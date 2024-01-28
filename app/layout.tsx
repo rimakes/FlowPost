@@ -29,8 +29,8 @@ export default function RootLayout({
                     >
                         <AppProvider>{children}</AppProvider>
                     </Theme>
+                    <Toaster />
                 </body>
-                <Toaster />
             </SessionProvider>
         </html>
     );

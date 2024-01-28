@@ -21,11 +21,14 @@ import {
     PanelTopCloseIcon,
     Paperclip,
     Settings,
+    SidebarClose,
+    SidebarOpen,
     Sparkles,
     Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 export default function DefaultLayout({
     children,
@@ -41,48 +44,9 @@ export default function DefaultLayout({
             <div className='relative flex flex-col flex-1 overflow-x-hidden border-0 border-blue-500'>
                 {/*  Site header */}
                 <Header />
-                <div
-                    className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full
-                '
-                >
-                    <div
-                        className='sidebar border border-border
-                        lg:border-t-0
-                           flex gap-2 lg:flex-col lg:p-2 lg:w-[256px]
-                    sticky bottom-0 lg:z-2 isolate bg-background border-r border-r-muted
-                    border-t
-                    '
-                    >
-                        <Button className='rounded-full gap-2 hidden lg:flex'>
-                            <Feather />
-                            Escribe tu post
-                        </Button>
-                        <div
-                            className='mb-auto flex lg:block border-0 border-pink-600
-                        lg:ml-0 lg:mr-0
-                        overflow-x-auto
-                        lg:overflow-x-hidden
-                        w-full
-                        relative
-                        -right-2
-                        '
-                        >
-                            {MAIN_MENU_ITEMS.map((item) => (
-                                <MenuItem key={item.href} {...item} />
-                            ))}
-                        </div>
-                        <div className='hidden lg:block'>
-                            {SECONDAARY_MENU_ITEMS.map((item) => (
-                                <MenuItem key={item.href} {...item} />
-                            ))}
-                            <WordsUsedWidget />
-                        </div>
-                        {/* REVIEW: How to "stack to the right" in flex container*/}
-                        {/* LEARNING: Apparently, negative margins can only pull elements when that element is "anchored" from that side. AKA: in order to pull the element to the border of the parent, we need to do justify end (so it's anchored to the end) and THEN use a negative margin */}
-                        {/* <div className='border border-border p-2 flex justify-end'>
-                            <div className='h-20 border border-border border-r-8 w-full -mr-2'></div>
-                        </div> */}
-                    </div>
+                <div className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full'>
+                    <Sidebar />
+
                     {/* <main className='gap flex flex-1 flex-col py-12 [&>*:first-child]:scroll-mt-16'> */}
                     <main className='border-0 border-indigo-600 flex-1 overflow-auto flex flex-col'>
                         <div className='gap-2 bg-muted p-2 flex justify-center items-center text-sm'>
@@ -113,12 +77,71 @@ export default function DefaultLayout({
     );
 }
 
+type SidebarProps = {};
+
+export const Sidebar = ({}: SidebarProps) => {
+    const [collapsed, setCollapsed] = useState(true);
+
+    return (
+        <div
+            className='sidebar border border-border
+    lg:border-t-0
+       flex gap-2 lg:flex-col lg:p-2 
+sticky bottom-0 lg:z-2 isolate bg-background border-r
+border-t
+'
+        >
+            <Button
+                className='absolute top-0 right-0 translate-x-full'
+                size={'icon'}
+                variant={'secondary'}
+                onClick={() => setCollapsed(!collapsed)}
+            >
+                {collapsed ? (
+                    <SidebarOpen className='w-5 h-5' />
+                ) : (
+                    <SidebarClose className='w-5 h-5' />
+                )}
+            </Button>
+            <Button className='rounded-full gap-2 hidden lg:flex'>
+                <Feather />
+                {!collapsed && `Escribe tu post`}
+            </Button>
+            <div
+                className={`${collapsed ? '' : '-right-2'} mb-auto flex lg:block border-0 border-pink-600
+                lg:ml-0 lg:mr-0
+                overflow-x-auto
+                lg:overflow-x-hidden
+                w-full
+                relative
+                `}
+            >
+                {MAIN_MENU_ITEMS.map((item) => (
+                    <MenuItem key={item.href} {...item} collapsed={collapsed} />
+                ))}
+            </div>
+            <div className='hidden lg:block'>
+                {SECONDAARY_MENU_ITEMS.map((item) => (
+                    <MenuItem key={item.href} {...item} collapsed={collapsed} />
+                ))}
+                <WordsUsedWidget collapsed={collapsed} />
+            </div>
+            {/* REVIEW: How to "stack to the right" in flex container*/}
+            {/* LEARNING: Apparently, negative margins can only pull elements when that element is "anchored" from that side. AKA: in order to pull the element to the border of the parent, we need to do justify end (so it's anchored to the end) and THEN use a negative margin */}
+            {/* <div className='border border-border p-2 flex justify-end'>
+        <div className='h-20 border border-border border-r-8 w-full -mr-2'></div>
+    </div> */}
+        </div>
+    );
+};
+
 type MenuItem = {
     icon: LucideIcon;
     label: string;
     shortLabel?: string;
     href: string;
     className?: string;
+    collapsed?: boolean;
 };
 
 export const MenuItem = ({
@@ -127,6 +150,7 @@ export const MenuItem = ({
     label,
     shortLabel,
     className,
+    collapsed,
 }: MenuItem) => {
     const pathname = usePathname();
     return (
@@ -137,38 +161,51 @@ export const MenuItem = ({
             rounded-none
             lg:w-full
             transition-all
-            min-w-[6rem]
             lg:border-r-4
+            lg:border-t-0
             border-t-4
             border-transparent
             lg:hover:bg-muted
             `,
                 className,
                 pathname === href
-                    ? 'lg:border-r-4 lg:border-t-0  border-primary bg-primary/5'
-                    : ''
+                    ? 'lg:border-r-4 border-primary bg-primary/5'
+                    : '',
+                collapsed ? 'justify-center' : ''
             )}
         >
             <Icon className='w-5 h-5' />
-            <span className='hidden lg:inline'>{label}</span>
+            {!collapsed ? (
+                <span className='hidden lg:inline'>{label}</span>
+            ) : null}
             <span className='lg:hidden'>{shortLabel ? shortLabel : label}</span>
         </Link>
     );
 };
 
-export const WordsUsedWidget = () => {
+type WordsUsedWidgetProps = {
+    collapsed?: boolean;
+};
+
+export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
     return (
         <div className='bg-primary/5 text-xs p-2 rounded-md space-y-2 border border-primary/10'>
             <div className='flex justify-between font-semibold'>
-                <p>Palabras usadas</p>
-                <p>0 / 1000</p>
+                {!collapsed && <p>Palabras usadas</p>}
+                <p>
+                    0 <span>/ 1000</span>
+                </p>
             </div>
-            <Progress
-                value={50}
-                max={100}
-                className='h-2 border border-primary/10 rounded-full'
-            />
-            <p className='opacity-75'>Estas usando un free trial</p>
+            {!collapsed && (
+                <>
+                    <Progress
+                        value={50}
+                        max={100}
+                        className='h-2 border border-primary/10 rounded-full'
+                    />
+                    <p className='opacity-75'>Estas usando un free trial</p>
+                </>
+            )}
         </div>
     );
 };
