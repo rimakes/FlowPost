@@ -78,12 +78,20 @@ module.exports = {
                     from: { transform: 'translateX(-100%)' },
                     to: { transform: 'translateX(0%)' },
                 },
+                slide: {
+                    // translate: 0% calc(calc((var(--index) + var(--outset, 0)) * -100%));
+                    '100%': {
+                        translate:
+                            '0% calc(calc((var(--index) + var(--outset, 0)) * -100%))',
+                    },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
                 'slide-left': 'slide-left 20s linear infinite',
                 'slide-right': 'slide-right 20s linear infinite',
+                slide: 'slide var(--duration) var(--delay) infinite linear',
             },
         },
     },

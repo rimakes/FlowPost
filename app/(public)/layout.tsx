@@ -2,7 +2,7 @@
 // import Header from '@/components/ui/header';
 
 import Container from '@/components/shared/container';
-import Header from '@/components/shared/header/header';
+import Header from '@/components/shared/header/Header';
 
 export default function DefaultLayout({
     children,

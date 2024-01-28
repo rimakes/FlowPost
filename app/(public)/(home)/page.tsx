@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/shared/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Feedback from '@/components/shared/feedback';
-import { AvatarGroup } from '@/components/shared/avatar-group';
+import { AvatarGroup } from '@/components/shared/AvatarGroup';
 import { Faq } from '@/components/marketing/faq';
 import { Pricing } from '@/components/marketing/pricing';
 import { LogoGrid } from '@/components/marketing/logo-grid';

@@ -1,19 +1,16 @@
 import { cn } from '@/lib/utils';
 
 type CardHeaderProps = {
-    label: string;
+    title: string;
+    subtitle?: string;
     className?: string;
 };
 
-export function Header({ label, className }: CardHeaderProps) {
+export function Header({ title, subtitle, className }: CardHeaderProps) {
     return (
-        <h1
-            className={cn(
-                `text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6`,
-                className
-            )}
-        >
-            {label}
-        </h1>
+        <div className={cn(`mb-6`, className)}>
+            <h1 className={`text-3xl text-primary font-bold `}>{title}</h1>
+            <p>{subtitle}</p>
+        </div>
     );
 }

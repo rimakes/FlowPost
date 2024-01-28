@@ -14,6 +14,7 @@ const Container = ({ className, children }: ContainerProps) => {
         cont
         mx-auto
         w-full
+        
         max-w-[min(100%,2520px)]
         px-4
         md:px-10

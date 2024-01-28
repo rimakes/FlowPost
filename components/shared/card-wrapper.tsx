@@ -31,7 +31,7 @@ export function CardWrapper({
     return (
         <Card className={cn(`max-w-[350] border-none shadow-none`, className)}>
             <CardHeader>
-                <Header label='Welcome back! ✨' />
+                <Header title='Welcome back! ✨' />
             </CardHeader>
             <CardContent>{children}</CardContent>
             {showSocial && (

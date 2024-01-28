@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import Theme from '@/providers/theme-provider';
 import AppProvider from '@/providers/app-provider';
 import { primaryFont } from '@/config/fonts';
+import { HeadwayScript } from '@/scripts/headway';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -22,7 +23,7 @@ export default function RootLayout({
                 <body className={''}>
                     <Theme
                         attribute='class'
-                        defaultTheme='system'
+                        defaultTheme='light'
                         enableSystem
                         disableTransitionOnChange
                     >
