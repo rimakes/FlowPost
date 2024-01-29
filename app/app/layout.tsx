@@ -89,8 +89,8 @@ export const Sidebar = ({}: SidebarProps) => {
        flex gap-2 lg:flex-col lg:p-2 
 sticky bottom-0 lg:z-2 isolate bg-background border-r
 border-t
-transition-[width] duration-2000
- ${collapsed ? 'w-16 lg:w-24' : 'w-72 lg:w-72'}`}
+transition-[width] duration-300
+ ${collapsed ? 'lg:w-24' : 'w-72 lg:w-72'}`}
         >
             <Button
                 className='absolute top-0 right-0 translate-x-full'
@@ -161,7 +161,6 @@ export const MenuItem = ({
                 `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
             rounded-none
             lg:w-full
-            transition-all
             lg:border-r-4
             lg:border-t-0
             border-t-4
@@ -175,9 +174,9 @@ export const MenuItem = ({
                 collapsed ? 'justify-center' : ''
             )}
         >
-            <Icon className='w-5 h-5' />
+            <Icon className='w-5 h-5 shrink-0' />
             {!collapsed ? (
-                <span className='hidden lg:inline'>{label}</span>
+                <span className='hidden lg:inline truncate'>{label}</span>
             ) : null}
             <span className='lg:hidden'>{shortLabel ? shortLabel : label}</span>
         </Link>

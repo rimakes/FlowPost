@@ -55,17 +55,12 @@ export const CustomFormSchema = z.object({
 });
 
 export function PostWritterForm({ className }: PostWritterFormProps) {
-    const {
-        requestPost,
-        postRequest: { description, templateId, toneId },
-    } = useContext(PostWritterContext);
-
     const form = useForm({
         resolver: zodResolver(CustomFormSchema),
         defaultValues: {
-            description,
-            toneId,
-            templateId,
+            description: '',
+            toneId: 1,
+            templateId: null as number | null,
         },
         mode: 'onChange',
     });
@@ -87,8 +82,6 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 
     const onSubmit = async (data: PostRequest) => {
         console.log(data);
-        const res = await requestPost(data);
-        console.log(res);
         toast.success('Post creado');
     };
 
