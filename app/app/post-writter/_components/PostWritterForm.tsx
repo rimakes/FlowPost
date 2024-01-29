@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pen, Plus, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import {
@@ -29,6 +29,7 @@ import {
     SelectPostTemplate,
     SelectedPostTemplateCard,
 } from './SelectPostTemplate';
+import { PostWritterContext } from './PostWritterProvider';
 
 const MAX_LENGTH = 200;
 const MIN_LENGTH = 10;
@@ -37,7 +38,8 @@ type PostWritterFormProps = {
     className?: string;
 };
 
-const CustomFormSchema = z.object({
+export type PostRequest = z.infer<typeof CustomFormSchema>;
+export const CustomFormSchema = z.object({
     description: z
         .string()
         .min(MIN_LENGTH, 'Too short')
@@ -53,12 +55,17 @@ const CustomFormSchema = z.object({
 });
 
 export function PostWritterForm({ className }: PostWritterFormProps) {
+    const {
+        requestPost,
+        postRequest: { description, templateId, toneId },
+    } = useContext(PostWritterContext);
+
     const form = useForm({
         resolver: zodResolver(CustomFormSchema),
         defaultValues: {
-            description: '',
-            toneId: 1,
-            templateId: null as number | null,
+            description,
+            toneId,
+            templateId,
         },
         mode: 'onChange',
     });
@@ -78,8 +85,10 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         form.setValue('toneId', value);
     };
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: PostRequest) => {
         console.log(data);
+        const res = await requestPost(data);
+        console.log(res);
         toast.success('Post creado');
     };
 
@@ -198,7 +207,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                         Elige Plantilla
                                                     </Button>
                                                 </DialogTrigger>
-                                                <DialogContent className='max-w-full md:max-w-4xl'>
+                                                <DialogContent className='max-w-full md:max-w-4xl border-0 border-green-500'>
                                                     <SelectPostTemplate
                                                         setSelected={
                                                             onSelectPostTemplate

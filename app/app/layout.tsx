@@ -84,12 +84,13 @@ export const Sidebar = ({}: SidebarProps) => {
 
     return (
         <div
-            className='sidebar border border-border
+            className={`sidebar border border-border
     lg:border-t-0
        flex gap-2 lg:flex-col lg:p-2 
 sticky bottom-0 lg:z-2 isolate bg-background border-r
 border-t
-'
+transition-[width] duration-2000
+ ${collapsed ? 'w-16 lg:w-24' : 'w-72 lg:w-72'}`}
         >
             <Button
                 className='absolute top-0 right-0 translate-x-full'

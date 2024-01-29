@@ -22,11 +22,10 @@ export const SelectPostTemplate = ({
             selectedCategory === 'todos'
     );
 
-    // REVIEW: LAYOUT: Need to find a pattern to make this layout more responsive. The layout is:
-    // - HEADER
-    // - BODY with 2 columns each one with a scrollable area inside a flex container
+    // REVIEW: LAYOUT: Need to find a pattern to make this layout more responsive
+    // DONE: Review in codepen: https://codepen.io/RicSala/pen/zYbpKwj
     return (
-        <div className='flex h-[80vh] flex-col gap-4 space-y-2 border-0 border-black'>
+        <div className='flex flex-col gap-4 space-y-2 border-0 border-black max-h-[90vh]'>
             {/* HEADER */}
             <h2 className='font-semibold mb-4'>
                 Selecciona el formato de tu post
@@ -34,7 +33,7 @@ export const SelectPostTemplate = ({
 
             <div className='flex flex-col gap-2'>
                 <Label className='text-sm font-semibold'>Categorías</Label>
-                <div className='flex flex-wrap gap-2 border-0 border-green-400'>
+                <div className='flex flex-wrap gap-2 border-0 border-green-400 max-h-24 overflow-x-auto'>
                     {TEMPLATE_CATEGORIES.map((category) => {
                         return (
                             <Button
@@ -56,8 +55,8 @@ export const SelectPostTemplate = ({
             </div>
 
             {/* BODY */}
-            <div className='flex flex-wrap flex-grow border-0 border-yellow-600 max-h-[50%]'>
-                <div className='sidebar flex-1 max-w-xs overflow-y-scroll border-0 border-blue-500 max-h-full'>
+            <div className='flex grow min-h-0 border-0 border-yellow-600'>
+                <div className='sidebar basis-64 grow overflow-y-scroll border-0 border-blue-500 max-h-full'>
                     {selectedCategoryTemplates.map((template, index) => {
                         return (
                             <div
@@ -66,35 +65,36 @@ export const SelectPostTemplate = ({
                                 className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex && 'bg-muted border-r-8 border-r-primary'} ${index}`}
                                 onClick={() => setSelectedPreviewIndex(index)}
                             >
-                                <h3 className='font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
+                                <h3 className='font-semibold overflow-hidden line-clamp-2'>
                                     {template.name}
                                 </h3>
-                                <p className='overflow-hidden text-ellipsis whitespace-nowrap'>
-                                    {template.content.slice(0, 50)}...
+                                <p className='overflow-hidden text-ellipsis line-clamp-2'>
+                                    {template.content}
                                 </p>
                             </div>
                         );
                     })}
                 </div>
-                <div className='border-0 flex-1 border-red-400 flex flex-col max-h-full '>
-                    <div className='overflow-y-scroll flex-grow border-0 border-green-400'>
+                <div className='border-0 basis-0 grow-[999] min-w-[50%] border-red-400 flex flex-col max-h-full overflow-y-scroll'>
+                    <div className='flex-grow border-0 border-green-400'>
                         <p className='whitespace-pre-line'>
                             {POST_TEMPLATES[selectedPreviewIndex].content}
                         </p>
                     </div>
-                    <div className='flex flex-wrap justify-between p-2'>
-                        <Button variant={'outline'} type='button'>
-                            <Pen className='mr-2 h-5 w-5' />
-                            Editar
-                        </Button>
-
-                        <Button
-                            onClick={() => setSelected(selectedPreviewIndex)}
-                        >
-                            Usar esta plantilla
-                        </Button>
-                    </div>
                 </div>
+            </div>
+            <div className='flex flex-wrap justify-between p-2 gap-2'>
+                <Button variant={'outline'} type='button' className='flex-1'>
+                    <Pen className='mr-2 h-5 w-5' />
+                    Editar
+                </Button>
+
+                <Button
+                    onClick={() => setSelected(selectedPreviewIndex)}
+                    className='flex-1'
+                >
+                    Usar esta plantilla
+                </Button>
             </div>
         </div>
     );

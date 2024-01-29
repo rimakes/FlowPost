@@ -1,5 +1,9 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import {
     Tooltip,
@@ -9,33 +13,34 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { Edit, GalleryHorizontal, LucideIcon, Save } from 'lucide-react';
+import { useContext, useState } from 'react';
+import { PostWritterContext } from './PostWritterProvider';
 
 type GeneratedPostProps = {
     className?: string;
 };
 
+type Status = 'idle' | 'loading' | 'success' | 'error';
+
 export const PostWritterResult = ({ className }: GeneratedPostProps) => {
+    const [status, setStatus] = useState<Status>('idle');
+    const { post } = useContext(PostWritterContext);
+
+    if (status === 'loading')
+        return (
+            <div className='flex-1 h-full w-full'>
+                <Skeleton className='h-full w-full' />
+            </div>
+        );
     return (
         <div className={cn(``, className)}>
-            <div className=''>
-                <h2 className='text-2xl font-bold'>Post generado</h2>
-                <p>Este es el texto generado por la IA</p>
-                <Separator />
-                <p>Generated post</p>
-            </div>
+            <Label>Post generado</Label>
             <div className='border border-muted p-2 space-y-2'>
                 <Textarea
-                    readOnly
                     rows={20}
                     className='border-none resize-none'
-                    defaultValue={`Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Adipisci provident temporibus hic ut nihil quia molestias,
-                    consectetur distinctio in totam, iure libero id fugiat
-                    debitis laboriosam odio iusto, maiores dolorem. Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Eos maxime
-                    vero, quod, dignissimos hic eum placeat, iusto atque ratione
-                    dolorem asperiores harum vel delectus. Impedit voluptatem
-                    atque aspernatur provident doloremque!`}
+                    value={post}
+                    readOnly
                 />
 
                 <div className='flex gap-2'>
