@@ -46,8 +46,8 @@ const PostGeneratorCard = ({ url }: { url: string }) => {
                         From Scratch
                     </CardTitle>
                 </CardHeader>
-                <CardContent>
-                    <p className='font-semibold'>Something cools goes here</p>
+                <CardContent className='py-8 px-4'>
+                    <p className='font-semibold'>Something cool goes here</p>
                     <CardDescription>
                         Genera un post a partir de cero
                     </CardDescription>

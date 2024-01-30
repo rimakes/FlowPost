@@ -432,7 +432,7 @@ export const PrimitiveLayout = ({
     return (
         <div
             className={cn(
-                `border border-primary bg-background p-2 relative before:-z-10 before:absolute before:h-full before:w-full before:border-8 before:border-current flex flex-col`,
+                `border border-primary bg-background p-2 relative before:-z-10 before:absolute before:h-full before:w-full before:border-0 before:border-current flex flex-col`,
                 className
             )}
         >

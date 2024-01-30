@@ -20,7 +20,7 @@ export default auth((req) => {
 
     if (isAuthRoute) {
         if (isLoggedIn) {
-            return Response.redirect(new URL('/app/dashboard', nextUrl));
+            return Response.redirect(new URL('/app', nextUrl));
         }
         return null;
     }

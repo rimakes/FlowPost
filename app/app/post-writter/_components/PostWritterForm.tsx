@@ -30,6 +30,7 @@ import {
     SelectedPostTemplateCard,
 } from './SelectPostTemplate';
 import { PostWritterContext } from './PostWritterProvider';
+import { CharCounter } from '@/components/shared/CharCounter';
 
 const MAX_LENGTH = 200;
 const MIN_LENGTH = 10;
@@ -55,12 +56,19 @@ export const CustomFormSchema = z.object({
 });
 
 export function PostWritterForm({ className }: PostWritterFormProps) {
+    const {
+        requestPost,
+        postRequest: { description, templateId, toneId },
+    } = useContext(PostWritterContext);
+
+    //
+
     const form = useForm({
         resolver: zodResolver(CustomFormSchema),
         defaultValues: {
-            description: '',
-            toneId: 1,
-            templateId: null as number | null,
+            description,
+            toneId,
+            templateId,
         },
         mode: 'onChange',
     });
@@ -82,6 +90,8 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 
     const onSubmit = async (data: PostRequest) => {
         console.log(data);
+        const res = await requestPost(data);
+        console.log(res);
         toast.success('Post creado');
     };
 
@@ -121,9 +131,12 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                             placeholder='Los mejores hooks para enganchar a tus seguidores en Linkedin'
                                             {...field}
                                         />
-                                        <p className={charCounterClasses}>
-                                            {charCounter}
-                                        </p>
+                                        <CharCounter
+                                            maxChars={MAX_LENGTH}
+                                            usedChars={
+                                                form.watch('description').length
+                                            }
+                                        />
                                     </div>
                                 </FormControl>
                                 <FormDescription>
@@ -166,7 +179,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                     </FormLabel>
                                     <FormControl>
                                         <div>
-                                            {field.value && (
+                                            {field.value ? (
                                                 <SelectedPostTemplateCard
                                                     template={
                                                         POST_TEMPLATES[
@@ -177,7 +190,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                         onDeselectPostTemplate
                                                     }
                                                 />
-                                            )}
+                                            ) : null}
                                             <Dialog
                                                 open={isDialogOpen}
                                                 onOpenChange={(isOpen) =>

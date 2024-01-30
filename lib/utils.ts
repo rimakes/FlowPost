@@ -53,3 +53,7 @@ export function debouncedFunction<T extends (...args: any[]) => any>(
         }, waitFor);
     };
 }
+
+export const deepCopy = <T>(obj: T) => {
+    return JSON.parse(JSON.stringify(obj)) as T;
+};
