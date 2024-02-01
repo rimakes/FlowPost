@@ -4,16 +4,21 @@ import Image from 'next/image';
 import { CSSProperties, useContext, useRef } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideType as SlideType } from '../page';
+import { QuadPattern } from '@/public/images/decoration/patterns/qqquad';
+import { secondaryFont } from '@/config/fonts';
+import { SvgWrapper } from '@/components/shared/SvgWrapper';
+import pattern from '@/public/images/decoration/patterns/i-like-food.svg';
+import { FoodPattern } from '@/public/images/decoration/patterns/i-like-food';
 
-type CarouselProps = {
+type SlideProps = {
     backgroundColor?: string;
-    fontColor?: string;
-    profilePictureUrl?: string;
+    fontColor: string;
+    profilePictureUrl: string;
     handle: string;
     name: string;
     title: string;
     description: string;
-    isActive?: boolean;
+    isActive: boolean;
     slide: SlideType;
     className?: string;
     slideNumber: number;
@@ -34,7 +39,7 @@ export const Slide = ({
     slide,
     slideNumber,
     setIsActive,
-}: CarouselProps) => {
+}: SlideProps) => {
     const {
         title,
         description,
@@ -80,6 +85,10 @@ export const Slide = ({
             }}
             onClick={() => setIsActive(true)}
         >
+            <DecorativeElements
+                primaryColor={backgroundColor!}
+                secondaryColor={color!}
+            />
             <SlideContent
                 hasTitle={hasTitle}
                 title={title!}
@@ -101,17 +110,38 @@ export const Slide = ({
                 slideNumber={slideNumber}
                 numberColor={backgroundColor}
                 backgroundColor={color}
-            />
-
-            {/* Swipe labal */}
-            <div
-                className='p-2 px-4 border rounded-full ml-auto absolute bottom-4 right-4'
-                style={{
-                    display: settings.showSwipeLabel ? 'flex' : 'none',
+                styles={{
+                    display: settings.showCounter ? 'flex' : 'none',
                 }}
+            />
+            <SwipeLabel swipeLabel={swipeLabel!} />
+        </div>
+    );
+};
+
+const SwipeLabel = ({ swipeLabel }: { swipeLabel: string }) => (
+    <div className='p-2 px-4 border rounded-full ml-auto absolute bottom-4 right-4'>
+        {swipeLabel}
+    </div>
+);
+
+type DecorativeElementsProps = {
+    primaryColor: string;
+    secondaryColor: string;
+};
+
+export const DecorativeElements = ({
+    primaryColor,
+    secondaryColor,
+}: DecorativeElementsProps) => {
+    return (
+        <div className='absolute h-full w-full top-0 left-0'>
+            <SvgWrapper
+                primaryColor={primaryColor}
+                secondaryColor={secondaryColor}
             >
-                {settings.showSwipeLabel ? swipeLabel : null}
-            </div>
+                <QuadPattern />
+            </SvgWrapper>
         </div>
     );
 };
@@ -136,7 +166,7 @@ const SlideContent = ({
     editDescription,
 }: SlideContentProps) => {
     return (
-        <div className='py-8'>
+        <div className='py-8 z-10'>
             <ContentEditable
                 htmlElement='p'
                 onChange={editTitle}

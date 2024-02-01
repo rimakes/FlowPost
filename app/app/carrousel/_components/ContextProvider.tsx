@@ -30,6 +30,10 @@ const INITIAL_STATE = {
     toggleSlideHasTitle: () => {},
     toggleSlideHasTagline: () => {},
     toggleSlideHasParagraph: () => {},
+    moveCurrentSlideToRight: () => {},
+    moveCurrentSlideToLeft: () => {},
+    addSlideToRight: () => {},
+    deleteCurrentSlide: () => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -151,6 +155,45 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const moveCurrentSlideToRight = () => {
+        const newCarousel = deepCopy(carousel);
+        const slideToMove = newCarousel.slides[currentSlide];
+        const nextSlide = newCarousel.slides[currentSlide + 1];
+        newCarousel.slides[currentSlide] = nextSlide;
+        newCarousel.slides[currentSlide + 1] = slideToMove;
+        setCarousel(newCarousel);
+        setCurrentSlide(currentSlide + 1);
+    };
+
+    const moveCurrentSlideToLeft = () => {
+        const newCarousel = deepCopy(carousel);
+        const slideToMove = newCarousel.slides[currentSlide];
+        const previousSlide = newCarousel.slides[currentSlide - 1];
+        newCarousel.slides[currentSlide] = previousSlide;
+        newCarousel.slides[currentSlide - 1] = slideToMove;
+        setCarousel(newCarousel);
+        setCurrentSlide(currentSlide - 1);
+    };
+
+    const addSlideToRight = () => {
+        const newCarousel = deepCopy(carousel);
+        console.log(newCarousel.slides.length);
+        const newSlide = deepCopy(newCarousel.slides[currentSlide]);
+        newCarousel.slides.splice(currentSlide + 1, 0, newSlide);
+        console.log(newCarousel.slides.length);
+        setCarousel(newCarousel);
+        setCurrentSlide(currentSlide + 1);
+    };
+
+    const deleteCurrentSlide = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.slides.splice(currentSlide, 1);
+        setCarousel(newCarousel);
+        if (currentSlide === newCarousel.slides.length) {
+            setCurrentSlide(currentSlide - 1);
+        }
+    };
+
     return (
         <CarouselContext.Provider
             value={{
@@ -172,6 +215,10 @@ export function CarouselContextProvider({
                 toggleSlideHasTitle,
                 toggleSlideHasTagline,
                 toggleSlideHasParagraph,
+                moveCurrentSlideToRight,
+                moveCurrentSlideToLeft,
+                addSlideToRight,
+                deleteCurrentSlide,
             }}
         >
             {children}

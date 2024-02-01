@@ -56,7 +56,7 @@ export const CarouselWorkbench = () => {
 
 type SlideWithSettingsProps = {
     className?: string;
-    isActive?: boolean;
+    isActive: boolean;
     slide: SlideType;
     slideNumber: number;
 };
