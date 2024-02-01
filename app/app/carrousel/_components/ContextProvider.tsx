@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { fakeCarousel } from '@/fakeData/fake-carousel';
 import { deepCopy } from '@/lib/utils';
+import { TColorPalette } from './Sidebar';
 
 const INITIAL_STATE = {
     currentSlide: 0 as number,
@@ -34,6 +35,7 @@ const INITIAL_STATE = {
     moveCurrentSlideToLeft: () => {},
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
+    setColorPalette: (colors: TColorPalette) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -194,6 +196,14 @@ export function CarouselContextProvider({
         }
     };
 
+    const setColorPalette = (colors: TColorPalette) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.colorPalette.primaryColor = colors.font;
+        newCarousel.colorPalette.backgroundColor = colors.background;
+        newCarousel.colorPalette.secondaryColor = colors.accent;
+        setCarousel(newCarousel);
+    };
+
     return (
         <CarouselContext.Provider
             value={{
@@ -219,6 +229,7 @@ export function CarouselContextProvider({
                 moveCurrentSlideToLeft,
                 addSlideToRight,
                 deleteCurrentSlide,
+                setColorPalette,
             }}
         >
             {children}

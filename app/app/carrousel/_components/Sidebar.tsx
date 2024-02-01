@@ -4,6 +4,13 @@ import { useContext } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '@/components/ui/accordion';
+import { colorPalettes } from '../../post-writter/_components/const';
 
 export const CarouselSidebar = () => {
     const {
@@ -25,6 +32,7 @@ export const CarouselSidebar = () => {
         toggleShowCounter,
         toggleShowSwipeLabel,
         toggleShowAuthor,
+        setColorPalette,
     } = useContext(CarouselContext);
     return (
         <div className='sidebar basis-60 grow border-0 border-green-500 p-4'>
@@ -44,6 +52,18 @@ export const CarouselSidebar = () => {
                     />
                 </div>
             </div>
+            <Accordion type='single' collapsible>
+                <AccordionItem value='item-1'>
+                    <AccordionTrigger className=''>Colores</AccordionTrigger>
+                    <AccordionContent>
+                        <ColorPaletteSelect onChange={setColorPalette} />
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value='item-2'>
+                    <AccordionTrigger>Número de slide</AccordionTrigger>
+                    <AccordionContent></AccordionContent>
+                </AccordionItem>
+            </Accordion>
             <Separator className='mt-2 mb-2' />
             <div className='space-y-4'>
                 <div>
@@ -87,6 +107,72 @@ export const CarouselSidebar = () => {
                     />
                 </div>
             </div>
+        </div>
+    );
+};
+
+type ColorPaletteSelectProps = {
+    onChange: (colorPalette: TColorPalette) => void;
+};
+
+const ColorPaletteSelect = ({ onChange }: ColorPaletteSelectProps) => {
+    return (
+        <div className='w-full h-full grid grid-cols-3 gap-2'>
+            {colorPalettes.map((palette, index) => (
+                <ColorPalette
+                    colors={{
+                        font: palette.fontColor,
+                        background: palette.backgroundColor,
+                        accent: palette.accentColor,
+                    }}
+                    key={index}
+                    onClick={onChange}
+                />
+            ))}
+        </div>
+    );
+};
+
+export type TColorPalette = {
+    font: string;
+    background: string;
+    accent: string;
+};
+
+type ColorPaletteProps = {
+    colors: TColorPalette;
+    onClick: (colorPalette: TColorPalette) => void;
+};
+
+const ColorPalette = ({
+    colors: { font, background, accent },
+    onClick,
+}: ColorPaletteProps) => {
+    const colorClasses = 'w-1/3 h-full border-none outline-none';
+
+    return (
+        <div
+            className='h-4 border rounded-l-md overflow-hidden rounded-r-md w-full flex'
+            onClick={() => onClick({ font, background, accent })}
+        >
+            <div
+                className={colorClasses}
+                style={{
+                    backgroundColor: font,
+                }}
+            ></div>
+            <div
+                className={colorClasses}
+                style={{
+                    backgroundColor: background,
+                }}
+            />
+            <div
+                className={colorClasses}
+                style={{
+                    backgroundColor: accent,
+                }}
+            />
         </div>
     );
 };

@@ -415,3 +415,209 @@ The best way is to focus on 1 thing at a time and give your best.
 `,
     },
 ];
+
+export const colorPalettes = [
+    {
+        fontColor: '#ffffff',
+        backgroundColor: '#0d3b66',
+        accentColor: '#fae596',
+        id: 1,
+    },
+    {
+        fontColor: '#000000',
+        backgroundColor: '#ff6b6b',
+        accentColor: '#ffe66d',
+        id: 2,
+    },
+    {
+        fontColor: '#f4f4f2',
+        backgroundColor: '#346751',
+        accentColor: '#c84b31',
+        id: 3,
+    },
+    {
+        fontColor: '#f4e8c1',
+        backgroundColor: '#22333b',
+        accentColor: '#d9594c',
+        id: 4,
+    },
+    {
+        fontColor: '#27213c',
+        backgroundColor: '#5a352a',
+        accentColor: '#e3b23c',
+        id: 5,
+    },
+    {
+        fontColor: '#2d3142',
+        backgroundColor: '#b2b2b2',
+        accentColor: '#ef8354',
+        id: 6,
+    },
+    {
+        fontColor: '#1b2021',
+        backgroundColor: '#51513d',
+        accentColor: '#f4d8cd',
+        id: 7,
+    },
+    {
+        fontColor: '#011627',
+        backgroundColor: '#fdfffc',
+        accentColor: '#2ec4b6',
+        id: 8,
+    },
+    {
+        fontColor: '#f9dc5c',
+        backgroundColor: '#ec4e20',
+        accentColor: '#d81159',
+    },
+    {
+        fontColor: '#011f4b',
+        backgroundColor: '#03396c',
+        accentColor: '#ff7b25',
+    },
+    {
+        fontColor: '#ffffff',
+        backgroundColor: '#003f88',
+        accentColor: '#e5e5e5',
+    },
+    {
+        fontColor: '#ffffff',
+        backgroundColor: '#101820',
+        accentColor: '#f2aa4c',
+    },
+    {
+        fontColor: '#f5f0e1',
+        backgroundColor: '#002500',
+        accentColor: '#929982',
+    },
+    {
+        fontColor: '#0b090a',
+        backgroundColor: '#f5f3f4',
+        accentColor: '#a9927d',
+    },
+    {
+        fontColor: '#ffffff',
+        backgroundColor: '#5f0f40',
+        accentColor: '#9a031e',
+    },
+    {
+        fontColor: '#1d1d1d',
+        backgroundColor: '#fefae0',
+        accentColor: '#f77f00',
+    },
+    {
+        fontColor: '#f2f3ae',
+        backgroundColor: '#f7ff56',
+        accentColor: '#ff9b42',
+    },
+    {
+        fontColor: '#f1faee',
+        backgroundColor: '#1d3557',
+        accentColor: '#e63946',
+    },
+    {
+        fontColor: '#a8dadc',
+        backgroundColor: '#457b9d',
+        accentColor: '#1d3557',
+    },
+    {
+        fontColor: '#1d3557',
+        backgroundColor: '#a8dadc',
+        accentColor: '#f1faee',
+    },
+    {
+        fontColor: '#e63946',
+        backgroundColor: '#f1faee',
+        accentColor: '#a8dadc',
+    },
+    {
+        fontColor: '#f4f1de',
+        backgroundColor: '#3d405b',
+        accentColor: '#81b29a',
+    },
+    {
+        fontColor: '#f2cc8f',
+        backgroundColor: '#e07a5f',
+        accentColor: '#3d405b',
+    },
+    {
+        fontColor: '#e07a5f',
+        backgroundColor: '#f2cc8f',
+        accentColor: '#81b29a',
+    },
+    {
+        fontColor: '#3d405b',
+        backgroundColor: '#f4f1de',
+        accentColor: '#e07a5f',
+    },
+    {
+        fontColor: '#f4f1de',
+        backgroundColor: '#81b29a',
+        accentColor: '#f2cc8f',
+    },
+    {
+        fontColor: '#81b29a',
+        backgroundColor: '#f4f1de',
+        accentColor: '#3d405b',
+    },
+    {
+        fontColor: '#f2cc8f',
+        backgroundColor: '#81b29a',
+        accentColor: '#f4f1de',
+    },
+    {
+        fontColor: '#353535',
+        backgroundColor: '#3c6e71',
+        accentColor: '#d9d9d9',
+    },
+    {
+        fontColor: '#d9d9d9',
+        backgroundColor: '#284b63',
+        accentColor: '#f4d35e',
+    },
+    {
+        fontColor: '#f4d35e',
+        backgroundColor: '#ee964b',
+        accentColor: '#f95738',
+    },
+    {
+        fontColor: '#272838',
+        backgroundColor: '#f3d9dc',
+        accentColor: '#99e1d9',
+    },
+    {
+        fontColor: '#99e1d9',
+        backgroundColor: '#272838',
+        accentColor: '#f3d9dc',
+    },
+    {
+        fontColor: '#f3d9dc',
+        backgroundColor: '#99e1d9',
+        accentColor: '#272838',
+    },
+    {
+        fontColor: '#272838',
+        backgroundColor: '#99e1d9',
+        accentColor: '#f3d9dc',
+    },
+    {
+        fontColor: '#ffffff',
+        backgroundColor: '#264653',
+        accentColor: '#2a9d8f',
+    },
+    {
+        fontColor: '#264653',
+        backgroundColor: '#2a9d8f',
+        accentColor: '#e9c46a',
+    },
+    {
+        fontColor: '#2a9d8f',
+        backgroundColor: '#e9c46a',
+        accentColor: '#f4a261',
+    },
+    {
+        fontColor: '#e9c46a',
+        backgroundColor: '#f4a261',
+        accentColor: '#e76f51',
+    },
+];
