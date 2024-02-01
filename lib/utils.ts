@@ -57,3 +57,7 @@ export function debouncedFunction<T extends (...args: any[]) => any>(
 export const deepCopy = <T>(obj: T) => {
     return JSON.parse(JSON.stringify(obj)) as T;
 };
+
+export function isEven(n: number) {
+    return n % 2 == 0;
+}

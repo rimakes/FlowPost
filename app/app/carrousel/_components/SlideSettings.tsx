@@ -1,11 +1,11 @@
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
-import { Slide } from './page';
+import { SlideType } from '../page';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { useContext } from 'react';
-import { CarouselContext } from './_components/CarouselProvider';
+import { CarouselContext } from './ContextProvider';
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 type SlideSettingsProps = {
     isActive?: boolean;
     className?: string;
-    slide: Slide;
+    slide: SlideType;
 };
 export function SlideSettings({
     isActive = false,
@@ -31,6 +31,9 @@ export function SlideSettings({
         editDescription,
         nextSlide,
         previousSlide,
+        toggleSlideHasTitle,
+        toggleSlideHasParagraph,
+        toggleSlideHasTagline,
     } = useContext(CarouselContext);
 
     if (!isActive) return null;
@@ -57,7 +60,11 @@ export function SlideSettings({
             </Button>
             <h2>Slide portada</h2>
             <div>
-                <Switch id='title' />
+                <Switch
+                    id='title'
+                    checked={slide.hasTitle}
+                    onCheckedChange={toggleSlideHasTitle}
+                />
                 <Label htmlFor='title'>Título</Label>
                 <Input
                     id='title'
@@ -66,7 +73,11 @@ export function SlideSettings({
                 />
             </div>
             <div>
-                <Switch id='tagline' />
+                <Switch
+                    id='tagline'
+                    checked={slide.hasTagline}
+                    onCheckedChange={toggleSlideHasTagline}
+                />
                 <Label htmlFor='tagline'>Tagline</Label>
                 <Input
                     id='tagline'
@@ -76,6 +87,11 @@ export function SlideSettings({
             </div>
             <div>
                 <Label htmlFor='paragraph'>Párrafo 1</Label>
+                <Switch
+                    id='tagline'
+                    checked={slide.hasParagraph}
+                    onCheckedChange={toggleSlideHasParagraph}
+                />
                 <Textarea
                     id='paragraph'
                     className='resize-none'
