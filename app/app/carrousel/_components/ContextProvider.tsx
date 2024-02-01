@@ -158,6 +158,7 @@ export function CarouselContextProvider({
     };
 
     const moveCurrentSlideToRight = () => {
+        if (currentSlide === carousel.slides.length - 1) return;
         const newCarousel = deepCopy(carousel);
         const slideToMove = newCarousel.slides[currentSlide];
         const nextSlide = newCarousel.slides[currentSlide + 1];
@@ -168,6 +169,7 @@ export function CarouselContextProvider({
     };
 
     const moveCurrentSlideToLeft = () => {
+        if (currentSlide === 0) return;
         const newCarousel = deepCopy(carousel);
         const slideToMove = newCarousel.slides[currentSlide];
         const previousSlide = newCarousel.slides[currentSlide - 1];

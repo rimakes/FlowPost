@@ -118,11 +118,17 @@ export const SlideActions = () => {
         moveCurrentSlideToLeft,
         moveCurrentSlideToRight,
         deleteCurrentSlide,
+        currentSlide,
+        carousel,
     } = useContext(CarouselContext);
+
+    const isLastSlide = currentSlide === carousel.slides.length - 1;
+    const isFirstSlide = currentSlide === 0;
 
     return (
         <div className='flex gap-2 text-xs w-full'>
             <Button
+                disabled={isFirstSlide}
                 variant={'secondary'}
                 size={'sm'}
                 className='mr-auto'
@@ -148,6 +154,7 @@ export const SlideActions = () => {
                 <Plus className='h-4 w-4' />
             </Button>
             <Button
+                disabled={isLastSlide}
                 variant={'secondary'}
                 size={'sm'}
                 className=''
