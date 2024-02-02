@@ -7,6 +7,12 @@ import Container from '@/components/shared/container';
 import Header from '@/components/shared/header/Header';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import {
     BrainCog,
@@ -70,6 +76,10 @@ type SidebarProps = {};
 export const Sidebar = ({}: SidebarProps) => {
     const [collapsed, setCollapsed] = useState(true);
 
+    const collapse = () => {
+        setCollapsed(true);
+    };
+
     return (
         <div
             className={`sidebar border border-border
@@ -79,7 +89,7 @@ sticky bottom-0 lg:z-2 bg-background border-r
 border-t
 isolate
 transition-[width] duration-300
- ${collapsed ? 'lg:w-24' : 'w-72 lg:w-72'}`}
+ ${collapsed ? 'lg:w-16' : 'w-72 lg:w-72'}`}
         >
             <Button
                 className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10'
@@ -107,7 +117,12 @@ transition-[width] duration-300
                 `}
             >
                 {MAIN_MENU_ITEMS.map((item) => (
-                    <MenuItem key={item.href} {...item} collapsed={collapsed} />
+                    <MenuItem
+                        key={item.href}
+                        {...item}
+                        collapsed={collapsed}
+                        collapse={collapse}
+                    />
                 ))}
             </div>
             <div className='hidden lg:block'>
@@ -132,6 +147,7 @@ type MenuItem = {
     href: string;
     className?: string;
     collapsed?: boolean;
+    collapse?: () => void;
 };
 
 export const MenuItem = ({
@@ -141,10 +157,12 @@ export const MenuItem = ({
     shortLabel,
     className,
     collapsed,
+    collapse = () => {},
 }: MenuItem) => {
     const pathname = usePathname();
     return (
         <Link
+            onClick={collapse}
             href={href}
             className={cn(
                 `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
@@ -163,7 +181,14 @@ export const MenuItem = ({
                 collapsed ? 'justify-center' : ''
             )}
         >
-            <Icon className='w-5 h-5 shrink-0' />
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Icon className='w-5 h-5 shrink-0' />
+                    </TooltipTrigger>
+                    <TooltipContent>{label}</TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             {!collapsed ? (
                 <span className='hidden lg:inline truncate'>{label}</span>
             ) : null}
@@ -178,10 +203,12 @@ type WordsUsedWidgetProps = {
 
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
     return (
-        <div className='bg-primary/5 text-xs p-2 rounded-md space-y-2 border border-primary/10'>
-            <div className='flex justify-between font-semibold'>
+        <div
+            className={`bg-primary/5 rounded-md space-y-2 border border-primary/10 ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'text-xs p-2 font-semibold'}`}
+        >
+            <div className='flex justify-between'>
                 {!collapsed && <p>Palabras usadas</p>}
-                <p>
+                <p className=''>
                     0 <span>/ 1000</span>
                 </p>
             </div>

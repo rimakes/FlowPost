@@ -13,6 +13,16 @@ import {
 import { colorPalettes } from '../../post-writter/_components/const';
 import { DownloadButton } from './downloadButton';
 import { Download } from 'lucide-react';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from '@/components/ui/hover-card';
 
 export const CarouselSidebar = () => {
     const {
@@ -40,13 +50,6 @@ export const CarouselSidebar = () => {
         <div className='sidebar basis-60 grow border-0 border-green-500 p-4'>
             <div className='flex flex-col gap-2'>
                 <div className='flex gap-2 items-center'>
-                    <Label htmlFor='name'>Alternar colores</Label>
-                    <Switch
-                        checked={alternateColors}
-                        onCheckedChange={toggleAlternateColors}
-                    />
-                </div>
-                <div className='flex gap-2 items-center'>
                     <Label htmlFor='name'>Mostrar autor</Label>
                     <Switch
                         checked={showAuthor}
@@ -54,18 +57,30 @@ export const CarouselSidebar = () => {
                     />
                 </div>
             </div>
-            <Accordion type='single' collapsible>
-                <AccordionItem value='item-1'>
-                    <AccordionTrigger className=''>Colores</AccordionTrigger>
-                    <AccordionContent>
+            <Collapsible title='Apariencia'>
+                <CollapsibleTrigger>Paleta de colores</CollapsibleTrigger>
+                <CollapsibleContent>
+                    <ColorPaletteSelect onChange={setColorPalette} />
+                </CollapsibleContent>
+            </Collapsible>
+
+            <HoverCard openDelay={100}>
+                <HoverCardTrigger className='cursor-pointer'>
+                    Colores
+                </HoverCardTrigger>
+                <HoverCardContent>
+                    <>
                         <ColorPaletteSelect onChange={setColorPalette} />
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value='item-2'>
-                    <AccordionTrigger>Número de slide</AccordionTrigger>
-                    <AccordionContent></AccordionContent>
-                </AccordionItem>
-            </Accordion>
+                        <div className='flex gap-2 items-center'>
+                            <Label htmlFor='name'>Alternar colores</Label>
+                            <Switch
+                                checked={alternateColors}
+                                onCheckedChange={toggleAlternateColors}
+                            />
+                        </div>
+                    </>
+                </HoverCardContent>
+            </HoverCard>
             <Separator className='mt-2 mb-2' />
             <div className='space-y-4'>
                 <div>

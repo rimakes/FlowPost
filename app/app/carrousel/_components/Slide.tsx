@@ -131,7 +131,12 @@ export const Slide = forwardRef<Ref, SlideProps>(
                             display: settings.showCounter ? 'flex' : 'none',
                         }}
                     />
-                    <SwipeLabel swipeLabel={swipeLabel!} />
+                    <SwipeLabel
+                        swipeLabel={swipeLabel!}
+                        style={{
+                            display: settings.showSwipeLabel ? 'block' : 'none',
+                        }}
+                    />
                 </div>
             </div>
         );
@@ -140,8 +145,22 @@ export const Slide = forwardRef<Ref, SlideProps>(
 
 Slide.displayName = 'Slide';
 
-const SwipeLabel = ({ swipeLabel }: { swipeLabel: string }) => (
-    <div className='p-2 px-4 border rounded-full ml-auto absolute bottom-4 right-4'>
+type SwipeLabelProps = {
+    swipeLabel: string;
+    className?: string;
+    style?: CSSProperties;
+};
+
+const SwipeLabel = ({ swipeLabel, className, style = {} }: SwipeLabelProps) => (
+    <div
+        className={cn(
+            `p-2 px-4 border rounded-full ml-auto absolute bottom-4 right-4`,
+            className
+        )}
+        style={{
+            ...style,
+        }}
+    >
         {swipeLabel}
     </div>
 );

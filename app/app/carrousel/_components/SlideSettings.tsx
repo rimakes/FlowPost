@@ -42,6 +42,8 @@ export function SlideSettings({
         toggleSlideHasTitle,
         toggleSlideHasParagraph,
         toggleSlideHasTagline,
+        carousel,
+        toggleShowSwipeLabel,
     } = useContext(CarouselContext);
 
     if (!isActive) return null;
@@ -76,12 +78,12 @@ export function SlideSettings({
                     onCheckedChange={toggleSlideHasTitle}
                 />
                 <Label htmlFor='title'>Título</Label>
-                <ContentEditable
+                {/* <ContentEditable
                     onChange={(e) => editTitle(e.target.value)}
                     html={slide.title!}
                     tagName='p'
                     className='border rounded-md p-2'
-                />
+                /> */}
             </div>
             <div>
                 <Switch
@@ -90,11 +92,11 @@ export function SlideSettings({
                     onCheckedChange={toggleSlideHasTagline}
                 />
                 <Label htmlFor='tagline'>Tagline</Label>
-                <Input
+                {/* <Input
                     id='tagline'
                     value={slide.tagline!}
                     onChange={(e) => editTagline(e.target.value)}
-                />
+                /> */}
             </div>
             <div>
                 <Label htmlFor='paragraph'>Párrafo 1</Label>
@@ -103,12 +105,26 @@ export function SlideSettings({
                     checked={slide.hasParagraph}
                     onCheckedChange={toggleSlideHasParagraph}
                 />
-                <Textarea
+                {/* <Textarea
                     id='paragraph'
                     className='resize-none'
                     value={slide.description!}
                     onChange={(e) => editDescription(e.target.value)}
+                /> */}
+            </div>
+            <div>
+                <Label htmlFor='paragraph'>Etiqueta desliza</Label>
+                <Switch
+                    id='tagline'
+                    checked={carousel.settings.showSwipeLabel}
+                    onCheckedChange={toggleShowSwipeLabel}
                 />
+                {/* <Textarea
+                    id='paragraph'
+                    className='resize-none'
+                    value={slide.description!}
+                    onChange={(e) => editDescription(e.target.value)}
+                /> */}
             </div>
         </div>
     );
