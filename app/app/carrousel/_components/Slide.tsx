@@ -1,4 +1,3 @@
-import { ContentEditable } from '@/components/shared/ContentEditable';
 import { cn, isEven } from '@/lib/utils';
 import Image from 'next/image';
 import {
@@ -15,6 +14,7 @@ import { secondaryFont } from '@/config/fonts';
 import { SvgWrapper } from '@/components/shared/SvgWrapper';
 import pattern from '@/public/images/decoration/patterns/i-like-food.svg';
 import { FoodPattern } from '@/public/images/decoration/patterns/i-like-food';
+import ContentEditable from 'react-contenteditable';
 
 type SlideProps = {
     backgroundColor?: string;
@@ -85,7 +85,7 @@ export const Slide = forwardRef<Ref, SlideProps>(
         }, [ref]);
 
         return (
-            <div className='text'>
+            <div className='slide text'>
                 <div
                     ref={ref}
                     className={cn(
@@ -186,21 +186,35 @@ const SlideContent = ({
     editTitle,
     editDescription,
 }: SlideContentProps) => {
+    const titleRef = useRef('');
+    const paragraphRef = useRef('');
+
+    useEffect(() => {
+        titleRef.current = title;
+        paragraphRef.current = description;
+    }, [title, description]);
+
     return (
         <div className='py-8 z-10'>
             <ContentEditable
-                htmlElement='p'
-                onChange={editTitle}
-                value={title!}
+                onChange={(event) => {
+                    console.log(event.target.value);
+                    titleRef.current = event.target.value;
+                    editTitle(event.target.value);
+                }}
+                html={titleRef.current}
                 style={{
                     display: hasTitle ? 'block' : 'none',
                 }}
                 className='uppercase text-[3em] focus:outline-none focus:ring-0 focus:border-transparent'
             />
             <ContentEditable
-                htmlElement='p'
-                onChange={editDescription}
-                value={description!}
+                onChange={(event) => {
+                    console.log(event.target.value);
+                    paragraphRef.current = event.target.value;
+                    editDescription(event.target.value);
+                }}
+                html={paragraphRef.current}
                 className='text-[2em]
                     focus:outline-none focus:ring-0 focus:border-transparent
                     '

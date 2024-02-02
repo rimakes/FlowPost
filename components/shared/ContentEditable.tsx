@@ -11,6 +11,7 @@ type ContentEditableProps = {
     onChange: (value: string) => void;
     value: string;
     style?: CSSProperties | undefined;
+    children?: React.ReactNode;
 };
 
 const allowedHtmlElements = {
@@ -70,12 +71,13 @@ function setCaret(el: HTMLElement, offset: number) {
     sel.addRange(range);
 }
 
-export function ContentEditable({
+export function CustomContentEditable({
     htmlElement,
     className,
     onChange,
     value,
     style,
+    children,
 
     ...props
 }: ContentEditableProps) {

@@ -98,24 +98,25 @@ const SlideWithSettings = ({
                 isActive ? 'z-10' : 'z-0'
             )}
         >
-            <Slide
-                profilePictureUrl={slide?.image!}
-                backgroundColor={colorPalette.backgroundColor}
-                fontColor={colorPalette.primaryColor}
-                name={authorName!}
-                handle={authorHandle!}
-                title={slide?.title!}
-                description={slide?.description!}
-                isActive={isActive}
-                setIsActive={() => {
-                    setCurrentSlideTo(slideNumber);
-                }}
-                className='border-r border-dashed'
-                slide={slide}
-                slideNumber={slideNumber}
-                ref={slideRef}
-                // scale-[100%]
-            />
+            <div className='border-r border-dashed'>
+                <Slide
+                    profilePictureUrl={slide?.image!}
+                    backgroundColor={colorPalette.backgroundColor}
+                    fontColor={colorPalette.primaryColor}
+                    name={authorName!}
+                    handle={authorHandle!}
+                    title={slide?.title!}
+                    description={slide?.description!}
+                    isActive={isActive}
+                    setIsActive={() => {
+                        setCurrentSlideTo(slideNumber);
+                    }}
+                    slide={slide}
+                    slideNumber={slideNumber}
+                    ref={slideRef}
+                    // scale-[100%]
+                />
+            </div>
             <SlideSettings isActive={isActive} slide={slide} />
             {/* <DownloadButton /> */}
         </div>

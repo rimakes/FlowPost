@@ -71,6 +71,14 @@ export function CarouselContextProvider({
     // When this provider is loaded, we will activate the "Carousel shortcuts": Right and left arrows to navigate between slides.
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            // If focus in the child of the slide, we don't want to trigger the shortcuts. The slide has a class name of "slide". Use that to prevent the event from triggering.
+            // TODO: Not sure this is the best way to do this. Maybe we should use a ref to the slide and check if the event target is the slide.
+            if (
+                event.target instanceof HTMLElement &&
+                event.target.closest('.slide')
+            )
+                return;
+
             if (event.key === 'ArrowRight') nextSlide();
             if (event.key === 'ArrowLeft') previousSlide();
         };

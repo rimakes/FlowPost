@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import ContentEditable from 'react-contenteditable';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -75,10 +76,11 @@ export function SlideSettings({
                     onCheckedChange={toggleSlideHasTitle}
                 />
                 <Label htmlFor='title'>Título</Label>
-                <Input
-                    id='title'
-                    value={slide.title!}
+                <ContentEditable
                     onChange={(e) => editTitle(e.target.value)}
+                    html={slide.title!}
+                    tagName='p'
+                    className='border rounded-md p-2'
                 />
             </div>
             <div>

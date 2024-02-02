@@ -15,7 +15,7 @@ import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/spinner';
 
-type ImageFormat = 'png' | 'svg';
+type ImageFormat = 'pdf' | 'svg';
 
 export function DownloadButton({}) {
     const [status, setStatus] = useState<TStatus>('idle');
@@ -25,28 +25,24 @@ export function DownloadButton({}) {
 
     const onDownload = async (format: ImageFormat) => {
         // get the current time
-        const now = new Date().getTime();
+        const now = new Date();
         setStatus('loading');
         let dataUrl;
         let link = document.createElement('a');
-        console.log('time til create link', new Date().getTime() - now);
 
         switch (format) {
-            case 'png':
+            case 'pdf':
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'px',
                     format: [1350, 1080],
                 });
-
-                console.log('time til create PDF', new Date().getTime() - now);
-
+                // REVIEW: How can we optimize this?
                 for (let i = 0; i < arrayOfRefs.length; i++) {
                     await addSlidetoCaroulse(arrayOfRefs[i].current!, pdf);
                     if (i !== arrayOfRefs.length - 1) {
                         pdf.addPage();
                     }
-                    console.log(`slide ${i}`, new Date().getTime() - now);
                 }
                 pdf.save('download.pdf');
 
@@ -89,10 +85,10 @@ export function DownloadButton({}) {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => {
-                        onDownload('png');
+                        onDownload('pdf');
                     }}
                 >
-                    PNG
+                    PDF
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -102,7 +98,7 @@ export function DownloadButton({}) {
 const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
     const dataUrl = await toPng(htmlElement, {
         quality: 1,
-        pixelRatio: 5,
+        pixelRatio: 4,
     });
     pdf.addImage({
         imageData: dataUrl,

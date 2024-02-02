@@ -75,13 +75,14 @@ export const Sidebar = ({}: SidebarProps) => {
             className={`sidebar border border-border
     lg:border-t-0
        flex gap-2 lg:flex-col lg:p-2 
-sticky bottom-0 lg:z-2 isolate bg-background border-r
+sticky bottom-0 lg:z-2 bg-background border-r
 border-t
+isolate
 transition-[width] duration-300
  ${collapsed ? 'lg:w-24' : 'w-72 lg:w-72'}`}
         >
             <Button
-                className='absolute top-0 right-0 translate-x-full'
+                className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10'
                 size={'icon'}
                 variant={'secondary'}
                 onClick={() => setCollapsed(!collapsed)}
