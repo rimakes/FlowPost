@@ -1,7 +1,13 @@
 import { ContentEditable } from '@/components/shared/ContentEditable';
 import { cn, isEven } from '@/lib/utils';
 import Image from 'next/image';
-import { CSSProperties, useContext, useRef } from 'react';
+import {
+    CSSProperties,
+    forwardRef,
+    useContext,
+    useEffect,
+    useRef,
+} from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideType as SlideType } from '../page';
 import { QuadPattern } from '@/public/images/decoration/patterns/qqquad';
@@ -25,99 +31,114 @@ type SlideProps = {
     setIsActive: (value: boolean) => void;
 };
 
+type Ref = HTMLDivElement;
+
 // TODO: if you need to resize the font based on parent container width, use this: https://codepen.io/tunglam/pen/xxZqrbr
 // TODO: Carousel snap: https://codepen.io/andy-set-studio/pen/wvoLLXo
 // TODO: Reference canva clone: https://github.com/msafeerhussain/canva-clone
-export const Slide = ({
-    backgroundColor: originalBackgroundColor,
-    fontColor: originalFontColor,
-    profilePictureUrl,
-    handle,
-    name,
-    className,
-    isActive = true,
-    slide,
-    slideNumber,
-    setIsActive,
-}: SlideProps) => {
-    const {
-        title,
-        description,
-        hasCounter,
-        hasParagraph,
-        hasTagline,
-        hasTitle,
-    } = slide;
+export const Slide = forwardRef<Ref, SlideProps>(
+    (
+        {
+            backgroundColor: originalBackgroundColor,
+            fontColor: originalFontColor,
+            profilePictureUrl,
+            handle,
+            name,
+            className,
+            isActive = true,
+            slide,
+            slideNumber,
+            setIsActive,
+        },
+        ref
+    ) => {
+        const {
+            title,
+            description,
+            hasCounter,
+            hasParagraph,
+            hasTagline,
+            hasTitle,
+        } = slide;
 
-    const {
-        editTitle,
-        editDescription,
-        carousel: { settings, swipeLabel, slides },
-    } = useContext(CarouselContext);
+        const {
+            editTitle,
+            editDescription,
+            carousel: { settings, swipeLabel, slides },
+        } = useContext(CarouselContext);
 
-    const backgroundColor =
-        isEven(slideNumber) && settings.alternateColors
-            ? originalFontColor
-            : originalBackgroundColor;
+        const backgroundColor =
+            isEven(slideNumber) && settings.alternateColors
+                ? originalFontColor
+                : originalBackgroundColor;
 
-    const color =
-        isEven(slideNumber) && settings.alternateColors
-            ? originalBackgroundColor
-            : originalFontColor;
+        const color =
+            isEven(slideNumber) && settings.alternateColors
+                ? originalBackgroundColor
+                : originalFontColor;
 
-    const isFirst = slideNumber === 0;
-    const isLast = slideNumber === slides.length - 1;
+        const isFirst = slideNumber === 0;
+        const isLast = slideNumber === slides.length - 1;
 
-    return (
-        <div
-            className={cn(
-                `border-0 border-border px-4 py-4 text-[0.75rem]
-                relative w-[390px] aspect-[1080/1350] m-auto overflow-hidden flex flex-col justify-between
-                `,
-                className,
-                isActive
-                    ? ''
-                    : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
-            )}
-            style={{
-                backgroundColor,
-                color,
-            }}
-            onClick={() => setIsActive(true)}
-        >
-            <DecorativeElements
-                primaryColor={backgroundColor!}
-                secondaryColor={color!}
-            />
-            <SlideContent
-                hasTitle={hasTitle}
-                title={title!}
-                hasParagraph={hasParagraph}
-                description={description!}
-                editTitle={editTitle}
-                editDescription={editDescription}
-                color={color!}
-                backgroundColor={backgroundColor!}
-            />
-            <ProfileBadge
-                isShown={settings.showAuthor && (isFirst || isLast)}
-                profilePictureUrl={profilePictureUrl}
-                handle={handle}
-                name={name}
-            />
+        useEffect(() => {
+            // console.log('ref from slide', ref);
+        }, [ref]);
 
-            <SlideNumber
-                slideNumber={slideNumber}
-                numberColor={backgroundColor}
-                backgroundColor={color}
-                styles={{
-                    display: settings.showCounter ? 'flex' : 'none',
-                }}
-            />
-            <SwipeLabel swipeLabel={swipeLabel!} />
-        </div>
-    );
-};
+        return (
+            <div className='text'>
+                <div
+                    ref={ref}
+                    className={cn(
+                        `border-0 border-border px-4 py-4 text-[0.75em]
+                    relative w-[32.5em] aspect-[1080/1350] m-auto overflow-hidden flex flex-col justify-between
+                    `,
+                        className,
+                        isActive
+                            ? ''
+                            : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
+                    )}
+                    style={{
+                        backgroundColor,
+                        color,
+                    }}
+                    onClick={() => setIsActive(true)}
+                >
+                    <DecorativeElements
+                        primaryColor={backgroundColor!}
+                        secondaryColor={color!}
+                    />
+                    <SlideContent
+                        hasTitle={hasTitle}
+                        title={title!}
+                        hasParagraph={hasParagraph}
+                        description={description!}
+                        editTitle={editTitle}
+                        editDescription={editDescription}
+                        color={color!}
+                        backgroundColor={backgroundColor!}
+                    />
+                    <ProfileBadge
+                        isShown={settings.showAuthor && (isFirst || isLast)}
+                        profilePictureUrl={profilePictureUrl}
+                        handle={handle}
+                        name={name}
+                    />
+                    <SlideNumber
+                        slideNumber={slideNumber}
+                        numberColor={backgroundColor}
+                        backgroundColor={color}
+                        styles={{
+                            display: settings.showCounter ? 'flex' : 'none',
+                        }}
+                    />
+                    <SwipeLabel swipeLabel={swipeLabel!} />
+                </div>
+            </div>
+        );
+    }
+);
+
+Slide.displayName = 'Slide';
 
 const SwipeLabel = ({ swipeLabel }: { swipeLabel: string }) => (
     <div className='p-2 px-4 border rounded-full ml-auto absolute bottom-4 right-4'>

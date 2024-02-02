@@ -47,8 +47,10 @@ export type ApiResponse<T = undefined, E = ApiError> =
 
 export type ApiRequestBody<
     T = undefined,
-    A = 'CREATE' | 'UPDATE' | 'DELETE' | 'INVITE' | 'EXIT'
+    A = 'CREATE' | 'UPDATE' | 'DELETE' | 'INVITE' | 'EXIT',
 > = {
     data: T;
     action: A;
 };
+
+export type TStatus = 'idle' | 'loading' | 'success' | 'error';

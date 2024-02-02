@@ -1,18 +1,26 @@
 'use client';
 
 import {
+    MutableRefObject,
+    RefObject,
     createContext,
+    createRef,
     use,
     useCallback,
     useContext,
     useEffect,
+    useRef,
     useState,
 } from 'react';
 import { fakeCarousel } from '@/fakeData/fake-carousel';
 import { deepCopy } from '@/lib/utils';
 import { TColorPalette } from './Sidebar';
 
+export type TArrayOfRefs = RefObject<HTMLDivElement>[];
+
 const INITIAL_STATE = {
+    arrayOfRefs: [] as TArrayOfRefs,
+    addRef: (ref: RefObject<HTMLDivElement>, index: number) => {},
     currentSlide: 0 as number,
     nextSlide: () => {},
     previousSlide: () => {},
@@ -50,7 +58,7 @@ export function CarouselContextProvider({
 }: CarouselContextProviderProps) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [carousel, setCarousel] = useState(fakeCarousel);
-
+    const [arrayOfRefs, setArrayOfRefs] = useState([] as TArrayOfRefs);
     const nextSlide = useCallback(() => {
         if (currentSlide === carousel.slides.length - 1) return;
         setCurrentSlide((currentSlide) => currentSlide + 1);
@@ -181,10 +189,8 @@ export function CarouselContextProvider({
 
     const addSlideToRight = () => {
         const newCarousel = deepCopy(carousel);
-        console.log(newCarousel.slides.length);
         const newSlide = deepCopy(newCarousel.slides[currentSlide]);
         newCarousel.slides.splice(currentSlide + 1, 0, newSlide);
-        console.log(newCarousel.slides.length);
         setCarousel(newCarousel);
         setCurrentSlide(currentSlide + 1);
     };
@@ -206,9 +212,22 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const addRef = useCallback(
+        (ref: RefObject<HTMLDivElement>, index: number) => {
+            setArrayOfRefs((arrayOfRefs) => {
+                const newArray = [...arrayOfRefs];
+                newArray[index] = ref;
+                return newArray;
+            });
+        },
+        []
+    );
+
     return (
         <CarouselContext.Provider
             value={{
+                arrayOfRefs,
+                addRef,
                 currentSlide,
                 nextSlide,
                 previousSlide,

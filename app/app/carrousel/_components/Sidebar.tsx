@@ -11,6 +11,8 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { colorPalettes } from '../../post-writter/_components/const';
+import { DownloadButton } from './downloadButton';
+import { Download } from 'lucide-react';
 
 export const CarouselSidebar = () => {
     const {
@@ -107,6 +109,7 @@ export const CarouselSidebar = () => {
                     />
                 </div>
             </div>
+            <DownloadButton />
         </div>
     );
 };

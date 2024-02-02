@@ -1,10 +1,11 @@
 import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideSettings } from './SlideSettings';
 import { Slide } from './Slide';
 import { SlideType } from '../page';
+import { DownloadButton } from './downloadButton';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -75,8 +76,19 @@ const SlideWithSettings = ({
             colorPalette,
             settings: { alternateColors },
         },
+        arrayOfRefs,
         setCurrentSlideTo,
+        currentSlide,
+        addRef,
     } = useContext(CarouselContext);
+    const slideRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        console.log('adding a ref');
+        addRef(slideRef, slideNumber);
+    }, [addRef, slideNumber]);
+
+    // console.log('refs from SlideWithSettings', slidesRef);
 
     return (
         <div
@@ -101,10 +113,11 @@ const SlideWithSettings = ({
                 className='border-r border-dashed'
                 slide={slide}
                 slideNumber={slideNumber}
+                ref={slideRef}
                 // scale-[100%]
             />
             <SlideSettings isActive={isActive} slide={slide} />
-            {alternateColors}
+            {/* <DownloadButton /> */}
         </div>
     );
 };

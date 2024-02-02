@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/popover';
 import { HeadwayScript } from '@/scripts/headway';
 import { SelectAccountMenu } from './SelectAccountMenu';
+import { DownloadButton } from '@/app/app/carrousel/_components/downloadButton';
 
 export default function Header() {
     const { sidebarOpen, setSidebarOpen } = useAppProvider();
@@ -34,6 +35,8 @@ export default function Header() {
                         <PenLine className='mr-2' />
                         Escribir Post
                     </Button>
+                    {/* REVIEW: This wouldn't ve ever worked here since it's out of the provider  */}
+                    {/* <DownloadButton /> */}
 
                     <Separator
                         orientation='vertical'

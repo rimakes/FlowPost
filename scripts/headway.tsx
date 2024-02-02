@@ -32,8 +32,6 @@ export function HeadwayScript() {
                         account: "yoawX7",
                         callbacks: {
                         onWidgetReady: function(widget) {
-                            console.log("Widget is here!");
-                            console.log("unseen entries count: " + widget.getUnseenCount());
                         },
                         onShowWidget: function(){
                             console.log("Someone opened the widget!");

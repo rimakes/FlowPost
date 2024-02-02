@@ -1,8 +1,8 @@
 export const QuadPattern = ({}) => {
     return (
         <g
-            shape-rendering='crispEdges'
-            stroke-linejoin='round'
+            shapeRendering='crispEdges'
+            strokeLinejoin='round'
             fill='none'
             strokeWidth='1'
         >
