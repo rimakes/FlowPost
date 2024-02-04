@@ -1,5 +1,5 @@
 'use client';
-
+import { Slide as SlideType } from '@prisma/client';
 import { Header } from '@/components/shared/header';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from 'lucide-react';
@@ -18,6 +18,7 @@ import Container from '@/components/shared/container';
 import { CarouselSidebar } from './_components/Sidebar';
 import { Slide } from './_components/Slide';
 import { CarouselWorkbench } from './_components/Workbench';
+import * as PrismaModels from '@prisma/client';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -48,44 +49,31 @@ export default function CarouselPage() {
     );
 }
 
-export type SlideType = {
-    title: string | null;
-    tagline: string | null;
-    subtitle: string | null;
-    description: string | null;
-    image: string | null;
-    hasCounter: boolean;
-    hasTitle: boolean;
-    hasParagraph: boolean;
-    hasTagline: boolean;
-    backgroundColor: string | null;
-    fontColor: string | null;
-};
+export type TAspectRatio =
+    PrismaModels.AspectRatio[keyof PrismaModels.AspectRatio];
 
-export type Carousel = {
-    swipeLabel: string | null;
-    slides: SlideType[];
-    colorPalette: CarouselColorPalette;
-    fontPalette: CarouselFontPalette;
-    backgroundPattern: string | null;
-    authorName: string | null;
-    authorPictureUrl: string | null;
-    authorHandle: string | null;
-    settings: {
-        alternateColors: boolean;
-        showCounter: boolean;
-        showSwipeLabel: boolean;
-        showAuthor: boolean;
-    };
-};
+export type TSlide = PrismaModels.Slide;
 
-export type CarouselColorPalette = {
-    primaryColor: string;
-    secondaryColor: string;
-    backgroundColor: string;
-};
+export type TCarousel = Omit<PrismaModels.Carousel, 'id'>;
 
-export type CarouselFontPalette = {
-    primaryFont: string;
-    secondaryFont: string;
-};
+// {
+//     swipeLabel: string | null;
+//     slides: TSlide[];
+//     colorPalette: TColorPalette;
+//     fontPalette: TFontPalette;
+//     backgroundPattern: string | null;
+//     authorName: string | null;
+//     authorPictureUrl: string | null;
+//     authorHandle: string | null;
+//     settings: {
+//         alternateColors: boolean;
+//         showCounter: boolean;
+//         showSwipeLabel: boolean;
+//         showAuthor: boolean;
+//         aspectRatio: TAspectRatio;
+//     };
+// };
+
+export type TColorPalette = PrismaModels.ColorPalette;
+
+export type TFontPalette = PrismaModels.FontPalette;

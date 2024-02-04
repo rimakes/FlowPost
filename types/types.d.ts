@@ -1,3 +1,6 @@
+import { ASPECT_RATIOS } from '@/app/app/post-writter/_components/const';
+import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
+
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
 export type PaginationInfo = {
@@ -54,3 +57,30 @@ export type ApiRequestBody<
 };
 
 export type TStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export type TCarouselTemplate = {};
+
+export type TSlideContent = {
+    title: string;
+    paragraph: string;
+    tagline: string;
+};
+
+// #### START OF TRYING
+// REVIEW: Not sure if this makes things easier or more complicated...will take it for a spin
+// IMPORTANT: NOT USING IT, BUT MAY BE USEFUL IN THE FUTURE
+type ModelNames = Prisma.ModelName; // Union Type with the names of all Models: "User" | "Post"...
+
+// Prisma model is a Record...
+export type PrismaModels = {
+    // ...where each key is a ModelName...
+    [M in ModelNames]: Exclude<
+        // ...and each value is the awaited return type of the findUnique method of the PrismaClient of the corresponding model
+        Awaited<ReturnType<PrismaClient[Uncapitalize<M>]['findUnique']>>,
+        null //..excluding null
+    >;
+};
+// Is the equivalent of doing something like this:
+// const user = await prisma.user.findUnique({ where: { id: 1 } });
+// typeof user
+// #### END OF TRYING

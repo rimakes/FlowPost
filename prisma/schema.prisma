@@ -101,3 +101,69 @@ model Post {
     published   Boolean   @default(false)
     publishedAt DateTime?
 }
+
+type DisplayableText {
+    content String  @default("")
+    isShown Boolean @default(true)
+}
+
+type Slide {
+    title      DisplayableText
+    paragraphs DisplayableText[]
+    tagline    DisplayableText
+    settings   SlideOverrides
+    image      Image
+}
+
+type Image {
+    url String
+}
+
+type SlideOverrides {
+    colorPalette ColorPalette
+    fontPalette  FontPalette
+}
+
+type ColorPalette {
+    font       String
+    background String
+    accent     String
+}
+
+type FontPalette {
+    primary     String
+    secondary   String
+    handWriting String
+}
+
+model Carousel {
+    id         String           @id @default(auto()) @map("_id") @db.ObjectId
+    slides     Slide[]
+    author     Author
+    swipeLabel String           @default("Desliza")
+    settings   CarouselSettings
+}
+
+type CarouselSettings {
+    // default "Desliza"
+    colorPalette      ColorPalette
+    fontPalette       FontPalette
+    backgroundPattern String?
+
+    showSwipeLabel  Boolean
+    alternateColors Boolean
+    showCounter     Boolean
+    showAuthor      Boolean     @default(true)
+    aspectRatio     AspectRatio
+}
+
+type Author {
+    name       String @default("Ricardo Sala")
+    pictureUrl String @default("/public/images/placeholders/user.png")
+    handle     String @default("@ricsala86")
+}
+
+enum AspectRatio {
+    SQUARE
+    PORTRAIT
+}

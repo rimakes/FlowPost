@@ -12,9 +12,11 @@ import {
     useRef,
     useState,
 } from 'react';
-import { fakeCarousel } from '@/fakeData/fake-carousel';
+import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 import { deepCopy } from '@/lib/utils';
 import { TColorPalette } from './Sidebar';
+import { TAspectRatio } from '../page';
+import { AspectRatio } from '@prisma/client';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
 
@@ -44,6 +46,7 @@ const INITIAL_STATE = {
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
     setColorPalette: (colors: TColorPalette) => {},
+    setCarouselAspectRatio: (aspectRatio: TAspectRatio) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -88,37 +91,37 @@ export function CarouselContextProvider({
 
     const editTitle = (newTitle: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].title = newTitle;
+        newCarousel.slides[currentSlide].title.content = newTitle;
         setCarousel(newCarousel);
     };
 
     const editTagline = (newTagline: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].tagline = newTagline;
+        newCarousel.slides[currentSlide].tagline.content = newTagline;
         setCarousel(newCarousel);
     };
 
     const editDescription = (newDescription: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].description = newDescription;
+        newCarousel.slides[currentSlide].paragraphs[0].content = newDescription;
         setCarousel(newCarousel);
     };
 
     const editImage = (newImage: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].image = newImage;
+        newCarousel.slides[currentSlide].image.url = newImage;
         setCarousel(newCarousel);
     };
 
     const editName = (newName: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.authorName = newName;
+        newCarousel.author.name = newName;
         setCarousel(newCarousel);
     };
 
     const editHandle = (newHandle: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.authorHandle = newHandle;
+        newCarousel.author.handle = newHandle;
         setCarousel(newCarousel);
     };
 
@@ -154,22 +157,22 @@ export function CarouselContextProvider({
 
     const toggleSlideHasTitle = () => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].hasTitle =
-            !newCarousel.slides[currentSlide].hasTitle;
+        newCarousel.slides[currentSlide].title.isShown =
+            !newCarousel.slides[currentSlide].title.isShown;
         setCarousel(newCarousel);
     };
 
     const toggleSlideHasTagline = () => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].hasTagline =
-            !newCarousel.slides[currentSlide].hasTagline;
+        newCarousel.slides[currentSlide].tagline.isShown =
+            !newCarousel.slides[currentSlide].tagline.isShown;
         setCarousel(newCarousel);
     };
 
     const toggleSlideHasParagraph = () => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].hasParagraph =
-            !newCarousel.slides[currentSlide].hasParagraph;
+        newCarousel.slides[currentSlide].paragraphs[0].isShown =
+            !newCarousel.slides[currentSlide].paragraphs[0].isShown;
         setCarousel(newCarousel);
     };
 
@@ -214,9 +217,15 @@ export function CarouselContextProvider({
 
     const setColorPalette = (colors: TColorPalette) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.colorPalette.primaryColor = colors.font;
-        newCarousel.colorPalette.backgroundColor = colors.background;
-        newCarousel.colorPalette.secondaryColor = colors.accent;
+        newCarousel.settings.colorPalette.font = colors.font;
+        newCarousel.settings.colorPalette.background = colors.background;
+        newCarousel.settings.colorPalette.accent = colors.accent;
+        setCarousel(newCarousel);
+    };
+
+    const setCarouselAspectRatio = (aspectRatio: TAspectRatio) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.aspectRatio = aspectRatio as AspectRatio;
         setCarousel(newCarousel);
     };
 
@@ -259,6 +268,7 @@ export function CarouselContextProvider({
                 addSlideToRight,
                 deleteCurrentSlide,
                 setColorPalette,
+                setCarouselAspectRatio,
             }}
         >
             {children}

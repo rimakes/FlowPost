@@ -4,15 +4,8 @@ import { useContext } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from '@/components/ui/accordion';
-import { colorPalettes } from '../../post-writter/_components/const';
+import { COLOR_PALETTES } from '../../post-writter/_components/const';
 import { DownloadButton } from './downloadButton';
-import { Download } from 'lucide-react';
 import {
     Collapsible,
     CollapsibleContent,
@@ -23,20 +16,34 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from '@/components/ui/hover-card';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Slide } from './Slide';
+import { range } from '@mantine/hooks';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { ASPECT_RATIOS_MAP } from './const';
 
 export const CarouselSidebar = () => {
     const {
         carousel: {
-            authorName,
-            authorHandle,
-            authorPictureUrl,
+            author: { name, handle, pictureUrl },
             settings: {
                 alternateColors,
                 showCounter,
                 showSwipeLabel,
                 showAuthor,
+                aspectRatio,
             },
         },
+        setCarouselAspectRatio,
         toggleAlternateColors,
         editImage,
         editName,
@@ -46,9 +53,42 @@ export const CarouselSidebar = () => {
         toggleShowAuthor,
         setColorPalette,
     } = useContext(CarouselContext);
+
+    // TODO: check what this is doing
+    // console.log('aspectRatio.valueOf()', aspectRatio.valueOf());
     return (
         <div className='sidebar basis-60 grow border-0 border-green-500 p-4'>
             <div className='flex flex-col gap-2'>
+                <div>
+                    <h3>Plantilla</h3>
+                    <Select
+                        value={aspectRatio}
+                        defaultValue={aspectRatio}
+                        onValueChange={(value) => {
+                            setCarouselAspectRatio(value);
+                        }}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder='Tamaño' />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup></SelectGroup>
+                            <SelectItem value='PORTRAIT' className=''>
+                                <div className='flex'>
+                                    Linkedin 4:5
+                                    <span className='text-[10px] text-green-700 ml-1'>
+                                        (Recomendado)
+                                    </span>
+                                </div>
+                            </SelectItem>
+                            <SelectItem value='SQUARE' className=''>
+                                <div className='flex'>Linkedin 1:1</div>
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <TemplateSelector />
+                </div>
+                <Separator />
                 <div className='flex gap-2 items-center'>
                     <Label htmlFor='name'>Mostrar autor</Label>
                     <Switch
@@ -95,7 +135,7 @@ export const CarouselSidebar = () => {
                     <Input
                         placeholder='Nombre'
                         id='name'
-                        value={authorName!}
+                        value={name!}
                         onChange={(event) => {
                             editName(event.target.value);
                         }}
@@ -106,7 +146,7 @@ export const CarouselSidebar = () => {
                     <Input
                         placeholder='Nombre'
                         id='profilePic'
-                        value={authorPictureUrl!}
+                        value={pictureUrl!}
                         onChange={(event) => {
                             editImage(event.target.value);
                         }}
@@ -117,7 +157,7 @@ export const CarouselSidebar = () => {
                     <Input
                         placeholder='Handle'
                         id='handle'
-                        value={authorHandle!}
+                        value={handle!}
                         onChange={(event) => {
                             editHandle(event.target.value);
                         }}
@@ -129,6 +169,41 @@ export const CarouselSidebar = () => {
     );
 };
 
+type TemplateSelectorProps = {};
+
+const TemplateSelector = ({}: TemplateSelectorProps) => {
+    const { currentSlide, carousel, setCurrentSlideTo } =
+        useContext(CarouselContext);
+    return (
+        <Dialog>
+            <DialogTrigger className='w-full' asChild>
+                <Button className='w-full' variant={'secondary'}>
+                    Elige plantilla
+                </Button>
+            </DialogTrigger>
+            <DialogContent className='md:max-w-[80vw] max-w-[calc(100%-1rem)]'>
+                <div className='template-rows flex flex-col items-start gap-2 scale-[30%] origin-left'>
+                    {/* TODO: This will eventually be images instead */}
+                    {range(1, 5).map((index) => {
+                        return (
+                            <div className='flex' key={index}>
+                                {carousel.slides.map((slide, index) => (
+                                    <Slide
+                                        className=''
+                                        key={index}
+                                        slide={slide}
+                                        slideNumber={index}
+                                    />
+                                ))}
+                            </div>
+                        );
+                    })}
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
 type ColorPaletteSelectProps = {
     onChange: (colorPalette: TColorPalette) => void;
 };
@@ -136,12 +211,12 @@ type ColorPaletteSelectProps = {
 const ColorPaletteSelect = ({ onChange }: ColorPaletteSelectProps) => {
     return (
         <div className='w-full h-full grid grid-cols-3 gap-2'>
-            {colorPalettes.map((palette, index) => (
+            {COLOR_PALETTES.map((palette, index) => (
                 <ColorPalette
                     colors={{
-                        font: palette.fontColor,
-                        background: palette.backgroundColor,
-                        accent: palette.accentColor,
+                        font: palette.font,
+                        background: palette.background,
+                        accent: palette.accent,
                     }}
                     key={index}
                     onClick={onChange}

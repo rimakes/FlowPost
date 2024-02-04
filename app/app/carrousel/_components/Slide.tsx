@@ -8,27 +8,18 @@ import {
     useRef,
 } from 'react';
 import { CarouselContext } from './ContextProvider';
-import { SlideType as SlideType } from '../page';
+import { TAspectRatio, TSlide as TSlide } from '../page';
 import { QuadPattern } from '@/public/images/decoration/patterns/qqquad';
-import { secondaryFont } from '@/config/fonts';
 import { SvgWrapper } from '@/components/shared/SvgWrapper';
-import pattern from '@/public/images/decoration/patterns/i-like-food.svg';
-import { FoodPattern } from '@/public/images/decoration/patterns/i-like-food';
 import ContentEditable from 'react-contenteditable';
+import { ASPECT_RATIOS_MAP } from './const';
 
 type SlideProps = {
-    backgroundColor?: string;
-    fontColor: string;
-    profilePictureUrl: string;
-    handle: string;
-    name: string;
-    title: string;
-    description: string;
-    isActive: boolean;
-    slide: SlideType;
+    isActive?: boolean;
+    slide: TSlide;
     className?: string;
     slideNumber: number;
-    setIsActive: (value: boolean) => void;
+    setIsActive?: (value: boolean) => void;
 };
 
 type Ref = HTMLDivElement;
@@ -39,105 +30,106 @@ type Ref = HTMLDivElement;
 export const Slide = forwardRef<Ref, SlideProps>(
     (
         {
-            backgroundColor: originalBackgroundColor,
-            fontColor: originalFontColor,
-            profilePictureUrl,
-            handle,
-            name,
             className,
             isActive = true,
             slide,
             slideNumber,
-            setIsActive,
+            setIsActive = () => {},
         },
         ref
     ) => {
-        const {
-            title,
-            description,
-            hasCounter,
-            hasParagraph,
-            hasTagline,
-            hasTitle,
-        } = slide;
+        const { title, paragraphs } = slide;
 
         const {
             editTitle,
             editDescription,
-            carousel: { settings, swipeLabel, slides },
+            carousel: { settings, swipeLabel, slides, author },
         } = useContext(CarouselContext);
 
         const backgroundColor =
             isEven(slideNumber) && settings.alternateColors
-                ? originalFontColor
-                : originalBackgroundColor;
+                ? settings.colorPalette.font
+                : settings.colorPalette.background;
 
-        const color =
+        const fontColor =
             isEven(slideNumber) && settings.alternateColors
-                ? originalBackgroundColor
-                : originalFontColor;
+                ? settings.colorPalette.background
+                : settings.colorPalette.font;
 
         const isFirst = slideNumber === 0;
         const isLast = slideNumber === slides.length - 1;
+
+        const aspectRatioClasses = {
+            '4:5': 'aspect-[1080/1350]',
+            '1:1': 'aspect-[1/1]',
+        };
+        // get the type of the keys of the object
+        // TODO: need to fix this. The type should be infer from the definition of the map in the carousel const
+        type AspectRatioKeys = keyof typeof aspectRatioClasses;
 
         useEffect(() => {
             // console.log('ref from slide', ref);
         }, [ref]);
 
         return (
-            <div className='slide text'>
-                <div
-                    ref={ref}
-                    className={cn(
-                        `border-0 border-border px-4 py-4 text-[0.75em]
-                    relative w-[32.5em] aspect-[1080/1350] m-auto overflow-hidden flex flex-col justify-between
+            <div
+                ref={ref}
+                className={cn(
+                    `slide border-0 border-border px-4 py-4 text-[0.75em]
+                    relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[settings.aspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between
                     `,
-                        className,
-                        isActive
-                            ? ''
-                            : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
-                    )}
-                    style={{
-                        backgroundColor,
-                        color,
+                    className,
+                    isActive
+                        ? ''
+                        : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
+                )}
+                style={{
+                    backgroundColor,
+                    color: fontColor,
+                }}
+                onClick={() => setIsActive(true)}
+            >
+                <DecorativeElements
+                    primaryColor={backgroundColor!}
+                    secondaryColor={fontColor!}
+                />
+                <SlideContent
+                    hasTitle={title.isShown}
+                    title={title.content}
+                    hasParagraph={paragraphs[0].isShown}
+                    description={paragraphs[0].content}
+                    editTitle={editTitle}
+                    editDescription={editDescription}
+                    color={fontColor!}
+                    backgroundColor={backgroundColor!}
+                />
+                <ProfileBadge
+                    isShown={settings.showAuthor && (isFirst || isLast)}
+                    profilePictureUrl={author.pictureUrl}
+                    handle={author.handle}
+                    name={author.name}
+                />
+                <SlideNumber
+                    slideNumber={slideNumber}
+                    numberColor={backgroundColor}
+                    backgroundColor={fontColor}
+                    styles={{
+                        display: settings.showCounter ? 'flex' : 'none',
                     }}
-                    onClick={() => setIsActive(true)}
-                >
-                    <DecorativeElements
-                        primaryColor={backgroundColor!}
-                        secondaryColor={color!}
-                    />
-                    <SlideContent
-                        hasTitle={hasTitle}
-                        title={title!}
-                        hasParagraph={hasParagraph}
-                        description={description!}
-                        editTitle={editTitle}
-                        editDescription={editDescription}
-                        color={color!}
-                        backgroundColor={backgroundColor!}
-                    />
-                    <ProfileBadge
-                        isShown={settings.showAuthor && (isFirst || isLast)}
-                        profilePictureUrl={profilePictureUrl}
-                        handle={handle}
-                        name={name}
-                    />
-                    <SlideNumber
-                        slideNumber={slideNumber}
-                        numberColor={backgroundColor}
-                        backgroundColor={color}
-                        styles={{
-                            display: settings.showCounter ? 'flex' : 'none',
-                        }}
-                    />
-                    <SwipeLabel
-                        swipeLabel={swipeLabel!}
-                        style={{
-                            display: settings.showSwipeLabel ? 'block' : 'none',
-                        }}
-                    />
-                </div>
+                />
+                <SwipeLabel
+                    swipeLabel={swipeLabel!}
+                    style={{
+                        display: settings.showSwipeLabel ? 'block' : 'none',
+                    }}
+                />
+                <style>
+                    {`
+                    .slide b {
+                        color: ${settings.colorPalette.accent};
+                    }
+                `}
+                </style>
             </div>
         );
     }

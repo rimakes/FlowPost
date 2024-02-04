@@ -4,8 +4,8 @@ import { useContext, useEffect, useRef } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideSettings } from './SlideSettings';
 import { Slide } from './Slide';
-import { SlideType } from '../page';
-import { DownloadButton } from './downloadButton';
+import { TSlide } from '../page';
+import { ASPECT_RATIOS_MAP } from './const';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -18,13 +18,8 @@ const translateClasses = {
 } as const;
 
 export const CarouselWorkbench = () => {
-    const {
-        currentSlide,
-        nextSlide,
-        previousSlide,
-        carousel,
-        setCurrentSlideTo,
-    } = useContext(CarouselContext);
+    const { currentSlide, nextSlide, previousSlide, carousel } =
+        useContext(CarouselContext);
     return (
         <div className='not-sidebar basis-0 grow-[999] min-w-[60%] border-0 border-blue-500 p-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] flex flex-col gap-2 relative'>
             <div className='flex justify-center gap-4 w-full items-center text-sm mt-2'>
@@ -58,7 +53,7 @@ export const CarouselWorkbench = () => {
 type SlideWithSettingsProps = {
     className?: string;
     isActive: boolean;
-    slide: SlideType;
+    slide: TSlide;
     slideNumber: number;
 };
 
@@ -70,11 +65,17 @@ const SlideWithSettings = ({
 }: SlideWithSettingsProps) => {
     const {
         carousel: {
-            authorHandle,
-            authorName,
-            authorPictureUrl,
-            colorPalette,
-            settings: { alternateColors },
+            author: { handle, name, pictureUrl },
+            settings: {
+                aspectRatio,
+                alternateColors,
+                backgroundPattern,
+                colorPalette,
+                fontPalette,
+                showAuthor,
+                showCounter,
+                showSwipeLabel,
+            },
         },
         arrayOfRefs,
         setCurrentSlideTo,
@@ -100,13 +101,6 @@ const SlideWithSettings = ({
         >
             <div className='border-r border-dashed'>
                 <Slide
-                    profilePictureUrl={slide?.image!}
-                    backgroundColor={colorPalette.backgroundColor}
-                    fontColor={colorPalette.primaryColor}
-                    name={authorName!}
-                    handle={authorHandle!}
-                    title={slide?.title!}
-                    description={slide?.description!}
                     isActive={isActive}
                     setIsActive={() => {
                         setCurrentSlideTo(slideNumber);
@@ -114,11 +108,9 @@ const SlideWithSettings = ({
                     slide={slide}
                     slideNumber={slideNumber}
                     ref={slideRef}
-                    // scale-[100%]
                 />
             </div>
             <SlideSettings isActive={isActive} slide={slide} />
-            {/* <DownloadButton /> */}
         </div>
     );
 };

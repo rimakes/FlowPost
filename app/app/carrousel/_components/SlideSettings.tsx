@@ -1,7 +1,7 @@
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
-import { SlideType } from '../page';
+import { TSlide } from '../page';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { useContext } from 'react';
@@ -25,7 +25,7 @@ import ContentEditable from 'react-contenteditable';
 type SlideSettingsProps = {
     isActive?: boolean;
     className?: string;
-    slide: SlideType;
+    slide: TSlide;
 };
 export function SlideSettings({
     isActive = false,
@@ -74,7 +74,7 @@ export function SlideSettings({
             <div>
                 <Switch
                     id='title'
-                    checked={slide.hasTitle}
+                    checked={slide.title.isShown}
                     onCheckedChange={toggleSlideHasTitle}
                 />
                 <Label htmlFor='title'>Título</Label>
@@ -88,7 +88,7 @@ export function SlideSettings({
             <div>
                 <Switch
                     id='tagline'
-                    checked={slide.hasTagline}
+                    checked={slide.tagline.isShown}
                     onCheckedChange={toggleSlideHasTagline}
                 />
                 <Label htmlFor='tagline'>Tagline</Label>
@@ -102,7 +102,7 @@ export function SlideSettings({
                 <Label htmlFor='paragraph'>Párrafo 1</Label>
                 <Switch
                     id='tagline'
-                    checked={slide.hasParagraph}
+                    checked={slide.paragraphs[0].isShown}
                     onCheckedChange={toggleSlideHasParagraph}
                 />
                 {/* <Textarea
@@ -119,12 +119,6 @@ export function SlideSettings({
                     checked={carousel.settings.showSwipeLabel}
                     onCheckedChange={toggleShowSwipeLabel}
                 />
-                {/* <Textarea
-                    id='paragraph'
-                    className='resize-none'
-                    value={slide.description!}
-                    onChange={(e) => editDescription(e.target.value)}
-                /> */}
             </div>
         </div>
     );
