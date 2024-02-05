@@ -1,3 +1,10 @@
+import {
+    POST_CATEGORIES,
+    VOICE_TONES,
+} from '@/app/app/post-writter/config/const';
+import { POST_TEMPLATES } from '@/app/app/post-writter/config/prompts';
+import { Pure } from '@/types/types';
+import * as PrismaClient from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -61,3 +68,35 @@ export const deepCopy = <T>(obj: T) => {
 export function isEven(n: number) {
     return n % 2 == 0;
 }
+
+export const getPostTemplateById = (id: string) => {
+    const template = POST_TEMPLATES.find((template) => template.id === id);
+
+    if (!template) {
+        throw new Error(`Template with id ${id} not found`);
+    }
+
+    return template;
+};
+
+export const getAllPostTemplates = () => {
+    const template = POST_TEMPLATES;
+
+    return template;
+};
+
+export const getAllPostCategories = () => {
+    const categories = POST_CATEGORIES;
+
+    return categories;
+};
+
+export const getVoiceToneById = (id: number) => {
+    const tone = VOICE_TONES.find((tone) => tone.id === id);
+
+    if (!tone) {
+        throw new Error(`Tone with id ${id} not found`);
+    }
+
+    return tone;
+};

@@ -1,26 +1,43 @@
 import { Button } from '@/components/ui/button';
 import { Pen } from 'lucide-react';
-import { POST_TEMPLATES, TEMPLATE_CATEGORIES } from './const';
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import {
+    cn,
+    getAllPostCategories,
+    getAllPostTemplates,
+    getPostTemplateById,
+} from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
+import { PostCategory, PostTemplate } from '@prisma/client';
+import { Pure } from '@/types/types';
 
 type SelectPostTemplateProps = {
-    setSelected: (selected: number) => void;
+    setSelected: (selected: string) => void;
 };
 
 export const SelectPostTemplate = ({
     setSelected,
 }: SelectPostTemplateProps) => {
-    const [selectedCategory, setSelectedTemplate] =
-        useState<(typeof TEMPLATE_CATEGORIES)[number]>('todos');
-    const [selectedPreviewIndex, setSelectedPreviewIndex] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState<
+        Pure<PostCategory>
+    >({
+        id: '1',
+        name: 'todos',
+        tags: [``],
+        description: '',
+    });
+    const [selectedPreviewIndex, setSelectedPreviewIndex] = useState('2');
 
-    const selectedCategoryTemplates = POST_TEMPLATES.filter(
-        (template) =>
-            template.category === selectedCategory ||
-            selectedCategory === 'todos'
+    const selectedCategoryTemplates = getAllPostTemplates().filter(
+        (template) => {
+            return (
+                template.tags.includes(selectedCategory.name) ||
+                selectedCategory.name === 'todos'
+            );
+        }
     );
+
+    const selectedTemplate = getPostTemplateById(selectedPreviewIndex);
 
     // REVIEW: LAYOUT: Need to find a pattern to make this layout more responsive
     // DONE: Review in codepen: https://codepen.io/RicSala/pen/zYbpKwj
@@ -34,20 +51,20 @@ export const SelectPostTemplate = ({
             <div className='flex flex-col gap-2'>
                 <Label className='text-sm font-semibold'>Categorías</Label>
                 <div className='flex flex-wrap gap-2 border-0 border-green-400 max-h-24 overflow-x-auto'>
-                    {TEMPLATE_CATEGORIES.map((category) => {
+                    {getAllPostCategories().map((category) => {
                         return (
                             <Button
-                                key={category}
+                                key={category.id}
                                 className='rounded-full'
                                 variant={
-                                    selectedCategory === category
+                                    selectedCategory.id === category.id
                                         ? 'default'
                                         : 'outline'
                                 }
                                 size={'sm'}
-                                onClick={() => setSelectedTemplate(category)}
+                                onClick={() => setSelectedCategory(category)}
                             >
-                                {category}
+                                {category.name}
                             </Button>
                         );
                     })}
@@ -61,9 +78,11 @@ export const SelectPostTemplate = ({
                         return (
                             <div
                                 // TODO: change the key to something more unique
-                                key={index}
-                                className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex && 'bg-muted border-r-8 border-r-primary'} ${index}`}
-                                onClick={() => setSelectedPreviewIndex(index)}
+                                key={template.id}
+                                className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex === template.id && 'bg-muted border-r-8 border-r-primary'} ${index}`}
+                                onClick={() =>
+                                    setSelectedPreviewIndex(template.id)
+                                }
                             >
                                 <h3 className='font-semibold overflow-hidden line-clamp-2'>
                                     {template.name}
@@ -78,7 +97,7 @@ export const SelectPostTemplate = ({
                 <div className='border-0 basis-0 grow-[999] min-w-[50%] border-red-400 flex flex-col max-h-full overflow-y-scroll'>
                     <div className='flex-grow border-0 border-green-400'>
                         <p className='whitespace-pre-line'>
-                            {POST_TEMPLATES[selectedPreviewIndex].content}
+                            {selectedTemplate!.content}
                         </p>
                     </div>
                 </div>
@@ -100,15 +119,8 @@ export const SelectPostTemplate = ({
     );
 };
 
-export type PostTemplate = {
-    name: string;
-    category: string;
-    title: string;
-    content: string;
-};
-
 export type PostTemplateCardProps = {
-    template: PostTemplate;
+    template: Pure<PostTemplate>;
     onDelete?: () => void;
     className?: string;
 };

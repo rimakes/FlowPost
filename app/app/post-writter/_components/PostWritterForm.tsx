@@ -12,18 +12,13 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
+import { cn, getPostTemplateById } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Pen, Plus, Sparkles } from 'lucide-react';
+import { Plus, Sparkles } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import {
-    POST_TEMPLATES,
-    TEMPLATE_CATEGORIES,
-    VOICE_TONES,
-    VoiceTone,
-} from './const';
+import { VOICE_TONES, VoiceTone } from '../config/const';
 import { toast } from 'sonner';
 import {
     SelectPostTemplate,
@@ -32,8 +27,10 @@ import {
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 
-const MAX_LENGTH = 200;
-const MIN_LENGTH = 10;
+const MAX_LENGTH = 500;
+const MIN_LENGTH = 50;
+const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
+const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
 
 type PostWritterFormProps = {
     className?: string;
@@ -43,12 +40,12 @@ export type PostRequest = z.infer<typeof CustomFormSchema>;
 export const CustomFormSchema = z.object({
     description: z
         .string()
-        .min(MIN_LENGTH, 'Too short')
-        .max(MAX_LENGTH, 'Too long'),
+        .min(MIN_LENGTH, tooShortError)
+        .max(MAX_LENGTH, tooLongError),
     toneId: z.number(),
     // templateId can't be null, but I want to refine the message error when it is null
     templateId: z
-        .number()
+        .string()
         .nullable()
         .refine((value) => value !== null, {
             message: 'Selecciona una plantilla',
@@ -60,8 +57,6 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         requestPost,
         postRequest: { description, templateId, toneId },
     } = useContext(PostWritterContext);
-
-    //
 
     const form = useForm({
         resolver: zodResolver(CustomFormSchema),
@@ -75,40 +70,28 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const onSelectPostTemplate = (index: number) => {
+    const onSelectPostTemplate = (id: string) => {
         setIsDialogOpen(false);
-        form.setValue('templateId', index, { shouldValidate: true });
+        form.setValue('templateId', id, { shouldValidate: true });
     };
 
     const onDeselectPostTemplate = () => {
         form.setValue('templateId', null);
     };
 
-    const onSelectTone = (value: VoiceTone['id']) => {
-        form.setValue('toneId', value);
+    const onSelectTone = (id: VoiceTone['id']) => {
+        form.setValue('toneId', id);
     };
 
     const onSubmit = async (data: PostRequest) => {
-        console.log(data);
         const res = await requestPost(data);
-        console.log(res);
         toast.success('Post creado');
     };
 
     const onError = (errors: any) => {
-        console.log(errors);
         toast.error('Ha habido un error, revisa los campos');
     };
 
-    const charCounterClasses = cn(
-        `absolute bottom-0 right-2 text-xs text-yellow-700/50`,
-        form.watch('description').length < MIN_LENGTH && 'text-red-500',
-        form.watch('description').length > Math.round(MAX_LENGTH / 2) &&
-            'text-green-500',
-        form.watch('description').length > MAX_LENGTH && 'text-destructive'
-    );
-
-    const charCounter = `${form.watch('description').length} / ${MAX_LENGTH}`;
     return (
         <>
             <Form {...form}>
@@ -181,11 +164,9 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                         <div>
                                             {field.value ? (
                                                 <SelectedPostTemplateCard
-                                                    template={
-                                                        POST_TEMPLATES[
-                                                            field.value
-                                                        ]
-                                                    }
+                                                    template={getPostTemplateById(
+                                                        field.value
+                                                    )}
                                                     onDelete={
                                                         onDeselectPostTemplate
                                                     }

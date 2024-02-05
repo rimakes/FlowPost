@@ -167,3 +167,25 @@ enum AspectRatio {
     SQUARE
     PORTRAIT
 }
+
+model PostTemplate {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Post fields
+    name    String
+    content String
+    tags    String[]
+}
+
+model PostCategory {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Category fields
+    name        String
+    description String
+    tags        String[]
+}

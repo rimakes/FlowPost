@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
-import { COLOR_PALETTES } from '../../post-writter/_components/const';
+import { COLOR_PALETTES } from '../../post-writter/config/const';
 import { DownloadButton } from './downloadButton';
 import {
     Collapsible,

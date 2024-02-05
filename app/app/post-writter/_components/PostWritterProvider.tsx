@@ -8,8 +8,8 @@ import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 const INITIAL_STATE = {
     post: 'this is a post',
     postRequest: {
-        description: 'Write a linkedin 2 line linkedin post about ecommerce',
-        templateId: 1,
+        description: `Cómo escribir el mejor copywritting para Linkedin sin ser un profesional`,
+        templateId: '',
         toneId: 1,
     } as PostRequest,
 };

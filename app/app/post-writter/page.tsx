@@ -10,7 +10,7 @@ export default function PostWritterPage() {
             <Header
                 className='mt-6'
                 title='Genera un post desde cero'
-                subtitle='Utiliza el poder de la IA para generar post irresistibles'
+                subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'
             />
             <Separator />
             <div className='mt-6 2xl:flex gap-8'>

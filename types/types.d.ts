@@ -1,4 +1,4 @@
-import { ASPECT_RATIOS } from '@/app/app/post-writter/_components/const';
+import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
@@ -84,3 +84,6 @@ export type PrismaModels = {
 // const user = await prisma.user.findUnique({ where: { id: 1 } });
 // typeof user
 // #### END OF TRYING
+
+// Helper type that converts a database model into an object to work with in the frontend (i.e. ommits id, createdAt, updatedAt, etc).
+export type Pure<T> = Omit<T, 'createdAt' | 'updatedAt'>;
