@@ -63,16 +63,8 @@ const useMicrophone = ({
                 setError('MediaRecorder not supported on this device/browser');
             }
 
-            const mimeType = getSupportedMimeTypes(
-                'audio',
-                audioTypes,
-                codecs
-            )[0];
+            const mimeType = 'video/mp4; codecs="avc1.424028, mp4a.40.2';
 
-            console.log(
-                'mimeType',
-                getSupportedMimeTypes('audio', audioTypes, codecs)
-            );
             if (
                 MediaRecorder.isTypeSupported &&
                 !MediaRecorder.isTypeSupported(mimeType)
