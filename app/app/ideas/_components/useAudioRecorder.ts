@@ -62,7 +62,8 @@ const useAudioRecorder: (
     }, [setRecordingTime, setTimerInterval]);
 
     const _stopTimer: () => void = useCallback(() => {
-        timerInterval != null && clearInterval(timerInterval);
+        timerInterval != null;
+        // && clearInterval(timerInterval);
         setTimerInterval(undefined);
     }, [timerInterval, setTimerInterval]);
 
