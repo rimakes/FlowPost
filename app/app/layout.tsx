@@ -1,5 +1,6 @@
 'use client';
 
+import Navbar from '@/components/shared/navbar/Navbar';
 import { Sidebar } from '@/components/shared/sidebar/Sidebar';
 import { Button } from '@/components/ui/button';
 import { Clock, Zap } from 'lucide-react';
@@ -12,6 +13,7 @@ export default function DefaultLayout({
     return (
         <div className='flex h-[100dvh] overflow-hidden border-0 border-green-500'>
             <div className='relative flex flex-col flex-1 overflow-x-hidden border-0 border-blue-500'>
+                <Navbar />
                 <div className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full'>
                     <Sidebar />
                     <main className='border-0 border-indigo-600 flex-1 overflow-auto flex flex-col'>

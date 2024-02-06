@@ -11,9 +11,6 @@ export default function NotFound() {
 
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
-                {/*  Site header */}
-                {/* <Header /> */}
-
                 <main className='grow [&>*:first-child]:scroll-mt-16'>
                     <div className='relative bg-white dark:bg-slate-900 h-full'>
                         <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto'>

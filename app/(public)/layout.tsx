@@ -1,8 +1,5 @@
-// import Sidebar from '@/components/ui/sidebar';
-// import Header from '@/components/ui/header';
-
 import Container from '@/components/shared/container';
-import Header from '@/components/shared/header/Header';
+import Navbar from '@/components/shared/navbar/Navbar';
 
 export default function DefaultLayout({
     children,
@@ -17,7 +14,7 @@ export default function DefaultLayout({
             {/* Content area */}
             <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
                 {/*  Site header */}
-                <Header />
+                <Navbar />
 
                 <main className='gap flex flex-1 flex-col py-12 [&>*:first-child]:scroll-mt-16'>
                     <Container className={''}>{children}</Container>
