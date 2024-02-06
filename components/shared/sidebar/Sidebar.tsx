@@ -13,7 +13,6 @@ import {
     SidebarClose,
     Feather,
     LucideIcon,
-    Link,
     Sparkles,
     GalleryHorizontal,
     Paperclip,
@@ -23,6 +22,7 @@ import {
     Settings,
     PanelTopCloseIcon,
 } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
@@ -81,7 +81,7 @@ transition-[width] duration-300
                 ))}
             </div>
             <div className='hidden lg:block'>
-                {SECONDAARY_MENU_ITEMS.map((item) => (
+                {SECONDARY_MENU_ITEMS.map((item) => (
                     <MenuItem key={item.href} {...item} collapsed={collapsed} />
                 ))}
                 <WordsUsedWidget collapsed={collapsed} />
@@ -265,7 +265,7 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
     },
 ];
 
-const SECONDAARY_MENU_ITEMS: MenuItem[] = [
+const SECONDARY_MENU_ITEMS: MenuItem[] = [
     {
         icon: Settings,
         label: 'Ajustes',
