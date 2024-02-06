@@ -11,7 +11,7 @@ import { HeadwayScript } from '@/scripts/headway';
 import { PenLine, ChevronsUpDown } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logo from '../logo';
-import { SelectAccountMenu } from '../header/SelectAccountMenu';
+import { SelectAccountMenu } from './SelectAccountMenu';
 
 export default function Navbar() {
     const { data } = useSession();

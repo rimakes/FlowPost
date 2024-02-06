@@ -24,14 +24,14 @@ export function LoginForm({}) {
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
             email: 'ricardo@grouz.io',
-            password: '88888888k',
+            password: '88888888',
         },
     });
 
     const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
         const res = await signIn('credentials', {
             ...values,
-            callbackUrl: `${window.location.origin}`,
+            callbackUrl: `/app`,
         });
 
         console.log(res);
