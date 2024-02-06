@@ -18,7 +18,10 @@ import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
 import { Pure } from '@/types/types';
 import { LinkedinPost } from '@prisma/client';
-import { createLinkedinPost, testingServer } from '@/app/_actions/test';
+import {
+    createLinkedinPost,
+    testingServer,
+} from '@/app/_actions/writter-actions';
 
 type GeneratedPostProps = {
     className?: string;

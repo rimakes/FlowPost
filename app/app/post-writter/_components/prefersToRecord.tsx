@@ -17,17 +17,21 @@ export function PrefersToRecord({ onRecord, text }: PrefersToRecordProps) {
         toast(isAllowed ? 'Ya puedes grabarte!!' : 'Microphone is denied');
     }, []);
     const [isMicroAllowed, setIsMicroAllowed] = useState(false);
-    const { startRecording, stopRecording, toggleRecording, isRecording } =
-        useMicrophone({
-            isMicAllowed: isMicroAllowed,
-            onMicAllowed,
-            setSpeech: onRecord,
-            speech: text,
-        });
+    const {
+        startRecording,
+        stopRecording,
+        toggleRecording,
+        isRecording,
+        initMediaRecorder,
+    } = useMicrophone({
+        onMicAllowed,
+        setSpeech: onRecord,
+    });
 
     const handleToggleMicStatus = () => {
         if (!isMicroAllowed) {
             setIsMicroAllowed(true);
+            initMediaRecorder();
             return;
         }
         if (isRecording) {

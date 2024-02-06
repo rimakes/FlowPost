@@ -26,12 +26,9 @@ import {
 } from './SelectPostTemplate';
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
-import { testingServer } from '@/app/_actions/test';
-import { SpeechRecorder } from '../../ideas/_components/SpeechRecorder';
 import { PrefersToRecord } from './prefersToRecord';
-import useMicrophone from '../../ideas/_components/useMicrophone';
 
-const MAX_LENGTH = 500;
+const MAX_LENGTH = 700;
 const MIN_LENGTH = 50;
 const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
 const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
@@ -121,7 +118,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                 <FormControl>
                                     <div className='relative'>
                                         <Textarea
-                                            className='resize-none overflow-hidden'
+                                            className='resize-none overflow-auto'
                                             placeholder='Los mejores hooks para enganchar a tus seguidores en Linkedin'
                                             {...field}
                                         />
@@ -267,15 +264,6 @@ export const VoiceToneSelector = ({
                     </Button>
                 );
             })}
-
-            <Button
-                type='button'
-                onClick={() => {
-                    testingServer('hola');
-                }}
-            >
-                Test
-            </Button>
         </div>
     );
 };

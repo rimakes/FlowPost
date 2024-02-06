@@ -1,9 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useAppProvider } from '@/providers/app-provider';
 import { ChevronsUpDown, PenLine } from 'lucide-react';
-import { useState } from 'react';
 import Logo from '../logo';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -13,12 +11,9 @@ import {
 } from '@/components/ui/popover';
 import { HeadwayScript } from '@/scripts/headway';
 import { SelectAccountMenu } from './SelectAccountMenu';
-import { DownloadButton } from '@/app/app/carrousel/_components/downloadButton';
 import { useSession } from 'next-auth/react';
 
 export default function Header() {
-    const { sidebarOpen, setSidebarOpen } = useAppProvider();
-    const [searchModalOpen, setSearchModalOpen] = useState<boolean>(false);
     const { data } = useSession();
 
     return (
