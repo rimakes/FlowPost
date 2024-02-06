@@ -63,7 +63,16 @@ const useMicrophone = ({
                 setError('MediaRecorder not supported on this device/browser');
             }
 
-            const mimeType = 'audio/ogg;codecs=opus';
+            const mimeType = getSupportedMimeTypes(
+                'audio',
+                audioTypes,
+                codecs
+            )[0];
+
+            console.log(
+                'mimeType',
+                getSupportedMimeTypes('audio', audioTypes, codecs)
+            );
             if (
                 MediaRecorder.isTypeSupported &&
                 !MediaRecorder.isTypeSupported(mimeType)
@@ -76,7 +85,7 @@ const useMicrophone = ({
             }
 
             const recorder = new MediaRecorder(stream!, {
-                mimeType: 'audio/ogg;codecs=opus',
+                mimeType,
             });
             recorder.ondataavailable = (e) => {
                 chunksRef.current.push(e.data);
@@ -86,7 +95,7 @@ const useMicrophone = ({
                 console.log('recording stopped');
                 // When recording stops, you can do something with the data
                 const audioBlob = new Blob(chunksRef.current, {
-                    type: 'audio/ogg;codecs=opus',
+                    type: mimeType,
                 });
                 setAudioData(audioBlob);
                 const formData = new FormData();
@@ -146,3 +155,55 @@ const useMicrophone = ({
 };
 
 export default useMicrophone;
+
+const videoTypes = ['webm', 'ogg', 'mp4', 'x-matroska'] as const;
+const audioTypes = ['webm', 'ogg', 'mp3', 'x-matroska'] as const;
+const codecs = [
+    'should-not-be-supported',
+    'vp9',
+    'vp9.0',
+    'vp8',
+    'vp8.0',
+    'avc1',
+    'av1',
+    'h265',
+    'h.265',
+    'h264',
+    'h.264',
+    'opus',
+    'pcm',
+    'aac',
+    'mpeg',
+    'mp4a',
+] as const;
+const media = ['audio', 'video'] as const;
+
+type TMedia = (typeof media)[number];
+type TVideoTypes = typeof videoTypes;
+type TAudioTypes = typeof audioTypes;
+type TCodecs = typeof codecs;
+
+function getSupportedMimeTypes(
+    media: TMedia,
+    types: TAudioTypes,
+    codecs: TCodecs
+) {
+    const isSupported = MediaRecorder.isTypeSupported;
+    const supported: string[] = [];
+    types.forEach((type) => {
+        const mimeType = `${media}/${type}`;
+        codecs.forEach((codec) =>
+            [
+                `${mimeType};codecs=${codec}`,
+                `${mimeType};codecs=${codec.toUpperCase()}`,
+                // /!\ false positive /!\
+                // `${mimeType};codecs:${codec}`,
+                // `${mimeType};codecs:${codec.toUpperCase()}`
+            ].forEach((variation) => {
+                if (isSupported(variation)) supported.push(variation);
+            })
+        );
+        if (isSupported(mimeType)) supported.push(mimeType);
+    });
+    return supported;
+}
