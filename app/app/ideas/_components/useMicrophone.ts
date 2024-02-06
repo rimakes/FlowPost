@@ -57,8 +57,26 @@ const useMicrophone = ({
             });
             onMicAllowed(true);
 
+            if (typeof MediaRecorder === 'undefined') {
+                // Handle the lack of MediaRecorder support
+                alert('MediaRecorder not supported on this device/browser');
+                setError('MediaRecorder not supported on this device/browser');
+            }
+
+            const mimeType = 'audio/ogg;codecs=opus';
+            if (
+                MediaRecorder.isTypeSupported &&
+                !MediaRecorder.isTypeSupported(mimeType)
+            ) {
+                // Handle the lack of MIME type support
+                alert(`${mimeType} is not supported on this device/browser`);
+                setError('MediaRecorder not supported on this device/browser');
+
+                return;
+            }
+
             const recorder = new MediaRecorder(stream!, {
-                mimeType: 'audio/webm',
+                mimeType: 'audio/ogg;codecs=opus',
             });
             recorder.ondataavailable = (e) => {
                 chunksRef.current.push(e.data);
@@ -68,7 +86,7 @@ const useMicrophone = ({
                 console.log('recording stopped');
                 // When recording stops, you can do something with the data
                 const audioBlob = new Blob(chunksRef.current, {
-                    type: 'audio/webm',
+                    type: 'audio/ogg;codecs=opus',
                 });
                 setAudioData(audioBlob);
                 const formData = new FormData();
@@ -85,16 +103,12 @@ const useMicrophone = ({
             mediaRecorderRef.current = recorder;
             console.log('MediaRecorder initialized');
         } catch (err) {
-            setError(
-                'Could not access the microphone. User denied or other error.'
-            );
             onMicAllowed(false);
         }
     }, [onMicAllowed, setSpeech]);
 
     const startRecording = useCallback(() => {
         if (!mediaRecorderRef.current) {
-            setError('MediaRecorder not initialized.');
             return;
         }
         console.log('start recording');

@@ -23,6 +23,7 @@ export function PrefersToRecord({ onRecord, text }: PrefersToRecordProps) {
         toggleRecording,
         isRecording,
         initMediaRecorder,
+        error,
     } = useMicrophone({
         onMicAllowed,
         setSpeech: onRecord,
@@ -58,6 +59,7 @@ export function PrefersToRecord({ onRecord, text }: PrefersToRecordProps) {
             >
                 {!isMicroAllowed ? <MicOff size={24} /> : <Mic size={24} />}
             </Button>
+            {JSON.stringify(error)}
         </div>
     );
 }
