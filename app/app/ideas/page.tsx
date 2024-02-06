@@ -22,9 +22,8 @@ export default function IdeasPage() {
         const formData = new FormData();
         formData.append('audio', recordingBlob, 'recording.webm');
 
-        createWebmFile(formData).then((transcription) => {
-            console.log(transcription);
-        });
+        const fn = async () => await createWebmFile(formData);
+        fn();
 
         // recordingBlob will be present at this point after 'stopRecording' has been called
     }, [recordingBlob]);
