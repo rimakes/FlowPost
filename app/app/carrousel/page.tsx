@@ -8,6 +8,7 @@ import { Heading } from '@/components/shared/Heading';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
+            
             */
 const stretchClasses =
     'relative w-[calc(100vw-1rem)] sm:w-[calc(100vw-1rem)] md:w-[calc(100vw-1rem)] lg:w-[calc(100vw-256px-1rem)]';
