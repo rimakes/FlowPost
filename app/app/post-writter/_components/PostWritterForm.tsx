@@ -26,6 +26,7 @@ import {
 } from './SelectPostTemplate';
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
+import { testingServer } from '@/app/_actions/test';
 
 const MAX_LENGTH = 500;
 const MIN_LENGTH = 50;
@@ -210,8 +211,14 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                             )}
                         />
                     </div>
-                    <Button>
-                        <Sparkles className='mr-2 h-5 w-5' /> Crear post
+                    <Button
+                        disabled={form.formState.isSubmitting}
+                        className={`${form.formState.isSubmitting && 'cursor-not-allowed'}`}
+                    >
+                        <Sparkles className='mr-2 h-5 w-5' />{' '}
+                        {form.formState.isSubmitting
+                            ? 'Creando post'
+                            : 'Crear post'}
                     </Button>
                 </form>
             </Form>
@@ -246,6 +253,15 @@ export const VoiceToneSelector = ({
                     </Button>
                 );
             })}
+
+            <Button
+                type='button'
+                onClick={() => {
+                    testingServer('hola');
+                }}
+            >
+                Test
+            </Button>
         </div>
     );
 };

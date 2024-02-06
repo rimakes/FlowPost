@@ -15,6 +15,10 @@ import { cn } from '@/lib/utils';
 import { Edit, GalleryHorizontal, LucideIcon, Save } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from './PostWritterProvider';
+import { useSession } from 'next-auth/react';
+import { Pure } from '@/types/types';
+import { LinkedinPost } from '@prisma/client';
+import { createLinkedinPost, testingServer } from '@/app/_actions/test';
 
 type GeneratedPostProps = {
     className?: string;
@@ -23,6 +27,8 @@ type GeneratedPostProps = {
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export const PostWritterResult = ({ className }: GeneratedPostProps) => {
+    const { data } = useSession();
+
     const [status, setStatus] = useState<Status>('idle');
     const { post } = useContext(PostWritterContext);
 
@@ -44,7 +50,14 @@ export const PostWritterResult = ({ className }: GeneratedPostProps) => {
                 />
 
                 <div className='flex gap-2'>
-                    <PostActionButton icon={Save} label='Guardar post' />
+                    <PostActionButton
+                        icon={Save}
+                        label='Guardar post'
+                        onClick={async () => {
+                            console.log('data', data?.user?.email!);
+                            await createLinkedinPost(post);
+                        }}
+                    />
                     <PostActionButton icon={Edit} label='Editar post' />
                     <PostActionButton
                         icon={GalleryHorizontal}
@@ -60,18 +73,21 @@ type PostActionButtonProps = {
     label?: string;
     className?: string;
     icon: LucideIcon;
+    onClick?: () => void;
 };
 
 export const PostActionButton = ({
     icon: Icon,
     className,
     label,
+    onClick,
 }: PostActionButtonProps) => {
     return (
         <TooltipProvider>
             <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild className={className}>
                     <Button
+                        onClick={onClick}
                         className='flex-1 rounded-full bg-muted text-primary/50
                     hover:bg-primary/10
                     '

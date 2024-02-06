@@ -14,10 +14,12 @@ import {
 import { HeadwayScript } from '@/scripts/headway';
 import { SelectAccountMenu } from './SelectAccountMenu';
 import { DownloadButton } from '@/app/app/carrousel/_components/downloadButton';
+import { useSession } from 'next-auth/react';
 
 export default function Header() {
     const { sidebarOpen, setSidebarOpen } = useAppProvider();
     const [searchModalOpen, setSearchModalOpen] = useState<boolean>(false);
+    const { data } = useSession();
 
     return (
         // BOILER: Change this in boilerplate
@@ -45,7 +47,7 @@ export default function Header() {
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button variant={'secondary'}>
-                                [Nombre]
+                                {data?.user.name || 'Cargando...'}
                                 <ChevronsUpDown className='ml-2 h-4 w-4' />
                             </Button>
                         </PopoverTrigger>

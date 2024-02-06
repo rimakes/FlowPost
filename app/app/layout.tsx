@@ -5,6 +5,7 @@
 
 import Container from '@/components/shared/container';
 import Header from '@/components/shared/header/Header';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -13,7 +14,8 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { cn } from '@/lib/utils';
+import { capitalizeFirstLetter, cn } from '@/lib/utils';
+import { stat } from 'fs';
 import {
     BrainCog,
     CalendarCheck,
@@ -89,7 +91,7 @@ sticky bottom-0 lg:z-2 bg-background border-r
 border-t
 isolate
 transition-[width] duration-300
- ${collapsed ? 'lg:w-16' : 'w-72 lg:w-72'}`}
+ ${collapsed ? 'lg:w-16' : 'lg:w-72'}`}
         >
             <Button
                 className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10'
@@ -145,6 +147,7 @@ type MenuItem = {
     label: string;
     shortLabel?: string;
     href: string;
+    status: 'active' | 'próximamente' | 'nuevo';
     className?: string;
     collapsed?: boolean;
     collapse?: () => void;
@@ -158,42 +161,80 @@ export const MenuItem = ({
     className,
     collapsed,
     collapse = () => {},
+    status = 'active',
 }: MenuItem) => {
     const pathname = usePathname();
+    const classNameNotActive =
+        status === 'próximamente'
+            ? 'text-primary/40 border-primary/40 cursor-not-allowed'
+            : '';
+
     return (
-        <Link
-            onClick={collapse}
-            href={href}
-            className={cn(
-                `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
-            rounded-none
-            lg:w-full
-            lg:border-r-4
-            lg:border-t-0
-            border-t-4
-            border-transparent
-            lg:hover:bg-muted
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Link
+                        onClick={collapse}
+                        href={href}
+                        className={cn(
+                            `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
+                            rounded-none
+                            lg:w-full
+                            lg:border-r-4
+                            lg:border-t-0
+                            border-t-4
+                            border-transparent
+                            lg:hover:bg-muted
             `,
-                className,
-                pathname === href
-                    ? 'lg:border-r-4 border-primary bg-primary/5'
-                    : '',
-                collapsed ? 'justify-center' : ''
-            )}
-        >
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <Icon className='w-5 h-5 shrink-0' />
-                    </TooltipTrigger>
-                    <TooltipContent>{label}</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-            {!collapsed ? (
-                <span className='hidden lg:inline truncate'>{label}</span>
-            ) : null}
-            <span className='lg:hidden'>{shortLabel ? shortLabel : label}</span>
-        </Link>
+                            className,
+                            pathname === href
+                                ? 'lg:border-r-4 border-primary bg-primary/5'
+                                : '',
+                            collapsed ? 'justify-center' : '',
+                            status === 'próximamente'
+                                ? 'cursor-not-allowed'
+                                : ''
+                        )}
+                    >
+                        <Icon
+                            className={`w-5 h-5 shrink-0 ${classNameNotActive}`}
+                        />
+                        {!collapsed ? (
+                            <span
+                                className={`${classNameNotActive} hidden lg:inline truncate`}
+                            >
+                                {label}
+                            </span>
+                        ) : null}
+                        <span className='lg:hidden'>
+                            {shortLabel ? shortLabel : label}
+                        </span>
+                        {collapsed || status === 'active' ? null : (
+                            <Badge
+                                variant={`${
+                                    status === 'próximamente'
+                                        ? 'outline'
+                                        : status === 'nuevo'
+                                          ? 'new'
+                                          : 'default'
+                                }`}
+                                className=' lg:static lg:opacity-100 opacity-60 absolute bottom-8
+
+                                '
+                            >
+                                {capitalizeFirstLetter(status).slice(0, 5) +
+                                    '.'}
+                            </Badge>
+                        )}
+                    </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                    {status !== 'active'
+                        ? 'Estamos desarrollando esta funcionalidad 🏗️'
+                        : label}
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 };
 
@@ -232,36 +273,42 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
         label: 'Post Generator',
         href: '/app/post-writter',
         shortLabel: 'Posts',
-    },
-    {
-        icon: Lightbulb,
-        label: 'Ideas para post',
-        href: '/app/ideas',
-        shortLabel: 'Ideas',
+        status: 'active',
     },
     {
         icon: GalleryHorizontal,
         label: 'Crea un carrusel',
         href: '/app/carrousel',
         shortLabel: 'Carrusel',
+        status: 'active',
     },
     {
         icon: Paperclip,
         label: 'Posts guardados',
         href: '/app/saved',
         shortLabel: 'Guardados',
+        status: 'active',
+    },
+    {
+        icon: Lightbulb,
+        label: 'Ideas para post',
+        href: '/app/ideas',
+        shortLabel: 'Ideas',
+        status: 'próximamente',
     },
     {
         icon: BrainCog,
         label: 'Inspiración',
         href: '/app/inspo',
         shortLabel: 'Inspo',
+        status: 'próximamente',
     },
     {
         icon: CalendarCheck,
         label: 'Programa tus posts',
         href: '/app/schedule',
         shortLabel: 'Posts',
+        status: 'próximamente',
     },
 ];
 
@@ -271,12 +318,14 @@ const SECONDAARY_MENU_ITEMS: MenuItem[] = [
         label: 'Ajustes',
         href: '/app/settings',
         shortLabel: 'Ajustes',
+        status: 'active',
     },
     {
         icon: PanelTopCloseIcon,
         label: 'Pide herramientas',
         href: '/app/feature-request',
         shortLabel: 'Peticiones',
+        status: 'active',
     },
 ];
 // BOILER: Para roadmap, usar canny.io

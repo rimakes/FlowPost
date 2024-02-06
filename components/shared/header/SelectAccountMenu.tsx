@@ -1,7 +1,11 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { User, Check, PlusCircle } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export const SelectAccountMenu = () => {
+    const { data } = useSession();
+
     return (
         <>
             <div className='flex flex-col'>
@@ -11,7 +15,9 @@ export const SelectAccountMenu = () => {
                             {/* REVIEW: I need to learn how to keep size ratios in these cases! */}
                             <User className='w-10 h-full bg-primary/10 rounded-lg border border-primary/20' />
                             <div className='flex flex-col gap-1'>
-                                <p className='font-semibold'>[Nombre]</p>
+                                <p className='font-semibold'>
+                                    {data?.user.name || 'Cargando...'}
+                                </p>
                                 <p className='text-primary/40 text-sm'>
                                     1 miembro
                                 </p>
