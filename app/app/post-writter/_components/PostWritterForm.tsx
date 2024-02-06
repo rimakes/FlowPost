@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn, getPostTemplateById } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Sparkles } from 'lucide-react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { VOICE_TONES, VoiceTone } from '../config/const';
@@ -28,6 +28,8 @@ import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 import { testingServer } from '@/app/_actions/test';
 import { SpeechRecorder } from '../../ideas/_components/SpeechRecorder';
+import { PrefersToRecord } from './prefersToRecord';
+import useMicrophone from '../../ideas/_components/useMicrophone';
 
 const MAX_LENGTH = 500;
 const MIN_LENGTH = 50;
@@ -94,6 +96,13 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         toast.error('Ha habido un error, revisa los campos');
     };
 
+    const setDescription = useCallback(
+        (text: string) => {
+            form.setValue('description', text);
+        },
+        [form]
+    );
+
     return (
         <>
             <Form {...form}>
@@ -122,6 +131,10 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                 form.watch('description').length
                                             }
                                         />
+                                        <PrefersToRecord
+                                            onRecord={setDescription}
+                                            text={field.value}
+                                        />
                                     </div>
                                 </FormControl>
                                 <FormDescription>
@@ -131,13 +144,6 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                 <FormMessage />
                             </FormItem>
                         )}
-                    />
-
-                    <SpeechRecorder
-                        setSpeech={(speech) => {
-                            console.log('speech', speech);
-                            form.setValue('description', speech);
-                        }}
                     />
 
                     <FormField
