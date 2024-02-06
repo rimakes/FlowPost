@@ -54,6 +54,7 @@ const useMicrophone = ({
         try {
             stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
+                video: false,
             });
             onMicAllowed(true);
 
@@ -63,7 +64,11 @@ const useMicrophone = ({
                 setError('MediaRecorder not supported on this device/browser');
             }
 
-            const mimeType = 'video/mp4; codecs="avc1.424028, mp4a.40.2';
+            const mimeType = getSupportedMimeTypes(
+                'audio',
+                audioTypes,
+                codecs
+            )[0];
 
             if (
                 MediaRecorder.isTypeSupported &&
