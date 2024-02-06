@@ -1,5 +1,5 @@
 import { createWebmFile } from '@/app/_actions/test';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface MicrophoneHook {
     isRecording: boolean;
@@ -27,6 +27,7 @@ const useMicrophone = ({
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
         null
     );
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
     // Clean up media recorder
     useEffect(() => {
@@ -48,78 +49,76 @@ const useMicrophone = ({
             );
             return;
         }
-    }, [isMicAllowed]);
+    }, []);
+
+    const initMediaRecorder = useCallback(async () => {
+        let chunks: BlobPart[] = [];
+        let stream: MediaStream | null = null;
+
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+            });
+            onMicAllowed(true);
+
+            const recorder = new MediaRecorder(stream!, {
+                mimeType: 'audio/webm',
+            });
+            recorder.ondataavailable = (e) => {
+                chunks.push(e.data);
+            };
+
+            recorder!.onstop = async () => {
+                console.log('recording stopped');
+                // When recording stops, you can do something with the data
+                const audioBlob = new Blob(chunks, {
+                    type: 'audio/webm',
+                });
+                setAudioData(audioBlob);
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.webm');
+
+                const transcription = await createWebmFile(formData);
+                setSpeech(transcription);
+                console.log(transcription);
+                chunks = []; // Reset chunks for next recording
+                // const audioUrl = URL.createObjectURL(audioBlob);
+                // const audio = new Audio(audioUrl);
+                // audio.play();
+            };
+            mediaRecorderRef.current = recorder;
+        } catch (err) {
+            setError(
+                'Could not access the microphone. User denied or other error.'
+            );
+            onMicAllowed(false);
+        }
+    }, [onMicAllowed, setSpeech]);
 
     useEffect(() => {
         if (!isMicAllowed) return;
-
-        let chunks: BlobPart[] = [];
-        let stream: MediaStream | null = null;
-        const initMediaRecorder = async () => {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                });
-                onMicAllowed(true);
-
-                setMediaRecorder(() => {
-                    const recorder = new MediaRecorder(stream!, {
-                        mimeType: 'audio/webm',
-                    });
-                    recorder.ondataavailable = (e) => {
-                        chunks.push(e.data);
-                    };
-
-                    recorder!.onstop = async () => {
-                        console.log('recording stopped');
-                        // When recording stops, you can do something with the data
-                        const audioBlob = new Blob(chunks, {
-                            type: 'audio/webm',
-                        });
-                        setAudioData(audioBlob);
-                        const formData = new FormData();
-                        formData.append('audio', audioBlob, 'recording.webm');
-
-                        const transcription = await createWebmFile(formData);
-                        setSpeech(transcription);
-                        console.log(transcription);
-                        chunks = []; // Reset chunks for next recording
-                        // const audioUrl = URL.createObjectURL(audioBlob);
-                        // const audio = new Audio(audioUrl);
-                        // audio.play();
-                    };
-                    return recorder;
-                });
-            } catch (err) {
-                setError(
-                    'Could not access the microphone. User denied or other error.'
-                );
-                onMicAllowed(false);
-            }
-        };
-
         initMediaRecorder();
-    }, [isMicAllowed, onMicAllowed, setSpeech]);
+    }, [initMediaRecorder, isMicAllowed]);
 
     const startRecording = useCallback(() => {
-        if (!mediaRecorder) {
+        if (!mediaRecorderRef.current) {
             setError('MediaRecorder not initialized.');
             return;
         }
         console.log('start recording');
         setIsRecording(true);
-        mediaRecorder.start();
-    }, [mediaRecorder]);
+        mediaRecorderRef.current.start();
+    }, []);
 
     const stopRecording = useCallback(() => {
         console.log('stop recording');
-        if (!mediaRecorder) {
+        if (!mediaRecorderRef.current) {
             setError('MediaRecorder not initialized.');
             return;
         }
         setIsRecording(false);
-        mediaRecorder.stop();
-    }, [mediaRecorder]);
+        mediaRecorderRef.current.stop();
+    }, []);
 
     const toggleRecording = useCallback(() => {
         if (isRecording) {
