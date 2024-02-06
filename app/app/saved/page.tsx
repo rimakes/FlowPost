@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator';
-import { Header } from '@/components/shared/header';
+import { Heading } from '@/components/shared/Heading';
 import { db } from '@/lib/prisma';
 
 export default async function IdeasPage() {
@@ -19,7 +19,7 @@ export default async function IdeasPage() {
 
     return (
         <div>
-            <Header
+            <Heading
                 className='mt-6'
                 title='Genera un post desde cero'
                 subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'

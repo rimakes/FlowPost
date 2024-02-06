@@ -7,7 +7,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Header } from './header';
+import { Heading } from './Heading';
 import { Social } from '../auth/social';
 import { Separator } from '../ui/separator';
 
@@ -31,7 +31,7 @@ export function CardWrapper({
     return (
         <Card className={cn(`max-w-[350] border-none shadow-none`, className)}>
             <CardHeader>
-                <Header title='Welcome back! ✨' />
+                <Heading title='Welcome back! ✨' />
             </CardHeader>
             <CardContent>{children}</CardContent>
             {showSocial && (

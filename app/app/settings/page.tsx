@@ -1,26 +1,14 @@
 'use client';
 
-import { Header } from '@/components/shared/header';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { AccountSettings } from './_components/AccountSettings';
 
 export default function IdeasPage() {
     return (
         <>
-            <Header
+            <Heading
                 className='mt-6'
                 title='Configuración'
                 subtitle='Configura tu espacio de trabajo'
@@ -51,62 +39,3 @@ export default function IdeasPage() {
         </>
     );
 }
-
-const generalSettingsSchema = z.object({
-    name: z.string(),
-});
-
-type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
-
-export const AccountSettings = () => {
-    const form = useForm({
-        resolver: zodResolver(generalSettingsSchema),
-        defaultValues: {
-            name: 'Javier',
-        },
-    });
-    return (
-        <>
-            <SubsectionHeading
-                title='Configuración general'
-                subtitle='Configura tu cuenta'
-            />
-            <div className='max-w-md'>
-                <Form {...form}>
-                    <form>
-                        <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Username</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder='Juan' {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </form>
-                </Form>
-            </div>
-        </>
-    );
-};
-
-type SubsectionHeadingProps = {
-    title: string;
-    subtitle: string;
-};
-
-const SubsectionHeading = ({ title, subtitle }: SubsectionHeadingProps) => {
-    return (
-        <div>
-            <h2 className='text-xl font-bold'>{title}</h2>
-            <p className='text-sm text-primary/40'>{subtitle}</p>
-        </div>
-    );
-};

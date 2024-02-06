@@ -4,8 +4,7 @@ import { range } from '@mantine/hooks';
 import {
     InfiniteCarrousel2,
     Item,
-} from '../layouts/_infinite-carousel/InfiniteCarrousel';
-import { PrimitiveLayout } from '../layouts/page';
+} from '../_infinite-carousel/InfiniteCarrousel';
 import { Smile } from 'lucide-react';
 
 export default function IdeasPage() {

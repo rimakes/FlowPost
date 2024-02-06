@@ -1,24 +1,10 @@
 'use client';
-import { Slide as SlideType } from '@prisma/client';
-import { Header } from '@/components/shared/header';
-import { Separator } from '@/components/ui/separator';
-import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from 'lucide-react';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
-import { useContext, useState } from 'react';
-import { SlideSettings } from './_components/SlideSettings';
-import {
-    CarouselContext,
-    CarouselContextProvider,
-} from './_components/ContextProvider';
-import { range } from '@mantine/hooks';
+import { CarouselContextProvider } from './_components/ContextProvider';
 import Container from '@/components/shared/container';
 import { CarouselSidebar } from './_components/Sidebar';
-import { Slide } from './_components/Slide';
 import { CarouselWorkbench } from './_components/Workbench';
 import * as PrismaModels from '@prisma/client';
+import { Heading } from '@/components/shared/Heading';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -30,7 +16,7 @@ export default function CarouselPage() {
     return (
         <>
             <Container>
-                <Header
+                <Heading
                     className='mt-6 border-0'
                     title='Genera un carrusel'
                     subtitle='Puedes generarlo de forma manual o pedirle a la IA que lo haga por ti a partir de un post'

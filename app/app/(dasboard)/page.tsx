@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import { Header } from '@/components/shared/header';
+import { Heading } from '@/components/shared/Heading';
 import {
     Card,
     CardContent,
@@ -15,7 +15,7 @@ export default async function Home() {
 
     return (
         <>
-            <Header
+            <Heading
                 className='mt-6'
                 title='Genera post con IA'
                 subtitle='Selecciona una plantilla para generar tu post'
