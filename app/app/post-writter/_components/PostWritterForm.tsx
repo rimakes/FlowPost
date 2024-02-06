@@ -27,6 +27,7 @@ import {
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 import { testingServer } from '@/app/_actions/test';
+import { SpeechRecorder } from '../../ideas/_components/SpeechRecorder';
 
 const MAX_LENGTH = 500;
 const MIN_LENGTH = 50;
@@ -130,6 +131,13 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                 <FormMessage />
                             </FormItem>
                         )}
+                    />
+
+                    <SpeechRecorder
+                        setSpeech={(speech) => {
+                            console.log('speech', speech);
+                            form.setValue('description', speech);
+                        }}
                     />
 
                     <FormField
