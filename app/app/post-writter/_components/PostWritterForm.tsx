@@ -26,7 +26,7 @@ import {
 } from './SelectPostTemplate';
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
-import { PrefersToRecord } from './prefersToRecord';
+import { RecordButton } from './RecordButton';
 
 const MAX_LENGTH = 700;
 const MIN_LENGTH = 50;
@@ -128,7 +128,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                 form.watch('description').length
                                             }
                                         />
-                                        <PrefersToRecord
+                                        <RecordButton
                                             onRecord={setDescription}
                                             text={field.value}
                                         />

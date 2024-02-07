@@ -3,7 +3,7 @@
 
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import { authMiddlewareOptions } from '@/auth.middleware.config';
-import { getUserByEmail } from './actions/getUser';
+import { getUserByEmail } from './lib/getUser';
 import { db } from './lib/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from '@auth/core/providers/google';

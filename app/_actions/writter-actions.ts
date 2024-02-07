@@ -7,6 +7,8 @@ import { LinkedinPost, Post } from '@prisma/client';
 import { MutableRefObject } from 'react';
 import fs from 'fs';
 import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
+import path from 'path';
+import cloudinary from 'cloudinary';
 
 export async function testingServer(input: string) {
     await wait(3000);

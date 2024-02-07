@@ -104,3 +104,5 @@ export const getVoiceToneById = (id: number) => {
 export const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const uploadFileToCloudinary = async (file: File) => {};

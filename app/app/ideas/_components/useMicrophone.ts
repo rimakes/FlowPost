@@ -64,11 +64,7 @@ const useMicrophone = ({
                 setError('MediaRecorder not supported on this device/browser');
             }
 
-            const mimeType = getSupportedMimeTypes(
-                'audio',
-                audioTypes,
-                codecs
-            )[0];
+            const mimeType = 'audio/webm';
 
             if (
                 MediaRecorder.isTypeSupported &&

@@ -12,7 +12,7 @@ type PrefersToRecordProps = {
     text: string;
 };
 
-export function PrefersToRecord({ onRecord, text }: PrefersToRecordProps) {
+export function RecordButton({ onRecord, text }: PrefersToRecordProps) {
     const onMicAllowed = useCallback((isAllowed: boolean) => {
         toast(isAllowed ? 'Ya puedes grabarte!!' : 'Microphone is denied');
     }, []);

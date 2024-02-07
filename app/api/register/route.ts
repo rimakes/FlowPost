@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { ApiRequestBody, ApiResponse } from '@/types/types';
-import { register } from '@/actions/register-user';
+import { register } from '@/lib/register-user';
 import { User } from '@prisma/client';
 import { RegisterFormValues } from '@/schemas/auth-schemas';
 import { wait } from '@/lib/utils';
