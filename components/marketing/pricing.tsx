@@ -6,6 +6,7 @@ import FeaturedLogo from '../icons/featured-logo';
 import { CheckoutButton } from './check-out-button';
 import Stripe from 'stripe';
 import Highlight from '../utils/Hightlight';
+import { primaryFont, secondaryFont } from '@/config/fonts';
 
 export const Pricing = async () => {
     const stripe = await getStripeInstance();
@@ -18,12 +19,19 @@ export const Pricing = async () => {
     );
 
     return (
-        <section className='flex max-w-7xl flex-col gap-20'>
+        <section className='flex max-w-7xl flex-col gap-20 relative'>
+            <div className='anchor -top-32 absolute' id='pricing' />
             <div className='gap2 flex flex-col text-center'>
-                <h2 className='border-b-0'>We grow only if you do</h2>
+                <h2
+                    className={`${secondaryFont.className} border-b-0 text-6xl font-extrabold`}
+                >
+                    Precio
+                </h2>
                 <div className='text-primary'>
-                    <Highlight>Flexible pricing</Highlight>, from easy starters
-                    to full corporate plans
+                    <p className='text-2xl'>
+                        Transforma tus pensamientos en post de Linkedin que
+                        convierten
+                    </p>
                 </div>{' '}
             </div>
             {/*TODO: With grid -> <div className="mx-auto grid max-w-sm grid-cols-[repeat(auto-fit,_minmax(min(250px,_100%),_1fr))] justify-center gap-5 sm:max-w-none"> */}
@@ -87,7 +95,7 @@ export const PriceCard = ({
       right-2
       -z-10
       rotate-12
-      fill-primary/20
+      fill-primary/10
       sm:-right-12
       md:-right-20
       
