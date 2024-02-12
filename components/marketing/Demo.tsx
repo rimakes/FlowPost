@@ -54,7 +54,12 @@ export function DemoWidget({ className }: DemoWidgetProps) {
             </Dialog>
 
             <SelectedPostTemplateCard
-                template={{ id: 1, name: 'test', description: 'test' }}
+                template={{
+                    id: '1',
+                    name: 'test',
+                    content: 'test',
+                    tags: ['test'],
+                }}
             />
             <Dialog
                 open={isTemplateModalOpen}
