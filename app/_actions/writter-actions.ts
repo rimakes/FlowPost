@@ -118,6 +118,20 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
     return carousel;
 }
 
+export async function updateCarousel(carousel: TCarousel) {
+    const updatedCarousel = await db.carousel.update({
+        where: {
+            id: carousel.id,
+        },
+        data: {
+            slides: carousel.slides,
+            settings: carousel.settings,
+        },
+    });
+
+    return updatedCarousel;
+}
+
 export const createWebmFile = async (formData: FormData) => {
     console.log(formData);
     // save the formdata to a file

@@ -14,9 +14,14 @@ import {
 } from 'react';
 import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 import { deepCopy } from '@/lib/utils';
-import { TColorPalette } from './Sidebar';
 import { AspectRatio } from '@prisma/client';
-import { TAspectRatioEnum, TCarousel, TLinkedinPost } from '@/types/types';
+import {
+    TAspectRatioEnum,
+    TCarousel,
+    TColorPalette,
+    TFontPallete,
+    TLinkedinPost,
+} from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
 
@@ -46,6 +51,7 @@ const INITIAL_STATE = {
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
     setColorPalette: (colors: TColorPalette) => {},
+    setFontPalette: (fonts: TFontPallete) => {},
     setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
 };
 
@@ -226,6 +232,13 @@ export function CarouselContextProvider({
         newCarousel.settings.colorPalette.accent = colors.accent;
         setCarousel(newCarousel);
     };
+    const setFontPalette = (fonts: TFontPallete) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.fontPalette.primary = fonts.primary;
+        newCarousel.settings.fontPalette.secondary = fonts.secondary;
+        newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
+        setCarousel(newCarousel);
+    };
 
     const setCarouselAspectRatio = (aspectRatio: TAspectRatioEnum) => {
         const newCarousel = deepCopy(carousel);
@@ -272,6 +285,7 @@ export function CarouselContextProvider({
                 addSlideToRight,
                 deleteCurrentSlide,
                 setColorPalette,
+                setFontPalette,
                 setCarouselAspectRatio,
             }}
         >

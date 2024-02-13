@@ -32,10 +32,15 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { ASPECT_RATIOS_MAP } from './const';
-import { TAspectRatioEnum } from '@/types/types';
+import { TAspectRatioEnum, TColorPalette } from '@/types/types';
+import { FontSelector } from '@/components/shared/FontSelector';
+import { Save } from 'lucide-react';
+import { updateCarousel } from '@/app/_actions/writter-actions';
+import { toast } from 'sonner';
 
 export const CarouselSidebar = () => {
     const {
+        carousel,
         carousel: {
             author: { name, handle, pictureUrl },
             settings: {
@@ -55,6 +60,7 @@ export const CarouselSidebar = () => {
         toggleShowSwipeLabel,
         toggleShowAuthor,
         setColorPalette,
+        setFontPalette,
     } = useContext(CarouselContext);
 
     // TODO: check what this is doing
@@ -168,6 +174,28 @@ export const CarouselSidebar = () => {
                 </div>
             </div>
             <DownloadButton />
+
+            <FontSelector
+                onSelect={(fontName) => {
+                    console.log('fontName', fontName);
+                    setFontPalette({
+                        handWriting: fontName,
+                        primary: fontName,
+                        secondary: fontName,
+                    });
+                }}
+                selectedFont='Robotto'
+            />
+
+            <Button
+                onClick={async () => {
+                    const savedCarousel = await updateCarousel(carousel);
+                    toast.success('Carrusel Guardado!');
+                }}
+            >
+                Guardar
+                <Save size={20} className='ml-2' />
+            </Button>
         </div>
     );
 };
@@ -227,12 +255,6 @@ const ColorPaletteSelect = ({ onChange }: ColorPaletteSelectProps) => {
             ))}
         </div>
     );
-};
-
-export type TColorPalette = {
-    font: string;
-    background: string;
-    accent: string;
 };
 
 type ColorPaletteProps = {

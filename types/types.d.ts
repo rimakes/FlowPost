@@ -1,5 +1,6 @@
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
+import { fontsMap } from '@/config/fonts';
 import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
@@ -99,3 +100,9 @@ export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
 type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
 export type TAspectRatioEnum = keyof TAspectRatioMap;
 export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
+
+export type TFontNames = keyof typeof fontsMap;
+
+export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
+
+export type TFontPallete = Prisma.FontPaletteGetPayload<{}>;
