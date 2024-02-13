@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Form,
     FormControl,
@@ -9,6 +11,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -19,14 +23,30 @@ const generalSettingsSchema = z.object({
 type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
 
 export const AccountSettings = () => {
+    const { data } = useSession();
+    console.log('data', data);
+
     const form = useForm({
         resolver: zodResolver(generalSettingsSchema),
         defaultValues: {
-            name: 'Javier',
+            name: data?.user?.name || '',
         },
     });
+
+    useEffect(() => {
+        if (data?.user.name) {
+            form.reset({
+                name: data.user.name,
+            });
+        }
+    }, [data, form, form.reset]);
+
+    console.log('form', form.getValues('name'));
+
     return (
         <>
+            {form.getValues('name')}
+            {JSON.stringify(data?.user.name)}
             <SubsectionHeading
                 title='Configuración general'
                 subtitle='Configura tu cuenta'
@@ -41,7 +61,10 @@ export const AccountSettings = () => {
                                 <FormItem>
                                     <FormLabel>Username</FormLabel>
                                     <FormControl>
-                                        <Input placeholder='Juan' {...field} />
+                                        <Input
+                                            placeholder='Ej. Juan'
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormDescription>
                                         This is your public display name.

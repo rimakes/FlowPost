@@ -1,11 +1,10 @@
-'use client';
-
 import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AccountSettings } from './_components/AccountSettings';
+import { auth } from '@/auth';
 
-export default function IdeasPage() {
+export default async function IdeasPage() {
     return (
         <>
             <Heading
