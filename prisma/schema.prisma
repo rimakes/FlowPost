@@ -124,8 +124,8 @@ type Slide {
     title      DisplayableText
     paragraphs DisplayableText[]
     tagline    DisplayableText
-    settings   SlideOverrides
-    image      Image
+    settings   SlideOverrides?
+    image      Image?
 }
 
 type Image {
@@ -133,20 +133,20 @@ type Image {
 }
 
 type SlideOverrides {
-    colorPalette ColorPalette
-    fontPalette  FontPalette
+    colorPalette ColorPalette?
+    fontPalette  FontPalette?
 }
 
 type ColorPalette {
-    font       String
-    background String
-    accent     String
+    font       String @default("#000000")
+    background String @default("#ffffff")
+    accent     String @default("#ff0000")
 }
 
 type FontPalette {
-    primary     String
-    secondary   String
-    handWriting String
+    primary     String @default("Roboto")
+    secondary   String @default("Roboto")
+    handWriting String @default("Roboto")
 }
 
 model Carousel {
@@ -161,13 +161,13 @@ type CarouselSettings {
     // default "Desliza"
     colorPalette      ColorPalette
     fontPalette       FontPalette
-    backgroundPattern String?
+    backgroundPattern String       @default("none")
 
-    showSwipeLabel  Boolean
-    alternateColors Boolean
-    showCounter     Boolean
+    showSwipeLabel  Boolean     @default(true)
+    alternateColors Boolean     @default(true)
+    showCounter     Boolean     @default(true)
     showAuthor      Boolean     @default(true)
-    aspectRatio     AspectRatio
+    aspectRatio     AspectRatio @default(SQUARE)
 }
 
 type Author {

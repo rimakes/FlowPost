@@ -1,26 +1,18 @@
 import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
-import { TSlide } from '../page';
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
 import { useContext } from 'react';
 import { CarouselContext } from './ContextProvider';
 import {
     ArrowLeft,
     ArrowLeftIcon,
-    ArrowRight,
     ArrowRightIcon,
-    Delete,
-    MoveRight,
-    MoveRightIcon,
     Plus,
-    Trash,
     Trash2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import ContentEditable from 'react-contenteditable';
+import { TSlide } from '@/types/types';
 
 type SlideSettingsProps = {
     isActive?: boolean;

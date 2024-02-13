@@ -6,7 +6,7 @@ import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 
 const INITIAL_STATE = {
-    post: 'this is a post',
+    post: ``,
     postRequest: {
         description: `Cómo escribir el mejor copywritting para Linkedin sin ser un profesional`,
         templateId: '',

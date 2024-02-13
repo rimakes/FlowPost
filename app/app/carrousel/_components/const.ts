@@ -1,4 +1,4 @@
-import { TCarousel, TSlide } from '@/app/app/carrousel/page';
+import { TCarousel, TSlide } from '@/types/types';
 import * as PrismaClient from '@prisma/client';
 
 export const fakeSlides: TSlide[] = [
@@ -37,7 +37,7 @@ export const fakeSlides: TSlide[] = [
     },
 ];
 
-export const fakeCarousel: TCarousel = {
+export const fakeCarousel: Omit<TCarousel, 'id'> = {
     slides: fakeSlides,
     author: {
         handle: '@ricSala',
@@ -57,7 +57,7 @@ export const fakeCarousel: TCarousel = {
             handWriting: 'Roboto',
         },
         aspectRatio: 'PORTRAIT',
-        backgroundPattern: null,
+        backgroundPattern: 'none',
         alternateColors: false,
         showAuthor: true,
         showCounter: true,
@@ -73,9 +73,5 @@ export const ASPECT_RATIOS_MAP = {
 // REVIEW THIS!
 // as const made the strings literal types instead of just string
 // satisfies makes sure the keys are the same as the enum from the prisma schema
-
-type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
-export type TAspectRatioEnum = keyof TAspectRatioMap;
-export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
 
 // export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];

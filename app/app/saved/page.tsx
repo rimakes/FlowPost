@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/shared/Heading';
 import { db } from '@/lib/prisma';
+import { PostCard } from './_components/PostCard';
 
 export default async function IdeasPage() {
     const findPostByUserId = async () => {
@@ -25,16 +26,9 @@ export default async function IdeasPage() {
                 subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'
             />
             <Separator />
-            <div className='mt-6 2xl:flex gap-8 grid grid-cols-4'>
+            <div className='mt-6 gap-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
                 {userPosts.map((post) => {
-                    return (
-                        <div
-                            key={post.id}
-                            className='border border-border p-4 rounded-md'
-                        >
-                            <p className='line-clamp-2'>{post.content}</p>
-                        </div>
-                    );
+                    return <PostCard key={post.id} post={post} />;
                 })}
             </div>
         </div>

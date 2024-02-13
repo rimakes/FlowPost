@@ -15,8 +15,8 @@ import {
 import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 import { deepCopy } from '@/lib/utils';
 import { TColorPalette } from './Sidebar';
-import { TAspectRatio } from '../page';
 import { AspectRatio } from '@prisma/client';
+import { TAspectRatioEnum, TCarousel, TLinkedinPost } from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
 
@@ -26,7 +26,7 @@ const INITIAL_STATE = {
     currentSlide: 0 as number,
     nextSlide: () => {},
     previousSlide: () => {},
-    carousel: fakeCarousel,
+    carousel: {} as TCarousel,
     editTitle: (newTitle: string) => {},
     editTagline: (newTagline: string) => {},
     editDescription: (newDescription: string) => {},
@@ -46,7 +46,7 @@ const INITIAL_STATE = {
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
     setColorPalette: (colors: TColorPalette) => {},
-    setCarouselAspectRatio: (aspectRatio: TAspectRatio) => {},
+    setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -55,12 +55,16 @@ export const CarouselContext = createContext({
     ...INITIAL_STATE,
 });
 
-type CarouselContextProviderProps = { children: React.ReactNode };
+type CarouselContextProviderProps = {
+    children: React.ReactNode;
+    initialCarousel: TCarousel;
+};
 export function CarouselContextProvider({
     children,
+    initialCarousel,
 }: CarouselContextProviderProps) {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [carousel, setCarousel] = useState(fakeCarousel);
+    const [carousel, setCarousel] = useState(initialCarousel);
     const [arrayOfRefs, setArrayOfRefs] = useState([] as TArrayOfRefs);
     const nextSlide = useCallback(() => {
         if (currentSlide === carousel.slides.length - 1) return;
@@ -109,7 +113,7 @@ export function CarouselContextProvider({
 
     const editImage = (newImage: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].image.url = newImage;
+        newCarousel.slides[currentSlide].image = { url: newImage };
         setCarousel(newCarousel);
     };
 
@@ -223,7 +227,7 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
-    const setCarouselAspectRatio = (aspectRatio: TAspectRatio) => {
+    const setCarouselAspectRatio = (aspectRatio: TAspectRatioEnum) => {
         const newCarousel = deepCopy(carousel);
         newCarousel.settings.aspectRatio = aspectRatio as AspectRatio;
         setCarousel(newCarousel);

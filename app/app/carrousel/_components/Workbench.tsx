@@ -1,11 +1,12 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useContext, useEffect, useRef } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideSettings } from './SlideSettings';
 import { Slide } from './Slide';
-import { TSlide } from '../page';
-import { ASPECT_RATIOS_MAP } from './const';
+import { TSlide } from '@/types/types';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {

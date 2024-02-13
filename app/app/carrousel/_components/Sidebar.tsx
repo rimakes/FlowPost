@@ -1,3 +1,5 @@
+'use client';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useContext } from 'react';
@@ -30,6 +32,7 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { ASPECT_RATIOS_MAP } from './const';
+import { TAspectRatioEnum } from '@/types/types';
 
 export const CarouselSidebar = () => {
     const {
@@ -64,7 +67,7 @@ export const CarouselSidebar = () => {
                     <Select
                         value={aspectRatio}
                         defaultValue={aspectRatio}
-                        onValueChange={(value) => {
+                        onValueChange={(value: TAspectRatioEnum) => {
                             setCarouselAspectRatio(value);
                         }}
                     >

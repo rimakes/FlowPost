@@ -18,10 +18,8 @@ import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
 import { Pure } from '@/types/types';
 import { LinkedinPost } from '@prisma/client';
-import {
-    createLinkedinPost,
-    testingServer,
-} from '@/app/_actions/writter-actions';
+import { createLinkedinPost } from '@/app/_actions/writter-actions';
+import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 
 type GeneratedPostProps = {
     className?: string;
@@ -53,7 +51,7 @@ export const PostWritterResult = ({ className }: GeneratedPostProps) => {
                 />
 
                 <div className='flex gap-2'>
-                    <PostActionButton
+                    <ButtonWithTooltip
                         icon={Save}
                         label='Guardar post'
                         onClick={async () => {
@@ -61,45 +59,13 @@ export const PostWritterResult = ({ className }: GeneratedPostProps) => {
                             await createLinkedinPost(post);
                         }}
                     />
-                    <PostActionButton icon={Edit} label='Editar post' />
-                    <PostActionButton
+                    <ButtonWithTooltip icon={Edit} label='Editar post' />
+                    <ButtonWithTooltip
                         icon={GalleryHorizontal}
                         label='Crear carrusel'
                     />
                 </div>
             </div>
         </div>
-    );
-};
-
-type PostActionButtonProps = {
-    label?: string;
-    className?: string;
-    icon: LucideIcon;
-    onClick?: () => void;
-};
-
-export const PostActionButton = ({
-    icon: Icon,
-    className,
-    label,
-    onClick,
-}: PostActionButtonProps) => {
-    return (
-        <TooltipProvider>
-            <Tooltip delayDuration={100}>
-                <TooltipTrigger asChild className={className}>
-                    <Button
-                        onClick={onClick}
-                        className='flex-1 rounded-full bg-muted text-primary/50
-                    hover:bg-primary/10
-                    '
-                    >
-                        <Icon />
-                    </Button>
-                </TooltipTrigger>
-                <TooltipContent>{label}</TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
     );
 };

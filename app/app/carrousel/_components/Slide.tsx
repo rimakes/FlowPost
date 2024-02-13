@@ -1,3 +1,5 @@
+'use client';
+
 import { cn, isEven } from '@/lib/utils';
 import Image from 'next/image';
 import {
@@ -8,11 +10,11 @@ import {
     useRef,
 } from 'react';
 import { CarouselContext } from './ContextProvider';
-import { TAspectRatio, TSlide as TSlide } from '../page';
 import { QuadPattern } from '@/public/images/decoration/patterns/qqquad';
 import { SvgWrapper } from '@/components/shared/SvgWrapper';
 import ContentEditable from 'react-contenteditable';
 import { ASPECT_RATIOS_MAP } from './const';
+import { TSlide } from '@/types/types';
 
 type SlideProps = {
     isActive?: boolean;
