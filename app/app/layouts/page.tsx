@@ -45,11 +45,18 @@ export default function IdeasPage() {
     const [speed, setSpeed] = useState<number>(10);
     return (
         <div className='grid md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 grid-cols-1 gap-16 p-8'>
-            <PrimitiveLayout name='The Frame'>
-                <div className='h-[300px]'></div>
+            <PrimitiveLayout name='The Two flex items, smaller commands width'>
+                <div className='flex'>
+                    <div className='flex flex-col border-8 border-red-400 items-center !w-min overflow-auto'>
+                        <div className='h-24 w-48 border-4 border-green-400'></div>
+                        <div className='overflow-y-auto relative border-8 border-black w-full'>
+                            <div className='h-24 w-96 border-4 border-blue-400 overflow-x-auto'></div>
+                        </div>
+                    </div>
+                </div>
             </PrimitiveLayout>
             <PrimitiveLayout name='The infinite carrousel relative'>
-                <InfiniteCarrousel2
+                {/* <InfiniteCarrousel2
                     inset={2}
                     outset={3}
                     className='h-[40vh]'
@@ -66,7 +73,7 @@ export default function IdeasPage() {
                             </div>
                         </Item>
                     ))}
-                </InfiniteCarrousel2>
+                </InfiniteCarrousel2> */}
                 <div className='absolute h-10 w-10 top-10 right-2'>
                     <Popover>
                         <PopoverTrigger>

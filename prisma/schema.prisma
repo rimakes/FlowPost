@@ -121,15 +121,18 @@ type DisplayableText {
 }
 
 type Slide {
-    title      DisplayableText
-    paragraphs DisplayableText[]
-    tagline    DisplayableText
-    settings   SlideOverrides?
-    image      Image?
+    title           DisplayableText
+    paragraphs      DisplayableText[]
+    tagline         DisplayableText
+    settings        SlideOverrides?
+    backgroundImage Image?
 }
 
 type Image {
-    url String
+    url      String
+    alt      String
+    opacity  Float  @default(1)
+    position String @default("center")
 }
 
 type SlideOverrides {
@@ -161,6 +164,7 @@ type CarouselSettings {
     // default "Desliza"
     colorPalette      ColorPalette
     fontPalette       FontPalette
+    // TODO: change to decorationId
     backgroundPattern String       @default("none")
 
     showSwipeLabel  Boolean     @default(true)

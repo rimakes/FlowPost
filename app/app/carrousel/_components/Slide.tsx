@@ -15,6 +15,9 @@ import { SvgWrapper } from '@/components/shared/SvgWrapper';
 import ContentEditable from 'react-contenteditable';
 import { ASPECT_RATIOS_MAP } from './const';
 import { TSlide } from '@/types/types';
+import { Decoration } from './Decoration';
+import { Background } from './Background';
+import { SlideBanner } from './SlideBanner';
 
 type SlideProps = {
     isActive?: boolean;
@@ -40,7 +43,7 @@ export const Slide = forwardRef<Ref, SlideProps>(
         },
         ref
     ) => {
-        const { title, paragraphs } = slide;
+        const { title, paragraphs, backgroundImage } = slide;
 
         const {
             editTitle,
@@ -91,9 +94,18 @@ export const Slide = forwardRef<Ref, SlideProps>(
                 }}
                 onClick={() => setIsActive(true)}
             >
-                <DecorativeElements
+                <Background
+                    imageUrl={backgroundImage?.url!}
+                    opacity={backgroundImage?.opacity}
+                />
+                <Decoration
+                    // @ts-ignore
+                    decorationid={settings.backgroundPattern}
                     primaryColor={backgroundColor!}
                     secondaryColor={fontColor!}
+                    even={isEven(slideNumber)}
+                    cover={slideNumber === 0}
+                    cta={slideNumber === slides.length - 1}
                 />
                 <SlideContent
                     hasTitle={title.isShown}
@@ -125,6 +137,9 @@ export const Slide = forwardRef<Ref, SlideProps>(
                         display: settings.showSwipeLabel ? 'block' : 'none',
                     }}
                 />
+                {!isFirst && !isLast && (
+                    <SlideBanner content='Carrusel creado en perbrand.com' />
+                )}
                 <style>
                     {`
                     .slide b {
@@ -158,27 +173,6 @@ const SwipeLabel = ({ swipeLabel, className, style = {} }: SwipeLabelProps) => (
         {swipeLabel}
     </div>
 );
-
-type DecorativeElementsProps = {
-    primaryColor: string;
-    secondaryColor: string;
-};
-
-export const DecorativeElements = ({
-    primaryColor,
-    secondaryColor,
-}: DecorativeElementsProps) => {
-    return (
-        <div className='absolute h-full w-full top-0 left-0'>
-            <SvgWrapper
-                primaryColor={primaryColor}
-                secondaryColor={secondaryColor}
-            >
-                <QuadPattern />
-            </SvgWrapper>
-        </div>
-    );
-};
 
 type SlideContentProps = {
     hasTitle: boolean;

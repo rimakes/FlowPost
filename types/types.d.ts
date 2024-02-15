@@ -1,3 +1,4 @@
+import { decorationMap } from '@/app/app/carrousel/_components/Decoration';
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import { fontsMap } from '@/config/fonts';
@@ -106,3 +107,5 @@ export type TFontNames = keyof typeof fontsMap;
 export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
 
 export type TFontPallete = Prisma.FontPaletteGetPayload<{}>;
+
+export type TDecorationId = keyof typeof decorationMap;

@@ -96,14 +96,14 @@ const SlideWithSettings = ({
     return (
         <div
             className={cn(
-                `shrink-0 isolate`,
-                className,
+                `WithSettings shrink-0 isolate`,
+                className || '',
                 isActive ? 'z-10' : 'z-0'
             )}
         >
             <div
                 // @ts-ignore
-                className={`${fontsMap[fontPalette.primary].className} border-r border-dashed`}
+                className={`${fontsMap[fontPalette.primary].className} border border-dashed`}
             >
                 <Slide
                     isActive={isActive}

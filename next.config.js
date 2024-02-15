@@ -22,6 +22,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'cdn.tailgrids.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'images.pexels.com',
+            },
         ],
     },
 };

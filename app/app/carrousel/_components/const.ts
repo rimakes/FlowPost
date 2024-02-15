@@ -3,8 +3,11 @@ import * as PrismaClient from '@prisma/client';
 
 export const fakeSlides: TSlide[] = [
     {
-        image: {
+        backgroundImage: {
             url: '/images/placeholders/user.png',
+            alt: 'some random',
+            opacity: 0.1,
+            position: 'center',
         },
         paragraphs: [
             {
@@ -52,12 +55,12 @@ export const fakeCarousel: Omit<TCarousel, 'id'> = {
             accent: '#ffffff',
         },
         fontPalette: {
-            primary: 'Roboto',
-            secondary: 'Roboto',
-            handWriting: 'Roboto',
+            primary: 'bricolage',
+            secondary: 'bricolage',
+            handWriting: 'bricolage',
         },
         aspectRatio: 'PORTRAIT',
-        backgroundPattern: 'none',
+        backgroundPattern: 'Bubbles',
         alternateColors: false,
         showAuthor: true,
         showCounter: true,

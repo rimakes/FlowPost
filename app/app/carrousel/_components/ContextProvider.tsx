@@ -19,6 +19,7 @@ import {
     TAspectRatioEnum,
     TCarousel,
     TColorPalette,
+    TDecorationId,
     TFontPallete,
     TLinkedinPost,
 } from '@/types/types';
@@ -53,6 +54,15 @@ const INITIAL_STATE = {
     setColorPalette: (colors: TColorPalette) => {},
     setFontPalette: (fonts: TFontPallete) => {},
     setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
+    setDecorationId: (decorationId: TDecorationId) => {},
+    setBackgroundImage: (
+        imageUrl?: string,
+        options?: {
+            alt?: string;
+            opacity?: number;
+            position?: string;
+        }
+    ) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -117,9 +127,9 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
-    const editImage = (newImage: string) => {
+    const editProfilePicture = (newImage: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].image = { url: newImage };
+        newCarousel.author.pictureUrl = newImage;
         setCarousel(newCarousel);
     };
 
@@ -246,6 +256,41 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const setDecorationId = (decorationId: TDecorationId) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.backgroundPattern = decorationId;
+        setCarousel(newCarousel);
+    };
+
+    const setBackgroundImage = (
+        imageUrl?: string,
+        options?: { alt?: string; opacity?: number; position?: string }
+    ) => {
+        const newCarousel = deepCopy(carousel);
+
+        let backgroundImage = newCarousel.slides[currentSlide].backgroundImage;
+        // TODO: This could be cleaner
+        if (!backgroundImage)
+            backgroundImage = {
+                url: '',
+                alt: '',
+                opacity: 0.1,
+                position: 'center',
+            };
+        if (imageUrl) backgroundImage.url = imageUrl;
+        if (options?.alt) backgroundImage.alt = options.alt;
+        if (options?.opacity) backgroundImage.opacity = options.opacity;
+        if (options?.position) backgroundImage.position = options.position;
+
+        // newCarousel.slides[currentSlide].backgroundImage = {
+        //     url: imageUrl,
+        //     alt: options?.alt ? options.alt : '',
+        //     opacity: options?.opacity ? options.opacity : 0.1,
+        //     position: 'center',
+        // };
+        setCarousel(newCarousel);
+    };
+
     const addRef = useCallback(
         (ref: RefObject<HTMLDivElement>, index: number) => {
             setArrayOfRefs((arrayOfRefs) => {
@@ -269,7 +314,7 @@ export function CarouselContextProvider({
                 editTitle,
                 editTagline,
                 editDescription,
-                editImage,
+                editImage: editProfilePicture,
                 editName,
                 editHandle,
                 setCurrentSlideTo,
@@ -287,6 +332,8 @@ export function CarouselContextProvider({
                 setColorPalette,
                 setFontPalette,
                 setCarouselAspectRatio,
+                setDecorationId,
+                setBackgroundImage,
             }}
         >
             {children}

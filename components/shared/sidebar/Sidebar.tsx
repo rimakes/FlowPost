@@ -231,7 +231,7 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: GalleryHorizontal,
         label: 'Crea un carrusel',
-        href: '/app/carrousel',
+        href: '/app/carrousel/new',
         shortLabel: 'Carrusel',
         status: 'active',
     },

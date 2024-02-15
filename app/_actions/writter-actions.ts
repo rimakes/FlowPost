@@ -16,6 +16,7 @@ import { StructuredOutputParser } from 'langchain/output_parsers';
 import { SlideSchemaPrompt } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
 import image from 'next/image';
+import axios from 'axios';
 
 export async function createLinkedinPost(post: string) {
     const user = await db.linkedinPost.create({
@@ -118,7 +119,24 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
     return carousel;
 }
 
-export async function updateCarousel(carousel: TCarousel) {
+export async function upsertCarousel(carousel: TCarousel) {
+    console.log(carousel);
+    if (carousel.id === undefined) {
+        const newCarousel = await db.carousel.create({
+            data: {
+                slides: carousel.slides,
+                settings: carousel.settings,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png',
+                },
+            },
+        });
+
+        return newCarousel;
+    }
+
     const updatedCarousel = await db.carousel.update({
         where: {
             id: carousel.id,
@@ -152,4 +170,22 @@ export const createWebmFile = async (formData: FormData) => {
     console.log(docs);
 
     return docs[0].pageContent;
+};
+
+export const getPexelImages = async (query: string) => {
+    console.log(query);
+    const pictures = await axios.get(
+        `https://api.pexels.com/v1/search?query=${query}&page=1&per_page=20&locale=es-ES`,
+        {
+            headers: {
+                Authorization: process.env.PEXELS_API_KEY,
+            },
+        }
+    );
+    console.log(pictures);
+    console.log(pictures.data.photos);
+    const photoUrls = pictures.data.photos.map((photo: any) => {
+        return photo.src.medium;
+    });
+    return photoUrls;
 };

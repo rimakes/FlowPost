@@ -34,9 +34,11 @@ import { Button } from '@/components/ui/button';
 import { ASPECT_RATIOS_MAP } from './const';
 import { TAspectRatioEnum, TColorPalette } from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
-import { Save } from 'lucide-react';
-import { updateCarousel } from '@/app/_actions/writter-actions';
+import { Save, Settings } from 'lucide-react';
+import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { toast } from 'sonner';
+import { DecorationSelector } from './DecorationSelector';
+import { useRouter } from 'next/navigation';
 
 export const CarouselSidebar = () => {
     const {
@@ -49,6 +51,7 @@ export const CarouselSidebar = () => {
                 showSwipeLabel,
                 showAuthor,
                 aspectRatio,
+                backgroundPattern,
             },
         },
         setCarouselAspectRatio,
@@ -61,7 +64,10 @@ export const CarouselSidebar = () => {
         toggleShowAuthor,
         setColorPalette,
         setFontPalette,
+        setDecorationId,
     } = useContext(CarouselContext);
+
+    const router = useRouter();
 
     // TODO: check what this is doing
     // console.log('aspectRatio.valueOf()', aspectRatio.valueOf());
@@ -187,10 +193,20 @@ export const CarouselSidebar = () => {
                 selectedFont='Robotto'
             />
 
+            <DecorationSelector
+                onSelect={(decoration) => {
+                    console.log('decoration', decoration);
+                    setDecorationId(decoration);
+                }}
+                // @ts-ignore
+                selectedDecoration={backgroundPattern}
+            />
+
             <Button
                 onClick={async () => {
-                    const savedCarousel = await updateCarousel(carousel);
+                    const savedCarousel = await upsertCarousel(carousel);
                     toast.success('Carrusel Guardado!');
+                    router.push(`/app/carrousel/${savedCarousel.id}`);
                 }}
             >
                 Guardar
