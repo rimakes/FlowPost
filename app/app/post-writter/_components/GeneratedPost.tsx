@@ -20,6 +20,7 @@ import { Pure } from '@/types/types';
 import { LinkedinPost } from '@prisma/client';
 import { createLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
+import { toast } from 'sonner';
 
 type GeneratedPostProps = {
     className?: string;
@@ -46,7 +47,7 @@ export const PostWritterResult = ({ className }: GeneratedPostProps) => {
                 <Textarea
                     rows={20}
                     className='border-none resize-none'
-                    value={post}
+                    value={post.content}
                     readOnly
                 />
 
@@ -56,7 +57,8 @@ export const PostWritterResult = ({ className }: GeneratedPostProps) => {
                         label='Guardar post'
                         onClick={async () => {
                             console.log('data', data?.user?.email!);
-                            await createLinkedinPost(post);
+                            await createLinkedinPost(post.content);
+                            toast('Post guardado');
                         }}
                     />
                     <ButtonWithTooltip icon={Edit} label='Editar post' />

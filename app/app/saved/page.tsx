@@ -2,35 +2,45 @@ import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/shared/Heading';
 import { db } from '@/lib/prisma';
 import { PostCard } from './_components/PostCard';
+import { SavedPageClient } from './_components/SavedPageClient';
 
-export default async function IdeasPage() {
-    const findPostByUserId = async () => {
-        return db.linkedinPost.findMany({
-            where: {
-                author: {
-                    is: {
-                        name: 'Ricardo Sala',
-                    },
+const findPostByUserId = async () => {
+    return db.linkedinPost.findMany({
+        where: {
+            author: {
+                is: {
+                    name: 'Ricardo Sala',
                 },
             },
-        });
-    };
+        },
+    });
+};
+const findCarruselsByUserId = async () => {
+    return db.carousel.findMany({
+        where: {
+            author: {
+                is: {
+                    name: 'Ricardo Sala',
+                },
+            },
+        },
+    });
+};
 
+export default async function IdeasPage() {
     const userPosts = await findPostByUserId();
+    const userCarrusels = await findCarruselsByUserId();
 
     return (
         <div>
             <Heading
                 className='mt-6'
-                title='Genera un post desde cero'
-                subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'
+                title='Post y Carrusels guardados'
+                subtitle='Aquí encontrarás tus post y carrusels guardados.'
             />
             <Separator />
-            <div className='mt-6 gap-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
-                {userPosts.map((post) => {
-                    return <PostCard key={post.id} post={post} />;
-                })}
-            </div>
+
+            <SavedPageClient posts={userPosts} carrusels={userCarrusels} />
         </div>
     );
 }

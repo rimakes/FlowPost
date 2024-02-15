@@ -147,9 +147,9 @@ type ColorPalette {
 }
 
 type FontPalette {
-    primary     String @default("Roboto")
-    secondary   String @default("Roboto")
-    handWriting String @default("Roboto")
+    primary     String @default("sofia")
+    secondary   String @default("sofia")
+    handWriting String @default("sofia")
 }
 
 model Carousel {

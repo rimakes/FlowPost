@@ -10,8 +10,6 @@ import {
     useRef,
 } from 'react';
 import { CarouselContext } from './ContextProvider';
-import { QuadPattern } from '@/public/images/decoration/patterns/qqquad';
-import { SvgWrapper } from '@/components/shared/SvgWrapper';
 import ContentEditable from 'react-contenteditable';
 import { ASPECT_RATIOS_MAP } from './const';
 import { TSlide } from '@/types/types';

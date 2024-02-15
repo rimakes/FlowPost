@@ -38,6 +38,13 @@ export async function deleteLinkedinPost(postId: string) {
         },
     });
 }
+export async function deleteCarousel(carouselId: string) {
+    await db.carousel.delete({
+        where: {
+            id: carouselId,
+        },
+    });
+}
 
 export async function createLinkedinCarousel(post: TLinkedinPost) {
     const model = new ChatOpenAI({
@@ -88,6 +95,12 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                 content: '',
                 isShown: false,
             },
+            backgroundImage: {
+                alt: '',
+                opacity: 0.1,
+                position: 'center',
+                url: '',
+            },
         };
     });
 
@@ -107,11 +120,12 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                     background: '#000000',
                 },
                 fontPalette: {
-                    handWriting: 'Robotto',
-                    primary: 'Robotto',
-                    secondary: 'Robotto',
+                    handWriting: 'inter',
+                    primary: 'inter',
+                    secondary: 'inter',
                 },
                 aspectRatio: 'PORTRAIT',
+                backgroundPattern: 'Bubbles',
             },
         },
     });
