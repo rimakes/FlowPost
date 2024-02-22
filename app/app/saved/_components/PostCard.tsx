@@ -5,18 +5,11 @@ import {
     deleteLinkedinPost,
 } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { TLinkedinPost, TStatus } from '@/types/types';
-import { Edit, GalleryHorizontal, LucideIcon, Trash2 } from 'lucide-react';
+import { Edit, GalleryHorizontal, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -50,7 +43,13 @@ export function PostCard({ post }: PostCardProps) {
                         router.refresh();
                     }}
                 />
-                <ButtonWithTooltip icon={Edit} label='Editar post' />
+                <ButtonWithTooltip
+                    icon={Edit}
+                    label='Editar post'
+                    onClick={() => {
+                        router.push(`/app/post-writter/${post.id}`);
+                    }}
+                />
                 <ButtonWithTooltip
                     icon={GalleryHorizontal}
                     label='Crear carrusel'

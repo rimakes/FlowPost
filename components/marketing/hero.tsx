@@ -5,7 +5,12 @@ import { ArrowDown, ArrowRight, Video } from 'lucide-react';
 import Image from 'next/image';
 import { Button, buttonVariants } from '../ui/button';
 import { signIn, useSession } from 'next-auth/react';
-import { handwritten } from '@/config/fonts';
+import {
+    fontsMap,
+    handwritten,
+    primaryFont,
+    secondaryFont,
+} from '@/config/fonts';
 import { DemoWidget } from './Demo';
 import Link from 'next/link';
 import { GetAccessButton } from './GetAccessButton';
@@ -25,7 +30,7 @@ export default function Hero({ className = '' }) {
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
                     <div className='mx-auto max-w-2xl text-center'>
                         <span
-                            className={`${handwritten.className} font-inter px-6 text-lg text-base-muted-content text-indigo-700`}
+                            className={`${handwritten.className} px-6 text-3xl text-base-muted-content text-indigo-700`}
                         >
                             Crea Posts y Carrusels de Linkedin en segundos
                         </span>

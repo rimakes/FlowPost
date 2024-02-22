@@ -1,6 +1,11 @@
 // Find more fonts at https://fonts.google.com/?vfonly=true
 
-import { Bricolage_Grotesque, Inter, Indie_Flower } from 'next/font/google';
+import {
+    Bricolage_Grotesque,
+    Inter,
+    Shantell_Sans,
+    Caveat,
+} from 'next/font/google';
 import {
     Sofia,
     Montserrat,
@@ -26,9 +31,9 @@ export const secondaryFont = Bricolage_Grotesque({
     display: 'swap',
 });
 
-export const handwritten = Indie_Flower({
+export const handwritten = Caveat({
     subsets: ['latin'],
-    variable: '--font-grotesque',
+    variable: '--font-caveat    ',
     display: 'swap',
     weight: ['400'],
 });
@@ -155,7 +160,7 @@ export const dancingScript = Dancing_Script({
 export const fontsMap = {
     bricolage: secondaryFont,
     inter: primaryFont,
-    Indie_Flower: handwritten,
+    Shantell_Sans: handwritten,
     sofia,
     montserrat,
     raleway,
