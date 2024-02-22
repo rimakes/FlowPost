@@ -1,4 +1,3 @@
-// REVIEW:
 // @ts-nocheck
 
 import NextAuth, { NextAuthConfig } from 'next-auth';

@@ -70,7 +70,7 @@ export function HomeNavbar({ className }: { className?: string }) {
                     <DropdownMenuContent className='flex flex-col gap-2 p-2'>
                         {menuItems.map((item) => {
                             return (
-                                <DropdownMenuItem key={item.url}>
+                                <DropdownMenuItem key={item.url} asChild>
                                     <Link
                                         href={item.url}
                                         className={buttonVariants({
