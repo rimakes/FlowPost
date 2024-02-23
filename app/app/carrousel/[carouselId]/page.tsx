@@ -1,8 +1,7 @@
 import { CarouselContextProvider } from '../_components/ContextProvider';
 import Container from '@/components/shared/container';
-import { CarouselSidebar } from '../_components/Sidebar';
+import { CarouselSidebar } from '../_components/sidebar/Sidebar';
 import { CarouselWorkbench } from '../_components/Workbench';
-import * as PrismaModels from '@prisma/client';
 import { Heading } from '@/components/shared/Heading';
 import { fakeCarousel } from '../_components/const';
 import { TCarousel } from '@/types/types';
@@ -49,7 +48,7 @@ export default async function CarouselPage({ params }: props) {
 
             <CarouselContextProvider initialCarousel={carousel}>
                 <div
-                    className={`flex border-t flex-wrap w-full border-0 border-re-500 grow`}
+                    className={`flex md:flex-row flex-col border-t flex-wrap w-full border-0 border-re-500 grow`}
                 >
                     <CarouselSidebar />
                     <CarouselWorkbench />

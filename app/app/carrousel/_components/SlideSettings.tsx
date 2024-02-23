@@ -132,15 +132,6 @@ export function SlideSettings({
                     onCheckedChange={toggleShowSwipeLabel}
                 />
             </div>
-            <div>
-                <Label htmlFor='paragraph'>Image url</Label>
-                <Input
-                    value={slide.backgroundImage?.url}
-                    onChange={(event) => {
-                        setBackgroundImage(event.target.value);
-                    }}
-                />
-            </div>
             <form
                 className='overflow-x-auto flex flex-col gap-2'
                 action={onSearch}

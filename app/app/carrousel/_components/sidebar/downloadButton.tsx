@@ -9,7 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
-import { CarouselContext } from './ContextProvider';
+import { CarouselContext } from '../ContextProvider';
 import { Button } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';

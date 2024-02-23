@@ -27,6 +27,7 @@ import {
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
+import Spinner from '@/components/icons/spinner';
 
 const MAX_LENGTH = 700;
 const MIN_LENGTH = 50;
@@ -100,6 +101,20 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         [form]
     );
 
+    const buttonContent = form.formState.isSubmitting ? (
+        <>
+            {' '}
+            <Spinner className='mr-2 h-5 w-5' />
+            Creando post{' '}
+        </>
+    ) : (
+        <>
+            {' '}
+            <Sparkles className='mr-2 h-5 w-5' />
+            Crear post{' '}
+        </>
+    );
+
     return (
         <>
             <Form {...form}>
@@ -135,8 +150,8 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                     </div>
                                 </FormControl>
                                 <FormDescription>
-                                    Nuestra IA generará un post basado en este
-                                    texto y el tono que elijas
+                                    Suéltalo tal y como te salga, incluso puedes
+                                    hacerlo POR VOZ. Nosotros le daremos forma.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -157,7 +172,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                         onSelectTone={onSelectTone}
                                     />
                                 </FormControl>
-                                <FormDescription>xxx</FormDescription>
+                                <FormDescription></FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -216,7 +231,11 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                             </Dialog>
                                         </div>
                                     </FormControl>
-                                    <FormDescription>xxx</FormDescription>
+                                    <FormDescription>
+                                        Hemos seleccionado más de 30 plantillas
+                                        virales. Selecciona la que más se adapta
+                                        a tu post
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -226,10 +245,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                         disabled={form.formState.isSubmitting}
                         className={`${form.formState.isSubmitting && 'cursor-not-allowed'}`}
                     >
-                        <Sparkles className='mr-2 h-5 w-5' />{' '}
-                        {form.formState.isSubmitting
-                            ? 'Creando post'
-                            : 'Crear post'}
+                        {buttonContent}
                     </Button>
                 </form>
             </Form>

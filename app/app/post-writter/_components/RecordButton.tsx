@@ -59,7 +59,6 @@ export function RecordButton({ onRecord, text }: PrefersToRecordProps) {
             >
                 {!isMicroAllowed ? <MicOff size={24} /> : <Mic size={24} />}
             </Button>
-            {JSON.stringify(error)}
         </div>
     );
 }

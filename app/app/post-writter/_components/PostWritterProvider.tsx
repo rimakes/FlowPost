@@ -23,6 +23,7 @@ const INITIAL_STATE = {
         templateId: '',
         toneId: 1,
     } as PostRequest,
+    setPost: (post: TLinkedinPost) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -101,6 +102,7 @@ export function PostWritterContextProvider({
                 post,
                 postRequest,
                 requestPost,
+                setPost,
             }}
         >
             {children}

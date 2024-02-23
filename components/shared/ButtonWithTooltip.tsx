@@ -6,6 +6,7 @@ import {
     TooltipTrigger,
 } from '../ui/tooltip';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 type ButtonWithTooltipProps = {
     label?: string;
@@ -23,12 +24,14 @@ export const ButtonWithTooltip = ({
     return (
         <TooltipProvider>
             <Tooltip delayDuration={100}>
-                <TooltipTrigger asChild className={className}>
+                <TooltipTrigger asChild>
                     <Button
                         onClick={onClick}
-                        className='flex-1 rounded-full bg-muted text-primary/50
-                    hover:bg-primary/10
-                    '
+                        className={cn(
+                            `flex-1 rounded-full bg-muted text-primary/50
+                        hover:bg-primary/10`,
+                            className
+                        )}
                     >
                         <Icon />
                     </Button>

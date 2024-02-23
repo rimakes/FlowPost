@@ -18,17 +18,36 @@ import { RunnableSequence } from '@langchain/core/runnables';
 import image from 'next/image';
 import axios from 'axios';
 
-export async function createLinkedinPost(post: string) {
-    const user = await db.linkedinPost.create({
-        data: {
-            content: post,
-            author: {
-                handle: 'Ricardo Sala',
-                name: 'Ricardo Sala',
-                pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+export async function createLinkedinPost(post: string, id: string) {
+    let linkedinPost: TLinkedinPost;
+    if (id === 'new') {
+        linkedinPost = await db.linkedinPost.create({
+            data: {
+                content: post,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                },
             },
-        },
-    });
+        });
+    } else {
+        linkedinPost = await db.linkedinPost.update({
+            where: {
+                id: id,
+            },
+            data: {
+                content: post,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                },
+            },
+        });
+    }
+
+    return linkedinPost;
 }
 
 export async function deleteLinkedinPost(postId: string) {

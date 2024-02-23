@@ -22,14 +22,17 @@ import {
     X,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { PostWritterContext } from '../../_components/PostWritterProvider';
 
-type LinkedinPostProps = { post: TLinkedinPost; className?: string };
-export function LinkedinPost({ post, className }: LinkedinPostProps) {
+type LinkedinPostProps = { className?: string };
+export function LinkedinPost({ className }: LinkedinPostProps) {
+    const { post } = useContext(PostWritterContext);
     return (
         <div
             className={cn(
-                `border border-border rounded-md p-2 flex flex-col gap-2 max-w-[555px]`,
+                `border border-border rounded-md p-2 flex flex-col gap-2 max-w-[555px]
+                `,
                 className
             )}
         >

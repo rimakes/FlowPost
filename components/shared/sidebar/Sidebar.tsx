@@ -223,7 +223,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: Sparkles,
-        label: 'Post Generator',
+        label: 'Escribe un Post',
         href: '/app/post-writter',
         shortLabel: 'Posts',
         status: 'active',

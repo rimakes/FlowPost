@@ -48,8 +48,8 @@ export default async function PostWritterPage({
             <div className='mt-6 2xl:flex gap-8'>
                 <PostWritterContextProvider initialPost={post}>
                     {/* <PostWritterForm className='flex-1' /> */}
-                    <PostWritterResult className='flex-1' />
-                    <LinkedinPost post={post} className='flex-1 mx-auto' />
+                    <PostWritterResult className='flex-1' isEditable={true} />
+                    <LinkedinPost className='flex-1 mx-auto max-h-[50%]' />
                 </PostWritterContextProvider>
             </div>
         </>
