@@ -65,6 +65,7 @@ export const fakeCarousel: Omit<TCarousel, 'id'> = {
         showAuthor: true,
         showCounter: true,
         showSwipeLabel: true,
+        showDecoration: true,
     },
 };
 
