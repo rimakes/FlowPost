@@ -17,7 +17,7 @@ export default function DefaultLayout({
                 <Navbar />
                 <div className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full'>
                     <Sidebar />
-                    <main className='border-0 border-indigo-600 flex-1 overflow-auto flex flex-col'>
+                    <main className='border-0 border-indigo-600 flex-1 overflow-auto flex flex-col bg-background'>
                         <ToolBanner className='hidden md:flex' />
                         {children}
                     </main>

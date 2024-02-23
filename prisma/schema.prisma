@@ -171,6 +171,7 @@ type CarouselSettings {
     alternateColors Boolean     @default(true)
     showCounter     Boolean     @default(true)
     showAuthor      Boolean     @default(true)
+    showDecoration  Boolean     @default(true)
     aspectRatio     AspectRatio @default(SQUARE)
 }
 

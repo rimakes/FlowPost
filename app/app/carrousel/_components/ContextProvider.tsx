@@ -44,6 +44,7 @@ const INITIAL_STATE = {
     toggleShowCounter: () => {},
     toggleShowSwipeLabel: () => {},
     toggleShowAuthor: () => {},
+    toggleShowDecoration: () => {},
     toggleSlideHasTitle: () => {},
     toggleSlideHasTagline: () => {},
     toggleSlideHasParagraph: () => {},
@@ -262,6 +263,13 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const toggleShowDecoration = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showDecoration =
+            !newCarousel.settings.showDecoration;
+        setCarousel(newCarousel);
+    };
+
     const setBackgroundImage = (
         imageUrl?: string,
         options?: { alt?: string; opacity?: number; position?: string }
@@ -320,6 +328,7 @@ export function CarouselContextProvider({
                 setCurrentSlideTo,
                 toggleAlternateColors,
                 toggleShowCounter,
+                toggleShowDecoration,
                 toggleShowSwipeLabel,
                 toggleShowAuthor,
                 toggleSlideHasTitle,
