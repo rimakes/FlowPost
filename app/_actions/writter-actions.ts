@@ -1,33 +1,186 @@
 "use server";
 
-import { db } from "@/lib/prisma";
-import { wait } from "@/lib/utils";
-import { Pure } from "@/types/types";
-import { LinkedinPost, Post } from "@prisma/client";
-import { MutableRefObject } from "react";
-import fs from "fs";
-import { OpenAIWhisperAudio } from "langchain/document_loaders/fs/openai_whisper_audio";
-import path from "path";
-import cloudinary from "cloudinary";
+import { db } from '@/lib/prisma';
+import { retryAsyncFunction, wait } from '@/lib/utils';
+import { Pure, TCarousel, TLinkedinPost, TSlide } from '@/types/types';
+import { LinkedinPost, Post, Prisma } from '@prisma/client';
+import { MutableRefObject } from 'react';
+import fs from 'fs';
+import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
+import path from 'path';
+import cloudinary from 'cloudinary';
+import { ChatOpenAI } from '@langchain/openai';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { promptGenerateCarousel } from '../app/saved/prompts';
+import { StructuredOutputParser } from 'langchain/output_parsers';
+import { SlideSchemaPrompt } from '@/types/schemas';
+import { RunnableSequence } from '@langchain/core/runnables';
+import image from 'next/image';
+import axios from 'axios';
 
-export async function testingServer(input: string) {
-  await wait(3000);
-  console.log(input);
+export async function createLinkedinPost(post: string, id: string) {
+    let linkedinPost: TLinkedinPost;
+    if (id === 'new') {
+        linkedinPost = await db.linkedinPost.create({
+            data: {
+                content: post,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                },
+            },
+        });
+    } else {
+        linkedinPost = await db.linkedinPost.update({
+            where: {
+                id: id,
+            },
+            data: {
+                content: post,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                },
+            },
+        });
+    }
+
+    return linkedinPost;
 }
 
-export async function createLinkedinPost(post: string) {
-  console.log("holasssss");
-  const user = await db.linkedinPost.create({
-    data: {
-      content: post,
-      author: {
-        handle: "Ricardo Sala",
-        name: "Ricardo Sala",
-        pictureUrl: "Ricardo Sala",
-      },
-    },
-  });
-  console.log(user);
+export async function deleteLinkedinPost(postId: string) {
+    await db.linkedinPost.delete({
+        where: {
+            id: postId,
+        },
+    });
+}
+export async function deleteCarousel(carouselId: string) {
+    await db.carousel.delete({
+        where: {
+            id: carouselId,
+        },
+    });
+}
+
+export async function createLinkedinCarousel(post: TLinkedinPost) {
+    const model = new ChatOpenAI({
+        temperature: 0.8,
+        modelName: 'gpt-4-0613',
+        streaming: true,
+        callbacks: [
+            {
+                handleLLMNewToken(token) {
+                    // console.log(token);
+                },
+            },
+        ],
+    });
+
+    const promptTemplate = PromptTemplate.fromTemplate(promptGenerateCarousel);
+
+    const parser = StructuredOutputParser.fromZodSchema(SlideSchemaPrompt);
+
+    const chain = RunnableSequence.from([promptTemplate, model, parser]);
+
+    console.log('Creating carousel...');
+
+    const fn = () =>
+        chain.invoke(
+            {
+                post: post.content,
+                format_instructions: parser.getFormatInstructions(),
+            },
+            { tags: ['test'] }
+        );
+
+    const generatedSlides = await retryAsyncFunction(fn, 3, 1000);
+
+    const formattedSlides = generatedSlides.map((slide) => {
+        return {
+            title: {
+                content: slide.title,
+                isShown: true,
+            },
+            paragraphs: [
+                {
+                    content: slide.paragraph,
+                    isShown: true,
+                },
+            ],
+            tagline: {
+                content: '',
+                isShown: false,
+            },
+            backgroundImage: {
+                alt: '',
+                opacity: 0.1,
+                position: 'center',
+                url: '',
+            },
+        };
+    });
+
+    const carousel = await db.carousel.create({
+        data: {
+            slides: formattedSlides,
+            author: {
+                handle: 'Ricardo Sala',
+                name: 'Ricardo Sala',
+                pictureUrl: '/images/placeholders/user.png',
+            },
+            // REVIEW: Why cannot do set: null?
+            settings: {
+                colorPalette: {
+                    accent: '#FF0000',
+                    font: '#FFFFFF',
+                    background: '#000000',
+                },
+                fontPalette: {
+                    handWriting: 'inter',
+                    primary: 'inter',
+                    secondary: 'inter',
+                },
+                aspectRatio: 'PORTRAIT',
+                backgroundPattern: 'Bubbles',
+            },
+        },
+    });
+
+    return carousel;
+}
+
+export async function upsertCarousel(carousel: TCarousel) {
+    console.log(carousel);
+    if (carousel.id === undefined) {
+        const newCarousel = await db.carousel.create({
+            data: {
+                slides: carousel.slides,
+                settings: carousel.settings,
+                author: {
+                    handle: 'Ricardo Sala',
+                    name: 'Ricardo Sala',
+                    pictureUrl: '/images/placeholders/user.png',
+                },
+            },
+        });
+
+        return newCarousel;
+    }
+
+    const updatedCarousel = await db.carousel.update({
+        where: {
+            id: carousel.id,
+        },
+        data: {
+            slides: carousel.slides,
+            settings: carousel.settings,
+        },
+    });
+
+    return updatedCarousel;
 }
 
 export const createWebmFile = async (formData: FormData) => {
@@ -62,4 +215,22 @@ export const createWebmFile = async (formData: FormData) => {
     console.error("Error processing the audio file:", error);
     throw error; // Rethrow the error for handling at a higher level
   }
+};
+
+export const getPexelImages = async (query: string) => {
+    console.log(query);
+    const pictures = await axios.get(
+        `https://api.pexels.com/v1/search?query=${query}&page=1&per_page=20&locale=es-ES`,
+        {
+            headers: {
+                Authorization: process.env.PEXELS_API_KEY,
+            },
+        }
+    );
+    console.log(pictures);
+    console.log(pictures.data.photos);
+    const photoUrls = pictures.data.photos.map((photo: any) => {
+        return photo.src.medium;
+    });
+    return photoUrls;
 };

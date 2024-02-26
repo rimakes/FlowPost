@@ -14,6 +14,18 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'placehold.co',
             },
+            {
+                protocol: 'https',
+                hostname: 'cdn.rareblocks.xyz',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.tailgrids.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.pexels.com',
+            },
         ],
     },
 };

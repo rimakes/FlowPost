@@ -1,4 +1,7 @@
+import { decorationMap } from '@/app/app/carrousel/_components/Decoration';
+import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
+import { fontsMap } from '@/config/fonts';
 import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
@@ -87,3 +90,22 @@ export type PrismaModels = {
 
 // Helper type that converts a database model into an object to work with in the frontend (i.e. ommits id, createdAt, updatedAt, etc).
 export type Pure<T> = Omit<T, 'createdAt' | 'updatedAt'>;
+
+// REVIEW: What is the difference between "getPayload" and just getting the type from the PrismaClient?
+export type TLinkedinPost = Pure<Prisma.LinkedinPostGetPayload<{}>>;
+
+export type TCarousel = Pure<Prisma.CarouselGetPayload<{}>>;
+
+export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
+
+type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
+export type TAspectRatioEnum = keyof TAspectRatioMap;
+export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
+
+export type TFontNames = keyof typeof fontsMap;
+
+export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
+
+export type TFontPallete = Prisma.FontPaletteGetPayload<{}>;
+
+export type TDecorationId = keyof typeof decorationMap;

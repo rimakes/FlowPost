@@ -1,26 +1,27 @@
+'use client';
+
 import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
-import { TSlide } from '../page';
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CarouselContext } from './ContextProvider';
 import {
     ArrowLeft,
     ArrowLeftIcon,
-    ArrowRight,
     ArrowRightIcon,
-    Delete,
-    MoveRight,
-    MoveRightIcon,
     Plus,
-    Trash,
     Trash2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import ContentEditable from 'react-contenteditable';
+import { TSlide, TStatus } from '@/types/types';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
+import axios from 'axios';
+import { getPexelImages } from '@/app/_actions/writter-actions';
+import Image from 'next/image';
+import { toast } from 'sonner';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -44,7 +45,18 @@ export function SlideSettings({
         toggleSlideHasTagline,
         carousel,
         toggleShowSwipeLabel,
+        setBackgroundImage,
     } = useContext(CarouselContext);
+    const [query, setQuery] = useState<string>('');
+    const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+    const [status, setStatus] = useState<TStatus>('idle');
+
+    const onSearch = async () => {
+        if (query === '') return toast('Debes ingresar un término de búsqueda');
+        const pictures = await getPexelImages(query);
+        console.log('pictures', pictures);
+        setPhotoUrls(pictures);
+    };
 
     if (!isActive) return null;
     return (
@@ -120,6 +132,60 @@ export function SlideSettings({
                     onCheckedChange={toggleShowSwipeLabel}
                 />
             </div>
+            <form
+                className='overflow-x-auto flex flex-col gap-2'
+                action={onSearch}
+            >
+                <Label htmlFor='paragraph'>Buscar imagen</Label>
+                <div className='flex gap-2'>
+                    <Input
+                        className='inline-block'
+                        value={query}
+                        onChange={(event) => {
+                            setQuery(event.target.value);
+                        }}
+                        placeholder='Ej. "Coches" · Imágenes por pexels.com'
+                    />
+                    <Button disabled={status === 'loading'}>
+                        {status === 'loading' ? 'Buscando...' : 'Buscar'}
+                    </Button>
+                </div>
+                <div className='flex gap-2 items-center overflow-x-auto max-w-[22rem]'>
+                    {photoUrls.map((url) => (
+                        <div
+                            key={url}
+                            className='relative h-24 aspect-square rounded-md overflow-hidden shrink-0'
+                        >
+                            <Image
+                                src={url}
+                                className='object-cover cursor-pointer'
+                                alt=''
+                                fill
+                                onClick={() => {
+                                    setBackgroundImage(url);
+                                }}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </form>
+            {/* <div>
+                <Label htmlFor='paragraph'>Image to all</Label>
+                <Checkbox checked={slide.image?.isBackground} />
+            </div> */}
+
+            <Slider
+                defaultValue={[slide.backgroundImage?.opacity!]}
+                value={[slide.backgroundImage?.opacity!]}
+                onValueChange={(value) => {
+                    setBackgroundImage(undefined, { opacity: value[0] });
+                }}
+                min={0}
+                max={1}
+                step={0.01}
+            />
+
+            {/* <Slider value={slide.backgroundImage?.opacity} min={0} max={100} /> */}
         </div>
     );
 }

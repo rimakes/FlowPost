@@ -223,7 +223,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: Sparkles,
-        label: 'Post Generator',
+        label: 'Escribe un Post',
         href: '/app/post-writter',
         shortLabel: 'Posts',
         status: 'active',
@@ -231,7 +231,7 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: GalleryHorizontal,
         label: 'Crea un carrusel',
-        href: '/app/carrousel',
+        href: '/app/carrousel/new',
         shortLabel: 'Carrusel',
         status: 'active',
     },

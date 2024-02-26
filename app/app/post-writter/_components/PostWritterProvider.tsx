@@ -4,14 +4,26 @@ import { apiClient } from '@/lib/apiClient';
 import { createContext, use, useContext, useState } from 'react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
+import { TLinkedinPost } from '@/types/types';
 
 const INITIAL_STATE = {
-    post: 'this is a post',
+    post: {
+        id: 'new',
+        content: '',
+        author: {
+            handle: 'Ricardo Sala',
+            name: 'Ricardo Sala',
+            pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+        },
+        publishedAt: new Date(),
+        published: false,
+    } as TLinkedinPost,
     postRequest: {
-        description: `Cómo escribir el mejor copywritting para Linkedin sin ser un profesional`,
+        description: ``,
         templateId: '',
         toneId: 1,
     } as PostRequest,
+    setPost: (post: TLinkedinPost) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -21,11 +33,15 @@ export const PostWritterContext = createContext({
     requestPost: (data: PostRequest) => Promise.resolve(''),
 });
 
-type PostWritterContextProviderProps = { children: React.ReactNode };
+type PostWritterContextProviderProps = {
+    children: React.ReactNode;
+    initialPost?: TLinkedinPost;
+};
 export function PostWritterContextProvider({
     children,
+    initialPost,
 }: PostWritterContextProviderProps) {
-    const [post, setPost] = useState<string>(INITIAL_STATE.post);
+    const [post, setPost] = useState(initialPost || INITIAL_STATE.post);
     const [postRequest, setPostRequest] = useState<PostRequest>(
         INITIAL_STATE.postRequest
     );
@@ -57,7 +73,7 @@ export function PostWritterContextProvider({
             const reader = transformedStream.getReader();
 
             let resData = '';
-            setPost('');
+            setPost((prev) => ({ ...prev, content: '' }));
 
             // Read the stream
             while (true) {
@@ -70,12 +86,12 @@ export function PostWritterContextProvider({
 
                 // Value is already decoded thanks to the TextDecoderStream
                 console.log(value);
-                setPost((prev) => prev + value);
+                setPost((prev) => ({ ...prev, content: prev.content + value }));
 
                 // Append the chunk to the result data
                 resData += value;
             }
-            setPost(resData);
+            setPost((prev) => ({ ...prev, content: resData }));
             return resData;
         } else return '';
     };
@@ -86,6 +102,7 @@ export function PostWritterContextProvider({
                 post,
                 postRequest,
                 requestPost,
+                setPost,
             }}
         >
             {children}

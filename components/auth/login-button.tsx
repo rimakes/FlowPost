@@ -27,7 +27,7 @@ export function LoginButton({ mode, children }: LoginButtonProps) {
     if (mode === 'modal') console.log('modal');
     return (
         <Dialog>
-            <DialogTrigger asChild>{children}</DialogTrigger>
+            <DialogTrigger>{children}</DialogTrigger>
             <DialogContent>
                 <>
                     <LoginForm />

@@ -12,13 +12,19 @@ import { PenLine, ChevronsUpDown } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logo from '../logo';
 import { SelectAccountMenu } from './SelectAccountMenu';
+import { cn } from '@/lib/utils';
 
-export default function Navbar() {
+export default function Navbar({ className }: { className?: string }) {
     const { data } = useSession();
 
     return (
         // BOILER: Change this in boilerplate
-        <header className=' px-4 sm:px-6 lg:px-8 sticky top-0 bg-background border-b border-border z-30 h-24'>
+        <header
+            className={cn(
+                `px-4 sm:px-6 lg:px-8 sticky top-0 border-b border-border z-30 py-4`,
+                className
+            )}
+        >
             <div className='flex items-center justify-between h-full -mb-px'>
                 {/* Left side */}
                 <div className='flex gap-2 items-center'>

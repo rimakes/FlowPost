@@ -1,11 +1,13 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useContext, useEffect, useRef } from 'react';
 import { CarouselContext } from './ContextProvider';
 import { SlideSettings } from './SlideSettings';
 import { Slide } from './Slide';
-import { TSlide } from '../page';
-import { ASPECT_RATIOS_MAP } from './const';
+import { TSlide } from '@/types/types';
+import { fontsMap, handwritten } from '@/config/fonts';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -94,12 +96,15 @@ const SlideWithSettings = ({
     return (
         <div
             className={cn(
-                `shrink-0 isolate`,
-                className,
+                `WithSettings shrink-0 isolate`,
+                className || '',
                 isActive ? 'z-10' : 'z-0'
             )}
         >
-            <div className='border-r border-dashed'>
+            <div
+                // @ts-ignore
+                className={`${fontsMap[fontPalette.primary].className} border border-dashed`}
+            >
                 <Slide
                     isActive={isActive}
                     setIsActive={() => {

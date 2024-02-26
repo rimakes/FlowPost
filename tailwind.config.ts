@@ -1,3 +1,4 @@
+import { backgroundPatterns, testo } from './background-patterns';
 import {
     GenerateBreakpointsParams,
     generateBreakpoints,
@@ -21,6 +22,13 @@ module.exports = {
             },
         },
         extend: {
+            backgroundImage: {
+                // It's not a pattern what we need, it's a "design" component!
+                topo: backgroundPatterns.topo,
+                squares: backgroundPatterns.squares,
+                things: backgroundPatterns.things,
+                pattern: backgroundPatterns.pattern,
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',

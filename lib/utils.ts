@@ -106,3 +106,29 @@ export const capitalizeFirstLetter = (string: string) => {
 };
 
 export const uploadFileToCloudinary = async (file: File) => {};
+
+export async function retryAsyncFunction<T>(
+    fn: () => Promise<T>,
+    maxAttempts: number = 3,
+    delayMs: number = 1000
+): Promise<T> {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            return await fn();
+        } catch (error) {
+            console.error(
+                `Attempt ${attempt} failed: ${(error as Error).message}`
+            );
+            if (attempt < maxAttempts) {
+                console.log(`Waiting ${delayMs}ms before retrying...`);
+                await wait(delayMs);
+            } else {
+                throw error; // Rethrow error after last attempt
+            }
+        }
+    }
+
+    // This line is technically unreachable due to the throw in the catch block,
+    // but TypeScript doesn't know that we're always throwing inside the loop on the last attempt
+    throw new Error('This should never happen');
+}
