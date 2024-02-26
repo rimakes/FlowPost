@@ -1,6 +1,6 @@
 'use client';
 import { TDecorationId } from '@/types/types';
-import { decorationMap } from '../Decoration';
+import { Decoration, decorationMap } from '../Decoration';
 import { Button } from '@/components/ui/button';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { ChevronDown } from 'lucide-react';
@@ -41,23 +41,32 @@ export function DecorationSelector({
                             <ChevronDown />
                         </Button>
                     </DialogTrigger>
-                    <DialogContent>
-                        <div>
+                    <DialogContent className='overflow-y-scroll max-h-full'>
+                        <div className='flex flex-col gap-2 '>
                             {Object.keys(decorationMap).map(
                                 (decoration, index) => {
                                     return (
-                                        // @ts-ignore
-                                        <Button
+                                        <div
+                                            key={index}
+                                            className='relative
+                                            slide border-border px-4 py-4 text-[0.75em]
+                     w-40 h-60 overflow-hidden border boroder-border
+                                            '
                                             onClick={() => {
                                                 onSelect(
                                                     decoration as TDecorationId
                                                 );
                                                 setIsDialogOpen(false);
                                             }}
-                                            key={index}
                                         >
-                                            {decoration}
-                                        </Button>
+                                            <Decoration
+                                                decorationid={
+                                                    decoration as TDecorationId
+                                                }
+                                                primaryColor={'#000'}
+                                                secondaryColor={'#000'}
+                                            />
+                                        </div>
                                     );
                                 }
                             )}
