@@ -27,6 +27,8 @@ import { ColorPaletteSelect } from './ColorPaletteSelector';
 import { SizeSelector } from './SizeSelector';
 import { AuthorSettings } from './AuthorSettings';
 import { ColorPalette } from './ColorPalette';
+import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
+import { Slider } from '@/components/ui/slider';
 
 export const CarouselSidebar = () => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -65,6 +67,7 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 showAuthor,
                 aspectRatio,
                 backgroundPattern,
+                showSwipeLabel,
             },
         },
         setCarouselAspectRatio,
@@ -72,6 +75,7 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
         setFontPalette,
         setDecorationId,
         setColorPalette,
+        toggleShowSwipeLabel,
     } = useContext(CarouselContext);
 
     const router = useRouter();
@@ -177,6 +181,8 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 selectedDecoration={backgroundPattern}
             />
             <Separator className='mt-2 mb-2' />
+            <LabelRoundnessSelector />
+            <Separator className='mt-2 mb-2' />
             <div className='flex flex-col justify-between gap-2 mt-auto'>
                 <Button
                     onClick={async () => {
@@ -192,5 +198,36 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 <DownloadButton />
             </div>
         </div>
+    );
+};
+
+export const LabelRoundnessSelector = () => {
+    const {
+        carousel: {
+            settings: { labelRoundness, showSwipeLabel },
+        },
+        toggleShowSwipeLabel,
+        setLabelRoundness,
+    } = useContext(CarouselContext);
+
+    return (
+        <ToggleableCollapsible
+            enabled={showSwipeLabel}
+            setEnabled={toggleShowSwipeLabel}
+            label='Etiqueta desliza'
+        >
+            <div className='flex gap-2'>
+                <Label>Redondeo</Label>
+                <Slider
+                    min={0}
+                    max={20}
+                    step={0.1}
+                    value={[labelRoundness]}
+                    onValueChange={(value) => {
+                        setLabelRoundness(value[0]);
+                    }}
+                />
+            </div>
+        </ToggleableCollapsible>
     );
 };

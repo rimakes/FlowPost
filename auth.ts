@@ -145,10 +145,6 @@ export const authOptions = {
     callbacks: {
         // to control if a user is allowed to sign in.
         async signIn({ user, account, profile, email, credentials }) {
-            console.log('from signin', { user });
-            console.log('from signin', { account });
-            console.log('from signin', { profile });
-
             if (account?.provider !== 'email') return true;
 
             const userExists = await db.user.findUnique({

@@ -167,11 +167,17 @@ type CarouselSettings {
     // TODO: change to decorationId
     backgroundPattern String       @default("none")
 
-    showSwipeLabel  Boolean     @default(true)
-    alternateColors Boolean     @default(true)
-    showCounter     Boolean     @default(true)
-    showAuthor      Boolean     @default(true)
-    aspectRatio     AspectRatio @default(SQUARE)
+    showSwipeLabel        Boolean     @default(true)
+    alternateColors       Boolean     @default(true)
+    showCounter           Boolean     @default(true)
+    showAuthor            Boolean     @default(true)
+    showDecoration        Boolean     @default(true)
+    aspectRatio           AspectRatio @default(SQUARE)
+    labelRoundness        Float       @default(0.5)
+    showProfilePic        Boolean     @default(true)
+    showName              Boolean     @default(true)
+    showHandle            Boolean     @default(true)
+    showAuthorInFirstOnly Boolean     @default(true)
 }
 
 type Author {

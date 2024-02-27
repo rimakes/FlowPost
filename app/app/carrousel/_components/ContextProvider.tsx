@@ -1,18 +1,12 @@
 'use client';
 
 import {
-    MutableRefObject,
     RefObject,
     createContext,
-    createRef,
-    use,
     useCallback,
-    useContext,
     useEffect,
-    useRef,
     useState,
 } from 'react';
-import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 import { deepCopy } from '@/lib/utils';
 import { AspectRatio } from '@prisma/client';
 import {
@@ -21,7 +15,6 @@ import {
     TColorPalette,
     TDecorationId,
     TFontPallete,
-    TLinkedinPost,
 } from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
@@ -44,6 +37,7 @@ const INITIAL_STATE = {
     toggleShowCounter: () => {},
     toggleShowSwipeLabel: () => {},
     toggleShowAuthor: () => {},
+    toggleShowDecoration: () => {},
     toggleSlideHasTitle: () => {},
     toggleSlideHasTagline: () => {},
     toggleSlideHasParagraph: () => {},
@@ -63,6 +57,11 @@ const INITIAL_STATE = {
             position?: string;
         }
     ) => {},
+    setLabelRoundness: (value: number) => {},
+    toggleShowName: () => {},
+    toggleShowProfilePic: () => {},
+    toggleShowHandle: () => {},
+    toggleShowAuthorInFirstOnly: () => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -262,6 +261,13 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const toggleShowDecoration = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showDecoration =
+            !newCarousel.settings.showDecoration;
+        setCarousel(newCarousel);
+    };
+
     const setBackgroundImage = (
         imageUrl?: string,
         options?: { alt?: string; opacity?: number; position?: string }
@@ -302,9 +308,46 @@ export function CarouselContextProvider({
         []
     );
 
+    const setLabelRoundness = (value: number) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.labelRoundness = value;
+        setCarousel(newCarousel);
+    };
+
+    const toggleShowName = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showName = !newCarousel.settings.showName;
+        setCarousel(newCarousel);
+    };
+
+    const toggleShowAuthorInFirstOnly = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showAuthorInFirstOnly =
+            !newCarousel.settings.showAuthorInFirstOnly;
+        setCarousel(newCarousel);
+    };
+
+    const toggleShowHandle = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showHandle = !newCarousel.settings.showHandle;
+        setCarousel(newCarousel);
+    };
+
+    const toggleShowProfilePic = () => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.settings.showProfilePic =
+            !newCarousel.settings.showProfilePic;
+        setCarousel(newCarousel);
+    };
+
     return (
         <CarouselContext.Provider
             value={{
+                toggleShowAuthorInFirstOnly,
+                toggleShowHandle,
+                toggleShowProfilePic,
+                setLabelRoundness,
+                toggleShowName,
                 arrayOfRefs,
                 addRef,
                 currentSlide,
@@ -320,6 +363,7 @@ export function CarouselContextProvider({
                 setCurrentSlideTo,
                 toggleAlternateColors,
                 toggleShowCounter,
+                toggleShowDecoration,
                 toggleShowSwipeLabel,
                 toggleShowAuthor,
                 toggleSlideHasTitle,
