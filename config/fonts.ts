@@ -51,6 +51,7 @@ export const bricolage = Bricolage_Grotesque({
     variable: '--font-grotesque',
     display: 'swap',
     preload: false,
+    adjustFontFallback: false,
 });
 export const inter = Inter({
     subsets: ['latin'],
