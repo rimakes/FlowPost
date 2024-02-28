@@ -1,8 +1,8 @@
 'use client';
-import { generateIdeas } from '@/app/_actions/ideas-actions';
+import { createIdea, generateIdeas } from '@/app/_actions/ideas-actions';
 import Spinner from '@/components/icons/spinner';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
     Form,
     FormControl,
@@ -18,6 +18,7 @@ import { IdeaRequestFormSchema } from '@/types/schemas';
 import { TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Feather, Save, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -121,19 +122,22 @@ type PostIdeaCardProps = {
 };
 
 export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
+    const [status, setStatus] = useState<TStatus>('loading');
     const router = useRouter();
+    const { data } = useSession();
+
     return (
         <div className='border rounded-lg p-4 shadow-sm flex flex-col gap-2'>
-            <div className='flex justify-end text-primary/50'>
-                <Button variant='ghost' size='icon' className='rounded-full'>
-                    <ThumbsUp size={18} />
+            <div className='flex justify-end text-primary/50 -mt-2 -mr-2'>
+                <Button variant='ghost' className='rounded-full p-1 h-6 w-6'>
+                    <ThumbsUp size={12} />
                 </Button>
-                <Button variant='ghost' size='icon' className='rounded-full'>
-                    <ThumbsDown size={18} />
+                <Button variant='ghost' className='rounded-full p-1 h-6 w-6'>
+                    <ThumbsDown size={12} />
                 </Button>
             </div>
             <p>{ideaDescription}</p>
-            <div className='flex gap-4'>
+            <div className='flex gap-4 mt-auto'>
                 <ButtonWithTooltip
                     icon={Feather}
                     label='Crear Post'
@@ -152,12 +156,11 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     icon={Save}
                     label='Guardar Idea'
                     onClick={async () => {
-                        toast.success('Creando.post..');
-                        // setStatus('loading');
-                        // const newCarousel = await createLinkedinCarousel(post);
-                        // setStatus('idle');
-                        // router.push(`/app/carrousel/${newCarousel.id}`);
-                        // console.log(newCarousel);
+                        const dbIdea = createIdea(
+                            ideaDescription,
+                            data?.user.id as string
+                        );
+                        toast.success('Idea guardada');
                     }}
                 />
             </div>
