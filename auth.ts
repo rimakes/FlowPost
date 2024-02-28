@@ -55,8 +55,6 @@ export const authOptions = {
             return {
               id: profile.sub,
               name: profile.name,
-              firstname: profile.given_name,
-              lastname: profile.family_name,
               email: profile.email,
             };
           },
