@@ -1,28 +1,19 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { Edit, GalleryHorizontal, LucideIcon, Save } from 'lucide-react';
+import { GalleryHorizontal, Save } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
-import { Pure } from '@/types/types';
-import { LinkedinPost } from '@prisma/client';
 import { createLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
-import { set } from 'zod';
+import EmojiPicker from 'emoji-picker-react';
+import { EmojiPickerClient } from '@/components/shared/EmojiPickerClient';
 
 type GeneratedPostProps = {
     className?: string;
@@ -49,6 +40,7 @@ export const PostWritterResult = ({
         );
     return (
         <div className={cn(``, className)}>
+            <EmojiPickerClient />
             <Label>Post generado</Label>
             <div className='border border-muted p-2 space-y-2'>
                 <div className='relative'>
