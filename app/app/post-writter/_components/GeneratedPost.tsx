@@ -40,7 +40,7 @@ export const PostWritterResult = ({
         );
     return (
         <div className={cn(``, className)}>
-            <EmojiPickerClient />
+            {/* <EmojiPickerClient /> */}
             <Label>Post generado</Label>
             <div className='border border-muted p-2 space-y-2'>
                 <div className='relative'>
