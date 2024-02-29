@@ -63,7 +63,9 @@ export const PostWritterResult = ({
 
                 <div className='flex gap-2'>
                     <ButtonWithTooltip
-                        icon={Save}
+                        icon={<Save />}
+                        className='flex-1 rounded-full bg-muted text-primary/50
+                        hover:bg-primary/10'
                         label='Guardar post'
                         onClick={async () => {
                             await createLinkedinPost(post.content, post.id);
@@ -80,7 +82,9 @@ export const PostWritterResult = ({
                         label='Editar post'
                     /> */}
                     <ButtonWithTooltip
-                        icon={GalleryHorizontal}
+                        icon={<GalleryHorizontal />}
+                        className='flex-1 rounded-full bg-muted text-primary/50
+                        hover:bg-primary/10'
                         label='Crear carrusel'
                     />
                 </div>

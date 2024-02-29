@@ -139,7 +139,9 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
             <p>{ideaDescription}</p>
             <div className='flex gap-4 mt-auto'>
                 <ButtonWithTooltip
-                    icon={Feather}
+                    icon={<Feather />}
+                    className='flex-1 rounded-full bg-muted text-primary/50
+                    hover:bg-primary/10'
                     label='Crear Post'
                     onClick={async () => {
                         toast.success('Creando.post..');
@@ -153,7 +155,9 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     }}
                 />
                 <ButtonWithTooltip
-                    icon={Save}
+                    icon={<Save />}
+                    className='flex-1 rounded-full bg-muted text-primary/50
+                    hover:bg-primary/10'
                     label='Guardar Idea'
                     onClick={async () => {
                         const dbIdea = createIdea(

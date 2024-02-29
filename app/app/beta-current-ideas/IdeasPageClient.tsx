@@ -169,7 +169,7 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
             <p>{ideaDescription}</p>
             <div className='flex gap-4'>
                 <ButtonWithTooltip
-                    icon={Feather}
+                    icon={<Feather />}
                     label='Crear Post'
                     onClick={async () => {
                         toast.success('Creando.post..');
@@ -183,7 +183,7 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     }}
                 />
                 <ButtonWithTooltip
-                    icon={Save}
+                    icon={<Save />}
                     label='Guardar Idea'
                     onClick={async () => {
                         toast.success('Creando.post..');

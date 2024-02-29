@@ -14,13 +14,18 @@ import { getPrevText } from '@/lib/get-prev-text';
 import { EditorBubbleMenu } from './bubble-menu/buble-menu';
 import TopMenu from './top-menu/top-menu';
 import useLocalStorage from '@/hooks/use-local-storage';
+import useFullScreen from '@/hooks/use-full-screen';
+import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
+import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
+import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
 
 export default function Editor({
     /**
      * Additional classes to add to the editor container.
      * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
      */
-    className = 'relative min-h-full w-full bg-base-100 sm:mb-[calc(20vh)]',
+    className = 'relative min-h-full w-full sm:mb-[calc(20vh)] p-8',
     /**
      * The default value to use for the editor.
      * Defaults to defaultEditorContent.
@@ -71,6 +76,8 @@ export default function Editor({
 }) {
     // TODO: change to mantine
     const [content, setContent] = useLocalStorage(storageKey, defaultValue);
+    const [elementRef, openFullScreen, closeFullscreen, isFullScreenActive] =
+        useFullScreen();
 
     const [hydrated, setHydrated] = useState(false);
 
@@ -130,16 +137,34 @@ export default function Editor({
     const editorRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div
-            onClick={() => {
-                editor?.chain().focus().run();
-            }}
-            className={className}
-        >
-            {editor && <EditorBubbleMenu editor={editor} />}
-            {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
-            <TopMenu editor={editor} handleDownload={() => {}} />
-            <EditorContent editor={editor} ref={editorRef} />
-        </div>
+        <>
+            <Button onClick={openFullScreen}>Full</Button>
+
+            <div
+                id='custom-editor'
+                ref={elementRef}
+                onClick={() => {
+                    editor?.chain().focus().run();
+                }}
+                className={cn(`bg-background`)}
+            >
+                <FullScreenToolBar
+                    openFullScreen={openFullScreen}
+                    closeFullscreen={closeFullscreen}
+                    className={isFullScreenActive ? 'flex' : 'hidden'}
+                />
+
+                {editor && <EditorBubbleMenu editor={editor} />}
+                {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
+                <div className={cn(``, className)}>
+                    <TopMenu editor={editor} handleDownload={() => {}} />
+                    <EditorContent
+                        editor={editor}
+                        ref={editorRef}
+                        className='flex-1'
+                    />
+                </div>
+            </div>
+        </>
     );
 }

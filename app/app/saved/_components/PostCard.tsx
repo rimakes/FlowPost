@@ -35,7 +35,9 @@ export function PostCard({ post }: PostCardProps) {
             <Separator className='-ml-[var(--outter-padding)] -mr-[var(--outter-padding)] w-[calc(100%+calc(var(--outter-padding)*2))]' />
             <div className='flex gap-2 pt-[var(--outter-padding)] relative'>
                 <ButtonWithTooltip
-                    icon={Trash2}
+                    icon={<Trash2 />}
+                    className='flex-1 rounded-full bg-muted text-primary/50
+                    hover:bg-primary/10'
                     label='Borrar post'
                     onClick={async () => {
                         await deleteLinkedinPost(post.id);
@@ -44,14 +46,18 @@ export function PostCard({ post }: PostCardProps) {
                     }}
                 />
                 <ButtonWithTooltip
-                    icon={Edit}
+                    icon={<Edit />}
+                    className='flex-1 rounded-full bg-muted text-primary/50
+                    hover:bg-primary/10'
                     label='Editar post'
                     onClick={() => {
                         router.push(`/app/post-writter/${post.id}`);
                     }}
                 />
                 <ButtonWithTooltip
-                    icon={GalleryHorizontal}
+                    icon={<GalleryHorizontal />}
+                    className='flex-1 rounded-full bg-muted text-primary/50
+                    hover:bg-primary/10'
                     label='Crear carrusel'
                     onClick={async () => {
                         toast.success(
