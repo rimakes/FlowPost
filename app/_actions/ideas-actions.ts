@@ -9,6 +9,7 @@ import { SlideSchemaPrompt, arrayOfIdeasSchema } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { generateIdeasPrompt } from '../app/ideas/const';
 import axios from 'axios';
+import { db } from '@/lib/prisma';
 
 export const generateIdeas = async (topic: string) => {
     const model = new ChatOpenAI({
@@ -52,4 +53,15 @@ export const getSearchResults = async (query: string) => {
     console.log(res.data);
 
     return res.data.items;
+};
+
+export const createIdea = async (ideaDescription: string, authorId: string) => {
+    const idea = db.idea.create({
+        data: {
+            description: ideaDescription,
+            author: { connect: { id: authorId } },
+        },
+    });
+
+    return idea;
 };
