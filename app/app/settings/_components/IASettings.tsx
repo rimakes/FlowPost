@@ -13,10 +13,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { TStatus } from '@/types/types';
+import { toast } from 'sonner';
 
 const iaSettingsSchema = z.object({
     autoPostGeneration: z.boolean(),
@@ -28,6 +30,7 @@ type IaSettings = z.infer<typeof iaSettingsSchema>;
 
 export const IASettings = () => {
     const { data } = useSession();
+    const [status, setStatus] = useState<TStatus>('idle');
 
     const form = useForm({
         resolver: zodResolver(iaSettingsSchema),
@@ -38,27 +41,28 @@ export const IASettings = () => {
         },
     });
 
-    // useEffect(() => {
-    //     if (data?.user.name) {
-    //         form.reset({
-    //             name: data.user.name,
-    //             // @ts-ignore
-    //             image: data.user.image,
-    //         });
-    //     }
-    // }, [data, form, form.reset]);
-
-    const onSubmit = (data: IaSettings) => {};
-    const onError = (error: any) => {};
+    const onSubmit = (data: IaSettings) => {
+        setStatus('loading');
+        console.log(data);
+        setStatus('success');
+        toast.success('Configuración guardada');
+        setStatus('idle');
+    };
+    const onError = (error: any) => {
+        toast('Error al guardar la configuración', {});
+    };
     return (
         <>
             <SettingsSectionHeader
-                title='Configuración general'
-                subtitle='Configura tu cuenta'
+                title='Configura tu IA'
+                subtitle='Creará contenido para ti basado en tus preferencias'
             />
             <div className='max-w-md mt-4'>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit, onError)}
+                        className='flex flex-col gap-4 items-start'
+                    >
                         <FormField
                             control={form.control}
                             name='shortBio'

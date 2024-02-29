@@ -61,7 +61,7 @@ export function BrandKitEditForm({
         );
         setStatus('success');
         router.refresh();
-        toast('Marca guardada', { icon: <ThumbsUp /> });
+        toast.success('Marca guardada');
         setStatus('idle');
         onSave();
     };
