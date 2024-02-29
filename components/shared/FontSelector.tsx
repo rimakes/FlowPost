@@ -24,7 +24,7 @@ export function FontSelector({ selectedFont, onSelect }: FontSelectorProps) {
     );
 
     return (
-        <div className='flex flex-col gap-2 overflow-y-auto max-h-48'>
+        <div className='flex flex-col gap-2 overflow-y-scroll max-h-48'>
             <Input
                 className='sticky top-0'
                 value={query}

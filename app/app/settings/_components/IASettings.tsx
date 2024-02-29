@@ -18,33 +18,38 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
 
-const generalSettingsSchema = z.object({
-    name: z.string(),
+const iaSettingsSchema = z.object({
+    autoPostGeneration: z.boolean(),
+    shortBio: z.string(),
+    topics: z.array(z.string()),
 });
 
-type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
+type IaSettings = z.infer<typeof iaSettingsSchema>;
 
-export const AccountSettings = () => {
+export const IASettings = () => {
     const { data } = useSession();
 
     const form = useForm({
-        resolver: zodResolver(generalSettingsSchema),
+        resolver: zodResolver(iaSettingsSchema),
         defaultValues: {
-            name: data?.user?.name || '',
-            image: data?.user?.image || '',
+            autoPostGeneration: true,
+            shortBio: '',
+            topics: [],
         },
     });
 
-    useEffect(() => {
-        if (data?.user.name) {
-            form.reset({
-                name: data.user.name,
-                // @ts-ignore
-                image: data.user.image,
-            });
-        }
-    }, [data, form, form.reset]);
+    // useEffect(() => {
+    //     if (data?.user.name) {
+    //         form.reset({
+    //             name: data.user.name,
+    //             // @ts-ignore
+    //             image: data.user.image,
+    //         });
+    //     }
+    // }, [data, form, form.reset]);
 
+    const onSubmit = (data: IaSettings) => {};
+    const onError = (error: any) => {};
     return (
         <>
             <SettingsSectionHeader
@@ -53,21 +58,24 @@ export const AccountSettings = () => {
             />
             <div className='max-w-md mt-4'>
                 <Form {...form}>
-                    <form>
+                    <form onSubmit={form.handleSubmit(onSubmit, onError)}>
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='shortBio'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nombre</FormLabel>
+                                    <FormLabel>
+                                        Breve descripción de quién eres
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder='Ej. Juan'
+                                            placeholder='Copywritter en Perbrand'
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your public display name.
+                                        La IA lo utilizará para personalizar el
+                                        contenido que escriba
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -75,18 +83,21 @@ export const AccountSettings = () => {
                         />
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='topics'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nombre</FormLabel>
+                                    <FormLabel>
+                                        ¿Sobre que quieres escribir?
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder='Ej. Juan'
+                                            placeholder='Ecommerce, Marketing, Tecnología'
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your public display name.
+                                        La IA lo utilizará para darte ideas de
+                                        contenido
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
