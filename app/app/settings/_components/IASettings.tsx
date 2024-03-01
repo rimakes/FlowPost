@@ -13,61 +13,73 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { TStatus } from '@/types/types';
+import { toast } from 'sonner';
 
-const generalSettingsSchema = z.object({
-    name: z.string(),
+const iaSettingsSchema = z.object({
+    autoPostGeneration: z.boolean(),
+    shortBio: z.string(),
+    topics: z.array(z.string()),
 });
 
-type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
+type IaSettings = z.infer<typeof iaSettingsSchema>;
 
-export const AccountSettings = () => {
+export const IASettings = () => {
     const { data } = useSession();
+    const [status, setStatus] = useState<TStatus>('idle');
 
     const form = useForm({
-        resolver: zodResolver(generalSettingsSchema),
+        resolver: zodResolver(iaSettingsSchema),
         defaultValues: {
-            name: data?.user?.name || '',
-            image: data?.user?.image || '',
+            autoPostGeneration: true,
+            shortBio: '',
+            topics: [],
         },
     });
 
-    useEffect(() => {
-        if (data?.user.name) {
-            form.reset({
-                name: data.user.name,
-                // @ts-ignore
-                image: data.user.image,
-            });
-        }
-    }, [data, form, form.reset]);
-
+    const onSubmit = (data: IaSettings) => {
+        setStatus('loading');
+        console.log(data);
+        setStatus('success');
+        toast.success('Configuración guardada');
+        setStatus('idle');
+    };
+    const onError = (error: any) => {
+        toast('Error al guardar la configuración', {});
+    };
     return (
         <>
             <SettingsSectionHeader
-                title='Configuración general'
-                subtitle='Configura tu cuenta'
+                title='Configura tu IA'
+                subtitle='Creará contenido para ti basado en tus preferencias'
             />
             <div className='max-w-md mt-4'>
                 <Form {...form}>
-                    <form>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit, onError)}
+                        className='flex flex-col gap-4 items-start'
+                    >
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='shortBio'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nombre</FormLabel>
+                                    <FormLabel>
+                                        Breve descripción de quién eres
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder='Ej. Juan'
+                                            placeholder='Copywritter en Perbrand'
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your public display name.
+                                        La IA lo utilizará para personalizar el
+                                        contenido que escriba
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -75,18 +87,21 @@ export const AccountSettings = () => {
                         />
                         <FormField
                             control={form.control}
-                            name='name'
+                            name='topics'
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nombre</FormLabel>
+                                    <FormLabel>
+                                        ¿Sobre que quieres escribir?
+                                    </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder='Ej. Juan'
+                                            placeholder='Ecommerce, Marketing, Tecnología'
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your public display name.
+                                        La IA lo utilizará para darte ideas de
+                                        contenido
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

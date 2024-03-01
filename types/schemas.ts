@@ -92,3 +92,23 @@ export const googleSearchResultsSchema = z.array(
         }),
     })
 );
+
+export const brandKitsSettingsSchema = z.object({
+    name: z.string().min(3, {
+        message: 'El nombre debe tener al menos 3 caracteres',
+    }),
+    handle: z.string().min(3, {
+        message: 'El handle debe tener al menos 3 caracteres',
+    }),
+    imageUrl: z.string().url(),
+    fontPalette: z.object({
+        handWriting: z.string(),
+        primary: z.string(),
+        secondary: z.string(),
+    }),
+    colorPalette: z.object({
+        accent: z.string(),
+        background: z.string(),
+        font: z.string(),
+    }),
+});

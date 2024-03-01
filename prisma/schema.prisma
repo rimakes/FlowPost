@@ -35,6 +35,24 @@ model User {
     Account  Account[]
     Post     Post[]
     Idea     Idea[]
+    Brand    Brand[]
+}
+
+model Brand {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // RELATIONS
+    authorId String @db.ObjectId
+    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+    // Brand fields
+    name         String
+    handle       String
+    imageUrl     String
+    colorPalette ColorPalette
+    fontPalette  FontPalette
 }
 
 model Idea {
