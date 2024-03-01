@@ -1,10 +1,11 @@
+'use client'
 import Scheduler from './_components/Scheduler'
 
-export default function SchedulePage() {
+export default async function SchedulePage() {
   return (
     <>
       <Scheduler />
-      
+
     </>
   )
 }

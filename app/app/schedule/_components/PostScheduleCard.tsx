@@ -1,3 +1,3 @@
-export default async function PostScheduleCard() {
+export default function PostScheduleCard() {
   return <></>
 }
