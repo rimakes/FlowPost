@@ -7,9 +7,10 @@ import { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import DraftModal from './draftModal'
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { db } from '@/lib/prisma'
+import { signIn, useSession } from 'next-auth/react'
 import ViewMore from './viewMore'
+import { PostWritterContextProvider } from '../../post-writter/_components/PostWritterProvider'
+import { PostWritterResult } from '../../post-writter/_components/GeneratedPost'
 
 interface userPostsProps {
   userPosts: any
@@ -19,9 +20,8 @@ export default function Scheduler({ userPosts }: userPostsProps) {
   // Get current date
   const { data } = useSession()
   const currentDate: any = new Date()
-  const [accountLinked, setAccountLinked] = useState(true)
+  const [accountLinked, setAccountLinked] = useState(false)
   const [selectedDraftId, setSelectedDraftId] = useState<number>()
-  const [viewMoreModal, setViewMoreModal] = useState(true)
 
   const [startDate, setStartDate] = useState<any>(
     currentDate.toISOString().split('T')[0]
@@ -33,6 +33,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
   )
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false)
   const [betweenDates, setBetweenDates] = useState<any>([])
+
+  const [viewMoreModal, setViewMoreModal] = useState(false)
+  const [editDetailsModal, setEditDetailsModal] = useState(false)
 
   const getDates = (startDate: any, endDate: any) => {
     const dateList = []
@@ -98,16 +101,26 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     try {
       const postData = {
         userId: data?.user?.id,
+        scheduledPosts: betweenDates,
       }
 
       const response = await axios.post(
-        'https://fcce-106-203-217-200.ngrok-free.app/api/schedule-post',
+        'http://localhost:3000/api/schedule-post',
         postData
       )
-      console.log(response)
+      setAccountLinked(response?.data?.loginUser)
     } catch (error) {
       console.error('Error:', error)
     }
+  }
+
+  useEffect(() => {
+    handlePostRequest()
+  }, [betweenDates])
+
+  const handleLinkedinLogin = async () => {
+    const res = await signIn('linkedin')
+    console.log(res)
   }
 
   const handleSelect = async (item: any, key: number) => {
@@ -116,7 +129,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         if (index === selectedDraftId) {
           return {
             ...items,
-            content: item?.content,
+            ...item,
             time: new Date().toLocaleTimeString('en-US', {
               hour: 'numeric',
               minute: 'numeric',
@@ -127,9 +140,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         return items
       })
     )
-
     setIsVoiceModalOpen(false)
   }
+
+  console.log(betweenDates)
 
   const handleClickDraftBtn = (key: number) => {
     setSelectedDraftId(key)
@@ -192,16 +206,19 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                           {item?.content ? item?.content : 'Empty...'}
                         </p>
                       </div>
-                      <div className='flex items-center gap-2'>
-                        <Dialog
-                          open={isVoiceModalOpen}
-                          onOpenChange={setIsVoiceModalOpen}
-                        >
-                          <DialogTrigger asChild>
-                            {!item?.content ? (
+                      {!item?.content && (
+                        <div className='flex items-center gap-2'>
+                          <Dialog
+                            open={isVoiceModalOpen}
+                            onOpenChange={setIsVoiceModalOpen}
+                          >
+                            <DialogTrigger asChild>
                               <div className='relative group w-full'>
                                 <button
-                                  onClick={() => handleClickDraftBtn(key)}
+                                  onClick={async () => {
+                                    handlePostRequest()
+                                    handleClickDraftBtn(key)
+                                  }}
                                   type='button'
                                   className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
                                 >
@@ -224,17 +241,35 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                   Pick a Draft
                                 </span>
                               </div>
-                            ) : (
+                            </DialogTrigger>
+                            <DialogContent
+                              className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
+                            >
+                              <DraftModal
+                                handleSelect={handleSelect}
+                                userPosts={userPosts}
+                                accountLinked={accountLinked}
+                                setIsVoiceModalOpen={setIsVoiceModalOpen}
+                                handleLinkedinLogin={handleLinkedinLogin}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      )}
+
+                      {item?.content && (
+                        <div className='flex items-center gap-2'>
+                          <Dialog
+                            open={viewMoreModal}
+                            onOpenChange={setViewMoreModal}
+                          >
+                            <DialogTrigger asChild>
                               <div className='flex items-center gap-2'>
                                 <div className='relative group w-full'>
                                   <button
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      if (viewMoreModal) {
-                                        setIsVoiceModalOpen(false)
-                                        setViewMoreModal(true)
-                                        handleClickDraftBtn(key)
-                                      }
+                                    onClick={() => {
+                                      setViewMoreModal(true)
+                                      handleClickDraftBtn(key)
                                     }}
                                     type='button'
                                     className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
@@ -255,12 +290,36 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                       ></path>
                                     </svg>
                                   </button>
-                                  {/* <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
-                                  View Post
-                                </span> */}
+                                  <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
+                                    View Post
+                                  </span>
                                 </div>
+                              </div>
+                            </DialogTrigger>
+                            <DialogContent
+                              className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
+                            >
+                              <ViewMore
+                                data={item}
+                                setEditDetailsModal={setEditDetailsModal}
+                                betweenDates={betweenDates}
+                                selectedDraftId={selectedDraftId}
+                                setViewMoreModal={setViewMoreModal}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                          <Dialog
+                            open={editDetailsModal}
+                            onOpenChange={setEditDetailsModal}
+                          >
+                            <DialogTrigger asChild>
+                              <div className='flex items-center gap-2'>
                                 <div className='relative group w-full'>
                                   <button
+                                    onClick={() => {
+                                      setEditDetailsModal(true)
+                                      handleClickDraftBtn(key)
+                                    }}
                                     type='button'
                                     className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
                                   >
@@ -277,53 +336,30 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                       <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
                                     </svg>
                                   </button>
-                                  {/* <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
-                                  Edit Post or Reschedule
-                                </span> */}
+                                  <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
+                                    Edit Post or Reschedule
+                                  </span>
                                 </div>
-                                <button
-                                  type='button'
-                                  className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
-                                >
-                                  <span className='sr-only'>More Options</span>
-                                  <svg
-                                    aria-hidden='true'
-                                    className='w-5 h-5 text-gray-400 group-hover:text-gray-500'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    viewBox='0 0 20 20'
-                                    fill='currentColor'
-                                  >
-                                    <path d='M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z'></path>
-                                  </svg>
-                                </button>
                               </div>
-                            )}
-                          </DialogTrigger>
-                          <DialogContent
-                            className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
-                          >
-                            {isVoiceModalOpen && (
-                              <DraftModal
-                                handleSelect={handleSelect}
-                                userPosts={userPosts}
-                                handlePostRequest={handlePostRequest}
-                                accountLinked={accountLinked}
-                                setIsVoiceModalOpen={setIsVoiceModalOpen}
-                              />
-                              // <ViewMore
-                              //   betweenDates={betweenDates}
-                              //   selectedDraftId={selectedDraftId}
-                              // />
-                            )}
-                            {viewMoreModal && (
-                              <ViewMore
-                                betweenDates={betweenDates}
-                                selectedDraftId={selectedDraftId}
-                              />
-                            )}
-                          </DialogContent>
-                        </Dialog>
-                      </div>
+                            </DialogTrigger>
+                            <DialogContent
+                              className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
+                            >
+                              <div className='mt-6 2xl:flex gap-8'>
+                                <PostWritterContextProvider initialPost={item}>
+                                  <PostWritterResult
+                                    className='flex-1'
+                                    height={604}
+                                    minHeight={604}
+                                    isEditable={true}
+                                    setEditDetailsModal={setEditDetailsModal}
+                                  />
+                                </PostWritterContextProvider>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

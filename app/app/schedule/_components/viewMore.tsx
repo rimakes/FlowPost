@@ -3,17 +3,35 @@ import React from 'react'
 interface viewPostType {
   betweenDates: any
   selectedDraftId: any
+  setViewMoreModal: (modal: boolean) => void
+  setEditDetailsModal: (modal: boolean) => void
+  data: any
 }
 
-const ViewMore = ({ betweenDates, selectedDraftId }: viewPostType) => {
+const ViewMore = ({
+  betweenDates,
+  selectedDraftId,
+  setViewMoreModal,
+  setEditDetailsModal,
+  data,
+}: viewPostType) => {
   return betweenDates.map((item: any, key: number) => {
-    console.log(item)
     if (key === selectedDraftId) {
+      const date = new Date(item?.updatedAt)
+
+      const options: any = {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      }
+
+      const formattedDateString = date.toLocaleString('en-US', options)
       return (
         <>
           <div>
-            {/* <div className='fixed inset-0 z-50 grid w-screen h-screen p-4 place-items-center bg-gray-700/75 sm:p-6 lg:p-8'>
-        <div className='relative w-full max-w-2xl mx-auto overflow-hidden bg-white shadow-xl rounded-xl'> */}
             <div className='relative w-full mx-auto overflow-hidden bg-white rounded-xl'>
               <div className='max-h-[83vh] lg:max-h-[83vh]'>
                 <div className='px-4 py-5 sm:px-6'>
@@ -40,7 +58,7 @@ const ViewMore = ({ betweenDates, selectedDraftId }: viewPostType) => {
                         ></path>
                       </svg>
                       <span className='text-sm font-semibold text-success-600'>
-                        Scheduled → March 02 • 09:00 AM
+                        Scheduled → {item?.date.split(',')[1]} • {item?.time}
                       </span>
                     </div>
                     <div className='relative'>
@@ -53,7 +71,7 @@ const ViewMore = ({ betweenDates, selectedDraftId }: viewPostType) => {
                       <textarea
                         readOnly={true}
                         rows={20}
-                        className='resize-none block w-full h-full p-0 text-gray-900 border-none appearance-none resize-y placeholder:text-gray-500 focus:ring-0 caret-blue-500 focus:outline-none'
+                        className='resize-none block w-full h-[400px] p-0 text-gray-900 border-none appearance-none placeholder:text-gray-500 focus:ring-0 caret-blue-500 focus:outline-none'
                       >
                         {item?.content}
                       </textarea>
@@ -61,23 +79,26 @@ const ViewMore = ({ betweenDates, selectedDraftId }: viewPostType) => {
                     <hr className='border-gray-200' />
                     <div className='flex flex-wrap items-center gap-y-1 gap-x-2'>
                       <span className='text-sm font-medium text-gray-500'>
-                        Last edited Mar 1, 2024, 5:51 PM
+                        Last edited {formattedDateString}
                       </span>
                       <span className='text-sm font-medium text-gray-500'>
                         •
                       </span>
                       <span className='text-sm font-medium text-gray-500'>
-                        1088 characters
+                        {item?.content?.length} characters
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className='px-4 py-5 sm:px-6'>
                   <div className='flex items-center gap-4 sm:justify-between'>
-                    <a
+                    <button
+                      onClick={() => {
+                        setViewMoreModal(false)
+                        setEditDetailsModal(true)
+                      }}
                       type='button'
                       className='inline-flex w-full sm:ml-auto sm:w-auto items-center justify-center gap-2 transition-all duration-150 rounded-full bg-white px-3 py-2 sm:px-4 sm:py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 group shadow-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
-                      href='/write?post_id=2ca5dde7-a768-4190-b0a1-0f15ba4a4ebd'
                     >
                       <svg
                         aria-hidden='true'
@@ -89,8 +110,9 @@ const ViewMore = ({ betweenDates, selectedDraftId }: viewPostType) => {
                         <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
                       </svg>
                       Edit
-                    </a>
+                    </button>
                     <button
+                      onClick={() => setViewMoreModal(false)}
                       type='button'
                       className='inline-flex w-full sm:w-auto items-center justify-center gap-2 transition-all duration-150 rounded-full bg-white px-3 py-2 sm:px-4 sm:py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 group shadow-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                     >

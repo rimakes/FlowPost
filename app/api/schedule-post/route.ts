@@ -70,12 +70,19 @@ export async function POST(req: NextRequest) {
     })
 
     if (!userAccount) {
-      return NextResponse.json(false, { status: 400 })
+      return NextResponse.json({ loginUser: false }, { status: 200 })
     }
 
-    await scheduler(body?.scheduledPosts,userAccount?.providerAccountId,userAccount?.access_token)
+    await scheduler(
+      body?.scheduledPosts,
+      userAccount?.providerAccountId,
+      userAccount?.access_token
+    )
 
-    return NextResponse.json({ message: 'Post scheduled' }, { status: 200 })
+    return NextResponse.json(
+      { message: 'Post scheduled', loginUser: true },
+      { status: 200 }
+    )
   } catch (error: any) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
