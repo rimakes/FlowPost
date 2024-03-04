@@ -96,7 +96,11 @@ export type TLinkedinPost = Pure<Prisma.LinkedinPostGetPayload<{}>>;
 
 export type TCarousel = Pure<Prisma.CarouselGetPayload<{}>>;
 
+export type TIdeas = Pure<Prisma.IdeaGetPayload<{}>>;
+
 export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
+
+export type TFeedback = '' | 'yes' | 'no' | 'partially';
 
 type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
 export type TAspectRatioEnum = keyof TAspectRatioMap;

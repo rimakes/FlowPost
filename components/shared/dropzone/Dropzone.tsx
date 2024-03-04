@@ -1,11 +1,13 @@
 'use client';
 // DOCS: https://react-dropzone.js.org
+// https://cloudinary.com/blog/guest_post/upload-images-with-react-dropzone
 
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useDropzone } from 'react-dropzone';
 import { TExtendedFile } from './Thumbnails';
 import { ReactNode } from 'react';
+import { ThumbsUp } from 'lucide-react';
 
 type DropzoneProps = {
     onDrop?: (files: File[]) => void;
@@ -20,15 +22,8 @@ export function Dropzone({
     className,
     children,
     maxFiles = 1,
-    dragActiveElement = <p className='text-center'>Suelta tu archivo</p>,
-    dragInactiveElement = (
-        <p className='flex flex-col items-center text-center gap-2'>
-            Arrastra o clicka aquí
-            <span className='text-primary/60 text-sm'>
-                para seleccionar tu archivo
-            </span>
-        </p>
-    ),
+    dragActiveElement: propDragActiveElement,
+    dragInactiveElement: propDragInactiveElement,
 }: DropzoneProps) {
     const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
         useDropzone({
@@ -46,6 +41,22 @@ export function Dropzone({
             },
         });
 
+    const dragActiveElement = propDragActiveElement || (
+        <p className='text-center'>Suelta tu archivo</p>
+    );
+
+    const dragInactiveElement = propDragInactiveElement || (
+        <p className='flex flex-col items-center text-center gap-2'>
+            Arrastra o clicka aquí
+            <span className='text-primary/60 text-sm'>
+                para seleccionar tu archivo
+            </span>
+        </p>
+    );
+
+    const hasFilesElement = '';
+    // acceptedFiles.length > 0 && <ThumbsUp size={30} />;
+
     return (
         <div
             {...getRootProps({
@@ -57,7 +68,12 @@ export function Dropzone({
             )}
         >
             <Input type='file' {...getInputProps()} />
-            {isDragActive ? dragActiveElement : dragInactiveElement}
+            {acceptedFiles.length > 0
+                ? hasFilesElement
+                : isDragActive
+                  ? dragActiveElement
+                  : dragInactiveElement}
+            {children}
         </div>
     );
 }

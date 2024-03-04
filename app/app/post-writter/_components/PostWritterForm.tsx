@@ -201,6 +201,9 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                     onDelete={
                                                         onDeselectPostTemplate
                                                     }
+                                                    onEditClick={() => {
+                                                        setIsDialogOpen(true);
+                                                    }}
                                                 />
                                             ) : null}
                                             <Dialog

@@ -8,25 +8,29 @@ import { GalleryHorizontal, Save } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
-import { createLinkedinPost } from '@/app/_actions/writter-actions';
+import {
+    createLinkedinCarousel,
+    createLinkedinPost,
+} from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon';
+import { useRouter } from 'next/navigation';
+import { TStatus } from '@/types/types';
+import { Progress } from '@/components/ui/progress';
+import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 
 type GeneratedPostProps = {
     className?: string;
     isEditable?: boolean;
 };
 
-type Status = 'idle' | 'loading' | 'success' | 'error';
-
 export const PostWritterResult = ({
     className,
     isEditable = false,
 }: GeneratedPostProps) => {
-    const { data } = useSession();
-
-    const [status, setStatus] = useState<Status>('idle');
+    const [status, setStatus] = useState<TStatus>('idle');
     const { post, setPost } = useContext(PostWritterContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
 
@@ -72,21 +76,7 @@ export const PostWritterResult = ({
                             toast('Post guardado');
                         }}
                     />
-                    {/* <ButtonWithTooltip
-                        className={
-                            isEditable || isEditableOverride
-                                ? 'bg-green-300'
-                                : 'bg-red-300'
-                        }
-                        icon={Edit}
-                        label='Editar post'
-                    /> */}
-                    <ButtonWithTooltip
-                        icon={<GalleryHorizontal />}
-                        className='flex-1 rounded-full bg-muted text-primary/50
-                        hover:bg-primary/10'
-                        label='Crear carrusel'
-                    />
+                    <CreateCarouselButton post={post} />
                 </div>
             </div>
         </div>

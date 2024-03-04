@@ -1,8 +1,7 @@
 'use client';
-import { createIdea, generateIdeas } from '@/app/_actions/ideas-actions';
+import { generateIdeas } from '@/app/_actions/ideas-actions';
 import Spinner from '@/components/icons/spinner';
-import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
     Form,
     FormControl,
@@ -17,12 +16,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { IdeaRequestFormSchema } from '@/types/schemas';
 import { TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Feather, Save, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
+import { PostIdeaCard } from './IdeaCard';
 
 type IdeasPageClientProps = {};
 export function IdeasPageClient({}: IdeasPageClientProps) {
@@ -108,7 +105,11 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
                 {status === 'success' && (
                     <div className='grid grid-cols-1 xl:grid-cols-2 gap-4'>
                         {ideas.map((idea, index) => (
-                            <PostIdeaCard key={index} ideaDescription={idea} />
+                            <PostIdeaCard
+                                key={index}
+                                ideaDescription={idea}
+                                isSaveButtonShown={true}
+                            />
                         ))}
                     </div>
                 )}
@@ -116,58 +117,3 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
         </div>
     );
 }
-
-type PostIdeaCardProps = {
-    ideaDescription: string;
-};
-
-export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
-    const [status, setStatus] = useState<TStatus>('loading');
-    const router = useRouter();
-    const { data } = useSession();
-
-    return (
-        <div className='border rounded-lg p-4 shadow-sm flex flex-col gap-2'>
-            <div className='flex justify-end text-primary/50 -mt-2 -mr-2'>
-                <Button variant='ghost' className='rounded-full p-1 h-6 w-6'>
-                    <ThumbsUp size={12} />
-                </Button>
-                <Button variant='ghost' className='rounded-full p-1 h-6 w-6'>
-                    <ThumbsDown size={12} />
-                </Button>
-            </div>
-            <p>{ideaDescription}</p>
-            <div className='flex gap-4 mt-auto'>
-                <ButtonWithTooltip
-                    icon={<Feather />}
-                    className='flex-1 rounded-full bg-muted text-primary/50
-                    hover:bg-primary/10'
-                    label='Crear Post'
-                    onClick={async () => {
-                        toast.success('Creando.post..');
-                        // setStatus('loading');
-                        // const newCarousel = await createLinkedinCarousel(post);
-                        // setStatus('idle');
-                        router.push(
-                            `/app/post-writter?description=${encodeURIComponent(ideaDescription)}`
-                        );
-                        // console.log(newCarousel);
-                    }}
-                />
-                <ButtonWithTooltip
-                    icon={<Save />}
-                    className='flex-1 rounded-full bg-muted text-primary/50
-                    hover:bg-primary/10'
-                    label='Guardar Idea'
-                    onClick={async () => {
-                        const dbIdea = createIdea(
-                            ideaDescription,
-                            data?.user.id as string
-                        );
-                        toast.success('Idea guardada');
-                    }}
-                />
-            </div>
-        </div>
-    );
-};

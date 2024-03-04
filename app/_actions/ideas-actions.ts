@@ -65,3 +65,9 @@ export const createIdea = async (ideaDescription: string, authorId: string) => {
 
     return idea;
 };
+
+export const deleteIdea = async (ideaId: string) => {
+    const idea = db.idea.delete({ where: { id: ideaId } });
+
+    return idea;
+};
