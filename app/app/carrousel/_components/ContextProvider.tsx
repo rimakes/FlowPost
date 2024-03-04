@@ -127,21 +127,27 @@ export function CarouselContextProvider({
     };
 
     const editProfilePicture = (newImage: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.pictureUrl = newImage;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.pictureUrl = newImage;
+            return newCarousel;
+        });
     };
 
     const editName = (newName: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.name = newName;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.name = newName;
+            return newCarousel;
+        });
     };
 
     const editHandle = (newHandle: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.handle = newHandle;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.handle = newHandle;
+            return newCarousel;
+        });
     };
 
     const setCurrentSlideTo = (newSlide: number) => {
@@ -234,19 +240,25 @@ export function CarouselContextProvider({
         }
     };
 
+    // TODO: Probably should do like this all of them. for now I am not changing it in case we want to use immer or a reducer in the future.
     const setColorPalette = (colors: TColorPalette) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.colorPalette.font = colors.font;
-        newCarousel.settings.colorPalette.background = colors.background;
-        newCarousel.settings.colorPalette.accent = colors.accent;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.settings.colorPalette.font = colors.font;
+            newCarousel.settings.colorPalette.background = colors.background;
+            newCarousel.settings.colorPalette.accent = colors.accent;
+            return newCarousel;
+        });
     };
+
     const setFontPalette = (fonts: TFontPallete) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.fontPalette.primary = fonts.primary;
-        newCarousel.settings.fontPalette.secondary = fonts.secondary;
-        newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.settings.fontPalette.primary = fonts.primary;
+            newCarousel.settings.fontPalette.secondary = fonts.secondary;
+            newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
+            return newCarousel;
+        });
     };
 
     const setCarouselAspectRatio = (aspectRatio: TAspectRatioEnum) => {

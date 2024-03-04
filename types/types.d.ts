@@ -100,6 +100,8 @@ export type TIdeas = Pure<Prisma.IdeaGetPayload<{}>>;
 
 export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
 
+export type TBrand = Pure<Prisma.BrandGetPayload<{}>>;
+
 export type TFeedback = '' | 'yes' | 'no' | 'partially';
 
 type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;

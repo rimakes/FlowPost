@@ -6,7 +6,7 @@ import { CarouselContext } from '../ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { TColorPalette, TFontPallete } from '@/types/types';
+import { TBrand, TColorPalette, TFontPallete } from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
 import { ChevronsUpDown, Save } from 'lucide-react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
@@ -29,8 +29,13 @@ import { AuthorSettings } from './AuthorSettings';
 import { ColorPalette } from './ColorPalette';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { Slider } from '@/components/ui/slider';
+import { BrandKitSelector } from './BrandKitSelector';
 
-export const CarouselSidebar = () => {
+type CarouselSidebarProps = {
+    brands: TBrand[];
+};
+
+export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     return (
@@ -44,20 +49,21 @@ export const CarouselSidebar = () => {
             </div>
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
                 <SheetContent side={'left'} className='md:hidden p-0 w-3/4'>
-                    <SideBarContent />
+                    <SideBarContent brands={brands} />
                 </SheetContent>
             </Sheet>
             {/* DESKTOP SIDEBAR */}
-            <SideBarContent className='hidden md:block' />
+            <SideBarContent brands={brands} className='hidden md:block' />
         </>
     );
 };
 
 type SideBarContentProps = {
     className?: string;
+    brands: TBrand[];
 };
 
-export const SideBarContent = ({ className }: SideBarContentProps) => {
+export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
     const {
         carousel,
         carousel: {
@@ -75,7 +81,9 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
         setFontPalette,
         setDecorationId,
         setColorPalette,
-        toggleShowSwipeLabel,
+        editImage,
+        editName,
+        editHandle,
     } = useContext(CarouselContext);
 
     const router = useRouter();
@@ -92,6 +100,18 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
         setFontPopOverisOpen(false);
     };
 
+    const onBrandChange = (brandId: string) => {
+        const brand = brands.find((brand) => brand.id === brandId);
+        console.log(brand);
+        if (brand) {
+            setColorPalette(brand.colorPalette);
+            setFontPalette(brand.fontPalette);
+            editImage(brand.imageUrl);
+            editName(brand.name);
+            editHandle(brand.handle);
+        }
+    };
+
     return (
         <div
             className={cn(`sidebar basis-60 grow p-4 flex flex-col`, className)}
@@ -103,6 +123,14 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                     setCarouselAspectRatio={setCarouselAspectRatio}
                 />
                 <TemplateSelector />
+            </div>
+            <Separator className='mt-2 mb-2' />
+            <div className='flex flex-col gap-2'>
+                <h3>Ajustes de marca</h3>
+                <BrandKitSelector
+                    brands={brands}
+                    onBrandChange={onBrandChange}
+                />
             </div>
             <Separator className='mt-2 mb-2' />
             <Popover
