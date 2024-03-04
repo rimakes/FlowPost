@@ -14,7 +14,7 @@ import {
     TCarousel,
     TColorPalette,
     TDecorationId,
-    TFontPallete,
+    TFontPalette,
 } from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
@@ -46,7 +46,7 @@ const INITIAL_STATE = {
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
     setColorPalette: (colors: TColorPalette) => {},
-    setFontPalette: (fonts: TFontPallete) => {},
+    setFontPalette: (fonts: TFontPalette) => {},
     setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
     setDecorationId: (decorationId: TDecorationId) => {},
     setBackgroundImage: (
@@ -251,7 +251,7 @@ export function CarouselContextProvider({
         });
     };
 
-    const setFontPalette = (fonts: TFontPallete) => {
+    const setFontPalette = (fonts: TFontPalette) => {
         setCarousel((prev) => {
             const newCarousel = deepCopy(prev);
             newCarousel.settings.fontPalette.primary = fonts.primary;

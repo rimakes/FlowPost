@@ -2,7 +2,7 @@
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { Brand } from '@prisma/client';
 import { fontsMap } from '@/config/fonts';
-import { TFontNames } from '@/types/types';
+import { TFontName } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';
 import { toast } from 'sonner';
@@ -50,7 +50,7 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
                 />
                 <div
                     className={`h-6 w-6 rounded-full mt-2 ${
-                        fontsMap[brand.fontPalette.primary as TFontNames]
+                        fontsMap[brand.fontPalette.primary as TFontName]
                             .className
                     }`}
                 >

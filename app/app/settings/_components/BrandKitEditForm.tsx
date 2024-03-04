@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { fontsMap } from '@/config/fonts';
 import { brandKitsSettingsSchema } from '@/types/schemas';
-import { Pure, TFontNames, TStatus } from '@/types/types';
+import { Pure, TFontName, TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Brand } from '@prisma/client';
 import {
@@ -169,6 +169,9 @@ export function BrandKitEditForm({
                                     <PopoverContent>
                                         <>
                                             <ColorPaletteSelect
+                                                colorPalette={form.getValues(
+                                                    'colorPalette'
+                                                )}
                                                 onChange={(colorPalette) => {
                                                     setColorsPopOverisOpen(
                                                         false
@@ -206,7 +209,7 @@ export function BrandKitEditForm({
                                                     fontsMap[
                                                         form.watch(
                                                             'fontPalette'
-                                                        ).primary as TFontNames
+                                                        ).primary as TFontName
                                                     ].className
                                                 }`}
                                             >

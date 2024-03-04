@@ -29,7 +29,7 @@ import { ChevronsUpDown, ThumbsUp } from 'lucide-react';
 import { fontsMap } from '@/config/fonts';
 import { Brand } from '@prisma/client';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
-import { TFontNames } from '@/types/types';
+import { TFontName } from '@/types/types';
 import { saveBrandKit } from '@/app/_actions/settings-actions';
 import { toast } from 'sonner';
 import { BrandKitCard } from './BrandKitCard';
