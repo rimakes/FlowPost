@@ -23,18 +23,17 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
 
+    console.log(body, '===body')
+
     const userAccount = await db.account.findFirst({
       where: { userId: body?.userId },
     })
-
-    console.log(userAccount)
 
     if (!userAccount) {
       return NextResponse.json({ loginUser: false }, { status: 200 })
     }
 
     await scheduler(
-      // body?.scheduledPosts,
       scheduledPosts,
       userAccount?.providerAccountId,
       userAccount?.access_token

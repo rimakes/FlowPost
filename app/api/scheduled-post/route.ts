@@ -5,14 +5,13 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(req: NextRequest) {
   try {
     const body: any = await req?.json()
-    console.log(body, '====')
     const schedulePost: TScheduledPost = await db.scheduledPost.create({
       data: { ...body },
     })
 
     return NextResponse.json({ schedulePost }, { status: 200 })
   } catch (error: any) {
-    console.log(error, '===errro')
+    console.log(error, '===error')
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }
@@ -67,7 +66,7 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const body: any = await  req?.json()
+    const body: any = await req?.json()
     const checkScheduledPost = await db.scheduledPost.findUnique({
       where: {
         id: body?.id,

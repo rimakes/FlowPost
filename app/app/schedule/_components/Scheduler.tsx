@@ -101,14 +101,78 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     try {
       const postData = {
         userId: data?.user?.id,
-        scheduledPosts: betweenDates,
+        scheduledPost: betweenDates,
       }
 
       const response = await axios.post(
-        'http://localhost:3000/api/schedule-post',
+        'http://localhost:3000/api/scheduled-post/schedule',
         postData
       )
+
+      console.log(response?.data?.loginUser, '================')
       setAccountLinked(response?.data?.loginUser)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const handleCreateSchedulePost = async () => {
+    try {
+      const postData = {
+        userId: data?.user?.id,
+        scheduledPost: betweenDates,
+      }
+
+      const response = await axios.post(
+        'http://localhost:3000/api/scheduled-post',
+        postData
+      )
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const handleUpdateSchedulePost = async () => {
+    try {
+      const postData = {
+        id: '1',
+        scheduledPost: betweenDates,
+      }
+
+      const response = await axios.put(
+        'http://localhost:3000/api/scheduled-post',
+        postData
+      )
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const handleGetSchedulePosts = async () => {
+    try {
+      const postData = {
+        userId: data?.user?.id,
+      }
+
+      const response = await axios.put(
+        'http://localhost:3000/api/scheduled-post',
+        postData
+      )
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  const handleDeleteSchedulePosts = async () => {
+    try {
+      const postData = {
+        id: '1',
+      }
+
+      const response = await axios.put(
+        'http://localhost:3000/api/scheduled-post',
+        postData
+      )
     } catch (error) {
       console.error('Error:', error)
     }
@@ -116,6 +180,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
   useEffect(() => {
     handlePostRequest()
+    handleCreateSchedulePost()
   }, [betweenDates])
 
   const handleLinkedinLogin = async () => {
@@ -217,6 +282,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                 <button
                                   onClick={async () => {
                                     handlePostRequest()
+                                    handleCreateSchedulePost()
                                     handleClickDraftBtn(key)
                                   }}
                                   type='button'
