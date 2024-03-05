@@ -36,6 +36,8 @@ import {
     TExtendedFile,
     Thumbnails,
 } from '@/components/shared/dropzone/Thumbnails';
+import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
+// import { uploadFileToCloudinary } from '@/lib/utils';
 
 type BrandKitEditFormProps = {
     defaultValues: Omit<Pure<Brand>, 'author' | 'authorId'>;
@@ -61,19 +63,26 @@ export function BrandKitEditForm({
     const [status, setStatus] = useState<TStatus>('idle');
 
     const onDrop = (acceptedFiles: File[]) => {
-        setPictures(() => {
-            console.log('dropped');
-            return acceptedFiles.map((file) =>
-                Object.assign(file, {
-                    preview: URL.createObjectURL(file),
-                })
-            );
-        });
+        const fileWithPreview = acceptedFiles.map((file) =>
+            Object.assign(file, {
+                preview: URL.createObjectURL(file),
+            })
+        )[0];
+        setPictures(() => [fileWithPreview]);
+        form.setValue('imageUrl', fileWithPreview.preview);
     };
 
     const onSubmit = async (data: Omit<Pure<Brand>, 'author' | 'authorId'>) => {
         setStatus('loading');
         console.log(data);
+
+        const formData = new FormData();
+        formData.append('file', pictures[0]);
+
+        // Upload the picture to cloudinary
+        const cloudinaryResponse = await uploadFileToCloudinary(formData);
+        console.log('cld response!', cloudinaryResponse);
+        data.imageUrl = cloudinaryResponse as string;
         await saveBrandKit(
             { ...data, id: form.getValues('id') },
             session!.user.id

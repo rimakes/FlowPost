@@ -36,7 +36,12 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
     return (
         <div className='rounded-lg p-2 flex justify-between border items-center rounded-l-full gap-4'>
             <div className='relative h-20 w-20 rounded-full overflow-hidden'>
-                <Image alt='brand profile pic' src={brand.imageUrl} fill />
+                <Image
+                    alt='brand profile pic'
+                    src={brand.imageUrl}
+                    fill
+                    className='object-cover'
+                />
             </div>
             <div className='flex flex-col'>
                 <p className='font-semibold'>{brand.name}</p>
