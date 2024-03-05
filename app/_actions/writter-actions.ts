@@ -185,6 +185,7 @@ export async function upsertCarousel(carousel: TCarousel) {
 
 export const createWebmFile = async (formData: FormData) => {
     console.log(formData);
+
     // save the formdata to a file
     const fileRaw = formData.get('audio') as File; // get the file from the formdata
     const buffer = await fileRaw.arrayBuffer(); // convert the file to an array buffer
@@ -193,18 +194,22 @@ export const createWebmFile = async (formData: FormData) => {
     const filePath = `audio/${fileName}`;
     fs.writeFileSync(filePath, file);
 
-    const loader = new OpenAIWhisperAudio(filePath, {
-        clientOptions: {
-            // TODO: How can we add parameters to the client?
-            // response_format: 'vtt',
-        },
-    });
-    const docs = await loader.load();
-    console.log(docs);
+    try {
+        const loader = new OpenAIWhisperAudio(filePath, {
+            clientOptions: {
+                // TODO: How can we add parameters to the client?
+                // response_format: 'vtt',
+            },
+        });
+        const docs = await loader.load();
+        console.log(docs);
 
-    return docs[0].pageContent;
+        return docs[0].pageContent;
+    } finally {
+        // Delete the file at the end
+        fs.unlinkSync(filePath);
+    }
 };
-
 export const getPexelImages = async (query: string) => {
     console.log(query);
     const pictures = await axios.get(
