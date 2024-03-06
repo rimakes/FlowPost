@@ -113,6 +113,7 @@ export function CarouselContextProvider({
     }, [nextSlide, previousSlide]);
 
     const editTitle = (newTitle: string) => {
+        console.log('newTitle', newTitle);
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].title.content = newTitle;
         setCarousel(newCarousel);
@@ -295,7 +296,7 @@ export function CarouselContextProvider({
                 url: '',
                 alt: '',
                 opacity: 0.1,
-                position: 'center',
+                position: 'CENTER',
             };
         if (imageUrl) backgroundImage.url = imageUrl;
         if (options?.alt) backgroundImage.alt = options.alt;

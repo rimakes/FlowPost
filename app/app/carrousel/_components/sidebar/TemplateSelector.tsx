@@ -39,7 +39,7 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                                         }
                                     >
                                         <TextOnlySlide
-                                            text={
+                                            title={
                                                 carousel.slides[index].title
                                                     .content
                                             }

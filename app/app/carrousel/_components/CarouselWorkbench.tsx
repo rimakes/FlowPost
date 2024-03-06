@@ -145,7 +145,7 @@ export const SlideWithSettings = ({
                     ref={slideRef}
                 >
                     <TextOnlySlide
-                        text={slide.title.content}
+                        title={slide.title.content}
                         subtitle={slide.paragraphs[0].content}
                     />
                 </ContentSlideLayout>

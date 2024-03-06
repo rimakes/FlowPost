@@ -4,11 +4,11 @@ import { useRef, useEffect, useContext } from 'react';
 import ContentEditable from 'react-contenteditable';
 
 type TextOnlySlideProps = {
-    text: string;
+    title: string;
     subtitle?: string;
 };
 
-export const TextOnlySlide = ({ text, subtitle }: TextOnlySlideProps) => {
+export const TextOnlySlide = ({ title, subtitle }: TextOnlySlideProps) => {
     // const paragraphRef = useRef('');
     const { editTitle, editDescription } = useContext(CarouselContext);
 
@@ -24,7 +24,7 @@ export const TextOnlySlide = ({ text, subtitle }: TextOnlySlideProps) => {
                     // paragraphRef.current = event.target.value;
                     editTitle(event.target.value);
                 }}
-                html={text}
+                html={title}
                 className='text-[2em]
                     focus:outline-none focus:ring-0 focus:border-transparent
                     '
