@@ -1,5 +1,5 @@
 import StarterKit from '@tiptap/starter-kit';
-import SlashCommand from './slash-command/slash-command';
+// import SlashCommand from './slash-command/slash-command';
 // import TiptapImage from "@tiptap/extension-image";
 
 export const defaultExtensions = [
@@ -124,7 +124,7 @@ export const defaultExtensions = [
     //     },
     //     includeChildren: true,
     //   }),
-    SlashCommand,
+    // SlashCommand,
     //   TiptapUnderline,
     //   TextStyle,
     //   Color,
