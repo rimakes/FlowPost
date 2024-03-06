@@ -1,45 +1,45 @@
+'use client';
+
 import { cn } from '@/lib/utils';
-import { TColorPalette } from '@/types/types';
+import { TColor, TColorPalette, TOrientation } from '@/types/types';
 
 type ColorPaletteProps = {
     colors: TColorPalette;
-    onClick: (colorPalette: TColorPalette) => void;
+    onClick?: (colorPalette: TColorPalette) => void;
     className?: string;
+    orientation?: TOrientation;
 };
 
 export const ColorPalette = ({
-    colors: { font, background, accent },
-    onClick,
+    colors,
+    onClick = () => {},
     className,
+    orientation = 'horizontal',
 }: ColorPaletteProps) => {
-    const colorClasses = 'w-1/3 h-full border-none outline-none';
+    const colorClasses = 'flex-1';
+    const colorIndex = ['accent', 'primary', 'font', 'background'];
 
     return (
         <div
             className={cn(
-                `h-4 border rounded-l-md overflow-hidden rounded-r-md w-full flex min-w-[4rem]`,
+                `h-4 border rounded-l-md overflow-hidden rounded-r-md w-full flex`,
+                orientation === 'vertical'
+                    ? 'flex-col h-16 min-w-[1rem]'
+                    : 'flex-row min-w-[4rem] min-h-[1rem]',
                 className
             )}
-            onClick={() => onClick({ font, background, accent })}
+            onClick={() => onClick(colors)}
         >
-            <div
-                className={colorClasses}
-                style={{
-                    backgroundColor: font,
-                }}
-            ></div>
-            <div
-                className={colorClasses}
-                style={{
-                    backgroundColor: background,
-                }}
-            />
-            <div
-                className={colorClasses}
-                style={{
-                    backgroundColor: accent,
-                }}
-            />
+            {/* {colorDivs} */}
+            {colorIndex.map((color, index) => (
+                <div
+                    key={index}
+                    className={cn(colorClasses)}
+                    style={{
+                        backgroundColor: colors[color as TColor],
+                    }}
+                ></div>
+            ))}
         </div>
     );
 };

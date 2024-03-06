@@ -178,6 +178,7 @@ type SlideOverrides {
 type ColorPalette {
     font       String @default("#000000")
     background String @default("#ffffff")
+    primary    String @default("#ff0000")
     accent     String @default("#ff0000")
 }
 

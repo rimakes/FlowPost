@@ -26,6 +26,9 @@ export const ColorPaletteSelect = ({
     const changeAccent = (color: string) => {
         onChange({ ...colorPalette, accent: color });
     };
+    const changePrimary = (color: string) => {
+        onChange({ ...colorPalette, primary: color });
+    };
     return (
         <>
             <div className='w-full h-full grid grid-cols-3 gap-2'>
@@ -35,6 +38,7 @@ export const ColorPaletteSelect = ({
                             font: palette.font,
                             background: palette.background,
                             accent: palette.accent,
+                            primary: palette.primary,
                         }}
                         key={index}
                         onClick={onChange}
@@ -57,6 +61,11 @@ export const ColorPaletteSelect = ({
                 <SimpleColorPicker
                     value={colorPalette.accent}
                     onColorChange={changeAccent}
+                />
+                <Label>Primario</Label>
+                <SimpleColorPicker
+                    value={colorPalette.primary}
+                    onColorChange={changePrimary}
                 />
             </div>
         </>

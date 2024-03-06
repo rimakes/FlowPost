@@ -68,6 +68,7 @@ export const BrandKitsSettings = ({
             accent: '#000000',
             background: '#000000',
             font: '#000000',
+            primary: '#000000',
         },
     };
 

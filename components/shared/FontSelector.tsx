@@ -9,8 +9,8 @@ import { TFontName } from '@/types/types';
 import { ChevronDown } from 'lucide-react';
 
 type FontSelectorProps = {
-    setFontPalette: (font: string) => void;
-    font: string;
+    setFontPalette: (font: TFontName) => void;
+    font: TFontName;
 };
 export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
     const [fontPopOverisOpen, setFontPopOverisOpen] = useState(false);
@@ -20,7 +20,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
         font.toLowerCase().includes(query.toLowerCase())
     );
 
-    const onSetFontPalette = (font: string) => {
+    const onSetFontPalette = (font: TFontName) => {
         setFontPalette(font);
         setFontPopOverisOpen(false);
     };
@@ -53,7 +53,9 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                                     key={font}
                                     // @ts-ignore
                                     className={`${fontsMap[font].className} text-lg`}
-                                    onClick={() => onSetFontPalette(font)}
+                                    onClick={() =>
+                                        onSetFontPalette(font as TFontName)
+                                    }
                                 >
                                     {font}
                                 </Button>

@@ -112,6 +112,14 @@ export type TFontName = keyof typeof fontsMap;
 
 export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
 
+export type TColor = keyof TColorPalette;
+
+export type TFont = keyof TFontPalette;
+
 export type TFontPalette = Prisma.FontPaletteGetPayload<{}>;
 
 export type TDecorationId = keyof typeof decorationMap;
+
+export type TOrientation = 'horizontal' | 'vertical';
+
+export type TMode = 'light' | 'dark';
