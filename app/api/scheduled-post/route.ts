@@ -51,11 +51,11 @@ export async function UPDATE(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const body: any = await req?.json()
-
-    const scheduledPost = await db.scheduledPost.findFirst({
+    const searchParams = new URLSearchParams(req.nextUrl.search)
+    const userId: any = searchParams.get('UserId')
+    const scheduledPost = await db.scheduledPost.findMany({
       where: {
-        userId: body?.userId,
+        userId,
       },
     })
     return NextResponse.json({ scheduledPost }, { status: 200 })
@@ -66,12 +66,16 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const body: any = await req?.json()
-    const checkScheduledPost = await db.scheduledPost.findUnique({
+    const searchParams = new URLSearchParams(req.nextUrl.search)
+    const id: any = searchParams.get('id')
+    const deleteData: any = searchParams.get('deleteData')
+    const checkScheduledPost: any = await db.scheduledPost.findUnique({
       where: {
-        id: body?.id,
+        id,
       },
     })
+
+    const postId: string = checkScheduledPost?.scheduledPost?.id
 
     if (!checkScheduledPost) {
       return NextResponse.json(
@@ -84,7 +88,16 @@ export async function DELETE(req: NextRequest) {
         id: checkScheduledPost?.id,
       },
     })
-    return NextResponse.json({ delete: true }, { status: 200 })
+
+    if (deleteData) {
+      await db.linkedinPost.delete({
+        where: {
+          id: postId,
+        },
+      })
+      return NextResponse.json({ delete: true }, { status: 200 })
+    }
+    return NextResponse.json({ unscheduled: true }, { status: 200 })
   } catch (error) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }

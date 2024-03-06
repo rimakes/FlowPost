@@ -41,7 +41,7 @@ const ViewMore = ({
                     </p>
                   </div>
                 </div>
-                <div className='px-4 sm:py-2 sm:px-6 overflow-y-auto max-h-[68vh] lg:max-h-[68vh]'>
+                <div className='px-4 sm:py-2 overflow-y-auto max-h-[68vh] lg:max-h-[68vh]'>
                   <div className='space-y-6'>
                     <div className='px-4 py-2.5 rounded-lg bg-success-50 ring-1 ring-success-200 ring-inset gap-2 flex items-center justify-center'>
                       <svg
@@ -91,8 +91,8 @@ const ViewMore = ({
                   </div>
                 </div>
                 <div className='px-4 py-5 sm:px-6'>
-                  <div className='flex items-center gap-4 sm:justify-between'>
-                    <button
+                  <div className='flex items-center gap-4 sm:justify-end'>
+                    {/* <button
                       onClick={() => {
                         setViewMoreModal(false)
                         setEditDetailsModal(true)
@@ -110,7 +110,7 @@ const ViewMore = ({
                         <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
                       </svg>
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => setViewMoreModal(false)}
                       type='button'

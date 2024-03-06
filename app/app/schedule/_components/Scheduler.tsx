@@ -3,21 +3,18 @@ import { Heading } from '@/components/shared/Heading'
 import { ChevronLeft } from 'lucide-react'
 import { ChevronRight } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import DraftModal from './draftModal'
 import axios from 'axios'
 import { signIn, useSession } from 'next-auth/react'
 import ViewMore from './viewMore'
-import { PostWritterContextProvider } from '../../post-writter/_components/PostWritterProvider'
-import { PostWritterResult } from '../../post-writter/_components/GeneratedPost'
 
 interface userPostsProps {
   userPosts: any
 }
 
 export default function Scheduler({ userPosts }: userPostsProps) {
-  // Get current date
   const { data } = useSession()
   const currentDate: any = new Date()
   const [accountLinked, setAccountLinked] = useState(false)
@@ -36,6 +33,24 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
   const [viewMoreModal, setViewMoreModal] = useState(false)
   const [editDetailsModal, setEditDetailsModal] = useState(false)
+  const [scheduledPosts, setScheduledPosts] = useState<any>([])
+  const [isOpen, setIsOpen] = useState<any>()
+
+  const popoverRef: any = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setIsOpen(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   const getDates = (startDate: any, endDate: any) => {
     const dateList = []
@@ -54,16 +69,37 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     const datesBetween = getDates(startDate, endDate)
     setBetweenDates(
       datesBetween.map((date) => {
-        return {
-          date: date.toLocaleDateString('en-US', {
-            weekday: 'long',
-            month: 'long', // abbreviated month name
-            day: '2-digit', // two-digit day of the month
-          }),
+        const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
+          (item: any) =>
+            item?.date ===
+            date.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long', // abbreviated month name
+              day: '2-digit', // two-digit day of the month
+            })
+        )
+
+        if (getDataByDate) {
+          return {
+            date: date.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long', // abbreviated month name
+              day: '2-digit', // two-digit day of the month
+            }),
+            ...getDataByDate,
+          }
+        } else {
+          return {
+            date: date.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long', // abbreviated month name
+              day: '2-digit', // two-digit day of the month
+            }),
+          }
         }
       })
     )
-  }, [startDate, endDate])
+  }, [startDate, endDate, scheduledPosts])
 
   const handleNext = () => {
     const newStartDate = new Date(startDate)
@@ -72,6 +108,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     newEndDate.setDate(newEndDate.getDate() + 4)
     setStartDate(newStartDate.toISOString().split('T')[0])
     setEndDate(newEndDate.toISOString().split('T')[0])
+    handleGetSchedulePosts()
   }
 
   const handlePrevious = () => {
@@ -81,6 +118,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     newEndDate.setDate(newEndDate.getDate() - 4)
     setStartDate(newStartDate.toISOString().split('T')[0])
     setEndDate(newEndDate.toISOString().split('T')[0])
+    handleGetSchedulePosts()
   }
 
   // Format dates for display
@@ -109,24 +147,27 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         postData
       )
 
-      console.log(response?.data?.loginUser, '================')
       setAccountLinked(response?.data?.loginUser)
     } catch (error) {
       console.error('Error:', error)
     }
   }
 
-  const handleCreateSchedulePost = async () => {
+  const handleCreateSchedulePost = async (selectedData: any, date: any) => {
     try {
+      const { date, ...rest } = selectedData
+
       const postData = {
         userId: data?.user?.id,
-        scheduledPost: betweenDates,
+        date,
+        scheduledPost: rest,
       }
 
       const response = await axios.post(
         'http://localhost:3000/api/scheduled-post',
         postData
       )
+      handleGetSchedulePosts()
     } catch (error) {
       console.error('Error:', error)
     }
@@ -150,65 +191,63 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
   const handleGetSchedulePosts = async () => {
     try {
-      const postData = {
-        userId: data?.user?.id,
-      }
-
-      const response = await axios.put(
-        'http://localhost:3000/api/scheduled-post',
-        postData
+      const response = await axios.get(
+        `http://localhost:3000/api/scheduled-post?UserId=${data?.user?.id}`
       )
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
-
-  const handleDeleteSchedulePosts = async () => {
-    try {
-      const postData = {
-        id: '1',
-      }
-
-      const response = await axios.put(
-        'http://localhost:3000/api/scheduled-post',
-        postData
-      )
+      setScheduledPosts(response?.data)
+      // setBetweenDates(response)
     } catch (error) {
       console.error('Error:', error)
     }
   }
 
   useEffect(() => {
-    handlePostRequest()
-    handleCreateSchedulePost()
-  }, [betweenDates])
+    if (data?.user?.id) {
+      handleGetSchedulePosts()
+    }
+  }, [data])
+
+  const handleDeleteSchedulePosts = async (id: string, deleteData: boolean) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/scheduled-post?id=${id}&deleteData=${deleteData}`
+      )
+      handleGetSchedulePosts()
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
 
   const handleLinkedinLogin = async () => {
     const res = await signIn('linkedin')
-    console.log(res)
   }
 
   const handleSelect = async (item: any, key: number) => {
-    setBetweenDates(
-      betweenDates.map((items: any, index: number) => {
-        if (index === selectedDraftId) {
-          return {
-            ...items,
-            ...item,
-            time: new Date().toLocaleTimeString('en-US', {
-              hour: 'numeric',
-              minute: 'numeric',
-              hour12: true,
-            }),
-          }
+    let selectedData = betweenDates.map((items: any, index: number) => {
+      if (index === selectedDraftId) {
+        return {
+          ...items,
+          ...item,
+          time: new Date().toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          }),
         }
-        return items
-      })
+      }
+      return items
+    })
+
+    const newUploadedData = selectedData?.filter(
+      (item: any, key: number) => key === selectedDraftId
     )
+
+    if (newUploadedData?.length) {
+      handleCreateSchedulePost(newUploadedData[0], newUploadedData[0]?.date)
+    }
+    setBetweenDates(selectedData)
     setIsVoiceModalOpen(false)
   }
-
-  console.log(betweenDates)
 
   const handleClickDraftBtn = (key: number) => {
     setSelectedDraftId(key)
@@ -247,7 +286,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
           <Separator />
         </div>
         <div>
-          <div className='lg:flex grid w-full gap-8 pb-8 overflow-x-auto h-full'>
+          <div className='lg:flex grid w-full gap-8 pb-8 h-full'>
             {betweenDates.map((item: any, key: number) => {
               return (
                 <div className='w-full'>
@@ -263,15 +302,17 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                     <div className='flex flex-col justify-between space-y-4'>
                       <div className='flex items-center justify-between gap-4'>
                         <p className='text-sm font-medium text-gray-500'>
-                          {item?.time}
+                          {item?.scheduledPost?.time}
                         </p>
                       </div>
                       <div className='flex-1 flex items-center justify-center min-h-[100px]'>
                         <p className='text-base italic font-medium text-gray-400 line-clamp-4'>
-                          {item?.content ? item?.content : 'Empty...'}
+                          {item?.scheduledPost?.content
+                            ? item?.scheduledPost?.content
+                            : 'Empty...'}
                         </p>
                       </div>
-                      {!item?.content && (
+                      {!item?.scheduledPost?.content && (
                         <div className='flex items-center gap-2'>
                           <Dialog
                             open={isVoiceModalOpen}
@@ -282,7 +323,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                 <button
                                   onClick={async () => {
                                     handlePostRequest()
-                                    handleCreateSchedulePost()
                                     handleClickDraftBtn(key)
                                   }}
                                   type='button'
@@ -323,43 +363,41 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                         </div>
                       )}
 
-                      {item?.content && (
+                      {item?.scheduledPost?.content && (
                         <div className='flex items-center gap-2'>
                           <Dialog
                             open={viewMoreModal}
                             onOpenChange={setViewMoreModal}
                           >
                             <DialogTrigger asChild>
-                              <div className='flex items-center gap-2'>
-                                <div className='relative group w-full'>
-                                  <button
-                                    onClick={() => {
-                                      setViewMoreModal(true)
-                                      handleClickDraftBtn(key)
-                                    }}
-                                    type='button'
-                                    className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
+                              <div className='relative group w-full'>
+                                <button
+                                  onClick={() => {
+                                    setViewMoreModal(true)
+                                    handleClickDraftBtn(key)
+                                  }}
+                                  type='button'
+                                  className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
+                                >
+                                  <span className='sr-only'>View Post</span>
+                                  <svg
+                                    aria-hidden='true'
+                                    className='w-5 h-5 text-gray-400 group-hover:text-gray-500'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    viewBox='0 0 20 20'
+                                    fill='currentColor'
                                   >
-                                    <span className='sr-only'>View Post</span>
-                                    <svg
-                                      aria-hidden='true'
-                                      className='w-5 h-5 text-gray-400 group-hover:text-gray-500'
-                                      xmlns='http://www.w3.org/2000/svg'
-                                      viewBox='0 0 20 20'
-                                      fill='currentColor'
-                                    >
-                                      <path d='M10 12a2 2 0 100-4 2 2 0 000 4z'></path>
-                                      <path
-                                        fill-rule='evenodd'
-                                        d='M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z'
-                                        clip-rule='evenodd'
-                                      ></path>
-                                    </svg>
-                                  </button>
-                                  <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
-                                    View Post
-                                  </span>
-                                </div>
+                                    <path d='M10 12a2 2 0 100-4 2 2 0 000 4z'></path>
+                                    <path
+                                      fill-rule='evenodd'
+                                      d='M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z'
+                                      clip-rule='evenodd'
+                                    ></path>
+                                  </svg>
+                                </button>
+                                <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
+                                  View Post
+                                </span>
                               </div>
                             </DialogTrigger>
                             <DialogContent
@@ -374,7 +412,88 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                               />
                             </DialogContent>
                           </Dialog>
-                          <Dialog
+                          {/* <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                            <DialogTrigger asChild> */}
+                          <div className='relative group w-full'>
+                            <button
+                              className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
+                              onClick={() => {
+                                if (isOpen === key) {
+                                  setIsOpen(null)
+                                } else {
+                                  setIsOpen(key)
+                                }
+                              }}
+                            >
+                              <svg
+                                aria-hidden='true'
+                                className='w-5 h-5 text-gray-400 group-hover:text-gray-500'
+                                xmlns='http://www.w3.org/2000/svg'
+                                viewBox='0 0 20 20'
+                                fill='currentColor'
+                              >
+                                <path d='M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z'></path>
+                              </svg>
+                            </button>
+                            {isOpen == key && (
+                              <ul
+                                ref={popoverRef}
+                                className='absolute text-gray-700 pt-1'
+                              >
+                                <li>
+                                  <button
+                                    onClick={() =>
+                                      handleDeleteSchedulePosts(item?.id, false)
+                                    }
+                                    className='rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-2 flex whitespace-no-wrap gap-[5px] cursor-pointer'
+                                  >
+                                    <svg
+                                      aria-hidden='true'
+                                      className='w-5 h-5 text-gray-500 group-hover:text-gray-600'
+                                      xmlns='http://www.w3.org/2000/svg'
+                                      viewBox='0 0 20 20'
+                                      fill='currentColor'
+                                    >
+                                      <path
+                                        fill-rule='evenodd'
+                                        d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                                        clip-rule='evenodd'
+                                      ></path>
+                                    </svg>{' '}
+                                    <span className='text-[16px]'>
+                                      Unschedule
+                                    </span>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() =>
+                                      handleDeleteSchedulePosts(item?.id, true)
+                                    }
+                                    className='bg-gray-200 hover:bg-gray-400 py-2 px-2 flex whitespace-no-wrap gap-[5px] cursor-pointer'
+                                  >
+                                    <svg
+                                      aria-hidden='true'
+                                      className='w-5 h-5 text-gray-500 group-hover:text-gray-600'
+                                      xmlns='http://www.w3.org/2000/svg'
+                                      viewBox='0 0 20 20'
+                                      fill='currentColor'
+                                    >
+                                      <path
+                                        fill-rule='evenodd'
+                                        d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                                        clip-rule='evenodd'
+                                      ></path>
+                                    </svg>{' '}
+                                    <span className='text-[16px]'>Delete</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            )}
+                          </div>
+                          {/* </DialogTrigger>
+                          </Dialog> */}
+                          {/* <Dialog
                             open={editDetailsModal}
                             onOpenChange={setEditDetailsModal}
                           >
@@ -412,6 +531,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                               className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
                             >
                               <div className='mt-6 2xl:flex gap-8'>
+                                <EditPostModal
+                                  initialPost={item}
+                                  className='flex-1'
+                                />
                                 <PostWritterContextProvider initialPost={item}>
                                   <PostWritterResult
                                     className='flex-1'
@@ -423,7 +546,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                 </PostWritterContextProvider>
                               </div>
                             </DialogContent>
-                          </Dialog>
+                          </Dialog> */}
                         </div>
                       )}
                     </div>
