@@ -2,7 +2,7 @@
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { Brand } from '@prisma/client';
 import { fontsMap } from '@/config/fonts';
-import { TFontName } from '@/types/types';
+import { TFont, TFontName } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';
 import { toast } from 'sonner';
@@ -59,7 +59,7 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
                 {Object.keys(brand.fontPalette).map((fontType) => (
                     <div
                         key={fontType}
-                        className={`flex items-center gap-2 ${fontsMap[brand.fontPalette[fontType as TFontName]].className}`}
+                        className={`flex items-center gap-2 ${fontsMap[brand.fontPalette[fontType as TFont] as TFontName].className}`}
                     >
                         {fontType}
                     </div>
