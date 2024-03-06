@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
 
-    console.log(body, '===body')
-
     const userAccount = await db.account.findFirst({
       where: { userId: body?.userId },
     })
@@ -27,7 +25,6 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     )
   } catch (error: any) {
-    console.log(error)
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }

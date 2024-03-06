@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ schedulePost }, { status: 200 })
   } catch (error: any) {
-    console.log(error, '===error')
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }
