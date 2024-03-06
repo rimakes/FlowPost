@@ -8,6 +8,7 @@ import { TCarousel } from '@/types/types';
 import { getSession } from 'next-auth/react';
 import { getBrandsByUserId } from '@/app/_actions/shared-actions';
 import { auth } from '@/auth';
+import { WorkbenchTest } from '../../better-carousel/components/WorkbenchTest';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -58,7 +59,7 @@ export default async function CarouselPage({ params }: props) {
                     className={`flex md:flex-row flex-col border-t flex-wrap w-full border-0 border-re-500 grow`}
                 >
                     <CarouselSidebar brands={userBrands} />
-                    <CarouselWorkbench />
+                    <WorkbenchTest />
                 </div>
             </CarouselContextProvider>
         </>

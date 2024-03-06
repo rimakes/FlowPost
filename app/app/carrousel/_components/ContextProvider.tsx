@@ -11,6 +11,7 @@ import { deepCopy } from '@/lib/utils';
 import { AspectRatio } from '@prisma/client';
 import {
     TAspectRatioEnum,
+    TBrand,
     TCarousel,
     TColorPalette,
     TDecorationId,
@@ -62,6 +63,9 @@ const INITIAL_STATE = {
     toggleShowProfilePic: () => {},
     toggleShowHandle: () => {},
     toggleShowAuthorInFirstOnly: () => {},
+    getCompleteBrand: () => {
+        return {} as Omit<TBrand, 'authorId' | 'id'>;
+    },
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -244,9 +248,7 @@ export function CarouselContextProvider({
     const setColorPalette = (colors: TColorPalette) => {
         setCarousel((prev) => {
             const newCarousel = deepCopy(prev);
-            newCarousel.settings.colorPalette.font = colors.font;
-            newCarousel.settings.colorPalette.background = colors.background;
-            newCarousel.settings.colorPalette.accent = colors.accent;
+            newCarousel.settings.colorPalette = colors;
             return newCarousel;
         });
     };
@@ -352,9 +354,19 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const getCompleteBrand = () => {
+        return {
+            ...carousel.author,
+            colorPalette: carousel.settings.colorPalette,
+            fontPalette: carousel.settings.fontPalette,
+            imageUrl: carousel.author.pictureUrl,
+        };
+    };
+
     return (
         <CarouselContext.Provider
             value={{
+                getCompleteBrand,
                 toggleShowAuthorInFirstOnly,
                 toggleShowHandle,
                 toggleShowProfilePic,

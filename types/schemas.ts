@@ -110,5 +110,6 @@ export const brandKitsSettingsSchema = z.object({
         accent: z.string(),
         background: z.string(),
         font: z.string(),
+        primary: z.string(),
     }),
 });

@@ -2,12 +2,13 @@
 
 import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useContext, useEffect, useRef } from 'react';
-import { CarouselContext } from './ContextProvider';
-import { SlideSettings } from './SlideSettings';
-import { Slide } from './Slide';
-import { TSlide } from '@/types/types';
+import { ReactNode, useContext, useEffect, useRef } from 'react';
+import { TBrand, TSlide } from '@/types/types';
 import { fontsMap, handwritten } from '@/config/fonts';
+import { CarouselContext } from '../../carrousel/_components/ContextProvider';
+import { SlideSettings } from '../../carrousel/_components/SlideSettings';
+import { BetterSlide } from './BetterSlide';
+import { TextOnlySlide } from './slideContents/TextOnlySlide';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -29,7 +30,11 @@ const translateClasses = {
     1500: '-translate-x-[1500%]',
 } as const;
 
-export const CarouselWorkbench = () => {
+type CarouselWorkbenchProps = {
+    brand: TBrand;
+};
+
+export const CarouselWorkbench = ({ brand }: CarouselWorkbenchProps) => {
     const { currentSlide, nextSlide, previousSlide, carousel } =
         useContext(CarouselContext);
     return (
@@ -54,8 +59,15 @@ export const CarouselWorkbench = () => {
                         key={index}
                         isActive={currentSlide === index}
                         slideNumber={index}
+                        numberOfSlides={carousel.slides.length}
+                        brand={brand}
                         className={`${translateClasses[(100 * currentSlide) as keys]} transition-transform duration-300`}
-                    />
+                    >
+                        <TextOnlySlide
+                            text={slide.title.content}
+                            subtitle={slide.tagline.content}
+                        />
+                    </SlideWithSettings>
                 ))}
             </div>
         </div>
@@ -67,6 +79,9 @@ type SlideWithSettingsProps = {
     isActive: boolean;
     slide: TSlide;
     slideNumber: number;
+    numberOfSlides: number;
+    brand: TBrand;
+    children?: ReactNode;
 };
 
 export const SlideWithSettings = ({
@@ -74,6 +89,9 @@ export const SlideWithSettings = ({
     isActive,
     slide,
     slideNumber,
+    numberOfSlides,
+    brand,
+    children,
 }: SlideWithSettingsProps) => {
     const {
         carousel: {
@@ -115,15 +133,19 @@ export const SlideWithSettings = ({
                 // @ts-ignore
                 className={`${fontsMap[fontPalette.primary].className} border border-dashed`}
             >
-                <Slide
+                <BetterSlide
                     isActive={isActive}
                     setIsActive={() => {
                         setCurrentSlideTo(slideNumber);
                     }}
-                    slide={slide}
-                    slideNumber={slideNumber}
                     ref={slideRef}
-                />
+                    brand={brand}
+                    mode='light'
+                    currentSlide={currentSlide}
+                    numberOfSlides={numberOfSlides}
+                >
+                    {children}
+                </BetterSlide>
             </div>
             <SlideSettings isActive={isActive} slide={slide} />
         </div>

@@ -2,7 +2,7 @@
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { Brand } from '@prisma/client';
 import { fontsMap } from '@/config/fonts';
-import { TFontName } from '@/types/types';
+import { TFont, TFontName } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';
 import { toast } from 'sonner';
@@ -35,32 +35,35 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
 
     return (
         <div className='rounded-lg p-2 flex justify-between border items-center rounded-l-full gap-4'>
-            <div className='relative h-20 w-20 rounded-full overflow-hidden'>
-                <Image
-                    alt='brand profile pic'
-                    src={brand.imageUrl}
-                    fill
-                    className='object-cover'
-                />
-            </div>
-            <div className='flex flex-col'>
-                <p className='font-semibold'>{brand.name}</p>
-                <p className='text-primary/50'>{brand.handle}</p>
-            </div>
-            <div className='flex flex-col'>
-                <ColorPalette
-                    className='w-16'
-                    colors={brand.colorPalette}
-                    onClick={() => {}}
-                />
-                <div
-                    className={`h-6 w-6 rounded-full mt-2 ${
-                        fontsMap[brand.fontPalette.primary as TFontName]
-                            .className
-                    }`}
-                >
-                    {brand.fontPalette.primary}
+            <div className='flex items-center gap-4'>
+                <div className='relative h-20 w-20 rounded-full overflow-hidden'>
+                    <Image
+                        alt='brand profile pic'
+                        src={brand.imageUrl}
+                        fill
+                        className='object-cover'
+                    />
                 </div>
+                <div className='flex flex-col'>
+                    <p className='font-semibold'>{brand.name}</p>
+                    <p className='text-primary/50'>{brand.handle}</p>
+                </div>
+            </div>
+            <ColorPalette
+                orientation='vertical'
+                className='w-4'
+                colors={brand.colorPalette}
+                onClick={() => {}}
+            />
+            <div className='flex-col gap-2'>
+                {Object.keys(brand.fontPalette).map((fontType) => (
+                    <div
+                        key={fontType}
+                        className={`flex items-center gap-2 ${fontsMap[brand.fontPalette[fontType as TFont] as TFontName].className}`}
+                    >
+                        {fontType}
+                    </div>
+                ))}
             </div>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
