@@ -231,10 +231,10 @@ model PostCategory {
 }
 
 model ScheduledPost {
-    date        String         
+    date        String
     id          String        @id @default(auto()) @map("_id") @db.ObjectId
     userId      String        @db.ObjectId
-    scheduledPost  Json[]
+    scheduledPost  Json
     createdAt   DateTime      @default(now())
     updatedAt   DateTime      @updatedAt
 
