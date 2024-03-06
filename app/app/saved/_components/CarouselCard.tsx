@@ -1,7 +1,6 @@
 'use client';
 
 import { TCarousel } from '@/types/types';
-import { Slide } from '../../carrousel/_components/Slide';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/auth';
 import { useSession } from 'next-auth/react';

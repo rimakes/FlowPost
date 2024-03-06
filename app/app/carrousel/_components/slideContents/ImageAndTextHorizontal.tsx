@@ -1,6 +1,6 @@
 import { TBrand, TOrientation } from '@/types/types';
 import Image from 'next/image';
-import { GradientBlob } from '../GradientBlob';
+import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
 
 type ImageAndTextVertical = {
@@ -49,7 +49,7 @@ export const ImageAndTextHorizontal = ({
                 }}
             >
                 <div className='relative w-fit'>
-                    <GradientBlob brand={brand} className='blur-3xl' />
+                    <SlideGradientBlob brand={brand} className='blur-3xl' />
                     <div
                         className='relative h-44 overflow-hidden w-44'
                         style={{

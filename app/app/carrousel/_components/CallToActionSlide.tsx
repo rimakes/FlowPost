@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
-import { ASPECT_RATIOS_MAP } from '../../carrousel/_components/const';
-import { ProfileCard } from './ProfileCard';
-import { ProgressBar } from './ProgressBar';
-import { GradientBlob } from './GradientBlob';
-import { aspectRatioClasses, AspectRatioKeys } from './BetterSlide';
+import { ASPECT_RATIOS_MAP } from './const';
+import { SlideProfileCard } from './slideParts/SlideProfileCard';
+import { SlideProgressBar } from './slideParts/SlideProgressBar';
+import { SlideGradientBlob } from './slideParts/SlideGradientBlob';
+import { aspectRatioClasses, AspectRatioKeys } from './ContentSlideLayout';
 
 type CallToActionSlideProps = {
     brand: TBrand;
@@ -41,13 +41,13 @@ relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as Aspect
             }}
             // onClick={() => setIsActive(true)}
         >
-            <ProgressBar
+            <SlideProgressBar
                 colorPalette={brand.colorPalette}
                 currentSlide={6}
                 numberOfSlides={6}
                 mode={mode}
             />
-            <GradientBlob brand={brand} />
+            <SlideGradientBlob brand={brand} />
 
             <div
                 className={cn(
@@ -72,7 +72,7 @@ relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as Aspect
                 <h1 className='text-3xl'>{title}</h1>
                 <p className='text-lg'>{subtitle}</p>
                 <p>{callToActionText}</p>
-                <ProfileCard
+                <SlideProfileCard
                     colorPalette={brand.colorPalette}
                     fontPalette={brand.fontPalette}
                     imageUrl={brand.imageUrl}

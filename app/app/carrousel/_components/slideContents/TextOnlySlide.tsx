@@ -9,19 +9,19 @@ type TextOnlySlideProps = {
 };
 
 export const TextOnlySlide = ({ text, subtitle }: TextOnlySlideProps) => {
-    const paragraphRef = useRef('');
-    const { editTitle } = useContext(CarouselContext);
+    // const paragraphRef = useRef('');
+    const { editTitle, editDescription } = useContext(CarouselContext);
 
-    useEffect(() => {
-        paragraphRef.current = text;
-    }, [text]);
+    // REVIEW: do we really need this?
+    // useEffect(() => {
+    //     paragraphRef.current = text;
+    // }, [text]);
 
     return (
         <div className='flex flex-col gap-2 h-full w-full z-10 justify-center -mt-6'>
             <ContentEditable
                 onChange={(event) => {
-                    console.log(event.target.value);
-                    paragraphRef.current = event.target.value;
+                    // paragraphRef.current = event.target.value;
                     editTitle(event.target.value);
                 }}
                 html={text}
@@ -36,20 +36,11 @@ export const TextOnlySlide = ({ text, subtitle }: TextOnlySlideProps) => {
                     lineHeight: 1.1,
                 }}
             />
-            {/* <h1
-                style={{
-                    fontSize: '2.5rem',
-                    lineHeight: 1.1,
-                }}
-            >
-                {text}
-            </h1> */}
             {subtitle && (
                 <ContentEditable
                     onChange={(event) => {
-                        console.log(event.target.value);
-                        paragraphRef.current = event.target.value;
-                        editTitle(event.target.value);
+                        // paragraphRef.current = event.target.value;
+                        editDescription(event.target.value);
                     }}
                     html={subtitle}
                     className='text-[1rem] focus:outline-none focus:ring-0 focus:border-transparent'

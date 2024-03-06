@@ -1,4 +1,4 @@
-import { decorationMap } from '@/app/app/carrousel/_components/Decoration';
+import { decorationMap } from '@/app/app/carrousel/_components/slideParts/SlideDecoration';
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import { fontsMap } from '@/config/fonts';
@@ -123,3 +123,10 @@ export type TDecorationId = keyof typeof decorationMap;
 export type TOrientation = 'horizontal' | 'vertical';
 
 export type TMode = 'light' | 'dark';
+
+export type TImage = {
+    url: string;
+    alt: string;
+    opacity: number;
+    position: string;
+};
