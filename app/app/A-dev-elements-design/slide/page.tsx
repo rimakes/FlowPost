@@ -3,27 +3,19 @@
 
 import { auth } from '@/auth';
 import { fakeCarousel } from '../../carrousel/_components/const';
-import { TBrand, TCarousel, TColorPalette } from '@/types/types';
+import { TCarousel, TColorPalette } from '@/types/types';
 import { Heading } from '@/components/shared/Heading';
 import Container from '@/components/shared/container';
 import { getBrandsByUserId } from '@/app/_actions/shared-actions';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
-import { Avatar } from '../components/Avatar';
-import { ProfileCard } from '../components/ProfileCard';
+import { SlideAvatar } from '../../carrousel/_components/slideParts/SlideAvatar';
+import { SlideProfileCard } from '../../carrousel/_components/slideParts/SlideProfileCard';
 import { ReactNode } from 'react';
-import { SlideFotter } from '../components/SlideFotter';
+import { SlideFotter } from '../../carrousel/_components/slideParts/SlideFotter';
 import { cn } from '@/lib/utils';
-import { ProgressBar } from '../components/ProgressBar';
-import { CallToActionSlide } from '../components/CallToActionSlide';
-import { ListSlide } from '../components/slideContents/ListSlide';
-import { BetterSlide } from '../components/BetterSlide';
-import { ImageAndTextVertical } from '../components/slideContents/ImageAndTextVertical';
-import { ImageAndTextHorizontal } from '../components/slideContents/ImageAndTextHorizontal';
+import { SlideProgressBar } from '../../carrousel/_components/slideParts/SlideProgressBar';
 import { CarouselContextProvider } from '../../carrousel/_components/ContextProvider';
-import { CarouselWorkbench } from '../components/Workbench';
-import { TextOnlySlide } from '../components/slideContents/TextOnlySlide';
-import { SlideWithSettings } from '../../carrousel/_components/Workbench';
-import { WorkbenchTest } from '../components/WorkbenchTest';
+import { CarouselWorkbench } from '../../carrousel/_components/CarouselWorkbench';
 
 type props = {
     params: {
@@ -71,7 +63,7 @@ export default async function CarouselPage({ params }: props) {
                             backgroundColor: brand.colorPalette.background,
                         }}
                     >
-                        <Avatar
+                        <SlideAvatar
                             imageUrl={brand.imageUrl}
                             mode='light'
                             colorPalette={brand.colorPalette}
@@ -83,7 +75,7 @@ export default async function CarouselPage({ params }: props) {
                             backgroundColor: brand.colorPalette.font,
                         }}
                     >
-                        <Avatar
+                        <SlideAvatar
                             imageUrl={brand.imageUrl}
                             mode='dark'
                             colorPalette={brand.colorPalette}
@@ -93,7 +85,7 @@ export default async function CarouselPage({ params }: props) {
 
                 <div className='flex gap-2'>
                     <Variant mode='light' colorPalette={brand.colorPalette}>
-                        <ProfileCard
+                        <SlideProfileCard
                             colorPalette={brand.colorPalette}
                             fontPalette={brand.fontPalette}
                             imageUrl={brand.imageUrl}
@@ -102,7 +94,7 @@ export default async function CarouselPage({ params }: props) {
                         />
                     </Variant>
                     <Variant mode='dark' colorPalette={brand.colorPalette}>
-                        <ProfileCard
+                        <SlideProfileCard
                             colorPalette={brand.colorPalette}
                             fontPalette={brand.fontPalette}
                             imageUrl={brand.imageUrl}
@@ -152,7 +144,7 @@ export default async function CarouselPage({ params }: props) {
                         colorPalette={brand.colorPalette}
                         className='w-[50%] relative'
                     >
-                        <ProgressBar
+                        <SlideProgressBar
                             colorPalette={brand.colorPalette}
                             currentSlide={1}
                             numberOfSlides={6}
@@ -164,7 +156,7 @@ export default async function CarouselPage({ params }: props) {
                         colorPalette={brand.colorPalette}
                         className='w-[50%] relative'
                     >
-                        <ProgressBar
+                        <SlideProgressBar
                             colorPalette={brand.colorPalette}
                             currentSlide={1}
                             numberOfSlides={6}
@@ -197,7 +189,7 @@ export default async function CarouselPage({ params }: props) {
                     mode='dark'
                 /> */}
                 <CarouselContextProvider initialCarousel={carousel}>
-                    <WorkbenchTest />
+                    <CarouselWorkbench />
                 </CarouselContextProvider>
                 {/* <CarouselWorkbench brand={brand} /> */}
             </div>

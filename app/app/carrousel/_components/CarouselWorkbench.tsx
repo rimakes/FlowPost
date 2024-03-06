@@ -3,11 +3,11 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ReactNode, useContext, useEffect, useRef } from 'react';
 import { TBrand, TDecorationId, TSlide } from '@/types/types';
-import { CarouselContext } from '../../carrousel/_components/ContextProvider';
-import { BetterSlide } from './BetterSlide';
+import { CarouselContext } from './ContextProvider';
+import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
 import { cn } from '@/lib/utils';
-import { SlideSettings } from '../../carrousel/_components/SlideSettings';
+import { SlideSettings } from './SlideSettings';
 import { fontsMap } from '@/config/fonts';
 import { get } from 'http';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
@@ -35,7 +35,7 @@ const translateClasses = {
 
 type CarouselWorkbenchProps = {};
 
-export const WorkbenchTest = ({}: CarouselWorkbenchProps) => {
+export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
     const {
         currentSlide,
         nextSlide,
@@ -104,18 +104,8 @@ export const SlideWithSettings = ({
     const {
         carousel: {
             author: { handle, name, pictureUrl },
-            settings: {
-                aspectRatio,
-                alternateColors,
-                backgroundPattern,
-                colorPalette,
-                fontPalette,
-                showAuthor,
-                showCounter,
-                showSwipeLabel,
-            },
+            settings: { fontPalette },
         },
-        arrayOfRefs,
         setCurrentSlideTo,
         currentSlide,
         addRef,
@@ -141,7 +131,7 @@ export const SlideWithSettings = ({
                 // @ts-ignore
                 className={`${fontsMap[fontPalette.primary].className}`}
             >
-                <BetterSlide
+                <ContentSlideLayout
                     brand={brand}
                     isActive={currentSlide === slideNumber}
                     mode='light'
@@ -151,19 +141,14 @@ export const SlideWithSettings = ({
                     currentSlide={slideNumber}
                     numberOfSlides={numberOfSlides}
                     decorationId={decorationId}
+                    backgroundImage={slide.backgroundImage!}
                     ref={slideRef}
                 >
                     <TextOnlySlide
                         text={slide.title.content}
                         subtitle={slide.paragraphs[0].content}
                     />
-                    {/* <ImageAndTextHorizontal
-                        brand={brand}
-                        imageUrl='https://images.pexels.com/photos/20432992/pexels-photo-20432992/free-photo-of-funchal-at-madeira.jpeg'
-                        title='This is a title here'
-                        description='lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
-                    /> */}
-                </BetterSlide>
+                </ContentSlideLayout>
             </div>
             <SlideSettings isActive={isActive} slide={slide} />
         </div>

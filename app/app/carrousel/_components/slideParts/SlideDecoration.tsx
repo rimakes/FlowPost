@@ -6,7 +6,7 @@
 
 import { cn } from '@/lib/utils';
 import { ArrowRight, Circle, TrendingUp } from 'lucide-react';
-import { TopoSVG } from './svgs/Topo';
+import { TopoSVG } from '../svgs/Topo';
 
 type DecorativeElementsProps = {
     primaryColor: string;
@@ -1004,7 +1004,7 @@ export const decorationMap = {
     Blobs,
 };
 
-export const Decoration = ({
+export const SlideDecoration = ({
     primaryColor,
     secondaryColor,
     tertiaryColor,

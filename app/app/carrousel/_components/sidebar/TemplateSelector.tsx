@@ -3,12 +3,14 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { range } from '@mantine/hooks';
 import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
-import { Slide } from '../Slide';
+import { ContentSlideLayout } from '@/app/app/carrousel/_components/ContentSlideLayout';
+import { TBrand } from '@/types/types';
+import { TextOnlySlide } from '@/app/app/carrousel/_components/slideContents/TextOnlySlide';
 
 type TemplateSelectorProps = {};
 
 export const TemplateSelector = ({}: TemplateSelectorProps) => {
-    const { currentSlide, carousel, setCurrentSlideTo } =
+    const { currentSlide, carousel, setCurrentSlideTo, getCompleteBrand } =
         useContext(CarouselContext);
     return (
         <Dialog>
@@ -24,12 +26,29 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                         return (
                             <div className='flex' key={index}>
                                 {carousel.slides.map((slide, index) => (
-                                    <Slide
+                                    <ContentSlideLayout
                                         className=''
                                         key={index}
-                                        slide={slide}
-                                        slideNumber={index}
-                                    />
+                                        brand={getCompleteBrand() as TBrand}
+                                        currentSlide={currentSlide}
+                                        numberOfSlides={carousel.slides.length}
+                                        isActive={currentSlide === index}
+                                        mode='light'
+                                        setIsActive={() =>
+                                            setCurrentSlideTo(index)
+                                        }
+                                    >
+                                        <TextOnlySlide
+                                            text={
+                                                carousel.slides[index].title
+                                                    .content
+                                            }
+                                            subtitle={
+                                                carousel.slides[index]
+                                                    .paragraphs[0].content
+                                            }
+                                        />
+                                    </ContentSlideLayout>
                                 ))}
                             </div>
                         );
