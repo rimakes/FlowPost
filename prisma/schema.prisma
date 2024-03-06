@@ -231,6 +231,7 @@ model PostCategory {
 }
 
 model ScheduledPost {
+    date        String         
     id          String        @id @default(auto()) @map("_id") @db.ObjectId
     userId      String        @db.ObjectId
     scheduledPost  Json[]
