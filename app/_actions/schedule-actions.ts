@@ -1,23 +1,5 @@
 import axios from 'axios'
 import cron from 'node-cron'
-const scheduledPosts = [
-  {
-    content: 'Post on 1121211',
-    time: new Date().setMinutes(new Date().getMinutes() + 1),
-  },
-  {
-    content: 'Post on 112qq2',
-    time: new Date().setMinutes(new Date().getMinutes() + 2),
-  },
-  {
-    content: 'Post on 42342313',
-    time: new Date().setMinutes(new Date().getMinutes()),
-  },
-  {
-    content: 'Post on332 14',
-    time: new Date().setMinutes(new Date().getMinutes()),
-  },
-]
 
 export const convertTimeTo24HourFormat = async (timeString: String) => {
   const [hoursStr, minutesStr] = timeString.split(':')
@@ -92,16 +74,16 @@ export const scheduler = async (
   accessToken: any
 ) => {
   scheduledPosts.forEach(async (post: any) => {
-    // cron.schedule(`* * * * *`, async () => {
-    // const currentTime = new Date()
-    // const postTime = await convertTimeTo24HourFormat(post?.time)
-    console.log('=====postTime')
-    // if (
-    //   currentTime.getHours() === postTime.getHours() &&
-    //   currentTime.getMinutes() === postTime.getMinutes()
-    // ) {
-    await postOnLinkedIn(providerId, post.content, accessToken)
-    // }
-    // })
+    cron.schedule(`* * * * *`, async () => {
+      const currentTime = new Date()
+      const postTime = await convertTimeTo24HourFormat(post?.time)
+      console.log('=====postTime')
+      if (
+        currentTime.getHours() === postTime.getHours() &&
+        currentTime.getMinutes() === postTime.getMinutes()
+      ) {
+        await postOnLinkedIn(providerId, post.content, accessToken)
+      }
+    })
   })
 }

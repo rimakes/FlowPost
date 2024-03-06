@@ -1,24 +1,7 @@
 import { scheduler } from '@/app/_actions/schedule-actions'
 import { db } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
-const scheduledPosts = [
-  {
-    content: 'Post on 1121211',
-    time: new Date().setMinutes(new Date().getMinutes() + 1),
-  },
-  {
-    content: 'Post on 112qq2',
-    time: new Date().setMinutes(new Date().getMinutes() + 2),
-  },
-  {
-    content: 'Post on 13',
-    time: new Date().setMinutes(new Date().getMinutes()),
-  },
-  {
-    content: 'Post on 14',
-    time: new Date().setMinutes(new Date().getMinutes()),
-  },
-]
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -34,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     await scheduler(
-      scheduledPosts,
+      body?.scheduledPost,
       userAccount?.providerAccountId,
       userAccount?.access_token
     )
