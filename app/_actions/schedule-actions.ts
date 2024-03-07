@@ -1,24 +1,25 @@
+import { db } from '@/lib/prisma'
 import axios from 'axios'
 import cron from 'node-cron'
 
-export const convertTimeTo24HourFormat = async (timeString: String) => {
-  const [hoursStr, minutesStr] = timeString.split(':')
-  let hours = parseInt(hoursStr)
-  const minutes = parseInt(minutesStr)
+// export const convertTimeTo24HourFormat = async (timeString: String) => {
+//   const [hoursStr, minutesStr] = timeString.split(':')
+//   let hours = parseInt(hoursStr)
+//   const minutes = parseInt(minutesStr)
 
-  if (timeString.includes('PM') && hours < 12) {
-    hours += 12
-  } else if (timeString.includes('AM') && hours === 12) {
-    hours = 0
-  }
+//   if (timeString.includes('PM') && hours < 12) {
+//     hours += 12
+//   } else if (timeString.includes('AM') && hours === 12) {
+//     hours = 0
+//   }
 
-  const date = new Date()
-  date.setHours(hours, minutes, 0, 0)
+//   const date = new Date()
+//   date.setHours(hours, minutes, 0, 0)
 
-  return date
-}
+//   return date
+// }
 
-const postOnLinkedIn = async (
+export const postOnLinkedIn = async (
   providerAccountId: String,
   content: String,
   accessToken: String | null
@@ -68,22 +69,43 @@ const postOnLinkedIn = async (
   }
 }
 
-export const scheduler = async (
-  scheduledPosts: any,
-  providerId: any,
-  accessToken: any
-) => {
-  scheduledPosts.forEach(async (post: any) => {
-    cron.schedule(`* * * * *`, async () => {
-      const currentTime = new Date()
-      const postTime = await convertTimeTo24HourFormat(post?.time)
-      console.log('=====postTime')
-      if (
-        currentTime.getHours() === postTime.getHours() &&
-        currentTime.getMinutes() === postTime.getMinutes()
-      ) {
-        await postOnLinkedIn(providerId, post.content, accessToken)
-      }
-    })
-  })
-}
+// export const scheduler = async (
+//   scheduledPosts: any,
+//   providerId: any,
+//   accessToken: any
+// ) => {
+//   const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+//   const endOfDay = new Date(
+//     new Date().setUTCHours(23, 59, 59, 999)
+//   ).toISOString()
+
+//   const getScheduledPost = await db.scheduledPost.findMany({
+//     where: {
+//       date: {
+//         gte: startOfDay, // 2019-11-08T00:00:00.000Z
+//         lt: endOfDay, //
+//       },
+//     },
+//   })
+
+//   console.log(getScheduledPost.length, '=====lengthttt')
+
+//   scheduledPosts?.forEach(async (post: any) => {
+//     console.log('------before cron-----')
+//     // cron.schedule(`* * * * *`, async () => {
+//     console.log('-----cron starts-----')
+//     const currentTime = new Date()
+//     const postDate = new Date(post?.date)
+//     // const postTime = await convertTimeTo24HourFormat(post?.time)
+//     console.log('------enddddde')
+//     if (
+//       currentTime.getHours() === postDate.getHours() &&
+//       currentTime.getMinutes() === postDate.getMinutes() &&
+//       currentTime?.getDate() === postDate?.getDate()
+//     ) {
+//       await postOnLinkedIn(providerId, post.content, accessToken)
+//       console.log('---------------posted')
+//     }
+//     // })
+//   })
+// }

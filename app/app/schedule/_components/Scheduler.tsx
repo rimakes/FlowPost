@@ -67,6 +67,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
   useEffect(() => {
     const datesBetween = getDates(startDate, endDate)
+
     setBetweenDates(
       datesBetween.map((date) => {
         const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
@@ -79,22 +80,26 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             })
         )
 
+        console.log(getDataByDate, '========getDataByDate')
+
         if (getDataByDate) {
           return {
-            date: date.toLocaleDateString('en-US', {
-              weekday: 'long',
-              month: 'long', // abbreviated month name
-              day: '2-digit', // two-digit day of the month
-            }),
+            // date: date.toLocaleDateString('en-US', {
+            //   weekday: 'long',
+            //   month: 'long', // abbreviated month name
+            //   day: '2-digit', // two-digit day of the month
+            // }),
+            date,
             ...getDataByDate,
           }
         } else {
           return {
-            date: date.toLocaleDateString('en-US', {
-              weekday: 'long',
-              month: 'long', // abbreviated month name
-              day: '2-digit', // two-digit day of the month
-            }),
+            // date: date.toLocaleDateString('en-US', {
+            //   weekday: 'long',
+            //   month: 'long', // abbreviated month name
+            //   day: '2-digit', // two-digit day of the month
+            // }),
+            date,
           }
         }
       })
@@ -173,28 +178,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     }
   }
 
-  const handleUpdateSchedulePost = async () => {
-    try {
-      const postData = {
-        id: '1',
-        scheduledPost: betweenDates,
-      }
-
-      const response = await axios.put(
-        'http://localhost:3000/api/scheduled-post',
-        postData
-      )
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
-
   const handleGetSchedulePosts = async () => {
     try {
       const response = await axios.get(
         `http://localhost:3000/api/scheduled-post?UserId=${data?.user?.id}`
       )
-      setScheduledPosts(response?.data)
+      setScheduledPosts(response?.data?.scheduledPost)
+
       // setBetweenDates(response)
     } catch (error) {
       console.error('Error:', error)
@@ -292,24 +282,27 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                 <div className='w-full'>
                   <div key={key} className='flex gap-[20px]'>
                     <div className='font-semibold text-[16px]'>
-                      {item?.date.split(',')[0]}
+                      {/* {item?.date.split(',')[0]} */}
+                      {new String(item?.date).split(' ').slice(1, 2).join(' ')}
                     </div>
                     <div className='font-normal text-[14px] flex items-center'>
-                      {item?.date.split(',')[1]}
+                      {/* {item?.date.split(',')[1]} */}
+                      {/* {new String(item?.date?.toLocaleTimeString())} */}
+                      {new String(item?.date).split(' ').slice(2, 3).join(' ')}
                     </div>
                   </div>
                   <div className='w-full mt-[2rem] transition-all duration-150 bg-gray-50 border px-4 py-5 border-gray-300 border-dashed shadow-sm rounded-2xl hover:shadow-md hover:-translate-y-1 min-h-[226px]'>
                     <div className='flex flex-col justify-between space-y-4'>
                       <div className='flex items-center justify-between gap-4'>
                         <p className='text-sm font-medium text-gray-500'>
-                          {item?.scheduledPost?.time}
+                          {item?.time}
                         </p>
                       </div>
                       <div className='flex-1 flex items-center justify-center min-h-[100px]'>
                         <p className='text-base italic font-medium text-gray-400 line-clamp-4'>
-                          {item?.scheduledPost?.content
-                            ? item?.scheduledPost?.content
-                            : 'Empty...'}
+                          {item?.content ? item?.content : 'Empty...'}
+
+                          {/* {item?.content ? item?.content : 'Empty...'} */}
                         </p>
                       </div>
                       {!item?.scheduledPost?.content && (

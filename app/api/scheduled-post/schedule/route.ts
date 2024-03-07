@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
+    console.log(body, '===body')
 
     const userAccount = await db.account.findFirst({
       where: { userId: body?.userId },
@@ -13,12 +14,6 @@ export async function POST(req: NextRequest) {
     if (!userAccount) {
       return NextResponse.json({ loginUser: false }, { status: 200 })
     }
-
-    await scheduler(
-      body?.scheduledPost,
-      userAccount?.providerAccountId,
-      userAccount?.access_token
-    )
 
     return NextResponse.json(
       { message: 'Post scheduled', loginUser: true },

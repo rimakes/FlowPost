@@ -3,6 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["mongoDb", "filterJson"]
 }
 
 datasource db {
@@ -231,7 +232,7 @@ model PostCategory {
 }
 
 model ScheduledPost {
-    date        String
+    date        DateTime
     id          String        @id @default(auto()) @map("_id") @db.ObjectId
     userId      String        @db.ObjectId
     scheduledPost  Json

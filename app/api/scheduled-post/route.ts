@@ -1,3 +1,4 @@
+// import { scheduler } from '@/app/_actions/schedule-actions'
 import { db } from '@/lib/prisma'
 import { TScheduledPost } from '@/types/types'
 import { NextRequest, NextResponse } from 'next/server'
@@ -5,6 +6,38 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(req: NextRequest) {
   try {
     const body: any = await req?.json()
+
+    const startOfDay = new Date(
+      new Date().setUTCHours(0, 0, 0, 0)
+    ).toISOString()
+    const endOfDay = new Date(
+      new Date().setUTCHours(23, 59, 59, 999)
+    ).toISOString()
+
+    const checkScheduled = await db.scheduledPost.findFirst({
+      where: {
+        date: {
+          gte: startOfDay,
+          lt: endOfDay,
+        },
+      },
+    })
+
+    if (checkScheduled) {
+      await db.scheduledPost.update({
+        where: { id: checkScheduled?.id },
+        data: { ...body },
+      })
+
+      const schedulePost = await db.scheduledPost.findFirst({
+        where: {
+          id: checkScheduled?.id,
+        },
+      })
+
+      return NextResponse.json({ schedulePost }, { status: 200 })
+    }
+
     const schedulePost: TScheduledPost = await db.scheduledPost.create({
       data: { ...body },
     })
@@ -88,7 +121,7 @@ export async function DELETE(req: NextRequest) {
       },
     })
 
-    if (deleteData) {
+    if (deleteData === false) {
       await db.linkedinPost.delete({
         where: {
           id: postId,
