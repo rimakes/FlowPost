@@ -26,6 +26,8 @@ export async function GET(req: NextRequest) {
       },
     })
 
+    console.log(scheduledPosts.length, '======')
+
     scheduledPosts?.forEach(async (post: any) => {
       const currentDate = new Date()
 
@@ -36,26 +38,31 @@ export async function GET(req: NextRequest) {
       })
 
       if (
-        currentDate === post?.date &&
-        currentDate?.getHours() === post?.date?.getHours() &&
-        currentDate?.getMinutes() === post?.date?.getMinutes()
+        // currentDate === post?.date &&
+        // currentDate?.getHours() === post?.date?.getHours() &&
+        // currentDate?.getMinutes() === post?.date?.getMinutes()
+        true
       ) {
-        await postOnLinkedIn(
-          userAccount?.providerAccountId,
-          post.content,
-          userAccount?.accessToken
-        )
-        const scheduledPost = {
-          ...post.scheduledPost,
-          published: true,
-          publishedAt: new Date(),
+        try {
+          await postOnLinkedIn(
+            userAccount?.providerAccountId,
+            post.content,
+            userAccount?.access_token
+          )
+          const scheduledPost = {
+            ...post.scheduledPost,
+            published: true,
+            publishedAt: new Date(),
+          }
+          await db.scheduledPost.update({
+            where: { id: post?.id },
+            data: {
+              scheduledPost,
+            },
+          })
+        } catch (error) {
+          return NextResponse.json({ data: 'Not posted' }, { status: 200 })
         }
-        await db.scheduledPost.update({
-          where: { id: post?.id },
-          data: {
-            scheduledPost,
-          },
-        })
       }
     })
 
