@@ -38,8 +38,9 @@ export const postOnLinkedIn = async (
     const response = await axios(config)
 
     console.log('Post successfully posted on LinkedIn:', response?.data?.id)
+    return response
   } catch (error: any) {
     console.error('Error posting on LinkedIn:', error)
-    return new Error(error)
+    return error
   }
 }

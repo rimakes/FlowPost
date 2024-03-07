@@ -40,12 +40,13 @@ export async function GET(req: NextRequest) {
         currentDate?.getHours() === post?.date?.getHours() &&
         currentDate?.getMinutes() === post?.date?.getMinutes()
       ) {
-        try {
-          await postOnLinkedIn(
-            userAccount?.providerAccountId,
-            post?.scheduledPost?.content,
-            userAccount?.access_token
-          )
+        const posted = await postOnLinkedIn(
+          userAccount?.providerAccountId,
+          post?.scheduledPost?.content,
+          userAccount?.access_token
+        )
+
+        if (posted?.data?.id) {
           const scheduledPost = {
             ...post.scheduledPost,
             published: true,
@@ -57,13 +58,11 @@ export async function GET(req: NextRequest) {
               scheduledPost,
             },
           })
-        } catch (error) {
-          return NextResponse.json({ data: 'Not posted' }, { status: 200 })
+          return NextResponse.json({ data: 'Success' }, { status: 200 })
         }
+        return NextResponse.json({ data: 'Error' }, { status: 400 })
       }
     })
-
-    return NextResponse.json({ data: 'Success' }, { status: 200 })
   } catch (error) {
     console.log(error)
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
