@@ -71,7 +71,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     setBetweenDates(
       datesBetween.map((date) => {
         const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
-          (item: any) => item?.date === new Date(date).toISOString()
+          (item: any) =>
+            new Date(item?.date)?.toDateString() ===
+            new Date(date?.toISOString())?.toDateString()
         )
 
         if (getDataByDate) {
