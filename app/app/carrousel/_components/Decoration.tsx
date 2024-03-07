@@ -12,6 +12,7 @@ type DecorativeElementsProps = {
     primaryColor: string;
     secondaryColor: string;
     tertiaryColor?: string;
+    accentColor?: string;
     decorationid: keyof typeof decorationMap;
     even?: boolean;
     cover?: boolean;
@@ -19,16 +20,7 @@ type DecorativeElementsProps = {
     alternateColors?: boolean;
 };
 
-type DecorationProps = {
-    primaryColor: string;
-    secondaryColor: string;
-    tertiaryColor?: string;
-
-    even?: boolean;
-    cover?: boolean;
-    cta?: boolean;
-    alternateColors?: boolean;
-};
+type DecorationProps = Omit<DecorativeElementsProps, 'decorationid'>;
 
 const Squares = ({
     primaryColor,
@@ -247,21 +239,28 @@ const Bubbles = ({
 };
 
 const Balls = ({
-    primaryColor,
-    secondaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     cover,
     cta,
     even,
 }: DecorationProps) => {
     const Element = (
-        <div className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0 bg-green-500 rounded-full w-40 h-40'></div>
+        <div
+            className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0  rounded-full w-40 h-40'
+            style={{
+                backgroundColor: primaryColor,
+            }}
+        ></div>
     );
 
     return (
         <DecorationConnectingPattern
             Element={Element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
+            primaryColor={primaryColor!}
+            secondaryColor={backgroundColor}
             cover={cover}
             cta={cta}
             even={even}
@@ -303,31 +302,39 @@ const Trending = ({
 };
 
 const VerticalGradient = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
             style={{
-                background: `linear-gradient(180deg, ${primaryColor} 0%, ${tertiaryColor}) 100%`,
+                background: `linear-gradient(180deg, ${backgroundColor} 0%, ${accentColor}) 100%`,
             }}
-        ></div>
+        >
+            {/* <p className='z-50'>ACCENT: {accentColor}</p> */}
+        </div>
     );
 };
 const HorizontalGradient = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+    even,
 }: DecorationProps) => {
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
+    const gradient = even
+        ? `linear-gradient(90deg, ${backgroundColor} 0%, ${primaryColor}) 100%`
+        : `linear-gradient(90deg, ${primaryColor} 0%, ${backgroundColor}) 100%`;
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
             style={{
-                background: `linear-gradient(90deg, ${primaryColor} 0%, ${tertiaryColor}) 100%`,
+                background: gradient,
             }}
         ></div>
     );
@@ -500,7 +507,12 @@ const Paper = ({ primaryColor, secondaryColor }: DecorationProps) => {
 //     );
 // };
 // https://fffuel.co/gggrain/
-const Organic = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Organic = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -514,9 +526,10 @@ const Organic = ({ primaryColor, secondaryColor }: DecorationProps) => {
 };
 
 const Stars = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     return (
         <div
@@ -529,7 +542,7 @@ const Stars = ({
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
                 <defs>
                     <linearGradient id='a' x1='0' x2='0' y1='0' y2='1'>
-                        <stop offset='0' stop-color={tertiaryColor} />
+                        <stop offset='0' stop-color={backgroundColor} />
                         <stop offset='1' stop-color={primaryColor} />
                     </linearGradient>
                 </defs>
@@ -554,9 +567,10 @@ const Stars = ({
 };
 
 const Prism = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     return (
         <div
@@ -577,8 +591,8 @@ const Prism = ({
                         y2='100%'
                         gradientTransform='rotate(240)'
                     >
-                        <stop offset='0' stop-color={primaryColor} />
-                        <stop offset='1' stop-color={tertiaryColor} />
+                        <stop offset='0' stop-color={backgroundColor} />
+                        <stop offset='1' stop-color={primaryColor} />
                     </linearGradient>
                     <pattern
                         patternUnits='userSpaceOnUse'
@@ -895,7 +909,12 @@ const Prism = ({
 //         </div>
 //     );
 // };
-const Sky = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Sky = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -909,7 +928,12 @@ const Sky = ({ primaryColor, secondaryColor }: DecorationProps) => {
         ></div>
     );
 };
-const Grid = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Grid = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -929,6 +953,7 @@ const Blobs = ({
     cta,
     even,
     tertiaryColor,
+    accentColor,
 }: DecorationProps) => {
     const element = (
         <div
@@ -983,6 +1008,7 @@ export const Decoration = ({
     primaryColor,
     secondaryColor,
     tertiaryColor,
+    accentColor,
     decorationid,
     cover,
     cta,
@@ -999,6 +1025,7 @@ export const Decoration = ({
             cta={cta}
             even={even}
             alternateColors={alternateColors}
+            accentColor={accentColor}
         />
     );
 };

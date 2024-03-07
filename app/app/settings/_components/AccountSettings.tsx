@@ -16,6 +16,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { SettingsSectionHeader } from './SettingsSectionHeader';
 
 const generalSettingsSchema = z.object({
     name: z.string(),
@@ -46,7 +47,7 @@ export const AccountSettings = () => {
 
     return (
         <>
-            <SubsectionHeading
+            <SettingsSectionHeader
                 title='Configuración general'
                 subtitle='Configura tu cuenta'
             />
@@ -98,19 +99,5 @@ export const AccountSettings = () => {
                 </Form>
             </div>
         </>
-    );
-};
-
-type SubsectionHeadingProps = {
-    title: string;
-    subtitle: string;
-};
-
-const SubsectionHeading = ({ title, subtitle }: SubsectionHeadingProps) => {
-    return (
-        <div>
-            <h2 className='text-xl font-bold'>{title}</h2>
-            <p className='text-sm text-primary/40'>{subtitle}</p>
-        </div>
     );
 };

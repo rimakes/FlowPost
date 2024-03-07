@@ -69,7 +69,7 @@ type SlideWithSettingsProps = {
     slideNumber: number;
 };
 
-const SlideWithSettings = ({
+export const SlideWithSettings = ({
     className,
     isActive,
     slide,

@@ -11,10 +11,11 @@ import { deepCopy } from '@/lib/utils';
 import { AspectRatio } from '@prisma/client';
 import {
     TAspectRatioEnum,
+    TBrand,
     TCarousel,
     TColorPalette,
     TDecorationId,
-    TFontPallete,
+    TFontPalette,
 } from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
@@ -46,7 +47,7 @@ const INITIAL_STATE = {
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
     setColorPalette: (colors: TColorPalette) => {},
-    setFontPalette: (fonts: TFontPallete) => {},
+    setFontPalette: (fonts: TFontPalette) => {},
     setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
     setDecorationId: (decorationId: TDecorationId) => {},
     setBackgroundImage: (
@@ -62,6 +63,9 @@ const INITIAL_STATE = {
     toggleShowProfilePic: () => {},
     toggleShowHandle: () => {},
     toggleShowAuthorInFirstOnly: () => {},
+    getCompleteBrand: () => {
+        return {} as Omit<TBrand, 'authorId' | 'id'>;
+    },
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -127,21 +131,27 @@ export function CarouselContextProvider({
     };
 
     const editProfilePicture = (newImage: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.pictureUrl = newImage;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.pictureUrl = newImage;
+            return newCarousel;
+        });
     };
 
     const editName = (newName: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.name = newName;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.name = newName;
+            return newCarousel;
+        });
     };
 
     const editHandle = (newHandle: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.author.handle = newHandle;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.handle = newHandle;
+            return newCarousel;
+        });
     };
 
     const setCurrentSlideTo = (newSlide: number) => {
@@ -234,19 +244,23 @@ export function CarouselContextProvider({
         }
     };
 
+    // TODO: Probably should do like this all of them. for now I am not changing it in case we want to use immer or a reducer in the future.
     const setColorPalette = (colors: TColorPalette) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.colorPalette.font = colors.font;
-        newCarousel.settings.colorPalette.background = colors.background;
-        newCarousel.settings.colorPalette.accent = colors.accent;
-        setCarousel(newCarousel);
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.settings.colorPalette = colors;
+            return newCarousel;
+        });
     };
-    const setFontPalette = (fonts: TFontPallete) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.fontPalette.primary = fonts.primary;
-        newCarousel.settings.fontPalette.secondary = fonts.secondary;
-        newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
-        setCarousel(newCarousel);
+
+    const setFontPalette = (fonts: TFontPalette) => {
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.settings.fontPalette.primary = fonts.primary;
+            newCarousel.settings.fontPalette.secondary = fonts.secondary;
+            newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
+            return newCarousel;
+        });
     };
 
     const setCarouselAspectRatio = (aspectRatio: TAspectRatioEnum) => {
@@ -340,9 +354,19 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const getCompleteBrand = () => {
+        return {
+            ...carousel.author,
+            colorPalette: carousel.settings.colorPalette,
+            fontPalette: carousel.settings.fontPalette,
+            imageUrl: carousel.author.pictureUrl,
+        };
+    };
+
     return (
         <CarouselContext.Provider
             value={{
+                getCompleteBrand,
                 toggleShowAuthorInFirstOnly,
                 toggleShowHandle,
                 toggleShowProfilePic,

@@ -8,11 +8,18 @@ import { GalleryHorizontal, Save } from 'lucide-react'
 import { useContext, useState } from 'react'
 import { PostWritterContext } from './PostWritterProvider'
 import { useSession } from 'next-auth/react'
-import { createLinkedinPost } from '@/app/_actions/writter-actions'
+import {
+  createLinkedinCarousel,
+  createLinkedinPost,
+} from '@/app/_actions/writter-actions'
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip'
 import { toast } from 'sonner'
 import { Switch } from '@/components/ui/switch'
-import { EmojiPickerClient } from '@/components/shared/EmojiPickerClient'
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon'
+import { useRouter } from 'next/navigation'
+import { TStatus } from '@/types/types'
+import { Progress } from '@/components/ui/progress'
+import useDeterminedProgressBar from '@/hooks/use-determined-progressbar'
 
 type GeneratedPostProps = {
   className?: string
@@ -43,10 +50,12 @@ export const PostWritterResult = ({
         <Skeleton className='h-full w-full' />
       </div>
     )
+
   return (
     <div className={cn(``, className)}>
-      <EmojiPickerClient />
+      {/* <EmojiPickerClient /> */}
       <Label>Post generado</Label>
+
       <div className='border border-muted p-2 space-y-2'>
         <div className='relative'>
           <Textarea
@@ -69,7 +78,9 @@ export const PostWritterResult = ({
 
         <div className='flex gap-2'>
           <ButtonWithTooltip
-            icon={Save}
+            icon={<Save />}
+            className='flex-1 rounded-full bg-muted text-primary/50
+                        hover:bg-primary/10'
             label='Guardar post'
             onClick={async () => {
               await createLinkedinPost(post.content, post.id)
@@ -79,16 +90,9 @@ export const PostWritterResult = ({
               }
             }}
           />
-          {/* <ButtonWithTooltip
-                        className={
-                            isEditable || isEditableOverride
-                                ? 'bg-green-300'
-                                : 'bg-red-300'
-                        }
-                        icon={Edit}
-                        label='Editar post'
-                    /> */}
-          <ButtonWithTooltip icon={GalleryHorizontal} label='Crear carrusel' />
+          {/* <ButtonWithTooltip icon={GalleryHorizontal} label='Crear carrusel' /> */}
+
+          <CreateCarouselButton post={post} />
         </div>
       </div>
     </div>

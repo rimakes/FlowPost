@@ -6,7 +6,13 @@ import { CarouselContext } from '../ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { TColorPalette, TFontPallete } from '@/types/types';
+import {
+    TBrand,
+    TColorPalette,
+    TFont,
+    TFontName,
+    TFontPalette,
+} from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
 import { ChevronsUpDown, Save } from 'lucide-react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
@@ -29,8 +35,18 @@ import { AuthorSettings } from './AuthorSettings';
 import { ColorPalette } from './ColorPalette';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { Slider } from '@/components/ui/slider';
+import { BrandKitSelector } from './BrandKitSelector';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
-export const CarouselSidebar = () => {
+type CarouselSidebarProps = {
+    brands: TBrand[];
+};
+
+export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     return (
@@ -44,20 +60,21 @@ export const CarouselSidebar = () => {
             </div>
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
                 <SheetContent side={'left'} className='md:hidden p-0 w-3/4'>
-                    <SideBarContent />
+                    <SideBarContent brands={brands} />
                 </SheetContent>
             </Sheet>
             {/* DESKTOP SIDEBAR */}
-            <SideBarContent className='hidden md:block' />
+            <SideBarContent brands={brands} className='hidden md:block' />
         </>
     );
 };
 
 type SideBarContentProps = {
     className?: string;
+    brands: TBrand[];
 };
 
-export const SideBarContent = ({ className }: SideBarContentProps) => {
+export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
     const {
         carousel,
         carousel: {
@@ -75,21 +92,36 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
         setFontPalette,
         setDecorationId,
         setColorPalette,
-        toggleShowSwipeLabel,
+        editImage,
+        editName,
+        editHandle,
     } = useContext(CarouselContext);
 
     const router = useRouter();
     const [colorsPopOverisOpen, setColorsPopOverisOpen] = useState(false);
-    const [fontPopOverisOpen, setFontPopOverisOpen] = useState(false);
 
     const onSetColorPalette = (colorPalette: TColorPalette) => {
         setColorPalette(colorPalette);
-        setColorsPopOverisOpen(false);
+        // setColorsPopOverisOpen(false);
     };
 
-    const onSetFontPalette = (fontPalette: TFontPallete) => {
-        setFontPalette(fontPalette);
-        setFontPopOverisOpen(false);
+    const onBrandChange = (brandId: string) => {
+        const brand = brands.find((brand) => brand.id === brandId);
+        console.log(brand);
+        if (brand) {
+            setColorPalette(brand.colorPalette);
+            setFontPalette(brand.fontPalette);
+            editImage(brand.imageUrl);
+            editName(brand.name);
+            editHandle(brand.handle);
+        }
+    };
+
+    const setFontByType = (fontType: TFont, font: TFontName) => {
+        setFontPalette({
+            ...carousel.settings.fontPalette,
+            [fontType]: font,
+        });
     };
 
     return (
@@ -103,6 +135,14 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                     setCarouselAspectRatio={setCarouselAspectRatio}
                 />
                 <TemplateSelector />
+            </div>
+            <Separator className='mt-2 mb-2' />
+            <div className='flex flex-col gap-2'>
+                <h3>Ajustes de marca</h3>
+                <BrandKitSelector
+                    brands={brands}
+                    onBrandChange={onBrandChange}
+                />
             </div>
             <Separator className='mt-2 mb-2' />
             <Popover
@@ -122,7 +162,10 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 </PopoverTrigger>
                 <PopoverContent>
                     <>
-                        <ColorPaletteSelect onChange={onSetColorPalette} />
+                        <ColorPaletteSelect
+                            colorPalette={carousel.settings.colorPalette}
+                            onChange={onSetColorPalette}
+                        />
                         <div className='flex gap-2 items-center'>
                             <Label htmlFor='name'>Alternar colores</Label>
                             <Switch
@@ -134,41 +177,21 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 </PopoverContent>
             </Popover>
             <Separator className='mt-2 mb-2' />
-            <Popover
-                open={fontPopOverisOpen}
-                onOpenChange={setFontPopOverisOpen}
-            >
-                <PopoverTrigger className='w-full flex items-center justify-between'>
-                    <div className='cursor-pointer flex gap-2 items-center'>
-                        Fuente{' '}
-                        <div
-                            className='h-6 w-6 rounded-full'
-                            style={{
-                                fontFamily:
-                                    carousel.settings.fontPalette.primary,
-                            }}
-                        >
-                            {carousel.settings.fontPalette.primary}
-                        </div>
+            <Collapsible>
+                <CollapsibleTrigger className='flex justify-between w-full items-center'>
+                    <div className='cursor-pointer flex items-center'>
+                        Fuentes
                     </div>
                     <ChevronsUpDown size={20} className='ml-2' />
-                </PopoverTrigger>
-                <PopoverContent>
-                    <>
-                        <FontSelector
-                            onSelect={(fontName) => {
-                                console.log('fontName', fontName);
-                                onSetFontPalette({
-                                    handWriting: fontName,
-                                    primary: fontName,
-                                    secondary: fontName,
-                                });
-                            }}
-                            selectedFont='Robotto'
-                        />
-                    </>
-                </PopoverContent>
-            </Popover>
+                </CollapsibleTrigger>
+                <CollapsibleContent className='mt-4'>
+                    <FontPaletteSelector
+                        fontPalette={carousel.settings.fontPalette}
+                        setFontByType={setFontByType}
+                    />
+                </CollapsibleContent>
+            </Collapsible>
+
             <Separator className='mt-2 mb-2' />
             <AuthorSettings />
             <Separator className='mt-2 mb-2' />
@@ -197,6 +220,35 @@ export const SideBarContent = ({ className }: SideBarContentProps) => {
                 </Button>
                 <DownloadButton />
             </div>
+        </div>
+    );
+};
+
+type FontPaletteSelectorProps = {
+    fontPalette: TFontPalette;
+    setFontByType: (fontType: TFont, font: TFontName) => void;
+};
+
+export const FontPaletteSelector = ({
+    fontPalette,
+    setFontByType,
+}: FontPaletteSelectorProps) => {
+    return (
+        <div className='flex flex-col gap-4'>
+            {Object.keys(fontPalette).map((fontType) => (
+                <div
+                    key={fontType}
+                    className='cursor-pointer flex flex-col items-start'
+                >
+                    {fontType}
+                    <FontSelector
+                        font={fontPalette[fontType as TFont] as TFontName}
+                        setFontPalette={(font: TFontName) =>
+                            setFontByType(fontType as TFont, font)
+                        }
+                    />
+                </div>
+            ))}
         </div>
     );
 };

@@ -31,11 +31,29 @@ model User {
   updatedAt              DateTime  @updatedAt
   role                   UserRole  @default(USER)
 
-  // messages Message[]
-  settings Settings?
-  Account  Account[]
-  Post     Post[]
-  Idea     Idea[]
+    // messages Message[]
+    settings Settings?
+    Account  Account[]
+    Post     Post[]
+    Idea     Idea[]
+    Brand    Brand[]
+}
+
+model Brand {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // RELATIONS
+    authorId String @db.ObjectId
+    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+    // Brand fields
+    name         String
+    handle       String
+    imageUrl     String
+    colorPalette ColorPalette
+    fontPalette  FontPalette
 }
 
 model Idea {
@@ -159,9 +177,10 @@ type SlideOverrides {
 }
 
 type ColorPalette {
-  font       String @default("#000000")
-  background String @default("#ffffff")
-  accent     String @default("#ff0000")
+    font       String @default("#000000")
+    background String @default("#ffffff")
+    primary    String @default("#ff0000")
+    accent     String @default("#ff0000")
 }
 
 type FontPalette {

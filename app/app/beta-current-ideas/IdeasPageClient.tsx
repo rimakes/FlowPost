@@ -2,6 +2,7 @@
 import { generateIdeas, getSearchResults } from '@/app/_actions/ideas-actions';
 import Spinner from '@/components/icons/spinner';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
+import { ThumbsFeedback } from '@/components/shared/ThumbsFeedback';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -14,22 +15,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { apiClient } from '@/lib/apiClient';
 import {
     IdeaRequestFormSchema,
     googleSearchResultsSchema,
 } from '@/types/schemas';
 import { TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import {
-    Feather,
-    Save,
-    Sparkle,
-    Sparkles,
-    ThumbsDown,
-    ThumbsUp,
-} from 'lucide-react';
+import { Feather, Save, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -158,18 +150,11 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
     const router = useRouter();
     return (
         <div className='border rounded-lg p-4 shadow-sm flex flex-col gap-2'>
-            <div className='flex justify-end text-primary/50'>
-                <Button variant='ghost' size='icon' className='rounded-full'>
-                    <ThumbsUp size={18} />
-                </Button>
-                <Button variant='ghost' size='icon' className='rounded-full'>
-                    <ThumbsDown size={18} />
-                </Button>
-            </div>
+            <ThumbsFeedback component='POSTIDEA-CARD' />
             <p>{ideaDescription}</p>
             <div className='flex gap-4'>
                 <ButtonWithTooltip
-                    icon={Feather}
+                    icon={<Feather />}
                     label='Crear Post'
                     onClick={async () => {
                         toast.success('Creando.post..');
@@ -183,7 +168,7 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     }}
                 />
                 <ButtonWithTooltip
-                    icon={Save}
+                    icon={<Save />}
                     label='Guardar Idea'
                     onClick={async () => {
                         toast.success('Creando.post..');

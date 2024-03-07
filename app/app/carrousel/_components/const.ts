@@ -26,6 +26,44 @@ export const fakeSlides: TSlide[] = [
                 background: '',
                 font: '',
                 accent: '',
+                primary: '',
+            },
+            fontPalette: {
+                primary: '',
+                secondary: '',
+                handWriting: '',
+            },
+        },
+        tagline: {
+            content: 'some randum tagline',
+            isShown: true,
+        },
+    },
+    {
+        backgroundImage: {
+            url: '/images/placeholders/user.png',
+            alt: 'some random',
+            opacity: 0.1,
+            position: 'center',
+        },
+        paragraphs: [
+            {
+                content:
+                    'Loremi ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+                isShown: true,
+            },
+        ],
+        title: {
+            content: 'some randum title',
+            isShown: true,
+        },
+        // Ignored for now
+        settings: {
+            colorPalette: {
+                background: '',
+                font: '',
+                accent: '',
+                primary: '',
             },
             fontPalette: {
                 primary: '',
@@ -58,6 +96,7 @@ export const fakeCarousel: Omit<TCarousel, 'id'> = {
             background: '#000000',
             font: '#ffffff',
             accent: '#ffffff',
+            primary: '#ffffff',
         },
         fontPalette: {
             primary: 'bricolage',
