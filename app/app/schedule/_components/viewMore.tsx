@@ -58,7 +58,14 @@ const ViewMore = ({
                         ></path>
                       </svg>
                       <span className='text-sm font-semibold text-success-600'>
-                        Scheduled → {item?.date.split(',')[1]} • {item?.time}
+                        Scheduled →{' '}
+                        {new Date(item?.date).toLocaleString('en-US', {
+                          month: 'long',
+                        })}
+                        &nbsp;
+                        {new Date(item?.date).getDate() < 10 ? '0' : ''}
+                        {new Date(item?.date).getDate()} •{' '}
+                        {item?.scheduledPost?.time}
                       </span>
                     </div>
                     <div className='relative'>
@@ -73,7 +80,7 @@ const ViewMore = ({
                         rows={20}
                         className='resize-none block w-full h-[400px] p-0 text-gray-900 border-none appearance-none placeholder:text-gray-500 focus:ring-0 caret-blue-500 focus:outline-none'
                       >
-                        {item?.content}
+                        {item?.scheduledPost?.content}
                       </textarea>
                     </p>
                     <hr className='border-gray-200' />
@@ -85,7 +92,7 @@ const ViewMore = ({
                         •
                       </span>
                       <span className='text-sm font-medium text-gray-500'>
-                        {item?.content?.length} characters
+                        {item?.scheduledPost?.content?.length} characters
                       </span>
                     </div>
                   </div>

@@ -21,12 +21,12 @@ export default function Scheduler({ userPosts }: userPostsProps) {
   const [selectedDraftId, setSelectedDraftId] = useState<number>()
 
   const [startDate, setStartDate] = useState<any>(
-    currentDate.toISOString().split('T')[0]
+    currentDate.toISOString().split('Tt')[0]
   )
   const [endDate, setEndDate] = useState<any>(
     new Date(currentDate.setDate(currentDate.getDate() + 3))
       .toISOString()
-      .split('T')[0]
+      .split('Tt')[0]
   )
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false)
   const [betweenDates, setBetweenDates] = useState<any>([])
@@ -71,35 +71,17 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     setBetweenDates(
       datesBetween.map((date) => {
         const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
-          (item: any) =>
-            item?.date ===
-            date.toLocaleDateString('en-US', {
-              weekday: 'long',
-              month: 'long', // abbreviated month name
-              day: '2-digit', // two-digit day of the month
-            })
+          (item: any) => item?.date === new Date(date).toISOString()
         )
-
-        console.log(getDataByDate, '========getDataByDate')
 
         if (getDataByDate) {
           return {
-            // date: date.toLocaleDateString('en-US', {
-            //   weekday: 'long',
-            //   month: 'long', // abbreviated month name
-            //   day: '2-digit', // two-digit day of the month
-            // }),
-            date,
+            date: new Date(date)?.toISOString(),
             ...getDataByDate,
           }
         } else {
           return {
-            // date: date.toLocaleDateString('en-US', {
-            //   weekday: 'long',
-            //   month: 'long', // abbreviated month name
-            //   day: '2-digit', // two-digit day of the month
-            // }),
-            date,
+            date: new Date(date)?.toISOString(),
           }
         }
       })
@@ -126,7 +108,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     handleGetSchedulePosts()
   }
 
-  // Format dates for display
   const formattedStartDate = new Date(startDate).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -136,7 +117,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     day: 'numeric',
   })
 
-  // Get time zone of current date
   const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const currentYear = new Date().getFullYear()
 
@@ -183,9 +163,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
       const response = await axios.get(
         `http://localhost:3000/api/scheduled-post?UserId=${data?.user?.id}`
       )
-      setScheduledPosts(response?.data?.scheduledPost)
-
-      // setBetweenDates(response)
+      setScheduledPosts(response?.data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -280,29 +258,29 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             {betweenDates.map((item: any, key: number) => {
               return (
                 <div className='w-full'>
-                  <div key={key} className='flex gap-[20px]'>
+                  <div key={key} className='flex gap-[10px]'>
                     <div className='font-semibold text-[16px]'>
-                      {/* {item?.date.split(',')[0]} */}
-                      {new String(item?.date).split(' ').slice(1, 2).join(' ')}
+                      {new Date(item?.date).toLocaleString('en-US', {
+                        month: 'long',
+                      })}
                     </div>
                     <div className='font-normal text-[14px] flex items-center'>
-                      {/* {item?.date.split(',')[1]} */}
-                      {/* {new String(item?.date?.toLocaleTimeString())} */}
-                      {new String(item?.date).split(' ').slice(2, 3).join(' ')}
+                      {new Date(item?.date).getDate() < 10 ? '0' : ''}
+                      {new Date(item?.date).getDate()}
                     </div>
                   </div>
                   <div className='w-full mt-[2rem] transition-all duration-150 bg-gray-50 border px-4 py-5 border-gray-300 border-dashed shadow-sm rounded-2xl hover:shadow-md hover:-translate-y-1 min-h-[226px]'>
                     <div className='flex flex-col justify-between space-y-4'>
                       <div className='flex items-center justify-between gap-4'>
                         <p className='text-sm font-medium text-gray-500'>
-                          {item?.time}
+                          {item?.scheduledPost?.time}
                         </p>
                       </div>
                       <div className='flex-1 flex items-center justify-center min-h-[100px]'>
                         <p className='text-base italic font-medium text-gray-400 line-clamp-4'>
-                          {item?.content ? item?.content : 'Empty...'}
-
-                          {/* {item?.content ? item?.content : 'Empty...'} */}
+                          {item?.scheduledPost?.content
+                            ? item?.scheduledPost?.content
+                            : 'Empty...'}
                         </p>
                       </div>
                       {!item?.scheduledPost?.content && (
@@ -463,7 +441,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                     onClick={() =>
                                       handleDeleteSchedulePosts(item?.id, true)
                                     }
-                                    className='bg-gray-200 hover:bg-gray-400 py-2 px-2 flex whitespace-no-wrap gap-[5px] cursor-pointer'
+                                    className='w-full bg-gray-200 hover:bg-gray-400 py-2 px-2 flex whitespace-no-wrap gap-[5px] cursor-pointer'
                                   >
                                     <svg
                                       aria-hidden='true'

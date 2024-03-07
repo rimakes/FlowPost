@@ -7,37 +7,6 @@ export async function POST(req: NextRequest) {
   try {
     const body: any = await req?.json()
 
-    const startOfDay = new Date(
-      new Date().setUTCHours(0, 0, 0, 0)
-    ).toISOString()
-    const endOfDay = new Date(
-      new Date().setUTCHours(23, 59, 59, 999)
-    ).toISOString()
-
-    const checkScheduled = await db.scheduledPost.findFirst({
-      where: {
-        date: {
-          gte: startOfDay,
-          lt: endOfDay,
-        },
-      },
-    })
-
-    if (checkScheduled) {
-      await db.scheduledPost.update({
-        where: { id: checkScheduled?.id },
-        data: { ...body },
-      })
-
-      const schedulePost = await db.scheduledPost.findFirst({
-        where: {
-          id: checkScheduled?.id,
-        },
-      })
-
-      return NextResponse.json({ schedulePost }, { status: 200 })
-    }
-
     const schedulePost: TScheduledPost = await db.scheduledPost.create({
       data: { ...body },
     })
