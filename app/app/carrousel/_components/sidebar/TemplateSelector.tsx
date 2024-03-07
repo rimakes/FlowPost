@@ -34,18 +34,19 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                                         numberOfSlides={carousel.slides.length}
                                         isActive={currentSlide === index}
                                         mode='light'
-                                        setIsActive={() =>
-                                            setCurrentSlideTo(index)
-                                        }
+                                        onClick={() => setCurrentSlideTo(index)}
                                     >
                                         <TextOnlySlide
-                                            text={
-                                                carousel.slides[index].title
+                                            title={
+                                                carousel.slides[index].title!
                                                     .content
                                             }
-                                            subtitle={
-                                                carousel.slides[index]
-                                                    .paragraphs[0].content
+                                            paragraphs={
+                                                carousel.slides[
+                                                    index
+                                                ].paragraphs?.map(
+                                                    (p) => p.content
+                                                ) ?? []
                                             }
                                         />
                                     </ContentSlideLayout>

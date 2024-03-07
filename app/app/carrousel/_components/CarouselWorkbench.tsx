@@ -2,7 +2,13 @@
 
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ReactNode, useContext, useEffect, useRef } from 'react';
-import { TBrand, TDecorationId, TSlide } from '@/types/types';
+import {
+    TBrand,
+    TDecorationId,
+    TFontName,
+    TSlide,
+    TSlideDesignNames,
+} from '@/types/types';
 import { CarouselContext } from './ContextProvider';
 import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
@@ -12,6 +18,7 @@ import { fontsMap } from '@/config/fonts';
 import { get } from 'http';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
 import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
+import { designMap } from './SlideDesignSelector';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -101,23 +108,18 @@ export const SlideWithSettings = ({
     children,
     decorationId,
 }: SlideWithSettingsProps) => {
-    const {
-        carousel: {
-            author: { handle, name, pictureUrl },
-            settings: { fontPalette },
-        },
-        setCurrentSlideTo,
-        currentSlide,
-        addRef,
-    } = useContext(CarouselContext);
+    const { setCurrentSlideTo, currentSlide, addRef } =
+        useContext(CarouselContext);
     const slideRef = useRef<HTMLDivElement>(null);
+    console.log('slide design', slide.design);
+    const DesignElement = slide.design
+        ? designMap[slide.design as TSlideDesignNames]
+        : TextOnlySlide;
+    // console.log('slide here', slide);
 
     useEffect(() => {
-        console.log('adding a ref');
         addRef(slideRef, slideNumber);
     }, [addRef, slideNumber]);
-
-    // console.log('refs from SlideWithSettings', slidesRef);
 
     return (
         <div
@@ -128,14 +130,13 @@ export const SlideWithSettings = ({
             )}
         >
             <div
-                // @ts-ignore
-                className={`${fontsMap[fontPalette.primary].className}`}
+                className={`${fontsMap[brand.fontPalette.primary as TFontName].className}`}
             >
                 <ContentSlideLayout
                     brand={brand}
                     isActive={currentSlide === slideNumber}
                     mode='light'
-                    setIsActive={() => {
+                    onClick={() => {
                         setCurrentSlideTo(slideNumber);
                     }}
                     currentSlide={slideNumber}
@@ -143,10 +144,20 @@ export const SlideWithSettings = ({
                     decorationId={decorationId}
                     backgroundImage={slide.backgroundImage!}
                     ref={slideRef}
+                    isCoverOrCTA={
+                        slide.design === 'CallToAction' ||
+                        slide.design === 'Cover'
+                    }
                 >
-                    <TextOnlySlide
-                        text={slide.title.content}
-                        subtitle={slide.paragraphs[0].content}
+                    <DesignElement
+                        key={slideNumber}
+                        image={slide.image?.url!}
+                        tagline={slide.tagline?.content!}
+                        brand={brand}
+                        description={slide.paragraphs[0]?.content}
+                        title={slide.title?.content!}
+                        paragraphs={slide.paragraphs.map((p) => p.content)}
+                        bigCharacter={slide.bigCharacter!}
                     />
                 </ContentSlideLayout>
             </div>

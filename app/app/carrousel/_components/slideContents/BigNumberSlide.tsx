@@ -1,11 +1,18 @@
 import { TBrand } from '@/types/types';
 
 type BigNumberSlideProps = {
+    title: string;
     brand: TBrand;
-    number: number;
+    bigCharacter: string;
+    tagline: string;
 };
 
-export const BigNumber = ({ brand, number }: BigNumberSlideProps) => {
+export const BigNumber = ({
+    brand,
+    bigCharacter,
+    title,
+    tagline,
+}: BigNumberSlideProps) => {
     return (
         <>
             <div
@@ -18,13 +25,13 @@ export const BigNumber = ({ brand, number }: BigNumberSlideProps) => {
             >
                 <div
                     id='number'
-                    className='absolute top-0 right-0'
+                    className='absolute top-0 right-0 -z-20'
                     style={{
                         fontWeight: 700,
                         lineHeight: 1,
                     }}
                 >
-                    1
+                    {bigCharacter}
                 </div>
             </div>
             <div
@@ -39,9 +46,9 @@ export const BigNumber = ({ brand, number }: BigNumberSlideProps) => {
                         fontFamily: brand.fontPalette.primary,
                     }}
                 >
-                    Slide Title
+                    {title}
                 </h2>
-                <p>Slide Content</p>
+                <p>{tagline}</p>
             </div>
         </>
     );

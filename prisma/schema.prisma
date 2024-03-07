@@ -156,18 +156,33 @@ type DisplayableText {
 }
 
 type Slide {
-    title           DisplayableText
+    title           DisplayableText?
+    tagline         DisplayableText?
     paragraphs      DisplayableText[]
-    tagline         DisplayableText
     settings        SlideOverrides?
+    bigCharacter    String?
+    image           Image?
     backgroundImage Image?
+    design          String?
 }
 
 type Image {
     url      String
     alt      String
-    opacity  Float  @default(1)
-    position String @default("center")
+    opacity  Float    @default(1)
+    position Position @default(TOP)
+}
+
+enum Position {
+    CENTER
+    TOP
+    BOTTOM
+    LEFT
+    RIGHT
+    TOP_LEFT
+    TOP_RIGHT
+    BOTTOM_LEFT
+    BOTTOM_RIGHT
 }
 
 type SlideOverrides {
