@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/prisma'
 import { postOnLinkedIn } from '../../_actions/schedule-actions'
 // This endpoint will check the scheduled posts, if there is any post then it'll post on linkedin.
-import { Prisma, PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
 export async function GET(req: NextRequest) {
   try {
     const startOfDay = new Date()
