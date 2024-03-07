@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
         try {
           await postOnLinkedIn(
             userAccount?.providerAccountId,
-            post.content,
+            post?.scheduledPost?.content,
             userAccount?.access_token
           )
           const scheduledPost = {
