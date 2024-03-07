@@ -26,8 +26,6 @@ export async function GET(req: NextRequest) {
       },
     })
 
-    console.log(scheduledPosts.length, '======')
-
     scheduledPosts?.forEach(async (post: any) => {
       const currentDate = new Date()
 
@@ -38,10 +36,9 @@ export async function GET(req: NextRequest) {
       })
 
       if (
-        // currentDate === post?.date &&
-        // currentDate?.getHours() === post?.date?.getHours() &&
-        // currentDate?.getMinutes() === post?.date?.getMinutes()
-        true
+        currentDate === post?.date &&
+        currentDate?.getHours() === post?.date?.getHours() &&
+        currentDate?.getMinutes() === post?.date?.getMinutes()
       ) {
         try {
           await postOnLinkedIn(
