@@ -2,7 +2,13 @@ import { decorationMap } from '@/app/app/carrousel/_components/slideParts/SlideD
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import { fontsMap } from '@/config/fonts';
-import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
+import type {
+    AspectRatio,
+    Position,
+    Prisma,
+    PrismaClient,
+} from '@prisma/client';
+import { designMap } from '@/app/app/carrousel/_components/SlideDesignSelector';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
@@ -130,3 +136,7 @@ export type TImage = {
     opacity: number;
     position: string;
 };
+
+export type TSlideDesignNames = keyof typeof designMap;
+
+export type TPosition = Position;

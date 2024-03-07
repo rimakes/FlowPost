@@ -1,46 +1,30 @@
 import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
-import { ASPECT_RATIOS_MAP } from './const';
-import { SlideProfileCard } from './slideParts/SlideProfileCard';
-import { SlideProgressBar } from './slideParts/SlideProgressBar';
-import { SlideGradientBlob } from './slideParts/SlideGradientBlob';
-import { aspectRatioClasses, AspectRatioKeys } from './ContentSlideLayout';
+import { ASPECT_RATIOS_MAP } from '../const';
+import { SlideProfileCard } from '../slideParts/SlideProfileCard';
+import { SlideProgressBar } from '../slideParts/SlideProgressBar';
+import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
+import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
 
 type CallToActionSlideProps = {
     brand: TBrand;
     title: string;
-    subtitle: string;
+    tagline: string;
     className?: string;
-    callToActionText: string;
+    paragraphs: string[];
     mode?: TMode;
 };
 
 export const CallToActionSlide = ({
     brand,
     title,
-    subtitle,
-    callToActionText,
+    tagline,
+    paragraphs,
     className = '',
     mode = 'light',
 }: CallToActionSlideProps) => {
     return (
-        <div
-            // ref={ref}
-            className={cn(
-                `slide border-0 border-border p-6 text-[0.75em]
-relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between isolate
-`
-                // className,
-                // isActive
-                //     ? ''
-                //     : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
-            )}
-            style={{
-                backgroundColor: brand.colorPalette.background,
-                color: brand.colorPalette.font,
-            }}
-            // onClick={() => setIsActive(true)}
-        >
+        <>
             <SlideProgressBar
                 colorPalette={brand.colorPalette}
                 currentSlide={6}
@@ -70,8 +54,8 @@ relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as Aspect
                     }}
                 />
                 <h1 className='text-3xl'>{title}</h1>
-                <p className='text-lg'>{subtitle}</p>
-                <p>{callToActionText}</p>
+                <p className='text-lg'>{tagline}</p>
+                <p>{paragraphs[0]}</p>
                 <SlideProfileCard
                     colorPalette={brand.colorPalette}
                     fontPalette={brand.fontPalette}
@@ -82,6 +66,6 @@ relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as Aspect
                     mode='dark'
                 />
             </div>
-        </div>
+        </>
     );
 };

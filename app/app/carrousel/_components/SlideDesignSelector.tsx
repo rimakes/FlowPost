@@ -1,101 +1,33 @@
-import { z } from 'zod';
+import { TBrand, TSlideDesignNames } from '@/types/types';
 import { BigNumber } from './slideContents/BigNumberSlide';
 import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
 import { ListSlide } from './slideContents/ListSlide';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
-import { TBrand, TSlideDesignNames } from '@/types/types';
-import {
-    aspectRatioClasses,
-    AspectRatioKeys,
-    ContentSlideLayout,
-} from './ContentSlideLayout';
-import { ASPECT_RATIOS_MAP } from './const';
+import { CallToActionSlide } from './slideContents/CallToActionSlide';
+import { CoverSlide } from './slideContents/CoverSlide';
 
 type SlideDesignSelectorProps = {
-    currentDesignId: string;
-    setCurrentDesign: (design: TSlideDesignNames) => void;
+    designId: string;
+    setDesignId: (designId: TSlideDesignNames) => void;
     brand: TBrand;
 };
-
 export function SlideDesignSelector({
-    currentDesignId,
-    setCurrentDesign,
+    designId,
+    setDesignId,
     brand,
 }: SlideDesignSelectorProps) {
-    const DesignElement = designMap[currentDesignId as TSlideDesignNames];
-
-    return (
-        <div className='flex scale-50 -translate-x-[25%]'>
-            {Object.keys(designMap).map((key) => {
-                const DesignElement = designMap[key as TSlideDesignNames];
-                return (
-                    <ContentSlideLayout
-                        key={1}
-                        brand={brand}
-                        mode='light'
-                        currentSlide={1}
-                        numberOfSlides={1}
-                        onClick={() =>
-                            setCurrentDesign(key as TSlideDesignNames)
-                        }
-                        isActive={true}
-                        className='relative'
-                    >
-                        <DesignElement
-                            brand={brand}
-                            description='Slide Content'
-                            imageUrl=''
-                            paragraphs={['item 1', 'item 2', 'item 3']}
-                            number={'1'}
-                            title='Slide Title'
-                            imageFirst={true}
-                            imageLocation='left'
-                            subtitle='Slide Content'
-                        />
-                    </ContentSlideLayout>
-                );
-            })}
-        </div>
-    );
+    return <div></div>;
 }
 
 export const designMap = {
-    BigNumber,
+    ListSlide: ListSlide,
+    BigNumberSlide: BigNumber,
     ImageAndTextHorizontal,
     ImageAndTextVertical,
-    ListSlide,
     TextOnlySlide,
+    CallToAction: CallToActionSlide,
+    Cover: CoverSlide,
 };
 
-// TODO: schemas for chatgpt
-export const designSchemasMap = {
-    BigNumber: z.object({}),
-    // ...
-};
-
-// export const SlideDecoration = ({
-//     primaryColor,
-//     secondaryColor,
-//     tertiaryColor,
-//     accentColor,
-//     decorationid,
-//     cover,
-//     cta,
-//     even,
-//     alternateColors,
-// }: DecorativeElementsProps) => {
-//     const DecorationComponent = decorationMap[decorationid];
-//     return (
-//         <DecorationComponent
-//             primaryColor={primaryColor}
-//             secondaryColor={secondaryColor}
-//             tertiaryColor={tertiaryColor}
-//             cover={cover}
-//             cta={cta}
-//             even={even}
-//             alternateColors={alternateColors}
-//             accentColor={accentColor}
-//         />
-//     );
-// };
+export const designNames = Object.keys(designMap);

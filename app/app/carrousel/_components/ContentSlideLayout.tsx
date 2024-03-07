@@ -25,14 +25,15 @@ export type AspectRatioKeys = keyof typeof aspectRatioClasses;
 type ContentSlideLayout = {
     brand: TBrand;
     mode: TMode;
-    isActive: boolean;
-    setIsActive: (isActive: boolean) => void;
+    isActive?: boolean;
+    onClick: (arg: any) => void;
     className?: string;
     children?: ReactNode;
     currentSlide: number;
     numberOfSlides: number;
     decorationId?: TDecorationId;
     backgroundImage?: TImage;
+    isCoverOrCTA?: boolean;
 };
 
 export const ContentSlideLayout = forwardRef<
@@ -44,13 +45,14 @@ export const ContentSlideLayout = forwardRef<
             brand,
             mode,
             children,
-            isActive,
-            setIsActive,
+            isActive = false,
+            onClick: setIsActive,
             className,
             currentSlide,
             numberOfSlides,
             decorationId,
             backgroundImage,
+            isCoverOrCTA = false,
         },
         ref
     ) => {
@@ -91,7 +93,7 @@ export const ContentSlideLayout = forwardRef<
                         opacity={backgroundImage.opacity}
                     />
                 )}
-                {decorationId && (
+                {!isCoverOrCTA && decorationId && (
                     <SlideDecoration
                         decorationid={decorationId}
                         primaryColor={colorPalette.font}
@@ -101,25 +103,35 @@ export const ContentSlideLayout = forwardRef<
                         even={isEven(currentSlide)}
                     />
                 )}
-                <SlideProgressBar
-                    colorPalette={colorPalette}
-                    currentSlide={currentSlide}
-                    numberOfSlides={numberOfSlides}
-                    mode={mode}
-                />
-                <SlideHeader text='Slide Title' slideNumber={2} className='' />
+                {!isCoverOrCTA && (
+                    <SlideProgressBar
+                        colorPalette={colorPalette}
+                        currentSlide={currentSlide}
+                        numberOfSlides={numberOfSlides}
+                        mode={mode}
+                    />
+                )}
+                {!isCoverOrCTA && (
+                    <SlideHeader
+                        text='Slide Title'
+                        slideNumber={currentSlide}
+                        className=''
+                    />
+                )}
                 {/* <p className='z-50'>ACCENT: {colorPalette.accent}</p> */}
                 {children}
-                <SlideFotter
-                    colorPalette={brand.colorPalette}
-                    fontPalette={brand.fontPalette}
-                    imageUrl={brand.imageUrl}
-                    name={brand.name}
-                    handle={brand.handle}
-                    mode={mode}
-                    swipeLabel={<ArrowRight className='h-10 w-10' />}
-                    className='absolute bottom-0 left-0 w-full p-6'
-                />
+                {!isCoverOrCTA && (
+                    <SlideFotter
+                        colorPalette={brand.colorPalette}
+                        fontPalette={brand.fontPalette}
+                        imageUrl={brand.imageUrl}
+                        name={brand.name}
+                        handle={brand.handle}
+                        mode={mode}
+                        swipeLabel={<ArrowRight className='h-10 w-10' />}
+                        className='absolute bottom-0 left-0 w-full p-6'
+                    />
+                )}
             </div>
         );
     }

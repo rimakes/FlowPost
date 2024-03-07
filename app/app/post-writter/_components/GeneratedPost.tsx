@@ -76,7 +76,7 @@ export const PostWritterResult = ({
                             toast('Post guardado');
                         }}
                     />
-                    <CreateCarouselButton post={post} />
+                    <CreateCarouselButton post={post} className='relative' />
                 </div>
             </div>
         </div>
