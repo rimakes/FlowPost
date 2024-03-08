@@ -223,6 +223,7 @@ type Author {
   handle     String @default("@ricsala86")
 }
 
+//type to store the ScheduledPostObject 
 type ScheduledPostObject {
   author      Author?
   id          String?
@@ -261,6 +262,7 @@ model PostCategory {
   tags        String[]
 }
 
+//model to store the ScheduledPost
 model ScheduledPost {
   date          DateTime
   id            String               @id @default(auto()) @map("_id") @db.ObjectId

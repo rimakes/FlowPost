@@ -122,6 +122,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
   const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const currentYear = new Date().getFullYear()
 
+  /**
+   * api to check if linkedin is connected or not
+   */
   const handlePostRequest = async () => {
     try {
       const postData = {
@@ -139,6 +142,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
       console.error('Error:', error)
     }
   }
+
+  /**
+   * api to create schedule post api
+   */
 
   const handleCreateSchedulePost = async (selectedData: any, date: any) => {
     try {
@@ -160,6 +167,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     }
   }
 
+  /**
+   * api to fetch all scheduled post
+   */
+
   const handleGetSchedulePosts = async () => {
     try {
       const response = await axios.get(
@@ -177,6 +188,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     }
   }, [data])
 
+  /**
+   * Api to delete / unschedule post
+   */
   const handleDeleteSchedulePosts = async (id: string, deleteData: boolean) => {
     try {
       const response = await axios.delete(
@@ -188,6 +202,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     }
   }
 
+  // if linkedin not connected then function will be called when clicked connect linkedin button
   const handleLinkedinLogin = async () => {
     const res = await signIn('linkedin')
   }
@@ -385,8 +400,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                               />
                             </DialogContent>
                           </Dialog>
-                          {/* <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                            <DialogTrigger asChild> */}
+
                           <div className='relative group w-full'>
                             <button
                               className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
@@ -464,62 +478,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                               </ul>
                             )}
                           </div>
-                          {/* </DialogTrigger>
-                          </Dialog> */}
-                          {/* <Dialog
-                            open={editDetailsModal}
-                            onOpenChange={setEditDetailsModal}
-                          >
-                            <DialogTrigger asChild>
-                              <div className='flex items-center gap-2'>
-                                <div className='relative group w-full'>
-                                  <button
-                                    onClick={() => {
-                                      setEditDetailsModal(true)
-                                      handleClickDraftBtn(key)
-                                    }}
-                                    type='button'
-                                    className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
-                                  >
-                                    <span className='sr-only'>
-                                      Edit Post or Reschedule
-                                    </span>
-                                    <svg
-                                      aria-hidden='true'
-                                      className='w-5 h-5 text-gray-400 group-hover:text-gray-500'
-                                      xmlns='http://www.w3.org/2000/svg'
-                                      viewBox='0 0 20 20'
-                                      fill='currentColor'
-                                    >
-                                      <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
-                                    </svg>
-                                  </button>
-                                  <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
-                                    Edit Post or Reschedule
-                                  </span>
-                                </div>
-                              </div>
-                            </DialogTrigger>
-                            <DialogContent
-                              className={`${accountLinked ? 'max-w-full md:max-w-4xl' : ''}`}
-                            >
-                              <div className='mt-6 2xl:flex gap-8'>
-                                <EditPostModal
-                                  initialPost={item}
-                                  className='flex-1'
-                                />
-                                <PostWritterContextProvider initialPost={item}>
-                                  <PostWritterResult
-                                    className='flex-1'
-                                    height={604}
-                                    minHeight={604}
-                                    isEditable={true}
-                                    setEditDetailsModal={setEditDetailsModal}
-                                  />
-                                </PostWritterContextProvider>
-                              </div>
-                            </DialogContent>
-                          </Dialog> */}
                         </div>
                       )}
                     </div>

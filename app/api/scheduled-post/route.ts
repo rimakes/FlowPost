@@ -1,8 +1,12 @@
-// import { scheduler } from '@/app/_actions/schedule-actions'
 import { db } from '@/lib/prisma'
 import { TScheduledPost } from '@/types/types'
 import { NextRequest, NextResponse } from 'next/server'
 
+/**
+ *
+ * @param req.body -> contains data of the post to be scheduled
+ * @returns schedulePost
+ */
 export async function POST(req: NextRequest) {
   try {
     const body: any = await req?.json()
@@ -17,39 +21,11 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function UPDATE(req: NextRequest) {
-  try {
-    const body: any = await req?.json()
-
-    let checkScheduledPost = await db.scheduledPost.findUnique({
-      where: {
-        id: body?.id,
-      },
-    })
-
-    if (!checkScheduledPost) {
-      return NextResponse.json(
-        { error: 'Something went wrong' },
-        { status: 500 }
-      )
-    }
-    await db.scheduledPost.update({
-      where: { id: body?.id },
-      data: {
-        ...body,
-      },
-    })
-    checkScheduledPost = await db.scheduledPost.findUnique({
-      where: {
-        id: body?.id,
-      },
-    })
-    return NextResponse.json({ checkScheduledPost }, { status: 200 })
-  } catch (error) {
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
-  }
-}
-
+/**
+ *
+ * @param req -> userId : based on userId we will fetch the all the posts of user which are on schedule
+ * @returns fetched scheduled posts
+ */
 export async function GET(req: NextRequest) {
   try {
     const searchParams = new URLSearchParams(req.nextUrl.search)
@@ -65,6 +41,13 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ *
+ * @param req: id -> id for unschedule the scheduled post from schedule
+ *           : deleteData -> if user deletes the post then it will be deleted from linkedinPost and from scheduledPost
+ * @returns :if unschedule happens then  unscheduled: true
+ *          :if delete happens then  delete: true 
+ */
 export async function DELETE(req: NextRequest) {
   try {
     const searchParams = new URLSearchParams(req.nextUrl.search)

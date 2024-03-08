@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/prisma'
 import { postOnLinkedIn } from '../../_actions/schedule-actions'
-// This endpoint will check the scheduled posts, if there is any post then it'll post on linkedin.
 
+// This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
   try {
     const startOfDay = new Date()
@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const endOfDay = new Date()
     endOfDay.setUTCHours(23, 59, 59, 999)
 
+    // finding the posts from the start of the day till end of day
     let scheduledPosts = await db.scheduledPost.findMany({
       where: {
         date: {
@@ -26,6 +27,7 @@ export async function GET(req: NextRequest) {
       },
     })
 
+    // posting the each post on linkedin from the scheduledPosts (post that are supposed to be posted today as per their time)
     scheduledPosts?.forEach(async (post: any) => {
       const currentDate = new Date()
 

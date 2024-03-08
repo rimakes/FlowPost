@@ -1,6 +1,10 @@
 import { db } from '@/lib/prisma'
 import { NextRequest, NextResponse } from 'next/server'
-
+/**
+ *
+ * @param req : userId -> to check if user's has connected the linkedin account or not
+ * @returns:{ loginUser: true } based on which frontend decides which pop-up to show,
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
