@@ -13,7 +13,7 @@ import { VideoClient } from '@/components/marketing/VideoClient';
 import Highlight from '@/components/utils/Hightlight';
 
 export default async function Home() {
-    const session = await auth();
+    // const session = await auth();
 
     return (
         <div className={`gap flex flex-col items-center justify-between`}>
