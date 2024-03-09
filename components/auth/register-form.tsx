@@ -192,7 +192,8 @@ export function RegisterForm({}) {
                     className='w-full'
                     onClick={async () => {
                         const res = await signIn('linkedin', {
-                            redirect: false,
+                            redirect: true,
+                            callbackUrl: '/app',
                         });
 
                         console.log({ res });

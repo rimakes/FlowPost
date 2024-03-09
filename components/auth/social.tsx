@@ -27,6 +27,7 @@ export function Social({}) {
                 onClick={async () => {
                     const res = await signIn('linkedin', {
                         redirect: true,
+                        callbackUrl: '/app',
                     });
                     console.log({ res });
                 }}
