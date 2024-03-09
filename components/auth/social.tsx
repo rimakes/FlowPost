@@ -25,8 +25,9 @@ export function Social({}) {
                 variant='outline'
                 className='w-full'
                 onClick={async () => {
-                    const res = await signIn('linkedin');
-
+                    const res = await signIn('linkedin', {
+                        redirect: true,
+                    });
                     console.log({ res });
                 }}
             >

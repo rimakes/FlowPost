@@ -2,7 +2,6 @@
 
 import { TCarousel } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { auth } from '@/auth';
 import { useSession } from 'next-auth/react';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Edit, Trash2 } from 'lucide-react';

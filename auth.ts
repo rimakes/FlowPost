@@ -22,23 +22,40 @@ export const authOptions = {
         }),
 
         // LinkedIn recently changed their OAuth flow which is why there is a bit extra code
-        // LinkedIn recently changed their OAuth flow which is why there is a bit extra code
         LinkedInProvider({
             clientId: process.env.LINKEDIN_CLIENT_ID,
             clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-            authorization: {
-                params: { scope: 'openid profile email' },
-            },
+            client: { token_endpoint_auth_method: 'client_secret_post' },
+            scope: 'r_liteprofile r_emailaddress',
             issuer: 'https://www.linkedin.com',
+            userinfo: {
+                url: 'https://api.linkedin.com/v2/userinfo',
+            },
+            tokenUri: 'https://www.linkedin.com/oauth/v2/accessToken',
+            wellKnown:
+                'https://www.linkedin.com/oauth/.well-known/openid-configuration',
+            authorization: {
+                url: 'https://www.linkedin.com/oauth/v2/authorization',
+                params: {
+                    scope: 'profile email openid w_member_social',
+                    prompt: 'consent',
+                    access_type: 'offline',
+                    response_type: 'code',
+                },
+            },
+
+            token: {
+                url: 'https://www.linkedin.com/oauth/v2/accessToken',
+            },
             jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
-            profile(profile, tokens) {
-                const defaultImage =
-                    'https://cdn-icons-png.flaticon.com/512/174/174857.png';
+            async profile(profile) {
+                console.log('profile:-', profile);
+
+                // REVIEW: This is what we will have on the token? or on the session?
                 return {
                     id: profile.sub,
                     name: profile.name,
                     email: profile.email,
-                    image: profile.picture ?? defaultImage,
                 };
             },
         }),
@@ -126,7 +143,7 @@ export const authOptions = {
     callbacks: {
         // to control if a user is allowed to sign in.
         async signIn({ user, account, profile, email, credentials }) {
-            if (account?.provider !== 'email') return true;
+            if (account?.provider !== 'email') return true; // We only filter if user is trying to sign in with email (we are implementing the "magic link" feature so they can change their password)
 
             const userExists = await db.user.findUnique({
                 where: { email: user.email! }, //the user object has an email property, which contains the email the user entered.
@@ -142,6 +159,7 @@ export const authOptions = {
             // Allows relative callback URLs
             if (url.startsWith('/')) return `${baseUrl}${url}`;
             // Allows callback URLs on the same origin
+            // REVIEW
             else if (new URL(url).origin === baseUrl) return url;
             return baseUrl;
         },
@@ -178,9 +196,7 @@ export const authOptions = {
         // When using database sessions, the User (user) object is passed as an argument.
         // When using JSON Web Tokens for sessions, the JWT payload (token) is provided instead.
         async session({ session, token, user }) {
-            // const favoriteTattooIds = await UserService.getFavoriteTattooIds(user);
-            // const favoriteTattooIds = await UserService.getFavoriteTattooIds(user);
-
+            console.log('session from session callback', session);
             if (session && session.user) {
             }
             return {
@@ -222,13 +238,13 @@ export const authOptions = {
     // https://next-auth.js.org/tutorials/securing-pages-and-api-routes
 } satisfies NextAuthConfig;
 
-export const {
-    handlers: { GET, POST },
-    auth,
-    signIn,
-    signOut,
-    update,
-} = NextAuth({
-    ...authMiddlewareOptions,
-    ...authOptions,
-});
+// export const {
+//     handlers: { GET, POST },
+//     auth,
+//     signIn,
+//     signOut,
+//     update,
+// } = NextAuth({
+//     ...authMiddlewareOptions,
+//     ...authOptions,
+// });
