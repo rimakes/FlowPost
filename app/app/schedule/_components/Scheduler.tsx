@@ -3,7 +3,7 @@ import { Heading } from '@/components/shared/Heading';
 import { ChevronLeft } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import DraftModal from './draftModal';
 import axios from 'axios';
@@ -174,7 +174,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
      * api to fetch all scheduled post
      */
 
-    const handleGetSchedulePosts = async () => {
+    const handleGetSchedulePosts = useCallback(async () => {
         try {
             const response = await axios.get(
                 `http://localhost:3000/api/scheduled-post?UserId=${data?.user?.id}`
@@ -183,13 +183,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         } catch (error) {
             console.error('Error:', error);
         }
-    };
+    }, [data]);
 
     useEffect(() => {
         if (data?.user?.id) {
             handleGetSchedulePosts();
         }
-    }, [data]);
+    }, [data, handleGetSchedulePosts]);
 
     /**
      * Api to delete / unschedule post
@@ -283,7 +283,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                     <div className='lg:flex grid w-full gap-8 pb-8 h-full'>
                         {betweenDates.map((item: any, key: number) => {
                             return (
-                                <div className='w-full'>
+                                <div className='w-full' key={item?.date}>
                                     <div key={key} className='flex gap-[10px]'>
                                         <div className='font-semibold text-[16px]'>
                                             {new Date(
