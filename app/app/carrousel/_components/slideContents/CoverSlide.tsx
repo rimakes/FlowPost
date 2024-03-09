@@ -5,6 +5,9 @@ import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
+import ContentEditable from 'react-contenteditable';
+import { useContext, useEffect, useRef } from 'react';
+import { CarouselContext } from '../ContextProvider';
 
 type CoverSlideProps = {
     brand: TBrand;
@@ -21,11 +24,22 @@ export const CoverSlide = ({
     className = '',
     mode = 'light',
 }: CoverSlideProps) => {
+    const titleRef = useRef('');
+    const taglineRef = useRef('');
+
+    const { editTitle, editDescription, editTagline } =
+        useContext(CarouselContext);
+
+    useEffect(() => {
+        if (title) titleRef.current = title;
+        if (tagline) taglineRef.current = tagline;
+    }, [tagline, title]);
+
     return (
         <>
             <div
                 className={cn(
-                    `flex flex-col gap-4 h-full items-center text-center justify-center`,
+                    `flex flex-col gap-4 h-full items-center text-center justify-center z-10`,
                     className
                 )}
             >
@@ -43,8 +57,41 @@ export const CoverSlide = ({
                         opacity: 0.3,
                     }}
                 />
-                <h1 className='text-3xl'>{title}</h1>
-                <p className='text-lg'>{tagline}</p>
+
+                <ContentEditable
+                    onChange={(event) => {
+                        titleRef.current = event.target.value;
+                        editTitle(event.target.value);
+                    }}
+                    html={titleRef.current}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
+                    // style={{
+                    //     display: hasParagraphs ? 'block' : 'none',
+                    // }}
+                    style={{
+                        fontSize: '1.8rem',
+                        lineHeight: 1.1,
+                    }}
+                />
+                <ContentEditable
+                    onChange={(event) => {
+                        taglineRef.current = event.target.value;
+                        editTagline(event.target.value);
+                    }}
+                    html={taglineRef.current}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
+                    // style={{
+                    //     display: hasParagraphs ? 'block' : 'none',
+                    // }}
+                    style={{
+                        fontSize: '1.25rem',
+                        lineHeight: 1.1,
+                    }}
+                />
                 <SlideProfileCard
                     colorPalette={brand.colorPalette}
                     fontPalette={brand.fontPalette}

@@ -5,6 +5,9 @@ import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
+import { useRef, useContext, useEffect } from 'react';
+import ContentEditable from 'react-contenteditable';
+import { CarouselContext } from '../ContextProvider';
 
 type CallToActionSlideProps = {
     brand: TBrand;
@@ -23,6 +26,19 @@ export const CallToActionSlide = ({
     className = '',
     mode = 'light',
 }: CallToActionSlideProps) => {
+    const titleRef = useRef('');
+    const taglineRef = useRef('');
+    const paragraphsRef = useRef<string[]>([]);
+
+    const { editTitle, editDescription, editTagline } =
+        useContext(CarouselContext);
+
+    useEffect(() => {
+        if (title) titleRef.current = title;
+        if (tagline) taglineRef.current = tagline;
+        if (paragraphs) paragraphsRef.current = paragraphs;
+    }, [paragraphs, tagline, title]);
+
     return (
         <>
             <SlideProgressBar
@@ -35,7 +51,7 @@ export const CallToActionSlide = ({
 
             <div
                 className={cn(
-                    `flex flex-col gap-4 h-full items-center text-center justify-center`,
+                    `flex flex-col gap-4 h-full items-center text-center justify-center z-10`,
                     className
                 )}
             >
@@ -53,9 +69,60 @@ export const CallToActionSlide = ({
                         opacity: 0.3,
                     }}
                 />
-                <h1 className='text-3xl'>{title}</h1>
-                <p className='text-lg'>{tagline}</p>
-                <p>{paragraphs[0]}</p>
+
+                <ContentEditable
+                    onChange={(event) => {
+                        titleRef.current = event.target.value;
+                        editTitle(event.target.value);
+                    }}
+                    html={titleRef.current}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
+                    // style={{
+                    //     display: hasParagraphs ? 'block' : 'none',
+                    // }}
+                    style={{
+                        fontSize: '1.875rem',
+                        lineHeight: 1.1,
+                    }}
+                />
+
+                <ContentEditable
+                    onChange={(event) => {
+                        taglineRef.current = event.target.value;
+                        editTagline(event.target.value);
+                    }}
+                    html={taglineRef.current}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
+                    // style={{
+                    //     display: hasParagraphs ? 'block' : 'none',
+                    // }}
+                    style={{
+                        fontSize: '1.125rem',
+                        lineHeight: 1.1,
+                    }}
+                />
+                <ContentEditable
+                    onChange={(event) => {
+                        paragraphsRef.current[0] = event.target.value;
+                        editDescription(event.target.value);
+                    }}
+                    html={paragraphsRef.current[0]}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
+                    // style={{
+                    //     display: hasParagraphs ? 'block' : 'none',
+                    // }}
+                    style={{
+                        fontSize: '0.8rem',
+                        fontWeight: 300,
+                        lineHeight: 1.5,
+                    }}
+                />
                 <SlideProfileCard
                     colorPalette={brand.colorPalette}
                     fontPalette={brand.fontPalette}
@@ -63,7 +130,7 @@ export const CallToActionSlide = ({
                     name={brand.name}
                     handle={brand.handle}
                     orientation='vertical'
-                    mode='dark'
+                    mode='light'
                 />
             </div>
         </>
