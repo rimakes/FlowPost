@@ -1,7 +1,6 @@
 // TODO: Can we parametrize this? https://www.figma.com/file/wfLC0M1Ct6MyFlD6sub2cX/Carousel-Post-Templates-Pack-(Community)?type=design&node-id=1-268&mode=design&t=Vyuq14JJuPJNLHyC-0
 // https://www.figma.com/file/2TevbCJQsHHge51w9GBz44/LinkedIn-Carousel-templates-(Community)?type=design&node-id=0-1&mode=design&t=JbZQ3CX6i9i8rvvt-0
 
-import { auth } from '@/auth';
 import { fakeCarousel } from '../../carrousel/_components/const';
 import { TBrand, TCarousel, TColorPalette } from '@/types/types';
 import { Heading } from '@/components/shared/Heading';
@@ -24,6 +23,8 @@ import { CarouselWorkbench } from '../components/Workbench';
 import { TextOnlySlide } from '../components/slideContents/TextOnlySlide';
 import { SlideWithSettings } from '../../carrousel/_components/Workbench';
 import { WorkbenchTest } from '../components/WorkbenchTest';
+import { authOptions } from '@/auth';
+import { Session, getServerSession } from 'next-auth';
 
 type props = {
     params: {
@@ -32,7 +33,8 @@ type props = {
 };
 
 export default async function CarouselPage({ params }: props) {
-    const session = await auth();
+    const session: Session | null = await getServerSession(authOptions);
+
     const brands = await getBrandsByUserId(session?.user.id!);
     const brand = brands[0];
 
