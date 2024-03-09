@@ -38,11 +38,7 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                                     >
                                         <TextOnlySlide
                                             title={
-<<<<<<< HEAD
-                                                carousel.slides[index].title
-=======
                                                 carousel.slides[index].title!
->>>>>>> better-carousels
                                                     .content
                                             }
                                             paragraphs={
