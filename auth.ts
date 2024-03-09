@@ -173,11 +173,14 @@ export const authOptions: NextAuthOptions = {
         // called anytime the user is redirected to a callback URL (e.g. on signin or signout).
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs
-            if (url.startsWith('/')) return `${baseUrl}${url}`;
-            // Allows callback URLs on the same origin
-            // REVIEW
-            else if (new URL(url).origin === baseUrl) return url;
-            return baseUrl;
+            // if (url.startsWith('/')) {
+            //     console.log('url -->', `${baseUrl}${url}`);
+            //     return `${baseUrl}${url}`;
+            // }
+            // // Allows callback URLs on the same origin
+            // // REVIEW
+            // else if (new URL(url).origin === baseUrl) return url;
+            return url;
         },
 
         // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or

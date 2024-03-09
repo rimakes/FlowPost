@@ -16,7 +16,7 @@ interface userPostsProps {
 
 export default function Scheduler({ userPosts }: userPostsProps) {
     const { data } = useSession();
-    const currentDate: any = new Date();
+    const currentDate = new Date();
     const [accountLinked, setAccountLinked] = useState(false);
     const [selectedDraftId, setSelectedDraftId] = useState<number>();
 
@@ -128,14 +128,17 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     /**
      * api to check if linkedin is connected or not
      */
+    // TODO: If this function just checks if the user has a Linkedin account connected...why are we calling it "handlePostRequest"?
+    // TODO: And why are we including the postData in the request? It's not being used in the backend.
     const handlePostRequest = async () => {
         try {
             const postData = {
-                userId: data?.user?.id,
+                userId: data?.user?.id, //TODO: compare this id with the one in the server session
                 scheduledPost: betweenDates,
             };
 
             const response = await axios.post(
+                //TODO: we have a "apiClient" that is already configured with the base URL. We should use it instead of axios
                 'http://localhost:3000/api/scheduled-post/schedule',
                 postData
             );
