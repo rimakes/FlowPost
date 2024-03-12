@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const postOnLinkedIn = async (
   providerAccountId: String,
-  content: String,
+  content: String | null | undefined,
   accessToken: String | null
 ) => {
   try {

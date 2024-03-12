@@ -9,13 +9,51 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export async function POST(req: NextRequest) {
   try {
-    const body: any = await req?.json()
+    const body: TScheduledPost = await req?.json()
 
-    const schedulePost: TScheduledPost = await db.scheduledPost.create({
+    const schedulePost = await db.scheduledPost.create({
       data: { ...body },
     })
 
     return NextResponse.json({ schedulePost }, { status: 200 })
+  } catch (error: any) {
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+  }
+}
+
+/**
+ *
+ * @param req ->to update the post time
+ * @returns -> returns the updated post
+ */
+
+export async function PUT(req: NextRequest) {
+  try {
+
+    const body: TScheduledPost = await req?.json()
+    const searchParams = new URLSearchParams(req.nextUrl.search)
+    const id: any = searchParams.get('id')
+    let checkScheduledPost = await db.scheduledPost.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!checkScheduledPost) {
+      return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+    }
+
+    const schedulePost = await db.scheduledPost.update({
+      where: {
+        id: checkScheduledPost?.id
+      },
+      data: {
+        scheduledPost: body
+      },
+    })
+
+    checkScheduledPost = await db.scheduledPost.findUnique({where: {id}})
+    return NextResponse.json({ updatedScheduledPost: schedulePost }, { status: 200 })
   } catch (error: any) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
@@ -46,13 +84,13 @@ export async function GET(req: NextRequest) {
  * @param req: id -> id for unschedule the scheduled post from schedule
  *           : deleteData -> if user deletes the post then it will be deleted from linkedinPost and from scheduledPost
  * @returns :if unschedule happens then  unscheduled: true
- *          :if delete happens then  delete: true 
+ *          :if delete happens then  delete: true
  */
 export async function DELETE(req: NextRequest) {
   try {
     const searchParams = new URLSearchParams(req.nextUrl.search)
     const id: any = searchParams.get('id')
-    const deleteData: any = searchParams.get('deleteData')
+    const deleteData: string | null = searchParams.get('deleteData')
     const checkScheduledPost: any = await db.scheduledPost.findUnique({
       where: {
         id,
