@@ -6,13 +6,13 @@ import { Separator } from '@/components/ui/separator';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import DraftModal from './draftModal';
-import axios from 'axios';
 import { signIn, useSession } from 'next-auth/react';
 import ViewMore from './viewMore';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { TScheduledPost } from '@/types/types'
+import { apiClient } from '@/lib/apiClient';
 
 interface userPostsProps {
     userPosts: [];
@@ -130,19 +130,11 @@ export default function Scheduler({ userPosts }: userPostsProps) {
      */
     // TODO: If this function just checks if the user has a Linkedin account connected...why are we calling it "handlePostRequest"?
     // TODO: And why are we including the postData in the request? It's not being used in the backend.
-    const handlePostRequest = async () => {
+    //TODO: we have a "apiClient" that is already configured with the base URL. We should use it instead of axios
+    //TODO: compare this id with the one in the server session
+    const checkLinkedInConnection = async () => {
         try {
-            const postData = {
-                userId: data?.user?.id, //TODO: compare this id with the one in the server session
-                scheduledPost: betweenDates,
-            };
-
-            const response = await axios.post(
-                //TODO: we have a "apiClient" that is already configured with the base URL. We should use it instead of axios
-                'http://localhost:3000/api/scheduled-post/schedule',
-                postData
-            );
-
+            const response = await apiClient.post('/scheduled-post/schedule');
             setAccountLinked(response?.data?.loginUser);
         } catch (error) {
             console.error('Error:', error);
@@ -156,17 +148,11 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     const handleCreateSchedulePost = async (selectedData: TScheduledPost, date: Date) => {
         try {
             const { date, ...rest } = selectedData;
-
             const postData = {
-                userId: data?.user?.id,
                 date,
                 scheduledPost: rest,
             };
-
-            const response = await axios.post(
-                'http://localhost:3000/api/scheduled-post',
-                postData
-            );
+            await apiClient.post('/scheduled-post',postData);
             handleGetSchedulePosts();
         } catch (error) {
             console.error('Error:', error);
@@ -179,9 +165,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
     const handleGetSchedulePosts = useCallback(async () => {
         try {
-            const response = await axios.get(
-                `http://localhost:3000/api/scheduled-post?UserId=${data?.user?.id}`
-            );
+            const response = await apiClient.get('/scheduled-post');
             setScheduledPosts(response?.data);
         } catch (error) {
             console.error('Error:', error);
@@ -202,9 +186,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         deleteData: boolean
     ) => {
         try {
-            const response = await axios.delete(
-                `http://localhost:3000/api/scheduled-post?id=${id}&deleteData=${deleteData}`
-            );
+            await apiClient.delete(`scheduled-post?id=${id}&deleteData=${deleteData}`);
             handleGetSchedulePosts();
         } catch (error) {
             console.error('Error:', error);
@@ -218,10 +200,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
     const handleUpdateSchedulePost = async (selectedData: TScheduledPost) => {
       try {
-      const response = await axios.put(
-        `http://localhost:3000/api/scheduled-post?id=${selectedData?.id}`,
-        selectedData?.scheduledPost
-      )
+      const response = await apiClient.put(`scheduled-post?id=${selectedData?.id}`,selectedData?.scheduledPost)
       handleGetSchedulePosts()
     } catch (error) {
       console.error('Error:', error)
@@ -337,6 +316,8 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                             <div className='flex items-center justify-between gap-4'>
                                                 <p className='text-sm font-medium text-gray-500'>
                                                     <TimePicker
+                                                    clockIcon={null}
+                                                    clearIcon={null}
                                                     value={item?.scheduledPost?.time || times[key]}
                                                     onChange={(newValue: any) => {
                                                         handleTimesChange(newValue, key)
@@ -365,7 +346,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                             <div className='relative group w-full'>
                                                                 <button
                                                                     onClick={async () => {
-                                                                        handlePostRequest();
+                                                                        checkLinkedInConnection();
                                                                         handleClickDraftBtn(
                                                                             key
                                                                         );

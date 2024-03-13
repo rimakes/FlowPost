@@ -38,6 +38,13 @@ export async function GET(req: NextRequest) {
         },
       })
 
+      const posted = await postOnLinkedIn(
+        userAccount?.providerAccountId,
+        post?.scheduledPost?.content,
+        userAccount?.access_token
+      )
+
+      
       if(Number(post?.scheduledPost?.time?.split(':')?.length) < 2){
         return NextResponse.json({ error: 'Time not found' }, { status: 500 })
       }

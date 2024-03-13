@@ -1,24 +1,26 @@
 import { db } from '@/lib/prisma';
 import { TScheduledPost } from '@/types/types';
+import { getServerSession, Session } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '@/auth';
 
 /**
  *
  * @param req.body -> contains data of the post to be scheduled
  * @returns schedulePost
- */
+*/
+// TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
+// I understand that you are taking the id from the session in he frontend, but it can be tampered by the user. Compare it with the server session to make sure that the user is the one that is logged in.
+// For a user to be able to schedule a post, they need:
+// - to be logged in (I think this should be done on the middleware)
+// - be the author of the post (aka, the post user id is equal to the session user id)
+
 export async function POST(req: NextRequest) {
     try {
+        const session: Session | null = await getServerSession(authOptions);
         const body: any = await req?.json();
-
-        // TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
-        // I understand that you are taking the id from the session in he frontend, but it can be tampered by the user. Compare it with the server session to make sure that the user is the one that is logged in.
-        // For a user to be able to schedule a post, they need:
-        // - to be logged in (I think this should be done on the middleware)
-        // - be the author of the post (aka, the post user id is equal to the session user id)
-
         const schedulePost: TScheduledPost = await db.scheduledPost.create({
-            data: { ...body },
+            data: { ...body, userId: session?.user?.id },
         });
 
         return NextResponse.json({ schedulePost }, { status: 200 });
@@ -38,7 +40,6 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-
     const body: TScheduledPost = await req?.json()
     const searchParams = new URLSearchParams(req.nextUrl.search)
     const id: any = searchParams.get('id')
@@ -73,10 +74,11 @@ export async function PUT(req: NextRequest) {
  * @param req -> userId : based on userId we will fetch the all the posts of user which are on schedule
  * @returns fetched scheduled posts
  */
+// TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
 export async function GET(req: NextRequest) {
     try {
-        const searchParams = new URLSearchParams(req.nextUrl.search);
-        const userId: any = searchParams.get('UserId'); // TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
+        const session: Session | null = await getServerSession(authOptions);
+        const userId: any = session?.user?.id; 
         const scheduledPost = await db.scheduledPost.findMany({
             where: {
                 userId,
