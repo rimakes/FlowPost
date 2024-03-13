@@ -2,9 +2,9 @@ import axios from 'axios';
 
 // REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
 export const postOnLinkedIn = async (
-  providerAccountId: String,
-  content: String | null | undefined,
-  accessToken: String | null
+    providerAccountId: String,
+    content: String | null | undefined,
+    accessToken: String | null
 ) => {
     try {
         const body = {

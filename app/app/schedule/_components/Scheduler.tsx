@@ -11,7 +11,7 @@ import ViewMore from './viewMore';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import { TScheduledPost } from '@/types/types'
+import { TScheduledPost } from '@/types/types';
 import { apiClient } from '@/lib/apiClient';
 
 interface userPostsProps {
@@ -38,16 +38,19 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     const [viewMoreModal, setViewMoreModal] = useState(false);
     const [editDetailsModal, setEditDetailsModal] = useState(false);
     const [scheduledPosts, setScheduledPosts] = useState<any>([]);
-    const [isOpen, setIsOpen] = useState<boolean | null | number>()
+    const [isOpen, setIsOpen] = useState<boolean | null | number>();
     const [times, setTimes] = useState<string[]>([]);
-    const popoverRef=useRef<HTMLUListElement>(null);
+    const popoverRef = useRef<HTMLUListElement>(null);
 
     useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
-          setIsOpen(null)
-        }
-      }
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                popoverRef.current &&
+                !popoverRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(null);
+            }
+        };
         document.addEventListener('mousedown', handleClickOutside);
 
         return () => {
@@ -145,14 +148,17 @@ export default function Scheduler({ userPosts }: userPostsProps) {
      * api to create schedule post api
      */
 
-    const handleCreateSchedulePost = async (selectedData: TScheduledPost, date: Date) => {
+    const handleCreateSchedulePost = async (
+        selectedData: TScheduledPost,
+        date: Date
+    ) => {
         try {
             const { date, ...rest } = selectedData;
             const postData = {
                 date,
                 scheduledPost: rest,
             };
-            await apiClient.post('/scheduled-post',postData);
+            await apiClient.post('/scheduled-post', postData);
             handleGetSchedulePosts();
         } catch (error) {
             console.error('Error:', error);
@@ -186,7 +192,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         deleteData: boolean
     ) => {
         try {
-            await apiClient.delete(`scheduled-post?id=${id}&deleteData=${deleteData}`);
+            await apiClient.delete(
+                `scheduled-post?id=${id}&deleteData=${deleteData}`
+            );
             handleGetSchedulePosts();
         } catch (error) {
             console.error('Error:', error);
@@ -199,33 +207,34 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     };
 
     const handleUpdateSchedulePost = async (selectedData: TScheduledPost) => {
-      try {
-      const response = await apiClient.put(`scheduled-post?id=${selectedData?.id}`,selectedData?.scheduledPost)
-      handleGetSchedulePosts()
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
+        try {
+            const response = await apiClient.put(
+                `scheduled-post?id=${selectedData?.id}`,
+                selectedData?.scheduledPost
+            );
+            handleGetSchedulePosts();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-  const handleTimeChange = (newValue: string, key: number) => {
-    const data = betweenDates?.map((item: {} , index: number) => {
-      if(index === key){
-        return {...item, time: newValue}
-      }else{
-        return item
-      }
-    })
-    setBetweenDates(data)
-    const { scheduledPost, ...rest } = data[key];
-    const updatedScheduledPost = { ...scheduledPost, time: newValue };
-    const updatedPayload = { ...rest, scheduledPost: updatedScheduledPost };
-    handleUpdateSchedulePost(updatedPayload)
-  };
+    const handleTimeChange = (newValue: string, key: number) => {
+        const data = betweenDates?.map((item: {}, index: number) => {
+            if (index === key) {
+                return { ...item, time: newValue };
+            } else {
+                return item;
+            }
+        });
+        setBetweenDates(data);
+        const { scheduledPost, ...rest } = data[key];
+        const updatedScheduledPost = { ...scheduledPost, time: newValue };
+        const updatedPayload = { ...rest, scheduledPost: updatedScheduledPost };
+        handleUpdateSchedulePost(updatedPayload);
+    };
 
-
-
-  const handleSelect = async (item: {}, key: number) => {
-    let selectedData = betweenDates.map((items: {}, index: number) => {
+    const handleSelect = async (item: {}, key: number) => {
+        let selectedData = betweenDates.map((items: {}, index: number) => {
             if (index === selectedDraftId) {
                 return {
                     ...items,
@@ -236,7 +245,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         });
 
         const newUploadedData = selectedData?.filter(
-          (item: {}, key: number) => key === selectedDraftId
+            (item: {}, key: number) => key === selectedDraftId
         );
 
         if (newUploadedData?.length) {
@@ -250,9 +259,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     };
 
     const handleTimesChange = (newValue: string, key: number) => {
-      const updatedTimes = [...times];
-      updatedTimes[key] = newValue;
-      setTimes(updatedTimes);
+        const updatedTimes = [...times];
+        updatedTimes[key] = newValue;
+        setTimes(updatedTimes);
     };
 
     const handleClickDraftBtn = (key: number) => {
@@ -316,13 +325,26 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                             <div className='flex items-center justify-between gap-4'>
                                                 <p className='text-sm font-medium text-gray-500'>
                                                     <TimePicker
-                                                    clockIcon={null}
-                                                    clearIcon={null}
-                                                    value={item?.scheduledPost?.time || times[key]}
-                                                    onChange={(newValue: any) => {
-                                                        handleTimesChange(newValue, key)
-                                                        handleTimeChange(newValue, key)
-                                                    }}/>
+                                                        clockIcon={null}
+                                                        clearIcon={null}
+                                                        value={
+                                                            item?.scheduledPost
+                                                                ?.time ||
+                                                            times[key]
+                                                        }
+                                                        onChange={(
+                                                            newValue: any
+                                                        ) => {
+                                                            handleTimesChange(
+                                                                newValue,
+                                                                key
+                                                            );
+                                                            handleTimeChange(
+                                                                newValue,
+                                                                key
+                                                            );
+                                                        }}
+                                                    />
                                                 </p>
                                             </div>
                                             <div className='flex-1 flex items-center justify-center min-h-[100px]'>
@@ -353,8 +375,12 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                                     }}
                                                                     type='button'
                                                                     className='flex items-center justify-center w-full p-2 text-sm font-medium leading-6 text-gray-500 transition-all duration-150 rounded-full bg-gray-50 group hover:text-gray-700 hover:ring-gray-200 ring-1 ring-transparent'
-                                                                    disabled={!times[key]}
-                                                                    >
+                                                                    disabled={
+                                                                        !times[
+                                                                            key
+                                                                        ]
+                                                                    }
+                                                                >
                                                                     <span className='sr-only'>
                                                                         Pick a
                                                                         Draft
@@ -374,7 +400,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                                     </svg>
                                                                 </button>
                                                                 <span className='whitespace-nowrap absolute px-3 py-2 text-xs font-semibold text-white transition-all duration-200 scale-0 -translate-x-1/2 bg-gray-900 rounded-md -top-10 group-hover:scale-100 left-1/2'>
-                                                                    {times[key] ? 'Pick a Draft' : 'Select time first'}
+                                                                    {times[key]
+                                                                        ? 'Pick a Draft'
+                                                                        : 'Select time first'}
                                                                 </span>
                                                             </div>
                                                         </DialogTrigger>

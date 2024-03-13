@@ -13,15 +13,15 @@ export async function POST(req: NextRequest) {
     try {
         const session: Session | null = await getServerSession(authOptions);
         const userAccount = await db.account.findFirst({
-            where: { userId: session?.user?.id}, 
+            where: { userId: session?.user?.id },
         });
-        
+
         if (!userAccount) {
             return NextResponse.json({ loginUser: false }, { status: 200 });
         }
-        
+
         return NextResponse.json(
-            { message: 'Account connected', loginUser: true }, 
+            { message: 'Account connected', loginUser: true },
             { status: 200 }
         );
     } catch (error: any) {
