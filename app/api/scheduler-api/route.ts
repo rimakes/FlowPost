@@ -5,12 +5,12 @@ import { TScheduledPost } from '@/types/types'
 
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
-  try {
-    const startOfDay = new Date()
-    startOfDay.setUTCHours(0, 0, 0, 0)
+    try {
+        const startOfDay = new Date();
+        startOfDay.setUTCHours(0, 0, 0, 0);
 
-    const endOfDay = new Date()
-    endOfDay.setUTCHours(23, 59, 59, 999)
+        const endOfDay = new Date();
+        endOfDay.setUTCHours(23, 59, 59, 999);
 
     // finding the posts from the start of the day till end of day
     let scheduledPosts = await db.scheduledPost.findMany({
