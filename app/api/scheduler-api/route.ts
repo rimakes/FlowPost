@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { postOnLinkedIn } from '../../_actions/schedule-actions';
+import { TScheduledPost } from '@/types/types';
 
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
@@ -15,13 +16,11 @@ export async function GET(req: NextRequest) {
         let scheduledPosts = await db.scheduledPost.findMany({
             where: {
                 date: {
-                    // get the post that are supposed to be posted today
                     gte: startOfDay,
                     lt: endOfDay,
                 },
                 scheduledPost: {
                     is: {
-                        //... and are not posted yet
                         publishedAt: null,
                         published: false,
                     },
@@ -30,21 +29,33 @@ export async function GET(req: NextRequest) {
         });
 
         // posting the each post on linkedin from the scheduledPosts (post that are supposed to be posted today as per their time)
-        scheduledPosts?.forEach(async (post: any) => {
+        scheduledPosts?.forEach(async (post: TScheduledPost) => {
             const currentDate = new Date();
-
-            // TODO: You are looking for the user account for each post...does this make sense?
-            // TODO: In addition, what if the user signed in using Google?
             const userAccount: any = await db.account.findFirst({
                 where: {
                     userId: post?.userId,
                 },
             });
 
+            const posted = await postOnLinkedIn(
+                userAccount?.providerAccountId,
+                post?.scheduledPost?.content,
+                userAccount?.access_token
+            );
+
+            if (Number(post?.scheduledPost?.time?.split(':')?.length) < 2) {
+                return NextResponse.json(
+                    { error: 'Time not found' },
+                    { status: 500 }
+                );
+            }
+
+            const hours = Number(post?.scheduledPost?.time?.split(':')[0]);
+            const minutes = Number(post?.scheduledPost?.time?.split(':')[1]);
             if (
                 currentDate === post?.date &&
-                currentDate?.getHours() === post?.date?.getHours() &&
-                currentDate?.getMinutes() === post?.date?.getMinutes()
+                currentDate?.getHours() === hours &&
+                currentDate?.getMinutes() === minutes
             ) {
                 const posted = await postOnLinkedIn(
                     userAccount?.providerAccountId,
@@ -52,7 +63,6 @@ export async function GET(req: NextRequest) {
                     userAccount?.access_token
                 );
 
-                // if the post is successfully posted on linkedin, then update the scheduledPost in the database
                 if (posted?.data?.id) {
                     const scheduledPost = {
                         ...post.scheduledPost,
@@ -72,8 +82,8 @@ export async function GET(req: NextRequest) {
                 }
                 return NextResponse.json({ data: 'Error' }, { status: 400 });
             }
-            // TODO: careful! If there is not post to be posted, you also need to return a NextResponse, otherwise deployment will fail
         });
+        return NextResponse.json({ message: 'Scheduled' }, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json(
