@@ -34,7 +34,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     );
     const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
     const [betweenDates, setBetweenDates] = useState<any>([]);
-
     const [viewMoreModal, setViewMoreModal] = useState(false);
     const [editDetailsModal, setEditDetailsModal] = useState(false);
     const [scheduledPosts, setScheduledPosts] = useState<any>([]);
@@ -153,9 +152,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         date: Date
     ) => {
         try {
-            const { date, ...rest } = selectedData;
+            const { date, time, ...rest } = selectedData;
             const postData = {
                 date,
+                time,
                 scheduledPost: rest,
             };
             await apiClient.post('/scheduled-post', postData);
@@ -173,6 +173,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         try {
             const response = await apiClient.get('/scheduled-post');
             setScheduledPosts(response?.data);
+            setTimes([]);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -210,7 +211,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         try {
             const response = await apiClient.put(
                 `scheduled-post?id=${selectedData?.id}`,
-                selectedData?.scheduledPost
+                selectedData
             );
             handleGetSchedulePosts();
         } catch (error) {
@@ -228,9 +229,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         });
         setBetweenDates(data);
         const { scheduledPost, ...rest } = data[key];
-        const updatedScheduledPost = { ...scheduledPost, time: newValue };
-        const updatedPayload = { ...rest, scheduledPost: updatedScheduledPost };
-        handleUpdateSchedulePost(updatedPayload);
+        const updatedPayload = { ...rest };
+        data[key] &&
+            data[key].linkedinPost &&
+            handleUpdateSchedulePost(updatedPayload);
     };
 
     const handleSelect = async (item: {}, key: number) => {
@@ -254,6 +256,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                 newUploadedData[0]?.date
             );
         }
+
         setBetweenDates(selectedData);
         setIsVoiceModalOpen(false);
     };
@@ -327,9 +330,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                     <TimePicker
                                                         clockIcon={null}
                                                         clearIcon={null}
+                                                        closeClock={true}
                                                         value={
-                                                            item?.scheduledPost
-                                                                ?.time ||
+                                                            item?.time ||
                                                             times[key]
                                                         }
                                                         onChange={(
@@ -349,14 +352,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                             </div>
                                             <div className='flex-1 flex items-center justify-center min-h-[100px]'>
                                                 <p className='text-base italic font-medium text-gray-400 line-clamp-4'>
-                                                    {item?.scheduledPost
-                                                        ?.content
-                                                        ? item?.scheduledPost
+                                                    {item?.linkedinPost?.content
+                                                        ? item?.linkedinPost
                                                               ?.content
                                                         : 'Empty...'}
                                                 </p>
                                             </div>
-                                            {!item?.scheduledPost?.content && (
+                                            {!item?.linkedinPost?.content && (
                                                 <div className='flex items-center gap-2'>
                                                     <Dialog
                                                         open={isVoiceModalOpen}
@@ -431,7 +433,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                 </div>
                                             )}
 
-                                            {item?.scheduledPost?.content && (
+                                            {item?.linkedinPost?.content && (
                                                 <div className='flex items-center gap-2'>
                                                     <Dialog
                                                         open={viewMoreModal}

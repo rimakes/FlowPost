@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["mongoDb", "filterJson"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
@@ -148,7 +147,8 @@ model LinkedinPost {
     publishedAt DateTime?
 
     // RELATIONS
-    author Author
+    author        Author
+    scheduledPost ScheduledPost[] // One-to-many relation: One LinkedIn post can be part of multiple scheduled posts
 }
 
 type DisplayableText {
@@ -238,18 +238,6 @@ type Author {
     handle     String @default("@ricsala86")
 }
 
-//type to store the ScheduledPostObject 
-type ScheduledPostObject {
-    author      Author?
-    id          String?
-    createdAt   String?
-    updatedAt   String?
-    content     String?
-    published   Boolean?  @default(false)
-    publishedAt DateTime?
-    time        String?
-}
-
 enum AspectRatio {
     SQUARE
     PORTRAIT
@@ -279,12 +267,14 @@ model PostCategory {
 
 //model to store the ScheduledPost
 model ScheduledPost {
-    date          DateTime
-    id            String               @id @default(auto()) @map("_id") @db.ObjectId
-    userId        String               @db.ObjectId
-    scheduledPost ScheduledPostObject?
-    createdAt     DateTime             @default(now())
-    updatedAt     DateTime             @updatedAt
+    time           String
+    date           DateTime
+    id             String        @id @default(auto()) @map("_id") @db.ObjectId
+    userId         String        @db.ObjectId
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    linkedinPostId String?       @db.ObjectId
+    linkedinPost   LinkedinPost? @relation(fields: [linkedinPostId], references: [id])
 
     @@map("ScheduledPost")
 }

@@ -19,12 +19,20 @@ export async function POST(req: NextRequest) {
     try {
         const session: Session | null = await getServerSession(authOptions);
         const body: any = await req?.json();
+        const linkedinPostId: string = body.scheduledPost.id;
+        delete body.scheduledPost;
+
         const schedulePost: TScheduledPost = await db.scheduledPost.create({
-            data: { ...body, userId: session?.user?.id },
+            data: {
+                ...body,
+                userId: session?.user?.id,
+                linkedinPostId,
+            },
         });
 
         return NextResponse.json({ schedulePost }, { status: 200 });
     } catch (error: any) {
+        console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
             { status: 500 }
@@ -55,14 +63,12 @@ export async function PUT(req: NextRequest) {
                 { status: 500 }
             );
         }
-
+        
         const schedulePost = await db.scheduledPost.update({
             where: {
-                id: checkScheduledPost?.id,
+                id,
             },
-            data: {
-                scheduledPost: body,
-            },
+            data: { time: body?.time },
         });
 
         checkScheduledPost = await db.scheduledPost.findUnique({
@@ -73,6 +79,7 @@ export async function PUT(req: NextRequest) {
             { status: 200 }
         );
     } catch (error: any) {
+        console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
             { status: 500 }
@@ -90,12 +97,20 @@ export async function GET(req: NextRequest) {
     try {
         const session: Session | null = await getServerSession(authOptions);
         const userId: any = session?.user?.id;
-        const scheduledPost = await db.scheduledPost.findMany({
-            where: {
-                userId,
-            },
-        });
-        return NextResponse.json({ scheduledPost }, { status: 200 });
+        const scheduledPostsIncludingLinkedinPosts =
+            await db.scheduledPost.findMany({
+                where: {
+                    userId,
+                },
+                include: {
+                    linkedinPost: true,
+                },
+            });
+
+        return NextResponse.json(
+            { scheduledPost: scheduledPostsIncludingLinkedinPosts },
+            { status: 200 }
+        );
     } catch (error) {
         return NextResponse.json(
             { error: 'Something went wrong' },

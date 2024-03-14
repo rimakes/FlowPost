@@ -1,6 +1,11 @@
 import axios from 'axios';
 
 // REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
+
+/*
+share on linkedin from api :- https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin
+linkedin end points : - https://www.linkedin.com/developers/apps/218468101/products/share-on-linkedin/endpoints
+ */
 export const postOnLinkedIn = async (
     providerAccountId: String,
     content: String | null | undefined,
