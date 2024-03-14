@@ -139,7 +139,7 @@ export async function DELETE(req: NextRequest) {
                 { status: 500 }
             );
         }
-        await db.scheduledPost.deleteMany({
+        await db.scheduledPost.delete({
             where: {
                 id: checkScheduledPost?.id,
             },
