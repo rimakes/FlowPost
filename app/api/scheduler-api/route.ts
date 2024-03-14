@@ -48,7 +48,6 @@ export async function GET(req: NextRequest) {
                 );
             }
 
-            console.log(post, '====');
             const hours = Number(post?.time?.split(':')[0]);
             const minutes = Number(post?.time?.split(':')[1]);
 

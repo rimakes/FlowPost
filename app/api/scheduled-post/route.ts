@@ -146,7 +146,7 @@ export async function DELETE(req: NextRequest) {
         });
 
         if (deleteData === 'true') {
-            await db.linkedinPost.delete({
+            await db.linkedinPost.deleteMany({
                 where: {
                     id: postId,
                 },
