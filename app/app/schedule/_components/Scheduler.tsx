@@ -18,6 +18,31 @@ interface userPostsProps {
     userPosts: [];
 }
 
+interface LinkedInPost {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    content: string;
+    published: boolean;
+    publishedAt: string | null;
+    author: {
+        name: string;
+        pictureUrl: string;
+        handle: string;
+    };
+}
+
+interface PostData {
+    time: string;
+    date: Date;
+    id: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    linkedinPostId: string;
+    linkedinPost: LinkedInPost;
+}
+
 export default function Scheduler({ userPosts }: userPostsProps) {
     const { data } = useSession();
     const currentDate = new Date();
@@ -33,10 +58,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             .split('Tt')[0]
     );
     const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
-    const [betweenDates, setBetweenDates] = useState<any>([]);
+    const [betweenDates, setBetweenDates] = useState<PostData[]>([]);
     const [viewMoreModal, setViewMoreModal] = useState(false);
     const [editDetailsModal, setEditDetailsModal] = useState(false);
-    const [scheduledPosts, setScheduledPosts] = useState<any>([]);
+    const [scheduledPosts, setScheduledPosts] = useState<TScheduledPost[]>([]);
     const [isOpen, setIsOpen] = useState<boolean | null | number>();
     const [times, setTimes] = useState<string[]>([]);
     const popoverRef = useRef<HTMLUListElement>(null);
@@ -70,21 +95,22 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         return dateList;
     };
 
+    console.log(scheduledPosts, '=====scheduledPosts');
+
     useEffect(() => {
         const datesBetween = getDates(startDate, endDate);
-
         setBetweenDates(
             datesBetween.map((date) => {
-                const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
-                    (item: any) =>
+                const getDataByDate = scheduledPosts?.scheduledPost?.find(
+                    (item: TScheduledPost) =>
                         new Date(item?.date)?.toDateString() ===
                         new Date(date?.toISOString())?.toDateString()
                 );
 
                 if (getDataByDate) {
                     return {
-                        date: new Date(date)?.toISOString(),
                         ...getDataByDate,
+                        date: new Date(date)?.toISOString(),
                     };
                 } else {
                     return {
@@ -147,16 +173,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
      * api to create schedule post api
      */
 
-    const handleCreateSchedulePost = async (
-        selectedData: TScheduledPost,
-        date: Date
-    ) => {
+    const handleCreateSchedulePost = async (selectedData: TScheduledPost) => {
         try {
-            const { date, time, ...rest } = selectedData;
+            const { date, time, id } = selectedData;
             const postData = {
                 date,
                 time,
-                scheduledPost: rest,
+                linkedinPostId: id,
             };
             await apiClient.post('/scheduled-post', postData);
             handleGetSchedulePosts();
@@ -220,7 +243,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     };
 
     const handleTimeChange = (newValue: string, key: number) => {
-        const data = betweenDates?.map((item: {}, index: number) => {
+        const data = betweenDates?.map((item: PostData, index: number) => {
             if (index === key) {
                 return { ...item, time: newValue };
             } else {
@@ -228,33 +251,32 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             }
         });
         setBetweenDates(data);
-        const { scheduledPost, ...rest } = data[key];
+        const { ...rest } = data[key];
         const updatedPayload = { ...rest };
         data[key] &&
             data[key].linkedinPost &&
             handleUpdateSchedulePost(updatedPayload);
     };
 
-    const handleSelect = async (item: {}, key: number) => {
-        let selectedData = betweenDates.map((items: {}, index: number) => {
-            if (index === selectedDraftId) {
-                return {
-                    ...items,
-                    ...item,
-                };
+    const handleSelect = async (item: { id: string }, key: number) => {
+        let selectedData: PostData[] = betweenDates.map(
+            (items: PostData, index: number) => {
+                if (index === selectedDraftId) {
+                    return {
+                        ...items,
+                        id: item?.id,
+                    };
+                }
+                return items;
             }
-            return items;
-        });
+        );
 
-        const newUploadedData = selectedData?.filter(
+        const newUploadedData: TScheduledPost[] = selectedData?.filter(
             (item: {}, key: number) => key === selectedDraftId
         );
 
         if (newUploadedData?.length) {
-            handleCreateSchedulePost(
-                newUploadedData[0],
-                newUploadedData[0]?.date
-            );
+            handleCreateSchedulePost(newUploadedData[0]);
         }
 
         setBetweenDates(selectedData);
@@ -271,6 +293,8 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         setSelectedDraftId(key);
     };
 
+    console.log(scheduledPosts, '====scheduledPosts');
+    console.log(betweenDates, '=====betweenDates');
     return (
         <>
             <div>
@@ -305,7 +329,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                 </div>
                 <div>
                     <div className='lg:flex grid w-full gap-8 pb-8 h-full'>
-                        {betweenDates.map((item: any, key: number) => {
+                        {betweenDates.map((item: PostData, key: number) => {
                             return (
                                 <div className='w-full' key={key}>
                                     <div key={key} className='flex gap-[10px]'>

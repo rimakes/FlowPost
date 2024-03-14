@@ -17,21 +17,19 @@ import { authOptions } from '@/auth';
 
 export async function POST(req: NextRequest) {
     try {
-        const session: Session | null = await getServerSession(authOptions);
-        const body: any = await req?.json();
-        const linkedinPostId: string = body.scheduledPost.id;
-        delete body.scheduledPost;
+        const session: Session | null = await getServerSession(authOptions)!;
+        const body: TScheduledPost = await req?.json();
+        const userId: string = session?.user?.id!;
 
         const schedulePost: TScheduledPost = await db.scheduledPost.create({
             data: {
                 ...body,
-                userId: session?.user?.id,
-                linkedinPostId,
+                userId,
             },
         });
 
         return NextResponse.json({ schedulePost }, { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
@@ -50,7 +48,7 @@ export async function PUT(req: NextRequest) {
     try {
         const body: TScheduledPost = await req?.json();
         const searchParams = new URLSearchParams(req.nextUrl.search);
-        const id: any = searchParams.get('id');
+        const id: string = searchParams.get('id')!;
         let checkScheduledPost = await db.scheduledPost.findUnique({
             where: {
                 id,
@@ -63,7 +61,7 @@ export async function PUT(req: NextRequest) {
                 { status: 500 }
             );
         }
-        
+
         const schedulePost = await db.scheduledPost.update({
             where: {
                 id,
@@ -78,7 +76,7 @@ export async function PUT(req: NextRequest) {
             { updatedScheduledPost: schedulePost },
             { status: 200 }
         );
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
@@ -96,21 +94,17 @@ export async function PUT(req: NextRequest) {
 export async function GET(req: NextRequest) {
     try {
         const session: Session | null = await getServerSession(authOptions);
-        const userId: any = session?.user?.id;
-        const scheduledPostsIncludingLinkedinPosts =
-            await db.scheduledPost.findMany({
-                where: {
-                    userId,
-                },
-                include: {
-                    linkedinPost: true,
-                },
-            });
+        const userId: string = session?.user?.id!;
+        const scheduledPost = await db.scheduledPost.findMany({
+            where: {
+                userId,
+            },
+            include: {
+                linkedinPost: true,
+            },
+        });
 
-        return NextResponse.json(
-            { scheduledPost: scheduledPostsIncludingLinkedinPosts },
-            { status: 200 }
-        );
+        return NextResponse.json({ scheduledPost }, { status: 200 });
     } catch (error) {
         return NextResponse.json(
             { error: 'Something went wrong' },
@@ -129,15 +123,15 @@ export async function GET(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
     try {
         const searchParams = new URLSearchParams(req.nextUrl.search);
-        const id: any = searchParams.get('id');
-        const deleteData: string | null = searchParams.get('deleteData');
-        const checkScheduledPost: any = await db.scheduledPost.findUnique({
+        const id: string = searchParams.get('id')!;
+        const deleteData: string = searchParams.get('deleteData')!;
+        const checkScheduledPost = await db.scheduledPost.findUnique({
             where: {
                 id,
             },
         });
 
-        const postId: string = checkScheduledPost?.scheduledPost?.id;
+        const postId: string = checkScheduledPost?.linkedinPostId!;
 
         if (!checkScheduledPost) {
             return NextResponse.json(

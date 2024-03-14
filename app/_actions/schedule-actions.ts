@@ -7,9 +7,9 @@ share on linkedin from api :- https://learn.microsoft.com/en-us/linkedin/consume
 linkedin end points : - https://www.linkedin.com/developers/apps/218468101/products/share-on-linkedin/endpoints
  */
 export const postOnLinkedIn = async (
-    providerAccountId: String,
+    providerAccountId: String | undefined,
     content: String | null | undefined,
-    accessToken: String | null
+    accessToken: String | null | undefined
 ) => {
     try {
         const body = {
@@ -47,7 +47,7 @@ export const postOnLinkedIn = async (
             response?.data?.id
         );
         return response;
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error posting on LinkedIn:', error);
         return error;
     }

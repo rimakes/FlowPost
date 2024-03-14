@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
         // posting the each post on linkedin from the scheduledPosts (post that are supposed to be posted today as per their time)
         scheduledPosts?.forEach(async (post: NewTScheduledPost) => {
             const currentDate = new Date();
-            const userAccount: any = await db.account.findFirst({
+            const userAccount = await db.account.findFirst({
                 where: {
                     userId: post?.userId,
                 },
@@ -48,6 +48,7 @@ export async function GET(req: NextRequest) {
                 );
             }
 
+            console.log(post, '====');
             const hours = Number(post?.time?.split(':')[0]);
             const minutes = Number(post?.time?.split(':')[1]);
 
@@ -56,7 +57,7 @@ export async function GET(req: NextRequest) {
                 currentDate?.getHours() === hours &&
                 currentDate?.getMinutes() === minutes
             ) {
-                const posted = await postOnLinkedIn(
+                const posted: any = await postOnLinkedIn(
                     userAccount?.providerAccountId,
                     post?.linkedinPost?.content,
                     userAccount?.access_token
