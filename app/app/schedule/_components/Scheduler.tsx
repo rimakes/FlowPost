@@ -37,10 +37,8 @@ interface PostData {
     date: Date;
     id: string;
     userId: string;
-    createdAt: string;
-    updatedAt: string;
     linkedinPostId: string;
-    linkedinPost: LinkedInPost;
+    linkedinPost?: LinkedInPost;
 }
 
 export default function Scheduler({ userPosts }: userPostsProps) {
@@ -95,30 +93,34 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         return dateList;
     };
 
-    console.log(scheduledPosts, '=====scheduledPosts');
-
     useEffect(() => {
         const datesBetween = getDates(startDate, endDate);
-        setBetweenDates(
-            datesBetween.map((date) => {
-                const getDataByDate = scheduledPosts?.scheduledPost?.find(
-                    (item: TScheduledPost) =>
-                        new Date(item?.date)?.toDateString() ===
-                        new Date(date?.toISOString())?.toDateString()
-                );
+        const data: PostData[] = datesBetween.map((date) => {
+            const getDataByDate = scheduledPosts?.find(
+                (item: TScheduledPost) =>
+                    new Date(item?.date)?.toDateString() ===
+                    new Date(date?.toISOString())?.toDateString()
+            );
 
-                if (getDataByDate) {
-                    return {
-                        ...getDataByDate,
-                        date: new Date(date)?.toISOString(),
-                    };
-                } else {
-                    return {
-                        date: new Date(date)?.toISOString(),
-                    };
-                }
-            })
-        );
+            if (getDataByDate) {
+                return {
+                    ...getDataByDate,
+                    linkedinPostId: getDataByDate?.linkedinPostId || '',
+                    date: new Date(date),
+                };
+            } else {
+                return {
+                    time: '',
+                    id: '',
+                    userId: '',
+                    createdAt: '',
+                    updatedAt: '',
+                    linkedinPostId: '',
+                    date: new Date(date),
+                };
+            }
+        });
+        setBetweenDates(data);
     }, [startDate, endDate, scheduledPosts]);
 
     const handleNext = () => {
@@ -195,7 +197,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     const handleGetSchedulePosts = useCallback(async () => {
         try {
             const response = await apiClient.get('/scheduled-post');
-            setScheduledPosts(response?.data);
+            setScheduledPosts(response?.data?.scheduledPost);
             setTimes([]);
         } catch (error) {
             console.error('Error:', error);
@@ -293,8 +295,6 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         setSelectedDraftId(key);
     };
 
-    console.log(scheduledPosts, '====scheduledPosts');
-    console.log(betweenDates, '=====betweenDates');
     return (
         <>
             <div>

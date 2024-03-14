@@ -6,11 +6,19 @@ import axios from 'axios';
 share on linkedin from api :- https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin
 linkedin end points : - https://www.linkedin.com/developers/apps/218468101/products/share-on-linkedin/endpoints
  */
+
+type IData = {
+    id: string;
+};
+type ResData = {
+    data: IData;
+};
+
 export const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,
     accessToken: String | null | undefined
-) => {
+): Promise<ResData> => {
     try {
         const body = {
             author: `urn:li:person:${providerAccountId}`,
@@ -49,6 +57,6 @@ export const postOnLinkedIn = async (
         return response;
     } catch (error) {
         console.error('Error posting on LinkedIn:', error);
-        return error;
+        throw error;
     }
 };

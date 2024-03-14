@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
                 currentDate?.getHours() === hours &&
                 currentDate?.getMinutes() === minutes
             ) {
-                const posted: any = await postOnLinkedIn(
+                const posted: { data: { id: string } } = await postOnLinkedIn(
                     userAccount?.providerAccountId,
                     post?.linkedinPost?.content,
                     userAccount?.access_token
