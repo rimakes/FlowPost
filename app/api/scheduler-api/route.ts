@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { postOnLinkedIn } from '../../_actions/schedule-actions';
-import { TScheduledPost } from '@/types/types';
+import { TLinkedinPost, TScheduledPost } from '@/types/types';
+
+type NewTScheduledPost = TScheduledPost & {
+    linkedinPost: TLinkedinPost;
+};
+
+// REVIEW: What about posts that should have been posted but were not? We need to handle that case as well, because it WILL happen!
 
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
@@ -12,69 +18,65 @@ export async function GET(req: NextRequest) {
         const endOfDay = new Date();
         endOfDay.setUTCHours(23, 59, 59, 999);
 
-        // finding the posts from the start of the day till end of day
-        let scheduledPosts = await db.scheduledPost.findMany({
+        // finding the posts from the start of the day till end of day that are not published
+        let scheduledPosts = (await db.scheduledPost.findMany({
             where: {
                 date: {
                     gte: startOfDay,
                     lt: endOfDay,
                 },
-                scheduledPost: {
-                    is: {
-                        publishedAt: null,
+            },
+            include: {
+                linkedinPost: {
+                    where: {
                         published: false,
                     },
                 },
             },
-        });
+        })) as NewTScheduledPost[];
 
         // posting the each post on linkedin from the scheduledPosts (post that are supposed to be posted today as per their time)
-        scheduledPosts?.forEach(async (post: TScheduledPost) => {
+        scheduledPosts?.forEach(async (post: NewTScheduledPost) => {
             const currentDate = new Date();
-            const userAccount: any = await db.account.findFirst({
+            const userAccount = await db.account.findFirst({
                 where: {
                     userId: post?.userId,
                 },
             });
 
-            const posted = await postOnLinkedIn(
-                userAccount?.providerAccountId,
-                post?.scheduledPost?.content,
-                userAccount?.access_token
-            );
-
-            if (Number(post?.scheduledPost?.time?.split(':')?.length) < 2) {
+            if (Number(post?.time?.split(':')?.length) < 2) {
                 return NextResponse.json(
                     { error: 'Time not found' },
                     { status: 500 }
                 );
             }
 
-            const hours = Number(post?.scheduledPost?.time?.split(':')[0]);
-            const minutes = Number(post?.scheduledPost?.time?.split(':')[1]);
+            const hours = Number(post?.time?.split(':')[0]);
+            const minutes = Number(post?.time?.split(':')[1]);
+
             if (
                 currentDate === post?.date &&
                 currentDate?.getHours() === hours &&
                 currentDate?.getMinutes() === minutes
             ) {
-                const posted = await postOnLinkedIn(
+                const posted: { data: { id: string } } = await postOnLinkedIn(
                     userAccount?.providerAccountId,
-                    post?.scheduledPost?.content,
+                    post?.linkedinPost?.content,
                     userAccount?.access_token
                 );
 
-                if (posted?.data?.id) {
-                    const scheduledPost = {
-                        ...post.scheduledPost,
-                        published: true,
-                        publishedAt: new Date(),
-                    };
-                    await db.scheduledPost.update({
-                        where: { id: post?.id },
+                if (posted?.data?.id && post?.linkedinPostId !== null) {
+                    await db.linkedinPost.update({
+                        where: {
+                            id: post?.linkedinPostId,
+                        },
                         data: {
-                            scheduledPost,
+                            published: true,
+                            publishedAt: new Date(),
                         },
                     });
+
+                    // REVIEW: ew! Sending a response from a forEach loop!😬 You will end up sending way too many responses!
                     return NextResponse.json(
                         { data: 'Success' },
                         { status: 200 }

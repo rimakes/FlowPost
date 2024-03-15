@@ -9,22 +9,31 @@ import { authOptions } from '@/auth';
  * @param req.body -> contains data of the post to be scheduled
  * @returns schedulePost
  */
-// TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
-// I understand that you are taking the id from the session in he frontend, but it can be tampered by the user. Compare it with the server session to make sure that the user is the one that is logged in.
-// For a user to be able to schedule a post, they need:
-// - to be logged in (I think this should be done on the middleware)
-// - be the author of the post (aka, the post user id is equal to the session user id)
-
 export async function POST(req: NextRequest) {
     try {
-        const session: Session | null = await getServerSession(authOptions);
-        const body: any = await req?.json();
+        const session = await getServerSession(authOptions)!;
+        const body: TScheduledPost = await req.json();
+        const userId = session?.user?.id!;
+
+        // Need to ensure that the user is the owner of the post
+        const linkedinPost = await db.linkedinPost.findUnique({
+            where: {
+                id: body.linkedinPostId!,
+            },
+        });
+
+        // REVIEW: We need to fix the whole database...there is a bit of a mess with the relationships
+
         const schedulePost: TScheduledPost = await db.scheduledPost.create({
-            data: { ...body, userId: session?.user?.id },
+            data: {
+                ...body,
+                userId,
+            },
         });
 
         return NextResponse.json({ schedulePost }, { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
+        console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
             { status: 500 }
@@ -37,12 +46,11 @@ export async function POST(req: NextRequest) {
  * @param req ->to update the post time
  * @returns -> returns the updated post
  */
-
 export async function PUT(req: NextRequest) {
     try {
         const body: TScheduledPost = await req?.json();
         const searchParams = new URLSearchParams(req.nextUrl.search);
-        const id: any = searchParams.get('id');
+        const id = searchParams.get('id')!;
         let checkScheduledPost = await db.scheduledPost.findUnique({
             where: {
                 id,
@@ -58,11 +66,9 @@ export async function PUT(req: NextRequest) {
 
         const schedulePost = await db.scheduledPost.update({
             where: {
-                id: checkScheduledPost?.id,
+                id,
             },
-            data: {
-                scheduledPost: body,
-            },
+            data: { time: body?.time },
         });
 
         checkScheduledPost = await db.scheduledPost.findUnique({
@@ -72,7 +78,8 @@ export async function PUT(req: NextRequest) {
             { updatedScheduledPost: schedulePost },
             { status: 200 }
         );
-    } catch (error: any) {
+    } catch (error) {
+        console.log(error);
         return NextResponse.json(
             { error: 'Something went wrong' },
             { status: 500 }
@@ -88,13 +95,17 @@ export async function PUT(req: NextRequest) {
 // TODO: This is actually pretty dangerous. A user could change the URL to get to get the scheduled post of another user's posts!! You should use the session to get the user's ID...
 export async function GET(req: NextRequest) {
     try {
-        const session: Session | null = await getServerSession(authOptions);
-        const userId: any = session?.user?.id;
+        const session = await getServerSession(authOptions);
+        const userId = session?.user?.id!;
         const scheduledPost = await db.scheduledPost.findMany({
             where: {
                 userId,
             },
+            include: {
+                linkedinPost: true,
+            },
         });
+
         return NextResponse.json({ scheduledPost }, { status: 200 });
     } catch (error) {
         return NextResponse.json(
@@ -113,16 +124,16 @@ export async function GET(req: NextRequest) {
  */
 export async function DELETE(req: NextRequest) {
     try {
-        const searchParams = new URLSearchParams(req.nextUrl.search);
-        const id: any = searchParams.get('id');
-        const deleteData: string | null = searchParams.get('deleteData');
-        const checkScheduledPost: any = await db.scheduledPost.findUnique({
+        const { searchParams } = req.nextUrl;
+        const id = searchParams.get('id')!;
+        const deleteData = searchParams.get('deleteData')!;
+        const checkScheduledPost = await db.scheduledPost.findUnique({
             where: {
                 id,
             },
         });
 
-        const postId: string = checkScheduledPost?.scheduledPost?.id;
+        const postId = checkScheduledPost?.linkedinPostId!;
 
         if (!checkScheduledPost) {
             return NextResponse.json(
@@ -130,6 +141,7 @@ export async function DELETE(req: NextRequest) {
                 { status: 500 }
             );
         }
+
         await db.scheduledPost.delete({
             where: {
                 id: checkScheduledPost?.id,
@@ -137,11 +149,19 @@ export async function DELETE(req: NextRequest) {
         });
 
         if (deleteData === 'true') {
+            await db.scheduledPost.deleteMany({
+                // REVIEW: We are supposing here there can be several schedules for the same post.
+                // not saying it's wrong, but it's something to keep in mind
+                where: {
+                    linkedinPostId: postId,
+                },
+            });
             await db.linkedinPost.delete({
                 where: {
                     id: postId,
                 },
             });
+
             return NextResponse.json({ delete: true }, { status: 200 });
         }
         return NextResponse.json({ unscheduled: true }, { status: 200 });

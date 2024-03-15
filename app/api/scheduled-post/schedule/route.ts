@@ -8,10 +8,10 @@ import { NextRequest, NextResponse } from 'next/server';
  * @returns:{ loginUser: true } based on which frontend decides which pop-up to show,
  */
 //TODO: Careful, there are Google and LinkedIn accounts!
-//TODO: The message should be something like "Account connected", shouldn't it?
+// TODO: This is still a problem! 👆
 export async function POST(req: NextRequest) {
     try {
-        const session: Session | null = await getServerSession(authOptions);
+        const session = await getServerSession(authOptions);
         const userAccount = await db.account.findFirst({
             where: { userId: session?.user?.id },
         });

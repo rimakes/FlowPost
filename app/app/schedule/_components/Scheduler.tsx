@@ -18,6 +18,29 @@ interface userPostsProps {
     userPosts: [];
 }
 
+interface LinkedInPost {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    content: string;
+    published: boolean;
+    publishedAt: string | null;
+    author: {
+        name: string;
+        pictureUrl: string;
+        handle: string;
+    };
+}
+
+interface PostData {
+    time: string;
+    date: Date;
+    id: string;
+    userId: string;
+    linkedinPostId: string;
+    linkedinPost?: LinkedInPost;
+}
+
 export default function Scheduler({ userPosts }: userPostsProps) {
     const { data } = useSession();
     const currentDate = new Date();
@@ -33,11 +56,10 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             .split('Tt')[0]
     );
     const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
-    const [betweenDates, setBetweenDates] = useState<any>([]);
-
+    const [betweenDates, setBetweenDates] = useState<PostData[]>([]);
     const [viewMoreModal, setViewMoreModal] = useState(false);
     const [editDetailsModal, setEditDetailsModal] = useState(false);
-    const [scheduledPosts, setScheduledPosts] = useState<any>([]);
+    const [scheduledPosts, setScheduledPosts] = useState<TScheduledPost[]>([]);
     const [isOpen, setIsOpen] = useState<boolean | null | number>();
     const [times, setTimes] = useState<string[]>([]);
     const popoverRef = useRef<HTMLUListElement>(null);
@@ -73,27 +95,32 @@ export default function Scheduler({ userPosts }: userPostsProps) {
 
     useEffect(() => {
         const datesBetween = getDates(startDate, endDate);
+        const data: PostData[] = datesBetween.map((date) => {
+            const getDataByDate = scheduledPosts?.find(
+                (item: TScheduledPost) =>
+                    new Date(item?.date)?.toDateString() ===
+                    new Date(date?.toISOString())?.toDateString()
+            );
 
-        setBetweenDates(
-            datesBetween.map((date) => {
-                const getDataByDate: any = scheduledPosts?.scheduledPost?.find(
-                    (item: any) =>
-                        new Date(item?.date)?.toDateString() ===
-                        new Date(date?.toISOString())?.toDateString()
-                );
-
-                if (getDataByDate) {
-                    return {
-                        date: new Date(date)?.toISOString(),
-                        ...getDataByDate,
-                    };
-                } else {
-                    return {
-                        date: new Date(date)?.toISOString(),
-                    };
-                }
-            })
-        );
+            if (getDataByDate) {
+                return {
+                    ...getDataByDate,
+                    linkedinPostId: getDataByDate?.linkedinPostId || '',
+                    date: new Date(date),
+                };
+            } else {
+                return {
+                    time: '',
+                    id: '',
+                    userId: '',
+                    createdAt: '',
+                    updatedAt: '',
+                    linkedinPostId: '',
+                    date: new Date(date),
+                };
+            }
+        });
+        setBetweenDates(data);
     }, [startDate, endDate, scheduledPosts]);
 
     const handleNext = () => {
@@ -148,15 +175,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
      * api to create schedule post api
      */
 
-    const handleCreateSchedulePost = async (
-        selectedData: TScheduledPost,
-        date: Date
-    ) => {
+    const handleCreateSchedulePost = async (selectedData: TScheduledPost) => {
         try {
-            const { date, ...rest } = selectedData;
+            const { date, time, id } = selectedData;
             const postData = {
                 date,
-                scheduledPost: rest,
+                time,
+                linkedinPostId: id,
             };
             await apiClient.post('/scheduled-post', postData);
             handleGetSchedulePosts();
@@ -172,7 +197,8 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     const handleGetSchedulePosts = useCallback(async () => {
         try {
             const response = await apiClient.get('/scheduled-post');
-            setScheduledPosts(response?.data);
+            setScheduledPosts(response?.data?.scheduledPost);
+            setTimes([]);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -210,7 +236,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         try {
             const response = await apiClient.put(
                 `scheduled-post?id=${selectedData?.id}`,
-                selectedData?.scheduledPost
+                selectedData
             );
             handleGetSchedulePosts();
         } catch (error) {
@@ -219,7 +245,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     };
 
     const handleTimeChange = (newValue: string, key: number) => {
-        const data = betweenDates?.map((item: {}, index: number) => {
+        const data = betweenDates?.map((item: PostData, index: number) => {
             if (index === key) {
                 return { ...item, time: newValue };
             } else {
@@ -227,33 +253,34 @@ export default function Scheduler({ userPosts }: userPostsProps) {
             }
         });
         setBetweenDates(data);
-        const { scheduledPost, ...rest } = data[key];
-        const updatedScheduledPost = { ...scheduledPost, time: newValue };
-        const updatedPayload = { ...rest, scheduledPost: updatedScheduledPost };
-        handleUpdateSchedulePost(updatedPayload);
+        const { ...rest } = data[key];
+        const updatedPayload = { ...rest };
+        data[key] &&
+            data[key].linkedinPost &&
+            handleUpdateSchedulePost(updatedPayload);
     };
 
-    const handleSelect = async (item: {}, key: number) => {
-        let selectedData = betweenDates.map((items: {}, index: number) => {
-            if (index === selectedDraftId) {
-                return {
-                    ...items,
-                    ...item,
-                };
+    const handleSelect = async (item: { id: string }, key: number) => {
+        let selectedData: PostData[] = betweenDates.map(
+            (items: PostData, index: number) => {
+                if (index === selectedDraftId) {
+                    return {
+                        ...items,
+                        id: item?.id,
+                    };
+                }
+                return items;
             }
-            return items;
-        });
+        );
 
-        const newUploadedData = selectedData?.filter(
+        const newUploadedData: TScheduledPost[] = selectedData?.filter(
             (item: {}, key: number) => key === selectedDraftId
         );
 
         if (newUploadedData?.length) {
-            handleCreateSchedulePost(
-                newUploadedData[0],
-                newUploadedData[0]?.date
-            );
+            handleCreateSchedulePost(newUploadedData[0]);
         }
+
         setBetweenDates(selectedData);
         setIsVoiceModalOpen(false);
     };
@@ -302,7 +329,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                 </div>
                 <div>
                     <div className='lg:flex grid w-full gap-8 pb-8 h-full'>
-                        {betweenDates.map((item: any, key: number) => {
+                        {betweenDates.map((item: PostData, key: number) => {
                             return (
                                 <div className='w-full' key={key}>
                                     <div key={key} className='flex gap-[10px]'>
@@ -327,9 +354,9 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                     <TimePicker
                                                         clockIcon={null}
                                                         clearIcon={null}
+                                                        closeClock={true}
                                                         value={
-                                                            item?.scheduledPost
-                                                                ?.time ||
+                                                            item?.time ||
                                                             times[key]
                                                         }
                                                         onChange={(
@@ -349,14 +376,13 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                             </div>
                                             <div className='flex-1 flex items-center justify-center min-h-[100px]'>
                                                 <p className='text-base italic font-medium text-gray-400 line-clamp-4'>
-                                                    {item?.scheduledPost
-                                                        ?.content
-                                                        ? item?.scheduledPost
+                                                    {item?.linkedinPost?.content
+                                                        ? item?.linkedinPost
                                                               ?.content
                                                         : 'Empty...'}
                                                 </p>
                                             </div>
-                                            {!item?.scheduledPost?.content && (
+                                            {!item?.linkedinPost?.content && (
                                                 <div className='flex items-center gap-2'>
                                                     <Dialog
                                                         open={isVoiceModalOpen}
@@ -431,7 +457,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
                                                 </div>
                                             )}
 
-                                            {item?.scheduledPost?.content && (
+                                            {item?.linkedinPost?.content && (
                                                 <div className='flex items-center gap-2'>
                                                     <Dialog
                                                         open={viewMoreModal}
