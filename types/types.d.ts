@@ -150,3 +150,12 @@ export type TImage = {
 export type TSlideDesignNames = keyof typeof designMap;
 
 export type TPosition = Position;
+
+// REVIEW: You can "populate" the type of a Prisma model by using the "include" property in the PrismaClient
+export type UserWithSettings = Prisma.UserGetPayload<{
+    include: { settings: true };
+}>;
+
+// REVIEW: This below is probably a better way than "TPure" to get the type of a Prisma model without the "id", "createdAt", "updatedAt" and other fields...
+// if I want to get the "create" input of a user?
+export type UserCreateInput = Prisma.UserCreateInput;
