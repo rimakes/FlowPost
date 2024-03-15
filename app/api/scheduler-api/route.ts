@@ -7,106 +7,57 @@ type NewTScheduledPost = TScheduledPost & {
     linkedinPost: TLinkedinPost;
 };
 
-// REVIEW: What about posts that should have been posted but were not? We need to handle that case as well, because it WILL happen!
-
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
     try {
-        console.log('GET /api/scheduler-api at ', new Date().toISOString());
-
+        const now = new Date();
         const startOfDay = new Date();
-        startOfDay.setUTCHours(0, 0, 0, 0);
+        startOfDay.setHours(0, 0, 0, 0);
 
-        const endOfDay = new Date();
-        endOfDay.setUTCHours(23, 59, 59, 999);
-
-        // finding the posts from the start of the day till end of day that are not published
-        let scheduledPosts = (await db.scheduledPost.findMany({
+        // finding the posts from the start of the day till end of day that are not published AND SHOULD BE PUBLISHED BY NOW
+        let pendingToPublishPosts = (await db.scheduledPost.findMany({
             where: {
                 date: {
                     gte: startOfDay,
-                    lt: endOfDay,
+                    lt: now,
+                },
+                linkedinPost: {
+                    published: false,
                 },
             },
             include: {
-                linkedinPost: {
-                    where: {
-                        published: false,
-                    },
-                },
+                linkedinPost: true,
             },
         })) as NewTScheduledPost[];
 
-        // posting the each post on linkedin from the scheduledPosts (post that are supposed to be posted today as per their time)
-        scheduledPosts?.forEach(async (post: NewTScheduledPost) => {
-            const currentDate = new Date();
+        pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
+            // const currentDate = new Date();
             const userAccount = await db.account.findFirst({
                 where: {
                     userId: post?.userId,
+                    provider: 'linkedin',
                 },
             });
 
-            if (Number(post?.time?.split(':')?.length) < 2) {
-                return NextResponse.json(
-                    { error: 'Time not found' },
-                    { status: 500 }
-                );
-            }
+            if (!userAccount) return;
 
-            const hours = Number(post?.time?.split(':')[0]);
-            const minutes = Number(post?.time?.split(':')[1]);
-
-            console.log(
-                'currentDate',
-                currentDate?.getDate(),
-                ' |||   post date -->',
-                post?.date.getDate()
-            );
-            console.log(
-                'current hours -->',
-                currentDate?.getHours(),
-                ' |||   post hours -->',
-                hours
-            );
-            console.log(
-                'current minutes -->',
-                currentDate?.getMinutes(),
-                ' |||   post minutes -->',
-                minutes
+            console.log('Posting on LinkedIn');
+            const posted: { data: { id: string } } = await postOnLinkedIn(
+                userAccount?.providerAccountId,
+                post?.linkedinPost?.content,
+                userAccount?.access_token
             );
 
-            if (
-                currentDate?.getDate() === post?.date.getDate() && // same day of the month
-                currentDate?.getMonth() === post?.date.getMonth() && // same month
-                currentDate?.getFullYear() === post?.date.getFullYear() && // same year
-                currentDate?.getHours() === hours &&
-                currentDate?.getMinutes() === minutes
-            ) {
-                console.log('Posting on LinkedIn');
-                const posted: { data: { id: string } } = await postOnLinkedIn(
-                    userAccount?.providerAccountId,
-                    post?.linkedinPost?.content,
-                    userAccount?.access_token
-                );
-
-                if (posted?.data?.id && post?.linkedinPostId !== null) {
-                    await db.linkedinPost.update({
-                        where: {
-                            id: post?.linkedinPostId,
-                        },
-                        data: {
-                            published: true,
-                            publishedAt: new Date(),
-                        },
-                    });
-
-                    // REVIEW: ew! Sending a response from a forEach loop!😬 You will end up sending way too many responses!
-                    return NextResponse.json(
-                        { data: 'Success' },
-                        { status: 200 }
-                    );
-                }
-                return NextResponse.json({ data: 'Error' }, { status: 400 });
+            if (posted?.data?.id && post?.linkedinPostId !== null) {
+                await db.linkedinPost.update({
+                    where: {
+                        id: post?.linkedinPostId,
+                    },
+                    data: {
+                        published: true,
+                        publishedAt: new Date(),
+                    },
+                });
             }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 200 });
