@@ -10,6 +10,7 @@ type NewTScheduledPost = TScheduledPost & {
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
     try {
+        console.log('Checking for scheduled posts');
         const now = new Date();
         const startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
