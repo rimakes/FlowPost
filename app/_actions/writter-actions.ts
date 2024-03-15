@@ -220,37 +220,33 @@ export async function upsertCarousel(carousel: TCarousel) {
 export const createWebmFile = async (formData: FormData) => {
   try {
     console.log(formData);
-    // Save the formdata to a file
-    const fileRaw = formData.get("audio") as File;
-    const buffer = await fileRaw.arrayBuffer();
+
+    // save the formdata to a file
+    const fileRaw = formData.get('audio') as File; // get the file from the formdata
+    const buffer = await fileRaw.arrayBuffer(); // convert the file to an array buffer
+
     const file = Buffer.from(buffer);
     const fileName = `audio.webm`;
     const filePath = `audio/${fileName}`;
     fs.writeFileSync(filePath, file);
 
-    // Process the file using OpenAIWhisperAudio
-    const loader = new OpenAIWhisperAudio(filePath, {
-      clientOptions: {
-        // TODO: How can we add parameters to the client?
-        // response_format: 'vtt',
-      },
-    });
-    const docs = await loader.load();
-    console.log(docs);
+    try {
+        const loader = new OpenAIWhisperAudio(filePath, {
+            clientOptions: {
+                // TODO: How can we add parameters to the client?
+                // response_format: 'vtt',
+            },
+        });
+        const docs = await loader.load();
+        console.log(docs);
 
-    // Retrieve the content from the processed file
-    const content = docs[0].pageContent;
+        return docs[0].pageContent;
+    } finally {
+        // Delete the file at the end
+        fs.unlinkSync(filePath);
+    }
 
-    // Delete the file after processing
-    fs.unlinkSync(filePath);
-
-    return content;
-  } catch (error) {
-    console.error("Error processing the audio file:", error);
-    throw error; // Rethrow the error for handling at a higher level
-  }
 };
-
 export const getPexelImages = async (query: string) => {
     console.log(query);
     const pictures = await axios.get(
