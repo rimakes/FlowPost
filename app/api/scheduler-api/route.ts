@@ -12,6 +12,8 @@ type NewTScheduledPost = TScheduledPost & {
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
     try {
+        console.log('GET /api/scheduler-api at ', new Date().toISOString());
+
         const startOfDay = new Date();
         startOfDay.setUTCHours(0, 0, 0, 0);
 
@@ -54,11 +56,33 @@ export async function GET(req: NextRequest) {
             const hours = Number(post?.time?.split(':')[0]);
             const minutes = Number(post?.time?.split(':')[1]);
 
+            console.log(
+                'currentDate',
+                currentDate?.getDate(),
+                ' |||   post date -->',
+                post?.date.getDate()
+            );
+            console.log(
+                'current hours -->',
+                currentDate?.getHours(),
+                ' |||   post hours -->',
+                hours
+            );
+            console.log(
+                'current minutes -->',
+                currentDate?.getMinutes(),
+                ' |||   post minutes -->',
+                minutes
+            );
+
             if (
-                currentDate === post?.date &&
+                currentDate?.getDate() === post?.date.getDate() && // same day of the month
+                currentDate?.getMonth() === post?.date.getMonth() && // same month
+                currentDate?.getFullYear() === post?.date.getFullYear() && // same year
                 currentDate?.getHours() === hours &&
                 currentDate?.getMinutes() === minutes
             ) {
+                console.log('Posting on LinkedIn');
                 const posted: { data: { id: string } } = await postOnLinkedIn(
                     userAccount?.providerAccountId,
                     post?.linkedinPost?.content,

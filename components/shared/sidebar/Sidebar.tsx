@@ -250,17 +250,17 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
         status: 'active',
     },
     {
-        icon: BrainCog,
-        label: 'Inspiración',
-        href: '/app/inspo',
-        shortLabel: 'Inspo',
-        status: 'próximamente',
-    },
-    {
         icon: CalendarCheck,
         label: 'Programa tus posts',
         href: '/app/schedule',
         shortLabel: 'Posts',
+        status: 'active',
+    },
+    {
+        icon: BrainCog,
+        label: 'Inspiración',
+        href: '/app/inspo',
+        shortLabel: 'Inspo',
         status: 'próximamente',
     },
 ];
