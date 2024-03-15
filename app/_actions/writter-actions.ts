@@ -3,7 +3,7 @@
 import { db } from '@/lib/prisma';
 import { retryAsyncFunction, wait } from '@/lib/utils';
 import { Pure, TCarousel, TLinkedinPost, TSlide } from '@/types/types';
-import { LinkedinPost, Post, Prisma } from '@prisma/client';
+import { LinkedinPost, BlogPost, Prisma } from '@prisma/client';
 import { MutableRefObject } from 'react';
 import fs from 'fs';
 import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
