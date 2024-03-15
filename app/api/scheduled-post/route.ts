@@ -139,6 +139,7 @@ export async function DELETE(req: NextRequest) {
                 { status: 500 }
             );
         }
+
         await db.scheduledPost.delete({
             where: {
                 id: checkScheduledPost?.id,
@@ -146,11 +147,17 @@ export async function DELETE(req: NextRequest) {
         });
 
         if (deleteData === 'true') {
-            await db.linkedinPost.deleteMany({
+            await db.scheduledPost.deleteMany({
+                where: {
+                    linkedinPostId: postId,
+                },
+            });
+            await db.linkedinPost.delete({
                 where: {
                     id: postId,
                 },
             });
+
             return NextResponse.json({ delete: true }, { status: 200 });
         }
         return NextResponse.json({ unscheduled: true }, { status: 200 });
