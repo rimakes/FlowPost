@@ -90,7 +90,7 @@ export function SpeechRecorder({ setSpeech }: SpeechRecorderProps) {
                         formData.append('audio', audioBlob, 'recording.webm');
 
                         const transcription = await createWebmFile(formData);
-                        setSpeech(transcription);
+                        setSpeech(transcription!);
                         audioChunks.current = []; // Reset chunks for next recording
                         // const audioUrl = URL.createObjectURL(audioBlob);
                         // const audio = new Audio(audioUrl);

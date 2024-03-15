@@ -11,11 +11,11 @@ import ViewMore from './viewMore';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import { TScheduledPost } from '@/types/types';
+import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import { apiClient } from '@/lib/apiClient';
 
 interface userPostsProps {
-    userPosts: [];
+    userPosts: TLinkedinPost[];
 }
 
 interface LinkedInPost {
@@ -202,7 +202,7 @@ export default function Scheduler({ userPosts }: userPostsProps) {
         } catch (error) {
             console.error('Error:', error);
         }
-    }, [data]);
+    }, []);
 
     useEffect(() => {
         if (data?.user?.id) {

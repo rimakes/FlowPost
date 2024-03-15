@@ -95,6 +95,7 @@ export const fakeSlides: TSlide[] = [
 ];
 
 export const fakeCarousel: Omit<TCarousel, 'id'> = {
+    userId: '65eeff20491ef024dbdae302',
     slides: fakeSlides,
     author: {
         handle: '@ricSala',

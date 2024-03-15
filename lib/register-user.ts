@@ -12,7 +12,6 @@ export const register = async (
             email,
             name,
             hashedPassword,
-            confirmPassword: '', //TODO: not sure if we should store this
             role,
             settings: {
                 create: {},
