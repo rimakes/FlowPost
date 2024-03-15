@@ -6,7 +6,13 @@ import { CarouselContext } from '../ContextProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { TBrand, TColorPalette, TFontPalette } from '@/types/types';
+import {
+    TBrand,
+    TColorPalette,
+    TFont,
+    TFontName,
+    TFontPalette,
+} from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
 import { ChevronsUpDown, Save } from 'lucide-react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
@@ -111,24 +117,10 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         }
     };
 
-    const setPrimaryFont = (font: string) => {
+    const setFontByType = (fontType: TFont, font: TFontName) => {
         setFontPalette({
             ...carousel.settings.fontPalette,
-            primary: font,
-        });
-    };
-
-    const setSecondaryFont = (font: string) => {
-        setFontPalette({
-            ...carousel.settings.fontPalette,
-            secondary: font,
-        });
-    };
-
-    const setHandwritingFont = (font: string) => {
-        setFontPalette({
-            ...carousel.settings.fontPalette,
-            handWriting: font,
+            [fontType]: font,
         });
     };
 
@@ -193,29 +185,10 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     <ChevronsUpDown size={20} className='ml-2' />
                 </CollapsibleTrigger>
                 <CollapsibleContent className='mt-4'>
-                    <div className='flex flex-col gap-4'>
-                        <div className='cursor-pointer flex flex-col items-start'>
-                            Primaria
-                            <FontSelector
-                                font={carousel.settings.fontPalette.primary}
-                                setFontPalette={setPrimaryFont}
-                            />
-                        </div>
-                        <div className='cursor-pointer flex flex-col items-start'>
-                            Secundaria
-                            <FontSelector
-                                font={carousel.settings.fontPalette.secondary}
-                                setFontPalette={setSecondaryFont}
-                            />
-                        </div>
-                        <div className='cursor-pointer flex flex-col items-start'>
-                            Manuscrita
-                            <FontSelector
-                                font={carousel.settings.fontPalette.handWriting}
-                                setFontPalette={setHandwritingFont}
-                            />
-                        </div>
-                    </div>
+                    <FontPaletteSelector
+                        fontPalette={carousel.settings.fontPalette}
+                        setFontByType={setFontByType}
+                    />
                 </CollapsibleContent>
             </Collapsible>
 
@@ -247,6 +220,35 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 </Button>
                 <DownloadButton />
             </div>
+        </div>
+    );
+};
+
+type FontPaletteSelectorProps = {
+    fontPalette: TFontPalette;
+    setFontByType: (fontType: TFont, font: TFontName) => void;
+};
+
+export const FontPaletteSelector = ({
+    fontPalette,
+    setFontByType,
+}: FontPaletteSelectorProps) => {
+    return (
+        <div className='flex flex-col gap-4'>
+            {Object.keys(fontPalette).map((fontType) => (
+                <div
+                    key={fontType}
+                    className='cursor-pointer flex flex-col items-start'
+                >
+                    {fontType}
+                    <FontSelector
+                        font={fontPalette[fontType as TFont] as TFontName}
+                        setFontPalette={(font: TFontName) =>
+                            setFontByType(fontType as TFont, font)
+                        }
+                    />
+                </div>
+            ))}
         </div>
     );
 };

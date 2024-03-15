@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 // A simplified way to detect OS (not full-proof, due to user agent string variability)
+// @ts-ignore
 const getOperatingSystem = (userAgent) => {
     if (userAgent.includes('Win')) return 'Windows';
     if (userAgent.includes('Mac')) return 'MacOS';

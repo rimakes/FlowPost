@@ -14,11 +14,10 @@ export const saveBrandKit = async (
     console.log(brandKit, userId);
     if (brandKit.id === 'new') {
         console.log('is new');
-        // @ts-ignore
-        delete brandKit.id;
         dbBrand = db.brand.create({
             data: {
                 ...brandKit,
+                id: undefined,
                 authorId: userId,
             },
         });

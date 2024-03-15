@@ -1,8 +1,14 @@
-import { decorationMap } from '@/app/app/carrousel/_components/Decoration';
+import { decorationMap } from '@/app/app/carrousel/_components/slideParts/SlideDecoration';
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import { fontsMap } from '@/config/fonts';
-import type { AspectRatio, Prisma, PrismaClient } from '@prisma/client';
+import type {
+    AspectRatio,
+    Position,
+    Prisma,
+    PrismaClient,
+} from '@prisma/client';
+import { designMap } from '@/app/app/carrousel/_components/SlideDesignSelector';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
@@ -93,9 +99,18 @@ export type Pure<T> = Omit<T, 'createdAt' | 'updatedAt'>;
 
 // REVIEW: What is the difference between "getPayload" and just getting the type from the PrismaClient?
 export type TLinkedinPost = Pure<Prisma.LinkedinPostGetPayload<{}>>;
-
+export type TScheduledPost = Pure<Prisma.ScheduledPostGetPayload<{}>>;
 export type TCarousel = Pure<Prisma.CarouselGetPayload<{}>>;
 
+export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
+
+type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
+export type TAspectRatioEnum = keyof TAspectRatioMap;
+export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
+
+export type TFontNames = keyof typeof fontsMap;
+
+export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
 export type TIdeas = Pure<Prisma.IdeaGetPayload<{}>>;
 
 export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
@@ -110,8 +125,28 @@ export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
 
 export type TFontName = keyof typeof fontsMap;
 
-export type TColorPalette = Prisma.ColorPaletteGetPayload<{}>;
+export type TFontPallete = Prisma.FontPaletteGetPayload<{}>;
+
+export type TDecorationId = keyof typeof decorationMap;
+export type TColor = keyof TColorPalette;
+
+export type TFont = keyof TFontPalette;
 
 export type TFontPalette = Prisma.FontPaletteGetPayload<{}>;
 
 export type TDecorationId = keyof typeof decorationMap;
+
+export type TOrientation = 'horizontal' | 'vertical';
+
+export type TMode = 'light' | 'dark';
+
+export type TImage = {
+    url: string;
+    alt: string;
+    opacity: number;
+    position: string;
+};
+
+export type TSlideDesignNames = keyof typeof designMap;
+
+export type TPosition = Position;

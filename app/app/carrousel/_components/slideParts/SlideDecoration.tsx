@@ -6,12 +6,13 @@
 
 import { cn } from '@/lib/utils';
 import { ArrowRight, Circle, TrendingUp } from 'lucide-react';
-import { TopoSVG } from './svgs/Topo';
+import { TopoSVG } from '../svgs/Topo';
 
 type DecorativeElementsProps = {
     primaryColor: string;
     secondaryColor: string;
     tertiaryColor?: string;
+    accentColor?: string;
     decorationid: keyof typeof decorationMap;
     even?: boolean;
     cover?: boolean;
@@ -19,21 +20,13 @@ type DecorativeElementsProps = {
     alternateColors?: boolean;
 };
 
-type DecorationProps = {
-    primaryColor: string;
-    secondaryColor: string;
-    tertiaryColor?: string;
-
-    even?: boolean;
-    cover?: boolean;
-    cta?: boolean;
-    alternateColors?: boolean;
-};
+type DecorationProps = Omit<DecorativeElementsProps, 'decorationid'>;
 
 const Squares = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     even,
     cover,
     cta,
@@ -49,7 +42,7 @@ const Squares = ({
             >
                 <g
                     fill='none'
-                    stroke={secondaryColor}
+                    stroke={accentColor}
                     stroke-width='1'
                     stroke-opacity={even && alternateColors ? '0.05' : '0.15'}
                 >
@@ -141,26 +134,28 @@ const Squares = ({
 };
 
 const Topo = ({
-    primaryColor,
-    secondaryColor,
-    alternateColors,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     even,
 }: DecorationProps) => {
     return (
         <div className='absolute h-full w-full top-0 left-0'>
             <TopoSVG
-                strokeColor={secondaryColor}
-                opacity={even && alternateColors ? '0.1' : '0.25'}
+                strokeColor={fontColor}
+                opacity={even && fontColor ? '0.1' : '0.1'}
             />
         </div>
     );
 };
 
 const Arrows = ({
-    primaryColor,
-    secondaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     cover,
-    tertiaryColor,
     even,
     cta,
 }: DecorationProps) => {
@@ -169,12 +164,12 @@ const Arrows = ({
             <ArrowRight
                 className='absolute top-8 -translate-x-1/2 left-0'
                 size={140}
-                color={secondaryColor}
+                color={primaryColor}
             />
             <ArrowRight
                 className='absolute bottom-12 -translate-x-3/4 left-0'
                 size={240}
-                color={secondaryColor}
+                color={primaryColor}
             />
         </div>
     );
@@ -182,19 +177,18 @@ const Arrows = ({
     return (
         <DecorationConnectingPattern
             Element={element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
             cover={cover}
             cta={cta}
             even={even}
-            tertiaryColor={tertiaryColor}
         />
     );
 };
 
 const Bubbles = ({
-    primaryColor,
-    secondaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     cover,
     cta,
     even,
@@ -204,28 +198,28 @@ const Bubbles = ({
             <Circle
                 className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
                 size={140}
-                color={secondaryColor}
+                color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
                 className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
                 size={200}
-                color={secondaryColor}
+                color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
                 className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
                 size={260}
-                color={secondaryColor}
+                color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
                 className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
                 size={320}
-                color={secondaryColor}
+                color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
@@ -235,8 +229,6 @@ const Bubbles = ({
     return (
         <DecorationConnectingPattern
             Element={Element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
             cover={cover}
             cta={cta}
             even={even}
@@ -247,21 +239,26 @@ const Bubbles = ({
 };
 
 const Balls = ({
-    primaryColor,
-    secondaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     cover,
     cta,
     even,
 }: DecorationProps) => {
     const Element = (
-        <div className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0 bg-green-500 rounded-full w-40 h-40'></div>
+        <div
+            className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0  rounded-full w-40 h-40'
+            style={{
+                backgroundColor: primaryColor,
+            }}
+        ></div>
     );
 
     return (
         <DecorationConnectingPattern
             Element={Element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
             cover={cover}
             cta={cta}
             even={even}
@@ -291,8 +288,6 @@ const Trending = ({
     return (
         <DecorationConnectingPattern
             Element={Element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
             cover={cover}
             cta={cta}
             even={even}
@@ -303,31 +298,39 @@ const Trending = ({
 };
 
 const VerticalGradient = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute h-full w-full top-0 left-0 -z-10'
             style={{
-                background: `linear-gradient(180deg, ${primaryColor} 0%, ${tertiaryColor}) 100%`,
+                background: `linear-gradient(180deg, ${backgroundColor} 0%, ${accentColor}) 100%`,
             }}
-        ></div>
+        >
+            {/* <p className='z-50'>ACCENT: {accentColor}</p> */}
+        </div>
     );
 };
 const HorizontalGradient = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+    even,
 }: DecorationProps) => {
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
+    const gradient = even
+        ? `linear-gradient(90deg, ${backgroundColor} 0%, ${primaryColor}) 100%`
+        : `linear-gradient(90deg, ${primaryColor} 0%, ${backgroundColor}) 100%`;
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute h-full w-full top-0 left-0 -z-10'
             style={{
-                background: `linear-gradient(90deg, ${primaryColor} 0%, ${tertiaryColor}) 100%`,
+                background: gradient,
             }}
         ></div>
     );
@@ -335,7 +338,7 @@ const HorizontalGradient = ({
 
 const Paper = ({ primaryColor, secondaryColor }: DecorationProps) => {
     return (
-        <div className={`absolute h-full w-full top-0 left-0`}>
+        <div className={`absolute h-full w-full top-0 left-0 -z-10`}>
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
                 <defs>
                     <filter id='roughpaper'>
@@ -500,7 +503,12 @@ const Paper = ({ primaryColor, secondaryColor }: DecorationProps) => {
 //     );
 // };
 // https://fffuel.co/gggrain/
-const Organic = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Organic = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -513,14 +521,15 @@ const Organic = ({ primaryColor, secondaryColor }: DecorationProps) => {
     );
 };
 
-const Stars = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+const Starts = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute h-full w-full top-0 left-0 -z-10'
             style={{
                 // backgroundColor: '#ffffff',
                 backgroundAttachment: 'fixed',
@@ -529,7 +538,7 @@ const Stars = ({
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
                 <defs>
                     <linearGradient id='a' x1='0' x2='0' y1='0' y2='1'>
-                        <stop offset='0' stop-color={tertiaryColor} />
+                        <stop offset='0' stop-color={backgroundColor} />
                         <stop offset='1' stop-color={primaryColor} />
                     </linearGradient>
                 </defs>
@@ -554,13 +563,14 @@ const Stars = ({
 };
 
 const Prism = ({
-    primaryColor,
-    secondaryColor,
-    tertiaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute h-full w-full top-0 left-0 -z-10'
             style={{
                 backgroundAttachment: 'fixed',
                 backgroundSize: 'cover',
@@ -577,8 +587,8 @@ const Prism = ({
                         y2='100%'
                         gradientTransform='rotate(240)'
                     >
-                        <stop offset='0' stop-color={primaryColor} />
-                        <stop offset='1' stop-color={tertiaryColor} />
+                        <stop offset='0' stop-color={backgroundColor} />
+                        <stop offset='1' stop-color={primaryColor} />
                     </linearGradient>
                     <pattern
                         patternUnits='userSpaceOnUse'
@@ -895,7 +905,12 @@ const Prism = ({
 //         </div>
 //     );
 // };
-const Sky = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Sky = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -909,7 +924,12 @@ const Sky = ({ primaryColor, secondaryColor }: DecorationProps) => {
         ></div>
     );
 };
-const Grid = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Grid = ({
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
+}: DecorationProps) => {
     return (
         <div
             className='absolute h-full w-full top-0 left-0'
@@ -923,12 +943,13 @@ const Grid = ({ primaryColor, secondaryColor }: DecorationProps) => {
     );
 };
 const Blobs = ({
-    primaryColor,
-    secondaryColor,
+    primaryColor: fontColor,
+    secondaryColor: backgroundColor,
+    tertiaryColor: primaryColor,
+    accentColor,
     cover,
     cta,
     even,
-    tertiaryColor,
 }: DecorationProps) => {
     const element = (
         <div
@@ -946,12 +967,9 @@ const Blobs = ({
     return (
         <DecorationConnectingPattern
             Element={element}
-            primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
             cover={cover}
             cta={cta}
             even={even}
-            tertiaryColor={tertiaryColor}
             xAxis={0}
             yAxis={36}
             className='opacity-100'
@@ -966,23 +984,24 @@ export const decorationMap = {
     Bubbles,
     Trending,
     VerticalGradient,
-    Starts: Stars,
+    Starts,
     Paper,
     Prism,
-    // Rounded,
     Balls,
     HorizontalGradient,
+    // Rounded,
     // Grain,
-    Organic,
-    Sky,
-    Grid,
-    Blobs,
+    // Organic,
+    // Sky,
+    // Grid,
+    // Blobs,
 };
 
-export const Decoration = ({
+export const SlideDecoration = ({
     primaryColor,
     secondaryColor,
     tertiaryColor,
+    accentColor,
     decorationid,
     cover,
     cta,
@@ -999,14 +1018,12 @@ export const Decoration = ({
             cta={cta}
             even={even}
             alternateColors={alternateColors}
+            accentColor={accentColor}
         />
     );
 };
 
 type DecorationConnectingPatternProps = {
-    primaryColor: string;
-    secondaryColor: string;
-    tertiaryColor?: string;
     cover?: boolean;
     cta?: boolean;
     even?: boolean;
@@ -1018,8 +1035,6 @@ type DecorationConnectingPatternProps = {
 };
 
 export const DecorationConnectingPattern = ({
-    primaryColor,
-    secondaryColor,
     cover,
     cta,
     even,

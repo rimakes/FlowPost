@@ -147,7 +147,8 @@ model LinkedinPost {
     publishedAt DateTime?
 
     // RELATIONS
-    author Author
+    author        Author
+    scheduledPost ScheduledPost[] // One-to-many relation: One LinkedIn post can be part of multiple scheduled posts
 }
 
 type DisplayableText {
@@ -156,18 +157,33 @@ type DisplayableText {
 }
 
 type Slide {
-    title           DisplayableText
+    title           DisplayableText?
+    tagline         DisplayableText?
     paragraphs      DisplayableText[]
-    tagline         DisplayableText
     settings        SlideOverrides?
+    bigCharacter    String?
+    image           Image?
     backgroundImage Image?
+    design          String?
 }
 
 type Image {
     url      String
     alt      String
-    opacity  Float  @default(1)
-    position String @default("center")
+    opacity  Float    @default(1)
+    position Position @default(TOP)
+}
+
+enum Position {
+    CENTER
+    TOP
+    BOTTOM
+    LEFT
+    RIGHT
+    TOP_LEFT
+    TOP_RIGHT
+    BOTTOM_LEFT
+    BOTTOM_RIGHT
 }
 
 type SlideOverrides {
@@ -178,6 +194,7 @@ type SlideOverrides {
 type ColorPalette {
     font       String @default("#000000")
     background String @default("#ffffff")
+    primary    String @default("#ff0000")
     accent     String @default("#ff0000")
 }
 
@@ -246,4 +263,18 @@ model PostCategory {
     name        String
     description String
     tags        String[]
+}
+
+//model to store the ScheduledPost
+model ScheduledPost {
+    time           String
+    date           DateTime
+    id             String        @id @default(auto()) @map("_id") @db.ObjectId
+    userId         String        @db.ObjectId
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    linkedinPostId String?       @db.ObjectId
+    linkedinPost   LinkedinPost? @relation(fields: [linkedinPostId], references: [id])
+
+    @@map("ScheduledPost")
 }

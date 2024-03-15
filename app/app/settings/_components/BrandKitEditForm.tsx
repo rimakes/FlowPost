@@ -13,14 +13,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { fontsMap } from '@/config/fonts';
 import { brandKitsSettingsSchema } from '@/types/schemas';
-import { Pure, TFontName, TStatus } from '@/types/types';
+import { Pure, TFont, TFontName, TFontPalette, TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Brand } from '@prisma/client';
-import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-} from '@radix-ui/react-popover';
 import { ChevronsUpDown, ThumbsUp } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
@@ -36,6 +31,14 @@ import {
     TExtendedFile,
     Thumbnails,
 } from '@/components/shared/dropzone/Thumbnails';
+import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
+import { FontPaletteSelector } from '../../carrousel/_components/sidebar/Sidebar';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+// import { uploadFileToCloudinary } from '@/lib/utils';
 
 type BrandKitEditFormProps = {
     defaultValues: Omit<Pure<Brand>, 'author' | 'authorId'>;
@@ -58,22 +61,32 @@ export function BrandKitEditForm({
     const [pictures, setPictures] = useState<TExtendedFile[]>(formattedPicture);
     const [colorsPopOverisOpen, setColorsPopOverisOpen] = useState(false);
     const [fontsPopOverisOpen, setFontsPopOverisOpen] = useState(false);
+    const [isNewPicture, setIsNewPicture] = useState(false);
     const [status, setStatus] = useState<TStatus>('idle');
 
     const onDrop = (acceptedFiles: File[]) => {
-        setPictures(() => {
-            console.log('dropped');
-            return acceptedFiles.map((file) =>
-                Object.assign(file, {
-                    preview: URL.createObjectURL(file),
-                })
-            );
-        });
+        const fileWithPreview = acceptedFiles.map((file) =>
+            Object.assign(file, {
+                preview: URL.createObjectURL(file),
+            })
+        )[0];
+        setPictures(() => [fileWithPreview]);
+        form.setValue('imageUrl', fileWithPreview.preview);
+        setIsNewPicture(true);
     };
 
     const onSubmit = async (data: Omit<Pure<Brand>, 'author' | 'authorId'>) => {
         setStatus('loading');
         console.log(data);
+
+        const formData = new FormData();
+        formData.append('file', pictures[0]);
+
+        if (isNewPicture) {
+            const cloudinaryResponse = await uploadFileToCloudinary(formData);
+            console.log('cld response!', cloudinaryResponse);
+            data.imageUrl = cloudinaryResponse as string;
+        }
         await saveBrandKit(
             { ...data, id: form.getValues('id') },
             session!.user.id
@@ -82,6 +95,7 @@ export function BrandKitEditForm({
         router.refresh();
         toast.success('Marca guardada');
         setStatus('idle');
+        setIsNewPicture(false);
         onSave();
     };
     const onError = (error: any) => {};
@@ -198,49 +212,19 @@ export function BrandKitEditForm({
                         <FormItem>
                             <FormLabel>Fuente (Letra)</FormLabel>
                             <FormControl>
-                                <Popover
-                                    open={fontsPopOverisOpen}
-                                    onOpenChange={setFontsPopOverisOpen}
-                                >
-                                    <PopoverTrigger className='w-full flex items-center justify-between'>
-                                        <div className='cursor-pointer flex gap-2 items-center'>
-                                            <div
-                                                className={`h-6 w-6 rounded-full ${
-                                                    fontsMap[
-                                                        form.watch(
-                                                            'fontPalette'
-                                                        ).primary as TFontName
-                                                    ].className
-                                                }`}
-                                            >
-                                                {
-                                                    form.watch('fontPalette')
-                                                        .primary
-                                                }
-                                            </div>
-                                        </div>
-                                        <ChevronsUpDown
-                                            size={20}
-                                            className='ml-2'
-                                        />
-                                    </PopoverTrigger>
-                                    <PopoverContent className='overflow-y-scroll'>
-                                        <FontSelector
-                                            onSelect={(fontPalette) => {
-                                                setFontsPopOverisOpen(false);
-                                                form.setValue('fontPalette', {
-                                                    primary: fontPalette,
-                                                    handWriting: fontPalette,
-                                                    secondary: fontPalette,
-                                                });
-                                            }}
-                                            selectedFont={
-                                                form.getValues('fontPalette')
-                                                    .primary
-                                            }
-                                        />
-                                    </PopoverContent>
-                                </Popover>
+                                <FontPaletteSelector
+                                    fontPalette={form.watch('fontPalette')}
+                                    setFontByType={(
+                                        type: TFont,
+                                        font: TFontName
+                                    ) => {
+                                        console.log('type', type);
+                                        form.setValue(
+                                            `fontPalette.${type}`,
+                                            font
+                                        );
+                                    }}
+                                />
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />

@@ -24,13 +24,23 @@ import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 type GeneratedPostProps = {
     className?: string;
     isEditable?: boolean;
+    height?: number;
+    minHeight?: number;
+    setEditDetailsModal?: any;
 };
+
+type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export const PostWritterResult = ({
     className,
     isEditable = false,
+    height,
+    minHeight,
+    setEditDetailsModal,
 }: GeneratedPostProps) => {
-    const [status, setStatus] = useState<TStatus>('idle');
+    const { data } = useSession();
+
+    const [status, setStatus] = useState<Status>('idle');
     const { post, setPost } = useContext(PostWritterContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
 
@@ -40,6 +50,7 @@ export const PostWritterResult = ({
                 <Skeleton className='h-full w-full' />
             </div>
         );
+
     return (
         <div className={cn(``, className)}>
             {/* <EmojiPickerClient /> */}
@@ -49,7 +60,7 @@ export const PostWritterResult = ({
                 <div className='relative'>
                     <Textarea
                         rows={20}
-                        className='border-none resize-none'
+                        className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]`}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}
                         onChange={(e) => {
@@ -76,7 +87,7 @@ export const PostWritterResult = ({
                             toast('Post guardado');
                         }}
                     />
-                    <CreateCarouselButton post={post} />
+                    <CreateCarouselButton post={post} className='relative' />
                 </div>
             </div>
         </div>

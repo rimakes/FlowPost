@@ -11,10 +11,13 @@ import { deepCopy } from '@/lib/utils';
 import { AspectRatio } from '@prisma/client';
 import {
     TAspectRatioEnum,
+    TBrand,
     TCarousel,
     TColorPalette,
     TDecorationId,
     TFontPalette,
+    TPosition,
+    TSlideDesignNames,
 } from '@/types/types';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
@@ -54,7 +57,7 @@ const INITIAL_STATE = {
         options?: {
             alt?: string;
             opacity?: number;
-            position?: string;
+            position?: TPosition;
         }
     ) => {},
     setLabelRoundness: (value: number) => {},
@@ -62,6 +65,10 @@ const INITIAL_STATE = {
     toggleShowProfilePic: () => {},
     toggleShowHandle: () => {},
     toggleShowAuthorInFirstOnly: () => {},
+    getCompleteBrand: () => {
+        return {} as Omit<TBrand, 'authorId' | 'id'>;
+    },
+    setDesign: (design: TSlideDesignNames) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -109,14 +116,16 @@ export function CarouselContextProvider({
     }, [nextSlide, previousSlide]);
 
     const editTitle = (newTitle: string) => {
+        console.log('editTitle', newTitle);
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].title.content = newTitle;
+
+        newCarousel.slides[currentSlide].title!.content = newTitle;
         setCarousel(newCarousel);
     };
 
     const editTagline = (newTagline: string) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].tagline.content = newTagline;
+        newCarousel.slides[currentSlide].tagline!.content = newTagline;
         setCarousel(newCarousel);
     };
 
@@ -182,15 +191,15 @@ export function CarouselContextProvider({
 
     const toggleSlideHasTitle = () => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].title.isShown =
-            !newCarousel.slides[currentSlide].title.isShown;
+        newCarousel.slides[currentSlide].title!.isShown =
+            !newCarousel.slides[currentSlide].title!.isShown;
         setCarousel(newCarousel);
     };
 
     const toggleSlideHasTagline = () => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].tagline.isShown =
-            !newCarousel.slides[currentSlide].tagline.isShown;
+        newCarousel.slides[currentSlide].tagline!.isShown =
+            !newCarousel.slides[currentSlide].tagline!.isShown;
         setCarousel(newCarousel);
     };
 
@@ -244,9 +253,7 @@ export function CarouselContextProvider({
     const setColorPalette = (colors: TColorPalette) => {
         setCarousel((prev) => {
             const newCarousel = deepCopy(prev);
-            newCarousel.settings.colorPalette.font = colors.font;
-            newCarousel.settings.colorPalette.background = colors.background;
-            newCarousel.settings.colorPalette.accent = colors.accent;
+            newCarousel.settings.colorPalette = colors;
             return newCarousel;
         });
     };
@@ -282,7 +289,7 @@ export function CarouselContextProvider({
 
     const setBackgroundImage = (
         imageUrl?: string,
-        options?: { alt?: string; opacity?: number; position?: string }
+        options?: { alt?: string; opacity?: number; position?: TPosition }
     ) => {
         const newCarousel = deepCopy(carousel);
 
@@ -293,7 +300,7 @@ export function CarouselContextProvider({
                 url: '',
                 alt: '',
                 opacity: 0.1,
-                position: 'center',
+                position: 'CENTER',
             };
         if (imageUrl) backgroundImage.url = imageUrl;
         if (options?.alt) backgroundImage.alt = options.alt;
@@ -352,9 +359,26 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const getCompleteBrand = () => {
+        return {
+            ...carousel.author,
+            colorPalette: carousel.settings.colorPalette,
+            fontPalette: carousel.settings.fontPalette,
+            imageUrl: carousel.author.pictureUrl,
+        };
+    };
+
+    const setDesign = (design: TSlideDesignNames) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.slides[currentSlide].design = design;
+        setCarousel(newCarousel);
+    };
+
     return (
         <CarouselContext.Provider
             value={{
+                setDesign,
+                getCompleteBrand,
                 toggleShowAuthorInFirstOnly,
                 toggleShowHandle,
                 toggleShowProfilePic,
