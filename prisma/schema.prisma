@@ -29,8 +29,8 @@ model User {
     updatedAt              DateTime  @updatedAt
     role                   UserRole  @default(USER)
 
-    // messages Message[]
-    settings      Settings?
+    settingsId    String?        @unique @db.ObjectId
+    settings      Settings?      @relation(fields: [settingsId], references: [id])
     account       Account[]
     posts         BlogPost[]
     linkedinPosts LinkedinPost[]
@@ -79,11 +79,27 @@ model Settings {
     updatedAt DateTime @updatedAt
 
     // RELATIONS
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId String @unique @db.ObjectId
 
     // Settings fields
-    darkMode Boolean @default(false)
+    darkMode Boolean    @default(false)
+    schedule TimeSlot[]
+    user     User?
+}
+
+type TimeSlot {
+    day    DaysOfTheWeek
+    time   String // EJ. "10:00", "14:00", "18:15", "20:00...
+    isSlot Boolean       @default(false)
+}
+
+enum DaysOfTheWeek {
+    MON
+    TUE
+    WED
+    THU
+    FRI
+    SAT
+    SUN
 }
 
 model Brand {

@@ -12,4 +12,4 @@ export default withAuth({
     },
 });
 
-export const config = { matcher: ['/app'] };
+export const config = { matcher: ['/app', '/app/:path*'] };

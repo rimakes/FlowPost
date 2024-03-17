@@ -52,7 +52,6 @@ export function RegisterForm({}) {
                 signIn('credentials', {
                     email: values.email,
                     password: values.password,
-                    redirect: false,
                     callbackUrl: '/app',
                 });
             })

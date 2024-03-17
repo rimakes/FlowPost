@@ -13,35 +13,24 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import { apiClient } from '@/lib/apiClient';
+import { LinkedinPost } from '@prisma/client';
+import { TimeSlotSettings } from './TimeSlotSettings';
 
-interface userPostsProps {
+type userPostsProps = {
     userPosts: TLinkedinPost[];
-}
+    userSchedule: any;
+};
 
-interface LinkedInPost {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    content: string;
-    published: boolean;
-    publishedAt: string | null;
-    author: {
-        name: string;
-        pictureUrl: string;
-        handle: string;
-    };
-}
-
-interface PostData {
+type PostData = {
     time: string;
     date: Date;
     id: string;
     userId: string;
     linkedinPostId: string;
-    linkedinPost?: LinkedInPost;
-}
+    linkedinPost?: LinkedinPost;
+};
 
-export default function Scheduler({ userPosts }: userPostsProps) {
+export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
     const { data } = useSession();
     const currentDate = new Date();
     const [accountLinked, setAccountLinked] = useState(false);
@@ -298,12 +287,15 @@ export default function Scheduler({ userPosts }: userPostsProps) {
     return (
         <>
             <div>
+                <div className='flex justify-between items-center'>
+                    <Heading
+                        className='mt-6'
+                        title='Schedule'
+                        subtitle='Here are the posts scheduled for upcoming days.'
+                    />
+                    <TimeSlotSettings schedule={userSchedule} />
+                </div>
                 <Separator />
-                <Heading
-                    className='mt-6'
-                    title='Schedule'
-                    subtitle='Here are the posts scheduled for upcoming days.'
-                />
 
                 <section className='flex justify-between items-center'>
                     <ChevronLeft

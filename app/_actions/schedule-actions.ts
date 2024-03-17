@@ -1,4 +1,9 @@
+'use server';
+
+import { db } from '@/lib/prisma';
+import { TDaysOfTheWeek } from '@/types/types';
 import axios from 'axios';
+import { revalidatePath } from 'next/cache';
 
 // REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
 
@@ -59,4 +64,94 @@ export const postOnLinkedIn = async (
         console.error('Error posting on LinkedIn:', error);
         throw error;
     }
+};
+
+export const toggleSlot = async (
+    time: string,
+    day: TDaysOfTheWeek,
+    settingsId: string
+) => {
+    const previousSettings = await db.settings.findUnique({
+        where: {
+            id: settingsId,
+        },
+    });
+
+    const previousSchedule = previousSettings?.schedule || [];
+
+    const slotIndex = previousSchedule.findIndex(
+        (slot) => slot.time === time && slot.day === day
+    );
+
+    if (slotIndex === -1) {
+        console.log('Slot not found');
+        previousSchedule.push({
+            day,
+            time,
+            isSlot: true,
+        });
+    } else {
+        console.log('Slot found');
+        previousSchedule[slotIndex].isSlot =
+            !previousSchedule[slotIndex].isSlot;
+        console.log(previousSchedule[slotIndex].isSlot);
+        console.log(previousSchedule);
+    }
+
+    const updatedSettings = await db.settings.update({
+        where: {
+            id: settingsId,
+        },
+        data: {
+            schedule: {
+                set: previousSchedule,
+            },
+        },
+    });
+
+    revalidatePath('/app/schedule');
+    // validateData();
+
+    return updatedSettings;
+};
+
+export const addTimeArray = async (time: string, settingsId: string) => {
+    const previousSettings = await db.settings.findUnique({
+        where: {
+            id: settingsId,
+        },
+    });
+
+    const previousSchedule = previousSettings?.schedule || [];
+
+    // If MON is already in the schedule, we don't need to add it again, just turn it into a slot
+    const monIndex = previousSchedule.findIndex(
+        (slot) => slot.day === 'MON' && slot.time === time
+    );
+
+    if (monIndex !== -1) {
+        previousSchedule[monIndex].isSlot = true;
+    } else {
+        previousSchedule.push({
+            day: 'MON',
+            time,
+            isSlot: true,
+        });
+    }
+
+    const updatedSettings = await db.settings.update({
+        where: {
+            id: settingsId,
+        },
+        data: {
+            schedule: {
+                set: previousSchedule,
+            },
+        },
+    });
+
+    revalidatePath('/app/schedule');
+    // validateData();
+
+    return updatedSettings;
 };

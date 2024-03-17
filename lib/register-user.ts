@@ -14,7 +14,9 @@ export const register = async (
             hashedPassword,
             role,
             settings: {
-                create: {},
+                create: {
+                    schedule: [],
+                },
             },
         },
     });

@@ -253,7 +253,7 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
         icon: CalendarCheck,
         label: 'Programa tus posts',
         href: '/app/schedule',
-        shortLabel: 'Posts',
+        shortLabel: 'Programar',
         status: 'active',
     },
     {

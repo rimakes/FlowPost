@@ -9,6 +9,7 @@ import type {
     PrismaClient,
 } from '@prisma/client';
 import { designMap } from '@/app/app/carrousel/_components/SlideDesignSelector';
+import { DaysOfTheWeek, TimeOfTheDay } from '@/config/const';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
@@ -159,3 +160,15 @@ export type UserWithSettings = Prisma.UserGetPayload<{
 // REVIEW: This below is probably a better way than "TPure" to get the type of a Prisma model without the "id", "createdAt", "updatedAt" and other fields...
 // if I want to get the "create" input of a user?
 export type UserCreateInput = Prisma.UserCreateInput;
+
+// TODO: not sure this is the best way to do this
+
+export type TDaysOfTheWeek = keyof typeof DaysOfTheWeek;
+
+export type TSlot = {
+    day: TDaysOfTheWeek;
+    time: string;
+    isSlot: boolean;
+};
+
+export type TNameTimeOfDay = keyof typeof TimeOfTheDay;
