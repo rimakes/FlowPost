@@ -4,44 +4,38 @@ import { db } from '@/lib/prisma';
 import { PostCard } from './_components/PostCard';
 import { SavedPageClient } from './_components/SavedPageClient';
 import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
 
-const findPostByUserId = async () => {
+const findPostByUserId = async (userId: string) => {
     return db.linkedinPost.findMany({
         where: {
-            author: {
-                is: {
-                    name: 'Ricardo Sala',
-                },
-            },
+            userId: userId,
         },
     });
 };
-const findCarruselsByUserId = async () => {
+const findCarruselsByUserId = async (userId: string) => {
     return db.carousel.findMany({
         where: {
-            author: {
-                is: {
-                    name: 'Ricardo Sala',
-                },
-            },
+            userId: userId,
         },
     });
 };
 
-const findIdeasByUserId = async () => {
+const findIdeasByUserId = async (userId: string) => {
     return db.idea.findMany({
         where: {
-            author: {
-                name: 'Ricardo',
-            },
+            authorId: userId,
         },
     });
 };
 
 export default async function IdeasPage() {
-    const userPosts = await findPostByUserId();
-    const userCarrusels = await findCarruselsByUserId();
-    const userIdeas = await findIdeasByUserId();
+    const session = await getServerSession(authOptions);
+
+    const userPosts = await findPostByUserId(session?.user.id!);
+    const userCarrusels = await findCarruselsByUserId(session?.user.id!);
+    const userIdeas = await findIdeasByUserId(session?.user.id!);
 
     return (
         <div>

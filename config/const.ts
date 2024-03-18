@@ -97,6 +97,18 @@ export enum TimeOfTheDay {
     T2345 = '11:45 PM',
 }
 
+// TODO: There is for sure a better way to do this...
+export const daysOfTheWeekMapNew = {
+    1: 'LUN',
+    2: 'MAR',
+    3: 'MIÉ',
+    4: 'JUE',
+    5: 'VIE',
+    6: 'SAB',
+    0: 'DOM',
+} as const;
+
+// TO BE DELETED
 export enum DaysOfTheWeek {
     MON = 'LUN',
     TUE = 'MAR',
@@ -106,3 +118,24 @@ export enum DaysOfTheWeek {
     SAT = 'SAB',
     SUN = 'DOM',
 }
+
+// TODO: There is for sure a better way to do this...
+export const daysOfTheWeekMap = {
+    0: DaysOfTheWeek.SUN,
+    1: DaysOfTheWeek.MON,
+    2: DaysOfTheWeek.TUE,
+    3: DaysOfTheWeek.WED,
+    4: DaysOfTheWeek.THU,
+    5: DaysOfTheWeek.FRI,
+    6: DaysOfTheWeek.SAT,
+};
+
+export const dayNumberToDayKeyMap = {
+    0: 'SUN',
+    1: 'MON',
+    2: 'TUE',
+    3: 'WED',
+    4: 'THU',
+    5: 'FRI',
+    6: 'SAT',
+};

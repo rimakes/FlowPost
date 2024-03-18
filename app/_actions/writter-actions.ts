@@ -25,8 +25,13 @@ import { RunnableSequence } from '@langchain/core/runnables';
 import image from 'next/image';
 import axios from 'axios';
 import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
 
-export async function createLinkedinPost(post: string, id: string) {
+export async function createLinkedinPost(
+    post: string,
+    id: string,
+    authorId: string
+) {
     let linkedinPost: TLinkedinPost;
     console.log('Guardando post');
     if (id === 'new') {
@@ -39,6 +44,7 @@ export async function createLinkedinPost(post: string, id: string) {
                     name: 'Ricardo Sala',
                     pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
                 },
+                userId: authorId,
             },
         });
     } else {
@@ -54,6 +60,7 @@ export async function createLinkedinPost(post: string, id: string) {
                     name: 'Ricardo Sala',
                     pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
                 },
+                userId: authorId,
             },
         });
     }
@@ -67,6 +74,8 @@ export async function deleteLinkedinPost(postId: string) {
             id: postId,
         },
     });
+
+    revalidatePath('/app/schedule');
 }
 export async function deleteCarousel(carouselId: string) {
     await db.carousel.delete({
@@ -186,7 +195,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
     return carousel;
 }
 
-export async function upsertCarousel(carousel: TCarousel) {
+export async function upsertCarousel(carousel: TCarousel, userId: string) {
     console.log(carousel);
     if (carousel.id === undefined) {
         const newCarousel = await db.carousel.create({
@@ -198,6 +207,7 @@ export async function upsertCarousel(carousel: TCarousel) {
                     name: 'Ricardo Sala',
                     pictureUrl: '/images/placeholders/user.png',
                 },
+                userId,
             },
         });
 
@@ -211,6 +221,7 @@ export async function upsertCarousel(carousel: TCarousel) {
         data: {
             slides: carousel.slides,
             settings: carousel.settings,
+            userId,
         },
     });
 

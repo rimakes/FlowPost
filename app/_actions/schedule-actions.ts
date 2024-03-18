@@ -1,7 +1,11 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import { TDaysOfTheWeek } from '@/types/types';
+import {
+    DayOfTheWeekNumber,
+    TDaysOfTheWeek,
+    TLinkedinPost,
+} from '@/types/types';
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 
@@ -68,7 +72,7 @@ export const postOnLinkedIn = async (
 
 export const toggleSlot = async (
     time: string,
-    day: TDaysOfTheWeek,
+    dayOfTheWeek: DayOfTheWeekNumber,
     settingsId: string
 ) => {
     const previousSettings = await db.settings.findUnique({
@@ -79,23 +83,21 @@ export const toggleSlot = async (
 
     const previousSchedule = previousSettings?.schedule || [];
 
-    const slotIndex = previousSchedule.findIndex(
-        (slot) => slot.time === time && slot.day === day
+    // Find if the slot exists
+    const slot = previousSchedule.find(
+        (slot) => slot.time === time && slot.dayOfTheWeek === dayOfTheWeek
     );
 
-    if (slotIndex === -1) {
-        console.log('Slot not found');
+    if (!slot) {
+        // If the slot does not exist, add it
         previousSchedule.push({
-            day,
+            dayOfTheWeek,
             time,
-            isSlot: true,
         });
     } else {
-        console.log('Slot found');
-        previousSchedule[slotIndex].isSlot =
-            !previousSchedule[slotIndex].isSlot;
-        console.log(previousSchedule[slotIndex].isSlot);
-        console.log(previousSchedule);
+        // If the slot exists, delete it
+        const index = previousSchedule.indexOf(slot);
+        previousSchedule.splice(index, 1);
     }
 
     const updatedSettings = await db.settings.update({
@@ -115,27 +117,28 @@ export const toggleSlot = async (
     return updatedSettings;
 };
 
-export const addTimeArray = async (time: string, settingsId: string) => {
+/**
+ * Add a time to the schedule (when including a time, Monday is always included)
+ */
+export const addTime = async (time: string, settingsId: string) => {
     const previousSettings = await db.settings.findUnique({
         where: {
             id: settingsId,
         },
     });
 
-    const previousSchedule = previousSettings?.schedule || [];
+    const newSchedule = previousSettings?.schedule || [];
 
-    // If MON is already in the schedule, we don't need to add it again, just turn it into a slot
-    const monIndex = previousSchedule.findIndex(
-        (slot) => slot.day === 'MON' && slot.time === time
-    );
+    const timeExist = newSchedule.find((slot) => slot.time === time);
 
-    if (monIndex !== -1) {
-        previousSchedule[monIndex].isSlot = true;
+    // If that time is already in the schedule, return
+    if (timeExist) {
+        return;
     } else {
-        previousSchedule.push({
-            day: 'MON',
+        // Otherwise, add the time to the schedule on Monday
+        newSchedule.push({
+            dayOfTheWeek: 1,
             time,
-            isSlot: true,
         });
     }
 
@@ -145,7 +148,7 @@ export const addTimeArray = async (time: string, settingsId: string) => {
         },
         data: {
             schedule: {
-                set: previousSchedule,
+                set: newSchedule,
             },
         },
     });
@@ -154,4 +157,48 @@ export const addTimeArray = async (time: string, settingsId: string) => {
     // validateData();
 
     return updatedSettings;
+};
+
+export const schedulePost = async (
+    postId: string,
+    userId: string,
+    date: Date,
+    time: string
+) => {
+    const newSchedule = db.scheduledPost.create({
+        data: {
+            linkedinPostId: postId,
+            userId,
+            date,
+            time,
+        },
+    });
+    revalidatePath('/app/schedule');
+
+    return newSchedule;
+};
+
+export const unschedulePost = async (postId: string) => {
+    console.log('Deleted schedule:', postId);
+    const deletedSchedule = await db.scheduledPost.deleteMany({
+        where: {
+            linkedinPostId: postId,
+        },
+    });
+
+    revalidatePath('/app/schedule');
+
+    return deletedSchedule;
+};
+
+export const deletePost = async (postId: string) => {
+    const deletedPost = await db.linkedinPost.delete({
+        where: {
+            id: postId,
+        },
+    });
+
+    revalidatePath('/app/schedule');
+
+    return deletedPost;
 };

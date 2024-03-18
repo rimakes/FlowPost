@@ -13,7 +13,10 @@ export async function POST(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         const userAccount = await db.account.findFirst({
-            where: { userId: session?.user?.id },
+            where: {
+                provider: 'linkedin',
+                userId: session?.user?.id,
+            },
         });
 
         if (!userAccount) {

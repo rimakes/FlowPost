@@ -10,12 +10,18 @@ import { DemoVideo } from '@/components/marketing/DemoVideo';
 import ReactPlayer from 'react-player';
 import { VideoClient } from '@/components/marketing/VideoClient';
 import Highlight from '@/components/utils/Hightlight';
+import { RedirectTweak } from './RedirectTweak';
 
 export default async function Home() {
     // const session = await auth();
 
     return (
         <div className={`gap flex flex-col items-center justify-between`}>
+            {/* TODO:
+            NextAuth is adding the callback to the url instead of redirecting to the callbackUrl on signup
+            Not ideal, but for now, we are using this to redirect to the callbackUrl manually
+            */}
+            <RedirectTweak />
             <Hero />
 
             <section className='flex flex-col gap-8 relative'>

@@ -22,6 +22,7 @@ import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
 import { Message } from './message';
 import { useState } from 'react';
+import { Social } from './social';
 
 export function RegisterForm({}) {
     const form = useForm({
@@ -170,41 +171,7 @@ export function RegisterForm({}) {
             </Form>
 
             <Separator />
-            <div className='flex flex-col items-center space-y-2'>
-                <h4>También puedes acceder con</h4>
-                <Button
-                    variant='outline'
-                    className='w-full'
-                    onClick={async () => {
-                        const res = await signIn('google', {
-                            // callbackUrl: '/app',
-                        });
-
-                        console.log({ res });
-                    }}
-                >
-                    {
-                        //TODO: review callback después de logearse con google
-                    }
-                    Google
-                </Button>
-                <Button
-                    variant='outline'
-                    className='w-full'
-                    onClick={async () => {
-                        const res = await signIn('linkedin', {
-                            callbackUrl: 'http://localhost:3000/app',
-                        });
-
-                        console.log({ res });
-                    }}
-                >
-                    {
-                        //TODO: review callback después de logearse con google
-                    }
-                    Linkedin
-                </Button>
-            </div>
+            <Social />
         </div>
     );
 }

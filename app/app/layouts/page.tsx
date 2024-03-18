@@ -47,7 +47,7 @@ export default function IdeasPage() {
         <div className='grid md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 grid-cols-1 gap-16 p-8'>
             <PrimitiveLayout name='The Two flex items, smaller commands width'>
                 <div className='flex'>
-                    <div className='flex flex-col border-8 border-red-400 items-center !w-min overflow-auto'>
+                    <div className='flex flex-col border-0 border-red-400 items-center !w-min overflow-auto'>
                         <div className='h-24 w-48 border-4 border-green-400'></div>
                         <div className='overflow-y-auto relative border-8 border-black w-full'>
                             <div className='h-24 w-96 border-4 border-blue-400 overflow-x-auto'></div>

@@ -1,58 +1,40 @@
 'use client';
 
-import { addTimeArray, toggleSlot } from '@/app/_actions/schedule-actions';
-import { Button } from '@/components/ui/button';
+import { addTime, toggleSlot } from '@/app/_actions/schedule-actions';
 import { Input } from '@/components/ui/input';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
-    SelectValue,
 } from '@/components/ui/select';
-import { DaysOfTheWeek, TimeOfTheDay } from '@/config/const';
-import { deepCopy } from '@/lib/utils';
-import { TDaysOfTheWeek, TNameTimeOfDay, TSlot } from '@/types/types';
-import { table, time } from 'console';
-import { PlusCircle } from 'lucide-react';
+import {
+    DaysOfTheWeek,
+    TimeOfTheDay,
+    daysOfTheWeekMapNew,
+} from '@/config/const';
+import { deepCopy, loadSchedulePerTime, range } from '@/lib/utils';
+import {
+    DayOfTheWeekNumber,
+    TNameTimeOfDay,
+    TSlot,
+    TimeMap,
+} from '@/types/types';
+import { table } from 'console';
+import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
 
 type SchedulerInputProps = {
     schedule: TSlot[];
 };
 
-type TimeMap = {
-    [key: string]: DaysOfTheWeek[];
-};
-
-/**
- * Load the schedule into a time map of the form:
- * {
- * '10:00': ['MON', 'TUE'],
- * '11:00': ['MON', 'TUE'],
- * ...
- * }
- * @param schedule The schedule to load, as an array of TSlot, being each slot of the shape {day: string, time: string, isSlot: boolean}
- */
-const loadSchedule = (schedule: TSlot[]) => {
-    const timeMap: TimeMap = {};
-    schedule.forEach((slot) => {
-        if (slot.isSlot === false) return;
-        const previousArray = timeMap[`${slot.time}`] || [];
-        previousArray.push(slot.day as DaysOfTheWeek);
-        timeMap[`${slot.time}`] = previousArray;
-    });
-    return timeMap;
-};
-
 export function SchedulerInput({ schedule }: SchedulerInputProps) {
     console.log('rendering SchedulerInput');
-    const scheduleHash = useMemo(() => loadSchedule(schedule), [schedule]);
+    const { data } = useSession();
+    const scheduleHash = useMemo(
+        () => loadSchedulePerTime(schedule),
+        [schedule]
+    );
     let [isPending, startTransition] = useTransition();
 
     const [optimisticTimeMap, optimisticallySetTimeMap] = useOptimistic<
@@ -65,29 +47,41 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
     // TODO: probably will want to memoize this
     const optimisticallyToggleTimeSlot = (newTimeSlot: TSlot) => {
         const newState = deepCopy(optimisticTimeMap);
-        // isSlot checks whether our new time slot is already in the state
-        const isSlot = newState[newTimeSlot.time].includes(
-            newTimeSlot.day as DaysOfTheWeek
-        );
 
         // Check if the time array of the new time slot exists
         const timeArrayExists = newState[newTimeSlot.time];
 
-        // If is a slot -> filter it out
-        if (isSlot) {
-            newState[newTimeSlot.time] = newState[newTimeSlot.time].filter(
-                (day) => day !== (newTimeSlot.day as DaysOfTheWeek)
+        // if it does not exist, we need to create it and add the slot
+        if (!timeArrayExists) {
+            newState[newTimeSlot.time] = [
+                newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber,
+            ];
+        }
+
+        if (timeArrayExists) {
+            const slotExists = newState[newTimeSlot.time].includes(
+                newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber
             );
-        }
 
-        // is not a slot, but the time is in the state -> add the slot
-        if (!isSlot && timeArrayExists) {
-            newState[newTimeSlot.time].push(newTimeSlot.day as DaysOfTheWeek);
-        }
+            // If the slot does not exist, we need to add it
+            if (!slotExists) {
+                newState[newTimeSlot.time].push(
+                    newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber
+                );
+            }
 
-        // If the time of the slot is not in the state -> we need to add the slot
-        if (!isSlot && !timeArrayExists) {
-            newState[newTimeSlot.time] = [newTimeSlot.day as DaysOfTheWeek];
+            // If the slot exists, we need to delete it
+            if (slotExists) {
+                newState[newTimeSlot.time] = newState[newTimeSlot.time].filter(
+                    (day) =>
+                        day !== (newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber)
+                );
+            }
+
+            // If the array is empty, we need to delete the time array
+            if (newState[newTimeSlot.time].length === 0) {
+                delete newState[newTimeSlot.time];
+            }
         }
 
         optimisticallySetTimeMap(newState);
@@ -95,60 +89,48 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
 
     const OptimisticallyAddTimeArray = (time: string) => {
         const newState = deepCopy(optimisticTimeMap);
-        newState[time] = ['MON' as DaysOfTheWeek];
+        newState[time] = [1];
         optimisticallySetTimeMap(newState);
     };
 
-    const daysOfTheWeekNames = Object.keys(DaysOfTheWeek) as TDaysOfTheWeek[];
     const timeOfTheDayNames = Object.keys(TimeOfTheDay);
     const timeSlots = Object.keys(optimisticTimeMap);
 
     return (
         <table className='w-full'>
-            {/* <div className='absolute right-5 bottom-5'>
-                {JSON.stringify(optimisticTimeMap)}
-            </div> */}
-            {/* head */}
-
             <thead>
                 <tr>
                     <th></th> {/* empty */}
-                    {daysOfTheWeekNames.map((day, index) => (
+                    {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
                         <th key={index}>
-                            {DaysOfTheWeek[day as TDaysOfTheWeek]}
+                            {daysOfTheWeekMapNew[day as DayOfTheWeekNumber]}
                         </th>
                     ))}
                 </tr>
             </thead>
             {/* body */}
             <tbody>
-                {/* row */}
                 {timeSlots.sort().map((time, index) => (
                     <tr key={index}>
                         <td>{time}</td>
-                        {daysOfTheWeekNames.map((day, index) => (
+                        {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
                             <td key={index}>
                                 <Input
                                     type='checkbox'
                                     checked={optimisticTimeMap[time].includes(
-                                        day as DaysOfTheWeek
+                                        day as DayOfTheWeekNumber
                                     )}
                                     onChange={() =>
                                         startTransition(() => {
                                             {
                                                 optimisticallyToggleTimeSlot({
-                                                    day,
+                                                    dayOfTheWeek: day,
                                                     time,
-                                                    isSlot: !optimisticTimeMap[
-                                                        time
-                                                    ].includes(
-                                                        day as DaysOfTheWeek
-                                                    ),
                                                 });
                                                 toggleSlot(
                                                     time,
-                                                    day,
-                                                    '65f63a991f32a48594adeea6'
+                                                    day as DayOfTheWeekNumber,
+                                                    data?.user.settingsId!
                                                 );
                                             }
                                         })
@@ -167,9 +149,9 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                                     OptimisticallyAddTimeArray(
                                         TimeOfTheDay[value as TNameTimeOfDay]
                                     );
-                                    addTimeArray(
+                                    addTime(
                                         TimeOfTheDay[value as TNameTimeOfDay],
-                                        '65f63a991f32a48594adeea6'
+                                        data?.user.settingsId!
                                     );
                                 });
                             }}

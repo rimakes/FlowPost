@@ -87,19 +87,8 @@ model Settings {
 }
 
 type TimeSlot {
-    day    DaysOfTheWeek
-    time   String // EJ. "10:00", "14:00", "18:15", "20:00...
-    isSlot Boolean       @default(false)
-}
-
-enum DaysOfTheWeek {
-    MON
-    TUE
-    WED
-    THU
-    FRI
-    SAT
-    SUN
+    dayOfTheWeek Int
+    time         String // EJ. "10:00", "14:00", "18:15", "20:00...
 }
 
 model Brand {

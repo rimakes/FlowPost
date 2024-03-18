@@ -4,13 +4,15 @@ import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { LoginForm } from './login-form';
 import { SwitchLink } from './switch-link';
+import { cn } from '@/lib/utils';
 
 type LoginButtonProps = {
     mode: 'modal' | 'redirect';
     children: React.ReactNode;
+    className?: string;
 };
 
-export function LoginButton({ mode, children }: LoginButtonProps) {
+export function LoginButton({ mode, children, className }: LoginButtonProps) {
     const router = useRouter();
 
     if (mode === 'redirect')
@@ -19,21 +21,22 @@ export function LoginButton({ mode, children }: LoginButtonProps) {
                 onClick={() => {
                     router.push(`/auth/signin`);
                 }}
+                className={cn(`w-full`, className)}
             >
                 {children}
             </span>
         );
 
-    if (mode === 'modal') console.log('modal');
-    return (
-        <Dialog>
-            <DialogTrigger>{children}</DialogTrigger>
-            <DialogContent>
-                <>
-                    <LoginForm />
-                    <SwitchLink signUp resetPassword />
-                </>
-            </DialogContent>
-        </Dialog>
-    );
+    if (mode === 'modal')
+        return (
+            <Dialog>
+                <DialogTrigger asChild>{children}</DialogTrigger>
+                <DialogContent>
+                    <>
+                        <LoginForm />
+                        <SwitchLink signUp resetPassword />
+                    </>
+                </DialogContent>
+            </Dialog>
+        );
 }

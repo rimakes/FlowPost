@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { User, Check, PlusCircle } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 export const SelectAccountMenu = () => {
     const { data } = useSession();
@@ -41,6 +41,12 @@ export const SelectAccountMenu = () => {
                 hover:text-destructive
                 '
                     variant={'ghost'}
+                    onClick={() => {
+                        signOut({
+                            callbackUrl: '/?just-loggedout=true',
+                            // redirect: true,
+                        });
+                    }}
                 >
                     <PlusCircle className='w-5 h-5' />
                     Salir

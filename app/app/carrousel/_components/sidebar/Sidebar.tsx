@@ -41,6 +41,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { useSession } from 'next-auth/react';
 
 type CarouselSidebarProps = {
     brands: TBrand[];
@@ -99,6 +100,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
 
     const router = useRouter();
     const [colorsPopOverisOpen, setColorsPopOverisOpen] = useState(false);
+    const { data } = useSession();
 
     const onSetColorPalette = (colorPalette: TColorPalette) => {
         setColorPalette(colorPalette);
@@ -209,7 +211,10 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <div className='flex flex-col justify-between gap-2 mt-auto'>
                 <Button
                     onClick={async () => {
-                        const savedCarousel = await upsertCarousel(carousel);
+                        const savedCarousel = await upsertCarousel(
+                            carousel,
+                            data?.user.id!
+                        );
                         toast.success('Carrusel Guardado!');
                         router.push(`/app/carrousel/${savedCarousel.id}`);
                     }}

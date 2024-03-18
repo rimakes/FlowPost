@@ -9,6 +9,7 @@ import { NextAuthOptions } from 'next-auth';
 
 import { config } from './config/shipper.config';
 import bcrypt from 'bcryptjs';
+import { redirect } from 'next/dist/server/api-utils';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -16,6 +17,23 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            async profile(profile, tokens) {
+                // console.log('profile:-', profile);
+                // console.log('tokens:-', tokens);
+
+                // create new settings for the user
+                const newSettings = await db.settings.create({
+                    data: {},
+                });
+
+                return {
+                    id: profile.sub,
+                    name: profile.name,
+                    email: profile.email,
+                    image: profile.picture,
+                    settingsId: newSettings.id,
+                };
+            },
         }),
 
         // LinkedIn recently changed their OAuth flow which is why there is a bit extra code
@@ -52,13 +70,18 @@ export const authOptions: NextAuthOptions = {
             },
             jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
             async profile(profile) {
-                console.log('profile:-', profile);
+                // console.log('profile:-', profile);
 
-                // REVIEW: This is what we will have on the token? or on the session?
+                const newSettings = await db.settings.create({
+                    data: {},
+                });
+
                 return {
                     id: profile.sub,
                     name: profile.name,
                     email: profile.email,
+                    image: profile.picture,
+                    settingsId: newSettings.id,
                 };
             },
         }),
@@ -86,11 +109,11 @@ export const authOptions: NextAuthOptions = {
                 );
 
                 if (!isCorrectPassword) {
-                    console.log(
-                        'Invalid credentials Custom',
-                        isCorrectPassword
-                    );
-                    console.log('credentials.password', credentials.password);
+                    // console.log(
+                    //     'Invalid credentials Custom',
+                    //     isCorrectPassword
+                    // );
+                    // console.log('credentials.password', credentials.password);
                     throw new Error('Invalid credentials Custom');
                 }
 
@@ -199,10 +222,22 @@ export const authOptions: NextAuthOptions = {
 
             // When the user signes in for the first time, we want to add some extra information to the token
             if (user) {
+                const dbUser = await db.user.findUnique({
+                    where: { id: user.id },
+                });
+
+                const linkedinAccountLinked = !!(await db.account.findFirst({
+                    where: {
+                        userId: dbUser!.id,
+                        provider: 'linkedin',
+                    },
+                }));
+
+                token.hasAccountLinked = linkedinAccountLinked;
                 token.id = user.id;
                 token.email = user.email;
                 token.name = user.name;
-                // token.role = user.role;
+                token.settingsId = dbUser?.settingsId;
             }
 
             return token;
@@ -215,7 +250,7 @@ export const authOptions: NextAuthOptions = {
         // When using database sessions, the User (user) object is passed as an argument.
         // When using JSON Web Tokens for sessions, the JWT payload (token) is provided instead.
         async session({ session, token, user }) {
-            console.log('session from session callback', session);
+            // console.log('session from session callback', session);
             if (session && session.user) {
             }
             return {
@@ -224,6 +259,8 @@ export const authOptions: NextAuthOptions = {
                     ...session.user,
                     id: token.id,
                     role: token.role,
+                    settingsId: token.settingsId,
+                    hasAccountLinked: token.hasAccountLinked,
                 },
             };
         },

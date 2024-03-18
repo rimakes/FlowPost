@@ -23,13 +23,14 @@ import {
     PanelTopCloseIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type SidebarProps = {};
 
 export const Sidebar = ({}: SidebarProps) => {
     const [collapsed, setCollapsed] = useState(true);
+    const router = useRouter();
 
     const collapse = () => {
         setCollapsed(true);
@@ -58,7 +59,13 @@ transition-[width] duration-300
                     <SidebarClose className='w-5 h-5' />
                 )}
             </Button>
-            <Button className='rounded-full gap-2 hidden lg:flex'>
+            <Button
+                className='rounded-full gap-2 hidden lg:flex'
+                onClick={() => {
+                    router.push('/app/post-writter/new');
+                    setCollapsed(true);
+                }}
+            >
                 <Feather />
                 {!collapsed && `Escribe tu post`}
             </Button>
@@ -223,7 +230,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: Sparkles,
-        label: 'Escribe un Post',
+        label: 'Escritor Automático',
         href: '/app/post-writter',
         shortLabel: 'Posts',
         status: 'active',
@@ -256,13 +263,13 @@ const MAIN_MENU_ITEMS: MenuItem[] = [
         shortLabel: 'Programar',
         status: 'active',
     },
-    {
-        icon: BrainCog,
-        label: 'Inspiración',
-        href: '/app/inspo',
-        shortLabel: 'Inspo',
-        status: 'próximamente',
-    },
+    // {
+    //     icon: BrainCog,
+    //     label: 'Inspiración',
+    //     href: '/app/inspo',
+    //     shortLabel: 'Inspo',
+    //     status: 'próximamente',
+    // },
 ];
 
 const SECONDARY_MENU_ITEMS: MenuItem[] = [

@@ -7,9 +7,14 @@ import type {
     Position,
     Prisma,
     PrismaClient,
+    TimeSlot,
 } from '@prisma/client';
 import { designMap } from '@/app/app/carrousel/_components/SlideDesignSelector';
-import { DaysOfTheWeek, TimeOfTheDay } from '@/config/const';
+import {
+    DaysOfTheWeek,
+    TimeOfTheDay,
+    daysOfTheWeekMapNew,
+} from '@/config/const';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
@@ -165,10 +170,24 @@ export type UserCreateInput = Prisma.UserCreateInput;
 
 export type TDaysOfTheWeek = keyof typeof DaysOfTheWeek;
 
-export type TSlot = {
-    day: TDaysOfTheWeek;
-    time: string;
-    isSlot: boolean;
-};
+export type TSlot = TimeSlot;
 
 export type TNameTimeOfDay = keyof typeof TimeOfTheDay;
+
+export type TimeMap = {
+    [key: string]: DayOfTheWeekNumber[];
+};
+
+export type DayMap = {
+    [key: number]: string[];
+};
+
+export type DayOfTheWeekNumber = keyof typeof daysOfTheWeekMapNew;
+export type DayOfTheWeek = (typeof daysOfTheWeekMapNew)[DayOfTheWeekNumber];
+
+export type PostOrSlot = {
+    hasPost: boolean;
+    postId?: string;
+    postContent?: string;
+    time: string;
+};

@@ -9,6 +9,8 @@ declare module 'next-auth' {
         user: {
             // role: string;
             id: string;
+            settingsId: string;
+            hasAccountLinked: boolean;
         } & DefaultSession['user'];
     }
     // Popular interfaces to augment
@@ -36,5 +38,7 @@ declare module '@auth/core/jwt' {
         /** OpenID ID Token */
         // role: string;
         id: string;
+        settingsId: string;
+        hasAccountLinked: boolean;
     }
 }

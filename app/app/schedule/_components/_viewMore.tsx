@@ -4,16 +4,12 @@ interface viewPostType {
     betweenDates: any;
     selectedDraftId: any;
     setViewMoreModal: (modal: boolean) => void;
-    setEditDetailsModal: (modal: boolean) => void;
-    data: any;
 }
 
 const ViewMore = ({
     betweenDates,
     selectedDraftId,
     setViewMoreModal,
-    setEditDetailsModal,
-    data,
 }: viewPostType) => {
     return betweenDates.map((item: any, key: number) => {
         if (key === selectedDraftId) {
@@ -110,25 +106,6 @@ const ViewMore = ({
                                 </div>
                                 <div className='px-4 py-5 sm:px-6'>
                                     <div className='flex items-center gap-4 sm:justify-end'>
-                                        {/* <button
-                      onClick={() => {
-                        setViewMoreModal(false)
-                        setEditDetailsModal(true)
-                      }}
-                      type='button'
-                      className='inline-flex w-full sm:ml-auto sm:w-auto items-center justify-center gap-2 transition-all duration-150 rounded-full bg-white px-3 py-2 sm:px-4 sm:py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 group shadow-xs ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
-                    >
-                      <svg
-                        aria-hidden='true'
-                        className='w-5 h-5 -ml-0.5'
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 20 20'
-                        fill='currentColor'
-                      >
-                        <path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
-                      </svg>
-                      Edit
-                    </button> */}
                                         <button
                                             onClick={() =>
                                                 setViewMoreModal(false)

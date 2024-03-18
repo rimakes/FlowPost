@@ -3,7 +3,14 @@ import {
     VOICE_TONES,
 } from '@/app/app/post-writter/config/const';
 import { POST_TEMPLATES } from '@/app/app/post-writter/config/prompts';
-import { Pure } from '@/types/types';
+import { DaysOfTheWeek } from '@/config/const';
+import {
+    DayMap,
+    DayOfTheWeekNumber,
+    Pure,
+    TSlot,
+    TimeMap,
+} from '@/types/types';
 import * as PrismaClient from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -132,3 +139,32 @@ export async function retryAsyncFunction<T>(
     // but TypeScript doesn't know that we're always throwing inside the loop on the last attempt
     throw new Error('This should never happen');
 }
+
+/**
+ * Load the schedule into a time map of the form:
+ * {
+ * '10:00': [0, 1],
+ * '11:00': [3, 6],
+ * ...
+ * }
+ * @param schedule The schedule to load, as an array of TSlots
+ */
+export const loadSchedulePerTime = (schedule: TSlot[]) => {
+    const timeMap: TimeMap = {};
+    schedule.forEach((slot) => {
+        const previousArray = timeMap[`${slot.time}`] || [];
+        previousArray.push(slot.dayOfTheWeek as DayOfTheWeekNumber);
+        timeMap[`${slot.time}`] = previousArray;
+    });
+    return timeMap;
+};
+
+export const loadSchedulePerDay = (schedule: TSlot[]) => {
+    const dayMap: DayMap = {};
+    schedule.forEach((slot) => {
+        const previousArray = (dayMap[slot.dayOfTheWeek] || []) as string[];
+        previousArray.push(slot.time);
+        dayMap[slot.dayOfTheWeek] = previousArray;
+    });
+    return dayMap;
+};

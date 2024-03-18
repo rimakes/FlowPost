@@ -12,10 +12,9 @@ export function Social({}) {
                 className='w-full'
                 onClick={async () => {
                     const res = await signIn('google', {
+                        redirect: true,
                         callbackUrl: '/app',
                     });
-
-                    console.log({ res });
                 }}
             >
                 {

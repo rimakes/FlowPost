@@ -21,6 +21,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { GetAccessButton } from '@/components/marketing/GetAccessButton';
+import { LoginButton } from '@/components/auth/login-button';
 
 export function HomeNavbar({ className }: { className?: string }) {
     const { data } = useSession();
@@ -52,7 +53,9 @@ export function HomeNavbar({ className }: { className?: string }) {
 
                 {/* Right side */}
                 <div className='lg:flex hidden items-center space-x-3'>
-                    <Button variant={'secondary'}>Login</Button>
+                    <LoginButton mode='modal'>
+                        <Button variant={'outline'}>Login</Button>
+                    </LoginButton>
                     {/* REVIEW: This wouldn't ve ever worked here since it's out of the provider  */}
                     {/* <DownloadButton /> */}
 
@@ -83,8 +86,12 @@ export function HomeNavbar({ className }: { className?: string }) {
                             );
                         })}
                         <Separator />
-                        <DropdownMenuItem asChild>
-                            <Button variant={'secondary'}>Login</Button>
+                        <DropdownMenuItem className='w-full' asChild>
+                            {/* <Button variant={'secondary'}> */}
+                            <LoginButton mode='modal'>
+                                <Button variant={'outline'}>Login</Button>
+                            </LoginButton>
+                            {/* </Button> */}
                         </DropdownMenuItem>
 
                         <DropdownMenuItem asChild>
@@ -97,7 +104,7 @@ export function HomeNavbar({ className }: { className?: string }) {
     );
 }
 
-const menuItems = [
+export const menuItems = [
     {
         label: 'Pruébalo',
         url: '#try-it',

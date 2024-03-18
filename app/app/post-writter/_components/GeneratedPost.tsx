@@ -83,7 +83,11 @@ export const PostWritterResult = ({
                         hover:bg-primary/10'
                         label='Guardar post'
                         onClick={async () => {
-                            await createLinkedinPost(post.content, post.id);
+                            await createLinkedinPost(
+                                post.content,
+                                post.id,
+                                data?.user?.id!
+                            );
                             toast('Post guardado');
                         }}
                     />
