@@ -57,7 +57,6 @@ export const CoverSlide = ({
                         opacity: 0.3,
                     }}
                 />
-
                 <ContentEditable
                     onChange={(event) => {
                         titleRef.current = event.target.value;
@@ -99,7 +98,7 @@ export const CoverSlide = ({
                     name={brand.name}
                     handle={brand.handle}
                     orientation='vertical'
-                    mode='dark'
+                    mode='light'
                 />
             </div>
         </>

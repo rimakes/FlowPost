@@ -1,5 +1,5 @@
 import { TBrand, TSlideDesignNames } from '@/types/types';
-import { BigNumber } from './slideContents/BigNumberSlide';
+import { BigNumberSlide } from './slideContents/BigNumberSlide';
 import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
 import { ListSlide } from './slideContents/ListSlide';
@@ -21,8 +21,8 @@ export function SlideDesignSelector({
 }
 
 export const designMap = {
-    ListSlide: ListSlide,
-    BigNumberSlide: BigNumber,
+    ListSlide,
+    BigNumberSlide,
     ImageAndTextHorizontal,
     ImageAndTextVertical,
     TextOnlySlide,

@@ -10,7 +10,7 @@ type BigNumberSlideProps = {
     tagline: string;
 };
 
-export const BigNumber = ({
+export const BigNumberSlide = ({
     brand,
     bigCharacter,
     title,

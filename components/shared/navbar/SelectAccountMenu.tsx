@@ -27,13 +27,13 @@ export const SelectAccountMenu = () => {
                         <Check className='w-5 h-5 self-center' />
                     </div>
                 </div>
-                <Button
+                {/* <Button
                     className='border-t border-border p-2 mt-0 rounded-none'
                     variant={'ghost'}
                 >
                     <PlusCircle className='w-5 h-5' />
                     Añade otra cuenta
-                </Button>
+                </Button> */}
                 <Button
                     className='p-2 mt-0 rounded-none
                 text-destructive

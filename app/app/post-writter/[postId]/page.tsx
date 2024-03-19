@@ -4,6 +4,7 @@ import { PostWritterResult } from '../_components/GeneratedPost';
 import { PostWritterContextProvider } from '../_components/PostWritterProvider';
 import { TLinkedinPost } from '@/types/types';
 import { LinkedinPost } from './_components/LinkedinPost';
+import Editor from '@/components/editor/editor';
 
 type PostWritterPageProps = {
     params: {
@@ -47,7 +48,11 @@ export default async function PostWritterPage({
             <Separator />
             <div className='mt-6 2xl:flex gap-8'>
                 <PostWritterContextProvider initialPost={post}>
-                    <PostWritterResult className='flex-1' isEditable={true} />
+                    <PostWritterResult
+                        className='flex-1'
+                        isEditable={true}
+                        showEditableSwitch={false}
+                    />
                     <LinkedinPost className='flex-1 mx-auto max-h-[50%]' />
                 </PostWritterContextProvider>
             </div>

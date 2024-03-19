@@ -45,6 +45,10 @@ export const AccountSettings = () => {
         }
     }, [data, form, form.reset]);
 
+    const onSubmit = (values: GeneralSettingsForm) => {
+        console.log(values);
+    };
+
     return (
         <>
             <SettingsSectionHeader
@@ -53,7 +57,7 @@ export const AccountSettings = () => {
             />
             <div className='max-w-md mt-4'>
                 <Form {...form}>
-                    <form>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
                         <FormField
                             control={form.control}
                             name='name'
@@ -73,7 +77,7 @@ export const AccountSettings = () => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name='name'
                             render={({ field }) => (
@@ -91,7 +95,7 @@ export const AccountSettings = () => {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
                         <Button type='submit' className='mt-4'>
                             Guardar
                         </Button>

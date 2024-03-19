@@ -27,6 +27,7 @@ type GeneratedPostProps = {
     height?: number;
     minHeight?: number;
     setEditDetailsModal?: any;
+    showEditableSwitch?: boolean;
 };
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
@@ -37,6 +38,7 @@ export const PostWritterResult = ({
     height,
     minHeight,
     setEditDetailsModal,
+    showEditableSwitch = true,
 }: GeneratedPostProps) => {
     const { data } = useSession();
 
@@ -67,16 +69,18 @@ export const PostWritterResult = ({
                             setPost({ ...post, content: e.target.value });
                         }}
                     />
-                    <div className='absolute right-2 bottom-2 flex items-center gap-2 text-xs text-primary/70'>
-                        <Label>Permitir edición</Label>
-                        <Switch
-                            checked={isEditableOverride}
-                            onCheckedChange={setIsEditableOverride}
-                        />
-                    </div>
+                    {showEditableSwitch && (
+                        <div className='absolute right-2 bottom-2 flex items-center gap-2 text-xs text-primary/70'>
+                            <Label>Permitir edición</Label>
+                            <Switch
+                                checked={isEditableOverride}
+                                onCheckedChange={setIsEditableOverride}
+                            />
+                        </div>
+                    )}
                 </div>
 
-                <div className='flex gap-2'>
+                <div className='flex gap-2 relative'>
                     <ButtonWithTooltip
                         icon={<Save />}
                         className='flex-1 rounded-full bg-muted text-primary/50

@@ -280,12 +280,12 @@ const SECONDARY_MENU_ITEMS: MenuItem[] = [
         shortLabel: 'Ajustes',
         status: 'active',
     },
-    {
-        icon: PanelTopCloseIcon,
-        label: 'Pide herramientas',
-        href: '/app/feature-request',
-        shortLabel: 'Peticiones',
-        status: 'active',
-    },
+    // {
+    //     icon: PanelTopCloseIcon,
+    //     label: 'Pide herramientas',
+    //     href: '/app/feature-request',
+    //     shortLabel: 'Peticiones',
+    //     status: 'active',
+    // },
 ];
 // BOILER: Para roadmap, usar canny.io

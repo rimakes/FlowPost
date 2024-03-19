@@ -13,9 +13,12 @@ import { useSession } from 'next-auth/react';
 import Logo from '../logo';
 import { SelectAccountMenu } from './SelectAccountMenu';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar({ className }: { className?: string }) {
     const { data } = useSession();
+    const router = useRouter();
 
     return (
         // BOILER: Change this in boilerplate
@@ -28,13 +31,19 @@ export default function Navbar({ className }: { className?: string }) {
             <div className='flex items-center justify-between h-full -mb-px'>
                 {/* Left side */}
                 <div className='flex gap-2 items-center'>
-                    <Logo />
+                    <Link href='/app'>
+                        <Logo />
+                    </Link>
                     <HeadwayScript />
                 </div>
 
                 {/* Right side */}
                 <div className='flex items-center space-x-3'>
-                    <Button>
+                    <Button
+                        onClick={() => {
+                            router.push('/app/post-writter/new');
+                        }}
+                    >
                         <PenLine className='mr-2' />
                         Escribir Post
                     </Button>

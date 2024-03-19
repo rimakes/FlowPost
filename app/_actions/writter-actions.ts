@@ -196,17 +196,14 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 }
 
 export async function upsertCarousel(carousel: TCarousel, userId: string) {
-    console.log(carousel);
+    const { author, settings, slides } = carousel;
+
     if (carousel.id === undefined) {
         const newCarousel = await db.carousel.create({
             data: {
-                slides: carousel.slides,
-                settings: carousel.settings,
-                author: {
-                    handle: 'Ricardo Sala',
-                    name: 'Ricardo Sala',
-                    pictureUrl: '/images/placeholders/user.png',
-                },
+                slides,
+                settings,
+                author,
                 userId,
             },
         });
@@ -219,9 +216,10 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
             id: carousel.id,
         },
         data: {
-            slides: carousel.slides,
-            settings: carousel.settings,
+            slides,
+            settings,
             userId,
+            author,
         },
     });
 

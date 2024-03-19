@@ -108,7 +108,7 @@ export const SlideWithSettings = ({
     children,
     decorationId,
 }: SlideWithSettingsProps) => {
-    const { setCurrentSlideTo, currentSlide, addRef } =
+    const { setCurrentSlideTo, currentSlide, addRef, carousel } =
         useContext(CarouselContext);
     const slideRef = useRef<HTMLDivElement>(null);
     console.log('slide design', slide.design);
@@ -148,6 +148,8 @@ export const SlideWithSettings = ({
                         slide.design === 'CallToAction' ||
                         slide.design === 'Cover'
                     }
+                    aspectRatio={carousel.settings.aspectRatio}
+                    hasDecoration={carousel.settings.showDecoration}
                 >
                     <DesignElement
                         key={slideNumber}

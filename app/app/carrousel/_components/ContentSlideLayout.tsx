@@ -14,6 +14,7 @@ import { SlideFotter } from './slideParts/SlideFotter';
 import { SlideHeader } from './slideParts/SlideHeader';
 import { SlideDecoration } from './slideParts/SlideDecoration';
 import { SlideBackground } from './slideParts/SlideBackground';
+import { AspectRatio } from '@prisma/client';
 
 export const aspectRatioClasses = {
     '4:5': 'aspect-[1080/1350]',
@@ -31,9 +32,11 @@ type ContentSlideLayout = {
     children?: ReactNode;
     currentSlide: number;
     numberOfSlides: number;
+    hasDecoration?: boolean;
     decorationId?: TDecorationId;
     backgroundImage?: TImage;
     isCoverOrCTA?: boolean;
+    aspectRatio?: AspectRatio;
 };
 
 export const ContentSlideLayout = forwardRef<
@@ -53,6 +56,8 @@ export const ContentSlideLayout = forwardRef<
             decorationId,
             backgroundImage,
             isCoverOrCTA = false,
+            aspectRatio = 'PORTRAIT',
+            hasDecoration = true,
         },
         ref
     ) => {
@@ -74,7 +79,7 @@ export const ContentSlideLayout = forwardRef<
                 ref={ref}
                 className={cn(
                     `slide border-0 border-border p-6 text-[0.75em]
-    relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP['PORTRAIT'] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between isolate
+    relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between isolate
     `,
                     className,
                     isActive
@@ -93,13 +98,13 @@ export const ContentSlideLayout = forwardRef<
                         opacity={backgroundImage.opacity}
                     />
                 )}
-                {!isCoverOrCTA && decorationId && (
+                {!isCoverOrCTA && decorationId && hasDecoration && (
                     <SlideDecoration
                         decorationid={decorationId}
-                        primaryColor={colorPalette.font}
-                        secondaryColor={colorPalette.background}
+                        fontColor={colorPalette.font}
+                        backgroundColor={colorPalette.background}
                         accentColor={colorPalette.accent}
-                        tertiaryColor={colorPalette.primary}
+                        primaryColor={colorPalette.primary}
                         even={isEven(currentSlide)}
                     />
                 )}
@@ -118,7 +123,6 @@ export const ContentSlideLayout = forwardRef<
                         className=''
                     />
                 )}
-                {/* <p className='z-50'>ACCENT: {colorPalette.accent}</p> */}
                 {children}
                 {!isCoverOrCTA && (
                     <SlideFotter

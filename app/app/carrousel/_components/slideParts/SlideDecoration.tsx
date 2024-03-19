@@ -9,9 +9,9 @@ import { ArrowRight, Circle, TrendingUp } from 'lucide-react';
 import { TopoSVG } from '../svgs/Topo';
 
 type DecorativeElementsProps = {
-    primaryColor: string;
-    secondaryColor: string;
-    tertiaryColor?: string;
+    fontColor: string;
+    backgroundColor: string;
+    primaryColor?: string;
     accentColor?: string;
     decorationid: keyof typeof decorationMap;
     even?: boolean;
@@ -23,9 +23,9 @@ type DecorativeElementsProps = {
 type DecorationProps = Omit<DecorativeElementsProps, 'decorationid'>;
 
 const Squares = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     even,
     cover,
@@ -134,9 +134,9 @@ const Squares = ({
 };
 
 const Topo = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     even,
 }: DecorationProps) => {
@@ -151,9 +151,9 @@ const Topo = ({
 };
 
 const Arrows = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     cover,
     even,
@@ -185,9 +185,9 @@ const Arrows = ({
 };
 
 const Bubbles = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     cover,
     cta,
@@ -239,9 +239,9 @@ const Bubbles = ({
 };
 
 const Balls = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     cover,
     cta,
@@ -270,7 +270,7 @@ const Balls = ({
 
 const Trending = ({
     primaryColor,
-    secondaryColor,
+    accentColor,
     cover,
     cta,
     even,
@@ -279,7 +279,7 @@ const Trending = ({
         <TrendingUp
             className='absolute bottom-0 translate-x-3/4 translate-y-full right-0'
             size={360}
-            color={secondaryColor}
+            color={accentColor}
             absoluteStrokeWidth={true}
             strokeWidth={24}
         />
@@ -298,9 +298,9 @@ const Trending = ({
 };
 
 const VerticalGradient = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
@@ -316,9 +316,9 @@ const VerticalGradient = ({
     );
 };
 const HorizontalGradient = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     even,
 }: DecorationProps) => {
@@ -336,7 +336,7 @@ const HorizontalGradient = ({
     );
 };
 
-const Paper = ({ primaryColor, secondaryColor }: DecorationProps) => {
+const Paper = ({ primaryColor, accentColor }: DecorationProps) => {
     return (
         <div className={`absolute h-full w-full top-0 left-0 -z-10`}>
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
@@ -504,9 +504,9 @@ const Paper = ({ primaryColor, secondaryColor }: DecorationProps) => {
 // };
 // https://fffuel.co/gggrain/
 const Organic = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     return (
@@ -522,9 +522,9 @@ const Organic = ({
 };
 
 const Starts = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     return (
@@ -563,9 +563,9 @@ const Starts = ({
 };
 
 const Prism = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     return (
@@ -906,9 +906,9 @@ const Prism = ({
 //     );
 // };
 const Sky = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     return (
@@ -925,9 +925,9 @@ const Sky = ({
     );
 };
 const Grid = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
 }: DecorationProps) => {
     return (
@@ -943,9 +943,9 @@ const Grid = ({
     );
 };
 const Blobs = ({
-    primaryColor: fontColor,
-    secondaryColor: backgroundColor,
-    tertiaryColor: primaryColor,
+    fontColor,
+    backgroundColor,
+    primaryColor,
     accentColor,
     cover,
     cta,
@@ -998,9 +998,9 @@ export const decorationMap = {
 };
 
 export const SlideDecoration = ({
+    fontColor,
+    backgroundColor,
     primaryColor,
-    secondaryColor,
-    tertiaryColor,
     accentColor,
     decorationid,
     cover,
@@ -1011,9 +1011,9 @@ export const SlideDecoration = ({
     const DecorationComponent = decorationMap[decorationid];
     return (
         <DecorationComponent
+            fontColor={fontColor}
+            backgroundColor={backgroundColor}
             primaryColor={primaryColor}
-            secondaryColor={secondaryColor}
-            tertiaryColor={tertiaryColor}
             cover={cover}
             cta={cta}
             even={even}

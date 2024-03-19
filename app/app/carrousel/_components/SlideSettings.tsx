@@ -14,19 +14,26 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { TBrand, TSlide, TStatus } from '@/types/types';
+import { TBrand, TSlide, TSlideDesignNames, TStatus } from '@/types/types';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { getPexelImages } from '@/app/_actions/writter-actions';
 import Image from 'next/image';
 import { toast } from 'sonner';
-import { SlideDesignSelector } from './SlideDesignSelector';
+import { SlideDesignSelector, designMap } from './SlideDesignSelector';
 import {
     Dialog,
     DialogClose,
     DialogContent,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -89,20 +96,28 @@ export function SlideSettings({
             >
                 <ArrowLeftIcon />
             </Button>
-            <h2>Slide portada</h2>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button>Elige plantilla</Button>
-                </DialogTrigger>
-                <DialogContent className='max-w-[80%] overflow-x-auto'>
-                    <SlideDesignSelector
-                        brand={getCompleteBrand() as TBrand}
-                        designId='ListSlide'
-                        setDesignId={setDesign}
-                    />
-                </DialogContent>
-            </Dialog>
-            <div>
+
+            <Label htmlFor='slide-type'>Tipo de slide</Label>
+            <Select
+                value={slide.design!}
+                onValueChange={(value) => {
+                    setDesign(value as TSlideDesignNames);
+                }}
+            >
+                <SelectTrigger id='slide-type'>
+                    <SelectValue placeholder='Selecciona' />
+                </SelectTrigger>
+                <SelectContent>
+                    {Object.keys(designMap).map((design, index) => {
+                        return (
+                            <SelectItem key={index} value={design}>
+                                {design}
+                            </SelectItem>
+                        );
+                    })}
+                </SelectContent>
+            </Select>
+            {/* <div>
                 <Switch
                     id='title'
                     checked={slide.title!.isShown}
@@ -129,16 +144,17 @@ export function SlideSettings({
             <div>
                 <Label htmlFor='paragraph'>Etiqueta desliza</Label>
                 <Switch
-                    id='tagline'
-                    checked={carousel.settings.showSwipeLabel}
-                    onCheckedChange={toggleShowSwipeLabel}
+                id='tagline'
+                checked={carousel.settings.showSwipeLabel}
+                onCheckedChange={toggleShowSwipeLabel}
                 />
-            </div>
+            </div> */}
+            <Separator />
             <form
                 className='overflow-x-auto flex flex-col gap-2'
                 action={onSearch}
             >
-                <Label htmlFor='paragraph'>Buscar imagen</Label>
+                <Label htmlFor='paragraph'>Imagen de fondo</Label>
                 <div className='flex gap-2'>
                     <Input
                         className='inline-block'
@@ -171,7 +187,7 @@ export function SlideSettings({
                     ))}
                 </div>
             </form>
-
+            <Label htmlFor='opacity'>Opacidad</Label>
             <Slider
                 defaultValue={[slide.backgroundImage?.opacity!]}
                 value={[slide.backgroundImage?.opacity!]}
@@ -181,6 +197,7 @@ export function SlideSettings({
                 min={0}
                 max={1}
                 step={0.01}
+                id='opacity'
             />
         </div>
     );

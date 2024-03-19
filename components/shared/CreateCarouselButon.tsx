@@ -32,7 +32,7 @@ export function CreateCarouselButton({
             icon={<GalleryHorizontal />}
             disabled={status === 'loading'}
             className={cn(
-                `flex-1 rounded-full bg-muted overflow-hidden text-primary/50 hover:bg-primary/10`,
+                `flex-1 rounded-full bg-muted overflow-hidden text-primary/50 hover:bg-primary/10 relative`,
                 className
             )}
             label='Crear carrusel'

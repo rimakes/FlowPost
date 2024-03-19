@@ -7,14 +7,17 @@ import { ChevronDown } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useContext, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
+import { ColorPalette } from '@prisma/client';
 
 type DecorationSelectorProps = {
     onSelect: (decoration: TDecorationId) => void;
     selectedDecoration: TDecorationId;
+    colorPalette: ColorPalette;
 };
 export function DecorationSelector({
     onSelect,
     selectedDecoration,
+    colorPalette,
 }: DecorationSelectorProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const {
@@ -23,11 +26,12 @@ export function DecorationSelector({
             settings: { showDecoration },
         },
     } = useContext(CarouselContext);
+    const { font, background, primary, accent } = colorPalette;
 
     return (
         <>
             <ToggleableCollapsible
-                label='Elementos Decorativos'
+                label='Decoración Fondo'
                 enabled={showDecoration}
                 setEnabled={toggleShowDecoration}
             >
@@ -42,16 +46,18 @@ export function DecorationSelector({
                         </Button>
                     </DialogTrigger>
                     <DialogContent className='overflow-y-scroll max-h-full'>
-                        <div className='flex flex-col gap-2 '>
+                        <div className='grid grid-cols-2 gap-2 '>
                             {Object.keys(decorationMap).map(
                                 (decoration, index) => {
                                     return (
                                         <div
                                             key={index}
-                                            className='relative
-                                            slide border-border px-4 py-4 text-[0.75em]
-                     w-40 h-60 overflow-hidden border boroder-border
-                                            '
+                                            className='relative border-border px-4 py-4 text-[0.75em] w-40 aspect-square
+                                            rounded-full overflow-hidden border boroder-border cursor-pointer'
+                                            style={{
+                                                backgroundColor: background,
+                                                color: font,
+                                            }}
                                             onClick={() => {
                                                 onSelect(
                                                     decoration as TDecorationId
@@ -63,9 +69,14 @@ export function DecorationSelector({
                                                 decorationid={
                                                     decoration as TDecorationId
                                                 }
-                                                primaryColor={'#000'}
-                                                secondaryColor={'#000'}
+                                                fontColor={font}
+                                                backgroundColor={background}
+                                                accentColor={accent}
+                                                primaryColor={primary}
                                             />
+                                            <p className='absolute top-8 text-lg font-semibold'>
+                                                {decoration}
+                                            </p>
                                         </div>
                                     );
                                 }

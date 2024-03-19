@@ -279,49 +279,49 @@ Es hora de que adoptemos una nueva forma de pensar sobre {tema y por qué esta n
         id: '10',
         name: 'Cómo Saber Si Eres',
         tags: ['lecciones', 'tips', 'ideas', 'historias'],
-        content: `How do you know if you are a {{XXX}}? You do any of the following things:
-1.{{XXX}} 
+        content: `¿Cómo sabes si eres un {{XXX}}? Haces cualquiera de las siguientes cosas:
 
-2.{{XXX}} 
+        1.{{XXX}}
 
-3.{{XXX}} 
+        2.{{XXX}}
 
-4.{{XXX}} 
+        3.{{XXX}}
 
-5.{{XXX}} 
+        4.{{XXX}}
 
-6.{{XXX}} 
+        5.{{XXX}}
 
-7.{{XXX}}
+        6.{{XXX}}
 
+        7.{{XXX}}
 
-What are some other signs that would tell you are a {{XXX}}? Leave it in the comments.
+        ¿Cuáles son algunas otras señales que te dirían que eres un {{XXX}}? Déjalo en los comentarios.
 
-{HASHTAGS}`,
+        {HASHTAGS}`,
     },
     {
         id: '11',
         name: 'Lo Que Importa',
         tags: ['lecciones', 'tips', 'ideas', 'historias'],
-        content: `{x} is not just about {x} and {x}.
+        content: `{x} no se trata solo de {x} y {x}.
 
-        It's about:
+        Se trata de:
         - {soft skill 1}
         - {soft skill 2}
         - {soft skill 3}
         - {soft skill 4}
          
-        When I started {x}, it was about sharing what I was learning.
+        Cuando empecé {x}, se trataba de compartir lo que estaba aprendiendo.
          
-        It's also about transforming myself into a more disciplined person and following good habits.
+        Se trata también de transformarme en una persona más disciplinada y seguir buenos hábitos.
         
         {customer testomonial}
          
-        For me, this is what {x} is.
+        Para mi, de esto es de lo que se trata {x}.
          
-        Not {vanity metric 1}
-        Not {vanity metric 2}
-        Not {vanity metric 3}
+        No {vanity metric 1}
+        No {vanity metric 2}
+        No {vanity metric 3}
 
 {HASHTAGS}`,
     },
@@ -329,7 +329,7 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         id: '12',
         name: `That's a Wrap!`,
         tags: ['lecciones', 'tips', 'ideas', 'historias'],
-        content: `Exactly {time} ago, I started {X}. So, here's my {x} wrapped: 
+        content: `Exactamente {time} atrás, comencé {X}. Así que, aquí está mi {x} empaquetado:
 
 
         > {highlight 1}
@@ -340,11 +340,12 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         > {highlight 6}
         > {highlight 7}
         
-        I am sure I am missing out on a few things, but these were the key highlights. 
+        Estoy seguro de que me estoy perdiendo algunas cosas, pero estos fueron los aspectos clave. 
         
         {x} will always be special. 
+        {x} siempre será especial.
         
-        Can't wait to see what {X} has in store. 
+        No puedo esperar a ver qué tiene preparado {X}.
 
 {HASHTAGS}`,
     },
@@ -377,11 +378,11 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         id: '15',
         name: 'Tu Superpoder',
         tags: ['lecciones', 'tips', 'ideas', 'historias'],
-        content: `Everyone has a unique ability.
+        content: `Todos tenemos una habilidad especial.
         
-        The more time you spend working on your superpowers the happier you'll be.
+        Cuanto más tiempo pases trabajando en tus superpoderes, más feliz serás.
 
-        My super powers have always been:
+        Mis superpoderes siempre han sido:
           
         1. 
         
@@ -390,7 +391,7 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         3.
 
 
-        My weakness (kryptonite) have always been:
+        Mis debilidades (mi criptonita) siempre han sido:
         
         1. 
         
@@ -398,14 +399,14 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         
         3.
 
-
-        The trick is to find people who's super powers are your kryptonite and then work together, so you can become a super machine.
-
-
-        If you work on your weaknesses, all you end up with a bunch of medicor weaknesses. If you agree with this concept, write “agree!” in the comments.
+        
+        El truco es encontrar personas cuyos superpoderes sean tu criptonita y trabajar juntos, para que puedas convertirte en una supermáquina.
 
 
-        And if you are brave enough, list your top 3 super powers and top 3 weaknesses. Trust me it feels good to say it out loud.
+        Si trabajas en tus debilidades, terminarás con un montón de debilidades mediocres. Si estás de acuerdo con este concepto, escribe "¡de acuerdo!" en los comentarios.
+
+
+        Y si eres lo suficientemente valiente, enumera tus 3 superpoderes principales y tus 3 debilidades principales. Créeme, sienta bien decirlo en voz alta.
         
         {CTA}
 
@@ -416,7 +417,8 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         id: '16',
         name: 'El Lenguaje del Éxito',
         tags: ['lecciones', 'tips', 'ideas', 'historias'],
-        content: `The language of successful {{XXX}}:
+        content: `El lenguaje del {{XXX}} de éxito:
+
 
 
         1. {{XXX}} 
@@ -434,8 +436,11 @@ What are some other signs that would tell you are a {{XXX}}? Leave it in the com
         7. {{XXX}}
 
         
-        What should number {{XXX}} be...?
-        Which number do you think is the most important...? #hashtags
+        ¿Cuál debería ser el número {{XXX}}...?
+
+        ¿Cuál crees que es la más importante...?
+
+        {HASHTAGS}
         `,
     },
     {

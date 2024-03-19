@@ -69,6 +69,7 @@ const INITIAL_STATE = {
         return {} as Omit<TBrand, 'authorId' | 'id'>;
     },
     setDesign: (design: TSlideDesignNames) => {},
+    editParagraphs: (newParagraphs: string[]) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -132,6 +133,19 @@ export function CarouselContextProvider({
     const editDescription = (newDescription: string) => {
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].paragraphs[0].content = newDescription;
+        setCarousel(newCarousel);
+    };
+
+    const editParagraphs = (newParagraphs: string[]) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.slides[currentSlide].paragraphs = newParagraphs.map(
+            (paragraph) => {
+                return {
+                    content: paragraph,
+                    isShown: true,
+                };
+            }
+        );
         setCarousel(newCarousel);
     };
 
@@ -377,6 +391,7 @@ export function CarouselContextProvider({
     return (
         <CarouselContext.Provider
             value={{
+                editParagraphs,
                 setDesign,
                 getCompleteBrand,
                 toggleShowAuthorInFirstOnly,

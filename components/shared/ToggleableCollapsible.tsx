@@ -35,6 +35,7 @@ export const ToggleableCollapsible = ({
                 <div className='flex justify-between items-center'>
                     <div className='flex gap-2 items-center'>
                         <Switch
+                            className='scale-75'
                             checked={enabled}
                             onCheckedChange={(value) => {
                                 setEnabled(value);

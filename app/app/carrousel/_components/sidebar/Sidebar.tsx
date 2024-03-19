@@ -65,7 +65,7 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
                 </SheetContent>
             </Sheet>
             {/* DESKTOP SIDEBAR */}
-            <SideBarContent brands={brands} className='hidden md:block' />
+            <SideBarContent brands={brands} className='hidden md:flex' />
         </>
     );
 };
@@ -86,6 +86,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 aspectRatio,
                 backgroundPattern,
                 showSwipeLabel,
+                colorPalette,
             },
         },
         setCarouselAspectRatio,
@@ -136,7 +137,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     aspectRatio={aspectRatio}
                     setCarouselAspectRatio={setCarouselAspectRatio}
                 />
-                <TemplateSelector />
+                {/* TODO: Recover this */}
+                {/* <TemplateSelector /> */}
             </div>
             <Separator className='mt-2 mb-2' />
             <div className='flex flex-col gap-2'>
@@ -204,13 +206,17 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 }}
                 // @ts-ignore
                 selectedDecoration={backgroundPattern}
+                colorPalette={colorPalette}
             />
             <Separator className='mt-2 mb-2' />
-            <LabelRoundnessSelector />
-            <Separator className='mt-2 mb-2' />
-            <div className='flex flex-col justify-between gap-2 mt-auto'>
+            {/* <LabelRoundnessSelector /> */}
+            {/* <Separator className='mt-2 mb-2' /> */}
+
+            <div className='flex flex-col justify-between gap-2 mt-8'>
                 <Button
                     onClick={async () => {
+                        console.log(carousel);
+                        console.log(carousel.author.pictureUrl);
                         const savedCarousel = await upsertCarousel(
                             carousel,
                             data?.user.id!

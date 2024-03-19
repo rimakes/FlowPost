@@ -1,5 +1,5 @@
 import { TBrand } from '@/types/types';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import ContentEditable from 'react-contenteditable';
 
@@ -10,15 +10,23 @@ type ListSlideProps = {
 };
 
 export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
-    const { editTitle, editDescription } = useContext(CarouselContext);
+    const { editTitle, editParagraphs } = useContext(CarouselContext);
+    const titleRef = useRef('');
+    const paragraphsRef = useRef(['']);
+
+    useEffect(() => {
+        if (title) titleRef.current = title;
+        if (paragraphs) paragraphsRef.current = paragraphs;
+    }, [paragraphs, title]);
 
     return (
         <div className='flex flex-col gap-4 h-full p-4 z-10'>
             <ContentEditable
                 onChange={(event) => {
+                    titleRef.current = event.target.value;
                     editTitle(event.target.value);
                 }}
-                html={`<h1>${title}</h1>`}
+                html={titleRef.current}
                 className='text-[2em]
                     focus:outline-none focus:ring-0 focus:border-transparent
                     '
@@ -34,7 +42,7 @@ export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
                     fontWeight: 300,
                 }}
             >
-                {paragraphs.map((item, index) => {
+                {paragraphsRef.current.map((item, index) => {
                     return (
                         <li key={index}>
                             <div
@@ -50,7 +58,24 @@ export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
                                 >
                                     {index + 1}
                                 </span>
-                                <p>{item}</p>
+                                <div>
+                                    <ContentEditable
+                                        onChange={(event) => {
+                                            paragraphsRef.current[index] =
+                                                event.target.value;
+                                            editParagraphs(
+                                                paragraphsRef.current
+                                            );
+                                        }}
+                                        html={paragraphsRef.current[index]}
+                                        className='text-[1rem] focus:outline-none focus:ring-0 focus:border-transparent'
+                                        style={{
+                                            fontSize: '1rem',
+                                            lineHeight: 1.5,
+                                            fontWeight: 200,
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </li>
                     );

@@ -29,8 +29,9 @@ import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/spinner';
 import { useSearchParams } from 'next/navigation';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon';
 
-const MAX_LENGTH = 700;
+const MAX_LENGTH = 1000;
 const MIN_LENGTH = 50;
 const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
 const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
