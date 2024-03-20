@@ -118,6 +118,28 @@ export const CoverSlideSchema = z.object({
     ]),
 });
 
+// description: string;
+// image: string;
+// imageLocation?: 'left' | 'right';
+// imageCaption?: string;
+
+export const ImageAndTextHorizontalSchema = z.object({
+    title: z.string().nonempty('El título no puede estar vacío'),
+    paragraphs: z.array(
+        z
+            .string()
+            .nonempty(
+                'El párrafo no puede estar vacío Y DEBE TENER SOLO UN ELEMENTO!!!. Puedes crear tantas slides como quieras de este tipo, pero este tipo solo puede tener UN elemento en el array de párrafos'
+            )
+    ),
+    image: z.string().min(1, {
+        message: 'Necesitamos una query sobre una foto relevante para tu slide',
+    }),
+    imageLocation: z.enum(['left', 'right']),
+    imageCaption: z.string().nonempty('El caption no puede estar vacío'),
+    design: z.enum(['ImageAndTextHorizontal']),
+});
+
 export const IdeaSchema = z.object({
     description: z
         .string()

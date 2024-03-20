@@ -3,7 +3,9 @@ import Image from 'next/image';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
 import ContentEditable from 'react-contenteditable';
-import { useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import image from 'next/image';
+import { CarouselContext } from '../ContextProvider';
 
 type ImageAndTextVertical = {
     brand: TBrand;
@@ -11,6 +13,7 @@ type ImageAndTextVertical = {
     description: string;
     image: string;
     imageLocation?: 'left' | 'right';
+    imageCaption?: string;
 };
 
 export const ImageAndTextHorizontal = ({
@@ -19,31 +22,58 @@ export const ImageAndTextHorizontal = ({
     description,
     image,
     imageLocation = 'right',
+    imageCaption,
 }: ImageAndTextVertical) => {
     const ArrowElement = imageLocation === 'right' ? ArrowRight : ArrowLeftIcon;
     // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const titleRef = useRef('');
+    const paragraphsRef = useRef(['']);
+    const imageCaptionRef = useRef('');
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
 
+    const { editTitle, editParagraphs } = useContext(CarouselContext);
+
+    useEffect(() => {
+        if (title) titleRef.current = title;
+        if (description) paragraphsRef.current = [description];
+        if (imageCaption) imageCaptionRef.current = imageCaption;
+        setIsHydrated(true);
+    }, [description, imageCaption, title]);
+
     return (
-        <div className='flex flex-col h-full p-2 py-6 gap-6'>
+        <div className='flex flex-col h-full p-2 py-6 gap-6 isolate z-10'>
             <div>
-                <h1
+                <ContentEditable
+                    onChange={(event) => {
+                        titleRef.current = event.target.value;
+                        editTitle(event.target.value);
+                    }}
+                    html={titleRef.current}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
                     style={{
                         fontSize: '2rem',
                         lineHeight: 1.1,
                     }}
-                >
-                    {title}
-                </h1>
-                <p
+                />
+
+                <ContentEditable
+                    onChange={(event) => {
+                        paragraphsRef.current[0] = event.target.value;
+                        editParagraphs([event.target.value]);
+                    }}
+                    html={paragraphsRef.current[0]}
+                    className='text-[2em]
+                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
                     style={{
                         fontSize: '1rem',
                         lineHeight: 1.3,
                         fontWeight: 200,
                     }}
-                >
-                    {description}
-                </p>
+                />
             </div>
             <div
                 className='flex items-center'
@@ -77,7 +107,15 @@ export const ImageAndTextHorizontal = ({
                         zIndex: 10,
                     }}
                 />
-                <p>This is provision of the image caption</p>
+
+                <ContentEditable
+                    onChange={(event) => {
+                        imageCaptionRef.current = event.target.value;
+                        // editimageCaption([event.target.value]);
+                    }}
+                    html={imageCaptionRef.current}
+                />
+                {/* <p>This is provision of the image caption</p> */}
             </div>
         </div>
     );

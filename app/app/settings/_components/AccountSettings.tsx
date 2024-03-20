@@ -71,7 +71,7 @@ export const AccountSettings = () => {
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your public display name.
+                                        Para saber cómo llamarte ;)
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

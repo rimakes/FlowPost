@@ -9,7 +9,7 @@ import type {
     PrismaClient,
     TimeSlot,
 } from '@prisma/client';
-import { designMap } from '@/app/app/carrousel/_components/SlideDesignSelector';
+import { designMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
 import {
     DaysOfTheWeek,
     TimeOfTheDay,

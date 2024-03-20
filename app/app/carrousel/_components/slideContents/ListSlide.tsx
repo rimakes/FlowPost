@@ -2,17 +2,26 @@ import { TBrand } from '@/types/types';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import ContentEditable from 'react-contenteditable';
+import { Editable } from '@/components/shared/Editable';
 
 type ListSlideProps = {
     brand: TBrand;
     title: string;
     paragraphs: string[];
+    listFirstNumber: number;
 };
 
-export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
+export const ListSlide = ({
+    brand,
+    paragraphs,
+    title,
+    listFirstNumber = 1,
+}: ListSlideProps) => {
+    console.log('ListSlide', paragraphs);
     const { editTitle, editParagraphs } = useContext(CarouselContext);
     const titleRef = useRef('');
     const paragraphsRef = useRef(['']);
+
     // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
 
@@ -46,44 +55,43 @@ export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
                     fontWeight: 300,
                 }}
             >
-                {paragraphsRef.current.map((item, index) => {
-                    return (
-                        <li key={index}>
-                            <div
-                                className='flex gap-2 items-start'
+                {paragraphsRef.current.map((paragraph, index) => (
+                    <li key={paragraph}>
+                        <div
+                            className='flex gap-2 items-start'
+                            style={{
+                                fontSize: '1.2rem',
+                            }}
+                        >
+                            <span
                                 style={{
-                                    fontSize: '1.2rem',
+                                    fontWeight: 700,
                                 }}
                             >
-                                <span
-                                    style={{
-                                        fontWeight: 700,
-                                    }}
-                                >
-                                    {index + 1}
-                                </span>
-                                <div>
-                                    <ContentEditable
-                                        onChange={(event) => {
-                                            paragraphsRef.current[index] =
-                                                event.target.value;
-                                            editParagraphs(
-                                                paragraphsRef.current
+                                {listFirstNumber + index}
+                            </span>
+                            <div>
+                                <Editable
+                                    value={paragraph}
+                                    setValue={(value) => {
+                                        // if value = '' remove the paragraph from the array
+                                        if (value === '') {
+                                            paragraphsRef.current.splice(
+                                                index,
+                                                1
                                             );
-                                        }}
-                                        html={paragraphsRef.current[index]}
-                                        className='text-[1rem] focus:outline-none focus:ring-0 focus:border-transparent'
-                                        style={{
-                                            fontSize: '1rem',
-                                            lineHeight: 1.5,
-                                            fontWeight: 200,
-                                        }}
-                                    />
-                                </div>
+                                        } else {
+                                            paragraphsRef.current[index] =
+                                                value;
+                                        }
+                                        editParagraphs(paragraphsRef.current);
+                                    }}
+                                    style={{}}
+                                />
                             </div>
-                        </li>
-                    );
-                })}
+                        </div>
+                    </li>
+                ))}
             </ul>
         </div>
     );

@@ -17,6 +17,7 @@ import {
     BigNumberSlideSchema,
     CallToActionSlideSchema,
     CoverSlideSchema,
+    ImageAndTextHorizontalSchema,
     ListSlideSchema,
     OnlyTextSlideSchema,
     SlideSchemaPrompt,
@@ -111,6 +112,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                     ListSlideSchema,
                     CallToActionSlideSchema,
                     CoverSlideSchema,
+                    ImageAndTextHorizontalSchema,
                 ])
             )
             .max(15)
@@ -132,8 +134,23 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
     const generatedSlides = await retryAsyncFunction(fn, 3, 1000);
     console.log('SLIDES!!!!', generatedSlides);
 
+    // Check if in the slides there is one that requires an image, and if so get the query
+    const imageSlide = generatedSlides.findIndex(
+        (slide) => slide.design === 'ImageAndTextHorizontal'
+    );
+
+    if (imageSlide !== -1) {
+        // @ts-ignore
+        const query = generatedSlides[imageSlide].image;
+        const images = await getPexelImages(query);
+        // @ts-ignore
+        generatedSlides[imageSlide].image = images[0];
+    }
+
     const formattedSlides: TSlide[] = generatedSlides.map((slide) => {
         return {
+            slideHeading: { content: slide.title, isShown: true },
+            listFirstItem: 1,
             title: {
                 content: slide.title,
                 isShown: true,
@@ -155,13 +172,23 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
             backgroundImage: {
                 alt: '',
                 opacity: 0.1,
-                position: 'CENTER',
                 url: '',
+                position: 'CENTER',
+                caption: '',
             },
             settings: null,
             // @ts-ignore
             bigCharacter: slide.bigCharacter ?? null,
-            image: null,
+            image: {
+                // @ts-ignore
+                caption: slide.imageCaption ?? '',
+                // @ts-ignore
+                position: slide.imagePosition ?? 'TOP',
+                alt: '',
+                opacity: 0.1,
+                // @ts-ignore
+                url: slide.image ?? '',
+            },
             design: slide.design,
         };
     });

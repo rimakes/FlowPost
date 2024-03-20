@@ -167,8 +167,10 @@ type Slide {
     title           DisplayableText?
     tagline         DisplayableText?
     paragraphs      DisplayableText[]
+    slideHeading    DisplayableText?
     settings        SlideOverrides?
     bigCharacter    String?
+    listFirstItem   Int?
     image           Image?
     backgroundImage Image?
     design          String?
@@ -177,6 +179,7 @@ type Slide {
 type Image {
     url      String
     alt      String
+    caption  String?
     opacity  Float    @default(1)
     position Position @default(TOP)
 }

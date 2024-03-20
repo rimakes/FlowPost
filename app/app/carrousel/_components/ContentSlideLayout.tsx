@@ -117,11 +117,7 @@ export const ContentSlideLayout = forwardRef<
                     />
                 )}
                 {!isCoverOrCTA && (
-                    <SlideHeader
-                        text='Slide Title'
-                        slideNumber={currentSlide}
-                        className=''
-                    />
+                    <SlideHeader slideNumber={currentSlide} className='z-10' />
                 )}
                 {children}
                 {!isCoverOrCTA && (

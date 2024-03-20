@@ -3,11 +3,17 @@ import * as PrismaClient from '@prisma/client';
 
 export const fakeSlides: TSlide[] = [
     {
+        listFirstItem: 1,
+        slideHeading: {
+            content: 'some randum heading',
+            isShown: true,
+        },
         backgroundImage: {
             url: '',
             alt: 'some random',
             opacity: 0.1,
             position: 'CENTER',
+            caption: 'some random caption',
         },
         paragraphs: [
             {
@@ -39,20 +45,27 @@ export const fakeSlides: TSlide[] = [
             isShown: true,
         },
         image: {
-            url: '',
+            url: 'https://images.unsplash.com/photo-1682686578289-cf9c8c472c9b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'some random',
             position: 'CENTER',
             opacity: 0.1,
+            caption: 'some random caption',
         },
         bigCharacter: 'R',
         design: 'TextOnlySlide',
     },
     {
+        listFirstItem: 1,
+        slideHeading: {
+            content: 'some randum heading',
+            isShown: true,
+        },
         backgroundImage: {
-            url: '',
+            url: 'https://images.unsplash.com/photo-1682686578289-cf9c8c472c9b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'some random',
             opacity: 0.1,
             position: 'CENTER',
+            caption: 'some random caption',
         },
         paragraphs: [
             {
@@ -84,10 +97,11 @@ export const fakeSlides: TSlide[] = [
             isShown: true,
         },
         image: {
-            url: '',
+            url: 'https://images.unsplash.com/photo-1682686578289-cf9c8c472c9b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'some random',
             position: 'CENTER',
             opacity: 0.1,
+            caption: 'some random caption',
         },
         bigCharacter: 'R',
         design: 'TextOnlySlide',

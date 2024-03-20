@@ -1,6 +1,5 @@
 'use client';
 
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
 import { useContext, useState } from 'react';
@@ -14,19 +13,13 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { TBrand, TSlide, TSlideDesignNames, TStatus } from '@/types/types';
+import { TSlide, TSlideDesignNames, TStatus } from '@/types/types';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { getPexelImages } from '@/app/_actions/writter-actions';
 import Image from 'next/image';
 import { toast } from 'sonner';
-import { SlideDesignSelector, designMap } from './SlideDesignSelector';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { designMap, designNamesMap } from './slideContents/contentMaps';
 import {
     Select,
     SelectContent,
@@ -111,7 +104,8 @@ export function SlideSettings({
                     {Object.keys(designMap).map((design, index) => {
                         return (
                             <SelectItem key={index} value={design}>
-                                {design}
+                                {/* @ts-ignore */}
+                                {designNamesMap[design]}
                             </SelectItem>
                         );
                     })}

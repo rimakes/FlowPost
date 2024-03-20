@@ -33,8 +33,7 @@ BigNumberSlide: use it when the main element of the text is a list and you want 
       "design": "BigNumberSlide"
     }},
 
-
-
+    
 ListSlide: use it when the text has a list but the list is not the only part of the text, so you want to use only one slide for the list. IMPORTANT!!!! the total list (the sum of all the items text) has more than 30 characters, split it into several slides.
     {{
         "title": "Enfoque tradicional",
@@ -45,6 +44,16 @@ ListSlide: use it when the text has a list but the list is not the only part of 
         ],
         "design": "ListSlide"
       }},
+
+  ImageAndTextHorizontal: use it when you want to show an image with a small paragraph of text. The paragraph must be concise (follow the schema). in the image property, put a query in Spanish that could be use to find an image that is relevant for the slide
+{{
+  "title": "Un enfoque moderno",
+  "paragraphs": ["Mientras tú estás aquí, tu competencia ya está en TikTok, Instagram y Facebook. ¿Dónde estás tú?"],
+  "image": "redes sociales móvil",
+  "imageLocation": "left",
+  "imageCaption": "¡Tus clientes están aquí!",
+  "design": "ImageAndTextHorizontal"
+}}
 
 
 TextOnlySlide: Use it when you have a chunk of paragraph that is important. But remember, only one paragraph per slide and a concise one.
@@ -63,9 +72,12 @@ CallToAction: always add a call to action slide at the end of the array.
         "tagline": "Sígueme para más contenido",
         "design": "CallToAction"
       }}
+      
 
 
 Now build the array.
+
+Try to use a mix of different slide types when possible.
 
 const array =
 

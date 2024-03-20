@@ -18,7 +18,7 @@ import { fontsMap } from '@/config/fonts';
 import { get } from 'http';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
 import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
-import { designMap } from './SlideDesignSelector';
+import { designMap } from './slideContents/contentMaps';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -160,6 +160,8 @@ export const SlideWithSettings = ({
                         title={slide.title?.content!}
                         paragraphs={slide.paragraphs.map((p) => p.content)}
                         bigCharacter={slide.bigCharacter!}
+                        listFirstNumber={slide.listFirstItem!}
+                        imageCaption={slide.image?.caption!}
                     />
                 </ContentSlideLayout>
             </div>

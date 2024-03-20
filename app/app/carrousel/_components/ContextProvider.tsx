@@ -137,6 +137,7 @@ export function CarouselContextProvider({
     };
 
     const editParagraphs = (newParagraphs: string[]) => {
+        console.log('NEW PARAGRAPHS', newParagraphs);
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].paragraphs = newParagraphs.map(
             (paragraph) => {
@@ -315,6 +316,7 @@ export function CarouselContextProvider({
                 alt: '',
                 opacity: 0.1,
                 position: 'CENTER',
+                caption: '',
             };
         if (imageUrl) backgroundImage.url = imageUrl;
         if (options?.alt) backgroundImage.alt = options.alt;
