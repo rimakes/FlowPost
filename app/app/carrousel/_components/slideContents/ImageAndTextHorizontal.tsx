@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
 import ContentEditable from 'react-contenteditable';
+import { useState } from 'react';
 
 type ImageAndTextVertical = {
     brand: TBrand;
@@ -20,6 +21,8 @@ export const ImageAndTextHorizontal = ({
     imageLocation = 'right',
 }: ImageAndTextVertical) => {
     const ArrowElement = imageLocation === 'right' ? ArrowRight : ArrowLeftIcon;
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     return (
         <div className='flex flex-col h-full p-2 py-6 gap-6'>

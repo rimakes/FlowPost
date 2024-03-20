@@ -7,6 +7,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { TBrand } from '@/types/types';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 type BrandKitSelectorProps = {
@@ -17,7 +18,19 @@ export function BrandKitSelector({
     brands,
     onBrandChange = () => {},
 }: BrandKitSelectorProps) {
-    const [brand, setBrand] = useState<string>();
+    const pathname = usePathname();
+
+    const [brand, setBrand] = useState<string>(() => {
+        if (pathname !== 'app/carrousel/new') {
+            return '';
+        }
+        if (brands && brands.length > 0) {
+            onBrandChange(brands[0].id);
+            return brands[0].id;
+        }
+        return '';
+    });
+
     return (
         <Select
             value={brand}

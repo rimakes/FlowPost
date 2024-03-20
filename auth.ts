@@ -7,7 +7,7 @@ import EmailProvider from 'next-auth/providers/email';
 import LinkedInProvider from 'next-auth/providers/linkedin';
 import { NextAuthOptions } from 'next-auth';
 
-import { config } from './config/shipper.config';
+import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/dist/server/api-utils';
 
@@ -132,7 +132,7 @@ export const authOptions: NextAuthOptions = {
                     pass: process.env.SMTP_PASSWORD,
                 },
             },
-            from: config.email.fromNoReply,
+            from: appConfig.email.fromNoReply,
         }),
     ],
 
@@ -140,7 +140,7 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/',
         newUser: '/', // New users will be directed here on first sign in
-        error: '/auth/error', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
+        error: '/auth/signin', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
     },
 
     debug: process.env.NODE_ENV === 'development', // Set to true to display debug messages
@@ -213,12 +213,16 @@ export const authOptions: NextAuthOptions = {
         // is called on a new session, after the user signs in. In subsequent calls, only token will be available.
         // whatever this callback returns will be the token that is stored in the cookie.
         async jwt({ token, user, account, profile, session, trigger }) {
-            // console.log({ token });
-            // console.log({ user });
-            // console.log({ account });
-            // console.log({ profile });
-            // console.log({ session });
-            // console.log({ trigger });
+            console.log({ token });
+            console.log({ user });
+            console.log({ account });
+            console.log({ profile });
+            console.log({ session });
+            console.log({ trigger });
+
+            if (trigger === 'update' && session.brands) {
+                token.brands = session.brands;
+            }
 
             // When the user signes in for the first time, we want to add some extra information to the token
             if (user) {
@@ -233,11 +237,18 @@ export const authOptions: NextAuthOptions = {
                     },
                 }));
 
+                const brandsOfUser = await db.brand.findMany({
+                    where: {
+                        authorId: user.id,
+                    },
+                });
+
                 token.hasAccountLinked = linkedinAccountLinked;
                 token.id = user.id;
                 token.email = user.email;
                 token.name = user.name;
                 token.settingsId = dbUser?.settingsId;
+                token.brands = brandsOfUser;
             }
 
             return token;
@@ -261,6 +272,7 @@ export const authOptions: NextAuthOptions = {
                     role: token.role,
                     settingsId: token.settingsId,
                     hasAccountLinked: token.hasAccountLinked,
+                    brands: token.brands,
                 },
             };
         },

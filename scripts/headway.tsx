@@ -20,12 +20,9 @@ export function HeadwayScript() {
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-            <Script
-                src='//cdn.headwayapp.co/widget.js'
-                strategy='afterInteractive'
-            />
+            <Script src='//cdn.headwayapp.co/widget.js' strategy='worker' />
 
-            <Script id='updates' strategy='lazyOnload'>{`
+            <Script id='updates' strategy='worker'>{`
             
                     var config = {
                         selector: ".headway",

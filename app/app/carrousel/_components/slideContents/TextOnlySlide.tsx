@@ -1,6 +1,6 @@
 import { CarouselContext } from '@/app/app/carrousel/_components/ContextProvider';
 import { Content } from 'next/font/google';
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect, useContext, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 
 type TextOnlySlideProps = {
@@ -13,11 +13,14 @@ export const TextOnlySlide = ({ title, paragraphs }: TextOnlySlideProps) => {
     const paragraphRef = useRef('');
     const { editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     // REVIEW: do we really need this?
     useEffect(() => {
         if (title) titleRef.current = title;
         if (paragraphs) paragraphRef.current = paragraphs[0];
+        setIsHydrated(true);
     }, [paragraphs, title]);
 
     return (

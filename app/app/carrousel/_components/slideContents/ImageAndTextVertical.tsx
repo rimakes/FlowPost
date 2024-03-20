@@ -1,5 +1,6 @@
 import { TBrand, TOrientation } from '@/types/types';
 import Image from 'next/image';
+import { useState } from 'react';
 
 type ImageAndTextVertical = {
     brand: TBrand;
@@ -16,6 +17,8 @@ export const ImageAndTextVertical = ({
     image,
     imageFirst = false,
 }: ImageAndTextVertical) => {
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
     return (
         <div className='flex flex-col h-full p-2 py-6 gap-6'>
             <div

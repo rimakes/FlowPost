@@ -1,5 +1,5 @@
 import { TBrand } from '@/types/types';
-import { useRef, useContext, useEffect } from 'react';
+import { useRef, useContext, useEffect, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import ContentEditable from 'react-contenteditable';
 
@@ -18,7 +18,8 @@ export const BigNumberSlide = ({
 }: BigNumberSlideProps) => {
     const titleRef = useRef('');
     const taglineRef = useRef('');
-    const bigCharacterRef = useRef('');
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     const { editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
@@ -26,6 +27,7 @@ export const BigNumberSlide = ({
     useEffect(() => {
         if (title) titleRef.current = title;
         if (tagline) taglineRef.current = tagline;
+        setIsHydrated(true);
     }, [tagline, title]);
 
     return (

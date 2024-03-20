@@ -129,64 +129,63 @@ export const MenuItem = ({
             ? 'text-primary/40 border-primary/40 cursor-not-allowed'
             : '';
 
+    const MenuLink = ({}) => (
+        <Link
+            onClick={collapse}
+            href={href}
+            className={cn(
+                `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
+            rounded-none
+            lg:w-full
+            lg:border-r-4
+            lg:border-t-0
+            border-t-4
+            border-transparent
+            lg:hover:bg-muted
+`,
+                className,
+                pathname === href
+                    ? 'lg:border-r-4 border-primary bg-primary/5'
+                    : '',
+                collapsed ? 'justify-center' : '',
+                status === 'próximamente' ? 'cursor-not-allowed' : ''
+            )}
+        >
+            <Icon className={`w-5 h-5 shrink-0 ${classNameNotActive}`} />
+            {!collapsed ? (
+                <span
+                    className={`${classNameNotActive} hidden lg:inline truncate`}
+                >
+                    {label}
+                </span>
+            ) : null}
+            <span className='lg:hidden'>{shortLabel ? shortLabel : label}</span>
+            {collapsed || status === 'active' ? null : (
+                <Badge
+                    variant={`${
+                        status === 'próximamente'
+                            ? 'outline'
+                            : status === 'nuevo'
+                              ? 'new'
+                              : 'default'
+                    }`}
+                    className=' lg:static lg:opacity-100 opacity-60 absolute bottom-8
+
+                '
+                >
+                    {capitalizeFirstLetter(status).slice(0, 5) + '.'}
+                </Badge>
+            )}
+        </Link>
+    );
+
+    if (!collapsed) return <MenuLink />;
+
     return (
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Link
-                        onClick={collapse}
-                        href={href}
-                        className={cn(
-                            `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
-                            rounded-none
-                            lg:w-full
-                            lg:border-r-4
-                            lg:border-t-0
-                            border-t-4
-                            border-transparent
-                            lg:hover:bg-muted
-            `,
-                            className,
-                            pathname === href
-                                ? 'lg:border-r-4 border-primary bg-primary/5'
-                                : '',
-                            collapsed ? 'justify-center' : '',
-                            status === 'próximamente'
-                                ? 'cursor-not-allowed'
-                                : ''
-                        )}
-                    >
-                        <Icon
-                            className={`w-5 h-5 shrink-0 ${classNameNotActive}`}
-                        />
-                        {!collapsed ? (
-                            <span
-                                className={`${classNameNotActive} hidden lg:inline truncate`}
-                            >
-                                {label}
-                            </span>
-                        ) : null}
-                        <span className='lg:hidden'>
-                            {shortLabel ? shortLabel : label}
-                        </span>
-                        {collapsed || status === 'active' ? null : (
-                            <Badge
-                                variant={`${
-                                    status === 'próximamente'
-                                        ? 'outline'
-                                        : status === 'nuevo'
-                                          ? 'new'
-                                          : 'default'
-                                }`}
-                                className=' lg:static lg:opacity-100 opacity-60 absolute bottom-8
-
-                                '
-                            >
-                                {capitalizeFirstLetter(status).slice(0, 5) +
-                                    '.'}
-                            </Badge>
-                        )}
-                    </Link>
+                    <MenuLink />
                 </TooltipTrigger>
                 <TooltipContent>
                     {status !== 'active'

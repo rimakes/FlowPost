@@ -1,4 +1,4 @@
-export const config = {
+export const appConfig = {
     routes: {
         /**
          *  Private route prefixes

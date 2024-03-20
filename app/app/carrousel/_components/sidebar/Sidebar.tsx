@@ -42,6 +42,7 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { useSession } from 'next-auth/react';
+import { fontTypeMap } from '@/config/const';
 
 type CarouselSidebarProps = {
     brands: TBrand[];
@@ -246,20 +247,23 @@ export const FontPaletteSelector = ({
 }: FontPaletteSelectorProps) => {
     return (
         <div className='flex flex-col gap-4'>
-            {Object.keys(fontPalette).map((fontType) => (
-                <div
-                    key={fontType}
-                    className='cursor-pointer flex flex-col items-start'
-                >
-                    {fontType}
-                    <FontSelector
-                        font={fontPalette[fontType as TFont] as TFontName}
-                        setFontPalette={(font: TFontName) =>
-                            setFontByType(fontType as TFont, font)
-                        }
-                    />
-                </div>
-            ))}
+            {Object.keys(fontPalette)
+                .sort()
+                .map((fontType) => (
+                    <div
+                        key={fontType}
+                        className='cursor-pointer flex flex-col items-start'
+                    >
+                        {/*@ts-ignore  */}
+                        {fontTypeMap[fontType]}
+                        <FontSelector
+                            font={fontPalette[fontType as TFont] as TFontName}
+                            setFontPalette={(font: TFontName) =>
+                                setFontByType(fontType as TFont, font)
+                            }
+                        />
+                    </div>
+                ))}
         </div>
     );
 };

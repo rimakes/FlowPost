@@ -17,7 +17,7 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { resetPasswordFormSchema } from '@/schemas/auth-schemas';
-import { config } from '@/config/shipper.config';
+import { appConfig } from '@/config/shipper.appconfig';
 
 export function ResetPasswordForm({}) {
     const form = useForm({
@@ -34,7 +34,7 @@ export function ResetPasswordForm({}) {
             // TODO: It's throwing an error due to a bug in the library: https://github.com/nextauthjs/next-auth/issues/9279.
             // will be fixed in the next release.
             const response = await signIn('email', {
-                callbackUrl: config.routes.defaultLogingRedirect,
+                callbackUrl: appConfig.routes.defaultLogingRedirect,
                 email: values.email,
                 redirect: false,
             });

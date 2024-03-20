@@ -1,5 +1,5 @@
 import { TBrand } from '@/types/types';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import ContentEditable from 'react-contenteditable';
 
@@ -13,10 +13,14 @@ export const ListSlide = ({ brand, paragraphs, title }: ListSlideProps) => {
     const { editTitle, editParagraphs } = useContext(CarouselContext);
     const titleRef = useRef('');
     const paragraphsRef = useRef(['']);
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {
         if (title) titleRef.current = title;
         if (paragraphs) paragraphsRef.current = paragraphs;
+
+        setIsHydrated(true);
     }, [paragraphs, title]);
 
     return (

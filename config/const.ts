@@ -1,3 +1,5 @@
+import { Brand } from '@prisma/client';
+
 export enum TimeOfTheDay {
     T0000 = '12:00 AM',
     T0015 = '12:15 AM',
@@ -138,4 +140,31 @@ export const dayNumberToDayKeyMap = {
     4: 'THU',
     5: 'FRI',
     6: 'SAT',
+};
+
+export const defaultValues: Pick<
+    Brand,
+    'name' | 'handle' | 'imageUrl' | 'fontPalette' | 'colorPalette' | 'id'
+> = {
+    id: 'new',
+    name: '',
+    handle: '',
+    imageUrl: '',
+    fontPalette: {
+        handWriting: 'sofia',
+        primary: 'sofia',
+        secondary: 'sofia',
+    },
+    colorPalette: {
+        accent: '#000000',
+        background: '#000000',
+        font: '#000000',
+        primary: '#000000',
+    },
+};
+
+export const fontTypeMap = {
+    primary: 'Primaria',
+    secondary: 'Secundaria',
+    handWriting: 'Manuscrita',
 };

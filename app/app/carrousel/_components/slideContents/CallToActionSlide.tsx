@@ -5,7 +5,7 @@ import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
-import { useRef, useContext, useEffect } from 'react';
+import { useRef, useContext, useEffect, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import { CarouselContext } from '../ContextProvider';
 
@@ -29,6 +29,8 @@ export const CallToActionSlide = ({
     const titleRef = useRef('');
     const taglineRef = useRef('');
     const paragraphsRef = useRef<string[]>([]);
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     const { editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
@@ -37,6 +39,7 @@ export const CallToActionSlide = ({
         if (title) titleRef.current = title;
         if (tagline) taglineRef.current = tagline;
         if (paragraphs) paragraphsRef.current = paragraphs;
+        setIsHydrated(true);
     }, [paragraphs, tagline, title]);
 
     return (

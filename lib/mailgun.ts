@@ -1,4 +1,4 @@
-import { config } from '@/config/shipper.config';
+import { appConfig } from '@/config/shipper.appconfig';
 import Mailgun from 'mailgun.js';
 
 const formData = require('form-data');
@@ -22,7 +22,7 @@ export const sendEmail = async (
     replyTo: string
 ) => {
     const data = {
-        from: config.email.fromAdmin,
+        from: appConfig.email.fromAdmin,
         to: [to],
         subject,
         text,
@@ -32,7 +32,7 @@ export const sendEmail = async (
 
     try {
         await mg.messages.create(
-            config.email.testSubdomain,
+            appConfig.email.testSubdomain,
             // (config.mailgun.subdomain ? `${config.mailgun.subdomain}.` : "") +
             // config.domainName,
             data

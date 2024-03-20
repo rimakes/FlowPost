@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { config } from '@/config/shipper.config';
+import { appConfig } from '@/config/shipper.appconfig';
 import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Button } from '../ui/button';
@@ -77,7 +77,7 @@ export default function Feedback({}) {
                         className='mb-4
           '
                     >
-                        ¿Qué opinas de {config.general.appName}?
+                        ¿Qué opinas de {appConfig.general.appName}?
                     </p>
                     <InputFaces value={value} setValue={setValue} />
                 </div>

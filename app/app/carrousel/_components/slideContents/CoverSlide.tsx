@@ -6,7 +6,7 @@ import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
 import ContentEditable from 'react-contenteditable';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
 
 type CoverSlideProps = {
@@ -29,10 +29,13 @@ export const CoverSlide = ({
 
     const { editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
+    // We need this to force a re-render when the slide is hydrated so the refs are updated
+    const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {
         if (title) titleRef.current = title;
         if (tagline) taglineRef.current = tagline;
+        setIsHydrated(true);
     }, [tagline, title]);
 
     return (
