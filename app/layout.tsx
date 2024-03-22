@@ -3,7 +3,7 @@ import './globals.css';
 import SessionProvider from '@/providers/session-provider';
 import { Toaster } from '@/components/ui/sonner';
 import Theme from '@/providers/theme-provider';
-import AppProvider from '@/providers/app-provider';
+import AppProvider from '@/providers/AppProvider';
 import { primaryFont } from '@/config/fonts';
 import { HeadwayScript } from '@/scripts/headway';
 import { AppModals } from './_components/AppModals';
@@ -28,10 +28,9 @@ export default function RootLayout({
                         enableSystem
                         disableTransitionOnChange
                     >
-                        <AppProvider>{children}</AppProvider>
+                        {children}
                     </Theme>
                     <Toaster />
-                    <AppModals />
                 </body>
             </SessionProvider>
         </html>

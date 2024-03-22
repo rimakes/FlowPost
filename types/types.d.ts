@@ -191,3 +191,19 @@ export type PostOrSlot = {
     postContent?: string;
     time: string;
 };
+
+export type AppNotificacion = {
+    lastShown: Date;
+    dimissals: number;
+    done: boolean;
+    lastInteraction: Date;
+    type: AppNotificationType;
+    message?: string;
+};
+
+export type AppNotifications = {
+    profileSetup?: AppNotificacion;
+};
+
+export type AppNotificationName = keyof AppNotifications;
+export type AppNotificationType = 'info' | 'warning' | 'error' | 'success';

@@ -41,6 +41,7 @@
         "@tiptap/suggestion": "^2.2.4",
         "@types/mailgun-js": "^0.22.18",
         "@types/streamifier": "^0.1.2",
+        "@uidotdev/usehooks": "^2.4.1",
         "ai": "^2.2.31",
         "axios": "^1.6.7",
         "bcryptjs": "^2.4.3",
