@@ -1,10 +1,12 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { User, Check, PlusCircle } from 'lucide-react';
+import { User, Check, PlusCircle, Settings } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export const SelectAccountMenu = () => {
     const { data } = useSession();
+    const router = useRouter();
 
     return (
         <>
@@ -34,6 +36,16 @@ export const SelectAccountMenu = () => {
                     <PlusCircle className='w-5 h-5' />
                     Añade otra cuenta
                 </Button> */}
+
+                <Button
+                    onClick={() => {
+                        router.push('/app/settings');
+                    }}
+                    variant={'ghost'}
+                >
+                    <Settings className='w-5 h-5' />
+                    Settings
+                </Button>
                 <Button
                     className='p-2 mt-0 rounded-none
                 text-destructive

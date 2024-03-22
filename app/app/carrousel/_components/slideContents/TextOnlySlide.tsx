@@ -6,12 +6,17 @@ import ContentEditable from 'react-contenteditable';
 type TextOnlySlideProps = {
     title: string;
     paragraphs?: string[];
+    slideNumber: number;
 };
 
-export const TextOnlySlide = ({ title, paragraphs }: TextOnlySlideProps) => {
+export const TextOnlySlide = ({
+    title,
+    paragraphs,
+    slideNumber,
+}: TextOnlySlideProps) => {
     const titleRef = useRef('');
     const paragraphRef = useRef('');
-    const { editTitle, editDescription, editTagline } =
+    const { editTitle, editDescription, editTagline, carousel } =
         useContext(CarouselContext);
     // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
@@ -40,6 +45,9 @@ export const TextOnlySlide = ({ title, paragraphs }: TextOnlySlideProps) => {
                 style={{
                     fontSize: '2.5rem',
                     lineHeight: 1.1,
+                    display: carousel.slides[slideNumber!].title?.isShown
+                        ? 'block'
+                        : 'none',
                 }}
             />
             {paragraphs && (
@@ -54,6 +62,10 @@ export const TextOnlySlide = ({ title, paragraphs }: TextOnlySlideProps) => {
                         fontSize: '1rem',
                         lineHeight: 1.5,
                         fontWeight: 200,
+                        display: carousel.slides[slideNumber!].paragraphs[0]
+                            ?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
             )}

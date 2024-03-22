@@ -147,13 +147,20 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
         generatedSlides[imageSlide].image = images[0];
     }
 
+    const firstBrand = await db.brand.findFirst({
+        where: {
+            authorId: post.userId!,
+        },
+    });
+
     const formattedSlides: TSlide[] = generatedSlides.map((slide) => {
+        console.log('slide', slide);
         return {
             slideHeading: { content: slide.title, isShown: true },
             listFirstItem: 1,
             title: {
-                content: slide.title,
-                isShown: true,
+                content: slide.title ?? '',
+                isShown: !!slide.title,
             },
             // @ts-ignore
             // TODO: how can we fix this?
@@ -167,7 +174,8 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
             tagline: {
                 // @ts-ignore
                 content: slide.tagline ?? '',
-                isShown: false,
+                // @ts-ignore
+                isShown: !!slide.tagline,
             },
             backgroundImage: {
                 alt: '',
@@ -178,7 +186,12 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
             },
             settings: null,
             // @ts-ignore
-            bigCharacter: slide.bigCharacter ?? null,
+            bigCharacter: {
+                // @ts-ignore
+                content: slide.bigCharacter ?? '',
+                // @ts-ignore
+                isShown: !!slide.bigCharacter,
+            },
             image: {
                 // @ts-ignore
                 caption: slide.imageCaption ?? '',
@@ -197,21 +210,23 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
         data: {
             slides: formattedSlides,
             author: {
-                handle: 'Ricardo Sala',
-                name: 'Ricardo Sala',
-                pictureUrl: '/images/placeholders/user.png',
+                handle: firstBrand?.handle ?? 'Ricardo Sala',
+                name: firstBrand?.name ?? 'Ricardo Sala',
+                pictureUrl:
+                    firstBrand?.imageUrl ?? '/images/placeholders/user.png',
             },
             // REVIEW: Why cannot do set: null?
             settings: {
                 colorPalette: {
-                    accent: '#FF0000',
-                    font: '#FFFFFF',
-                    background: '#000000',
+                    accent: firstBrand?.colorPalette.accent ?? '#FF0000',
+                    font: firstBrand?.colorPalette.font ?? '#FFFFFF',
+                    background:
+                        firstBrand?.colorPalette.background ?? '#000000',
                 },
                 fontPalette: {
-                    handWriting: 'inter',
-                    primary: 'inter',
-                    secondary: 'inter',
+                    handWriting: firstBrand?.fontPalette.handWriting ?? 'inter',
+                    primary: firstBrand?.fontPalette.primary ?? 'inter',
+                    secondary: firstBrand?.fontPalette.primary ?? 'inter',
                 },
                 aspectRatio: 'PORTRAIT',
                 backgroundPattern: 'Bubbles',

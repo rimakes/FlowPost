@@ -95,7 +95,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         setFontPalette,
         setDecorationId,
         setColorPalette,
-        editImage,
+        editProfilePicture,
         editName,
         editHandle,
     } = useContext(CarouselContext);
@@ -115,7 +115,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         if (brand) {
             setColorPalette(brand.colorPalette);
             setFontPalette(brand.fontPalette);
-            editImage(brand.imageUrl);
+            editProfilePicture(brand.imageUrl);
             editName(brand.name);
             editHandle(brand.handle);
         }
@@ -171,7 +171,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                             colorPalette={carousel.settings.colorPalette}
                             onChange={onSetColorPalette}
                         />
-                        <div className='flex gap-2 items-center'>
+                        <div className='flex gap-2 items-center mt-2'>
                             <Label htmlFor='name'>Alternar colores</Label>
                             <Switch
                                 checked={alternateColors}

@@ -22,7 +22,7 @@ import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
 import { Message } from './message';
 import { useState } from 'react';
-import { Social } from './social';
+import { Social } from './Social';
 
 export function RegisterForm({}) {
     const form = useForm({

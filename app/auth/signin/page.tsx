@@ -8,7 +8,7 @@ import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
 import { LoginForm } from '@/components/auth/login-form';
 import { Message } from '@/components/auth/message';
-import { SwitchLink } from '@/components/auth/switch-link';
+import { SwitchLink } from '@/components/auth/Switch-link';
 
 export default function SignIn() {
     return (
@@ -19,7 +19,7 @@ export default function SignIn() {
                     <div className='min-h-[100dvh] h-full flex flex-col after:flex-1'>
                         <AuthHeader />
 
-                        <div className='max-w-sm mx-auto w-full px-4 py-8'>
+                        <div className='max-w-sm mx-auto w-full px-4 py-8 space-y-4'>
                             {/* Form */}
                             <LoginForm />
                             {/* Footer */}

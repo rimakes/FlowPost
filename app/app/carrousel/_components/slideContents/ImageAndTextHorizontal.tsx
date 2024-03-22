@@ -114,6 +114,8 @@ export const ImageAndTextHorizontal = ({
                         // editimageCaption([event.target.value]);
                     }}
                     html={imageCaptionRef.current}
+                    className='                    focus:outline-none focus:ring-0 focus:border-transparent
+                    '
                 />
                 {/* <p>This is provision of the image caption</p> */}
             </div>

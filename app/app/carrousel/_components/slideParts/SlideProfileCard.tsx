@@ -51,7 +51,6 @@ export function SlideProfileCard({
             />
             <NameAndHandle
                 colorPalette={colorPalette}
-                mode={mode}
                 name={name}
                 handle={handle}
                 orientation={orientation}
@@ -63,7 +62,6 @@ export function SlideProfileCard({
 type NameAndHandleProps = {
     name: string;
     handle: string;
-    mode: TMode;
     colorPalette: TColorPalette;
     orientation?: TOrientation;
 };
@@ -71,7 +69,6 @@ type NameAndHandleProps = {
 export const NameAndHandle = ({
     name,
     handle,
-    mode,
     colorPalette,
     orientation = 'horizontal',
 }: NameAndHandleProps) => {
@@ -79,10 +76,7 @@ export const NameAndHandle = ({
         <div
             className='flex-col gap-2'
             style={{
-                color:
-                    mode === 'light'
-                        ? colorPalette.font
-                        : colorPalette.background,
+                color: colorPalette.font,
                 textAlign: orientation === 'vertical' ? 'center' : 'left',
             }}
         >

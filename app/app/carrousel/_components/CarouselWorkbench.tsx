@@ -6,13 +6,14 @@ import {
     TBrand,
     TDecorationId,
     TFontName,
+    TMode,
     TSlide,
     TSlideDesignNames,
 } from '@/types/types';
 import { CarouselContext } from './ContextProvider';
 import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
-import { cn } from '@/lib/utils';
+import { cn, isEven } from '@/lib/utils';
 import { SlideSettings } from './SlideSettings';
 import { fontsMap } from '@/config/fonts';
 import { get } from 'http';
@@ -71,7 +72,7 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
                 {carousel.slides.map((slide, index) => (
                     <SlideWithSettings
                         brand={getCompleteBrand() as TBrand}
-                        key={index}
+                        key={index} //TODO: Better no index
                         isActive={currentSlide === index}
                         slide={slide}
                         slideNumber={index}
@@ -80,6 +81,13 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
                             carousel.settings.backgroundPattern as TDecorationId
                         }
                         className={`${translateClasses[(100 * currentSlide) as keys]} transition-transform duration-300`}
+                        mode={
+                            carousel.settings.alternateColors &&
+                            !isEven(index) &&
+                            index !== 0
+                                ? 'dark'
+                                : 'light'
+                        }
                     />
                 ))}
             </div>
@@ -96,6 +104,7 @@ type SlideWithSettingsProps = {
     brand: TBrand;
     children?: ReactNode;
     decorationId?: TDecorationId;
+    mode: TMode;
 };
 
 export const SlideWithSettings = ({
@@ -107,6 +116,7 @@ export const SlideWithSettings = ({
     brand,
     children,
     decorationId,
+    mode,
 }: SlideWithSettingsProps) => {
     const { setCurrentSlideTo, currentSlide, addRef, carousel } =
         useContext(CarouselContext);
@@ -121,6 +131,19 @@ export const SlideWithSettings = ({
         addRef(slideRef, slideNumber);
     }, [addRef, slideNumber]);
 
+    const adjustedBrand: TBrand =
+        mode === 'dark'
+            ? {
+                  ...brand,
+                  colorPalette: {
+                      font: brand.colorPalette.background,
+                      background: brand.colorPalette.font,
+                      accent: brand.colorPalette.primary,
+                      primary: brand.colorPalette.accent,
+                  },
+              }
+            : brand;
+
     return (
         <div
             className={cn(
@@ -130,12 +153,16 @@ export const SlideWithSettings = ({
             )}
         >
             <div
-                className={`${fontsMap[brand.fontPalette.primary as TFontName].className}`}
+                className={`${fontsMap[brand.fontPalette.primary as TFontName].className} slideStyles`}
+                style={{
+                    // @ts-ignore
+                    '--bold-color': brand.colorPalette.accent,
+                }}
             >
                 <ContentSlideLayout
-                    brand={brand}
+                    brand={adjustedBrand}
                     isActive={currentSlide === slideNumber}
-                    mode='light'
+                    mode='dark'
                     onClick={() => {
                         setCurrentSlideTo(slideNumber);
                     }}
@@ -153,15 +180,17 @@ export const SlideWithSettings = ({
                 >
                     <DesignElement
                         key={slideNumber}
+                        slideNumber={slideNumber}
                         image={slide.image?.url!}
                         tagline={slide.tagline?.content!}
-                        brand={brand}
+                        brand={adjustedBrand}
                         description={slide.paragraphs[0]?.content}
                         title={slide.title?.content!}
                         paragraphs={slide.paragraphs.map((p) => p.content)}
-                        bigCharacter={slide.bigCharacter!}
+                        bigCharacter={slide.bigCharacter?.content || ''}
                         listFirstNumber={slide.listFirstItem!}
                         imageCaption={slide.image?.caption!}
+                        className=''
                     />
                 </ContentSlideLayout>
             </div>

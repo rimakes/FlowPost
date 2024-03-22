@@ -8,6 +8,7 @@ type BigNumberSlideProps = {
     brand: TBrand;
     bigCharacter: string;
     tagline: string;
+    slideNumber: number;
 };
 
 export const BigNumberSlide = ({
@@ -15,13 +16,14 @@ export const BigNumberSlide = ({
     bigCharacter,
     title,
     tagline,
+    slideNumber,
 }: BigNumberSlideProps) => {
     const titleRef = useRef('');
     const taglineRef = useRef('');
     // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
 
-    const { editTitle, editDescription, editTagline } =
+    const { editTitle, editDescription, editTagline, carousel } =
         useContext(CarouselContext);
 
     useEffect(() => {
@@ -72,6 +74,9 @@ export const BigNumberSlide = ({
                     style={{
                         fontSize: '5em',
                         fontFamily: brand.fontPalette.primary,
+                        display: carousel.slides[slideNumber!].title?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
 
@@ -84,12 +89,12 @@ export const BigNumberSlide = ({
                     className='text-[2em]
                     focus:outline-none focus:ring-0 focus:border-transparent
                     '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
                     style={{
                         fontSize: '1.25rem',
                         lineHeight: 1.1,
+                        display: carousel.slides[slideNumber!].tagline?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
             </div>

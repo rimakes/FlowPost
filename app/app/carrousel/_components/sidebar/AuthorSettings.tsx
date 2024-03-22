@@ -20,7 +20,6 @@ export const AuthorSettings = () => {
             author: { name, handle, pictureUrl },
             settings: { showAuthor, showName },
         },
-        editImage,
         editName,
         editHandle,
         toggleShowAuthor,
@@ -39,13 +38,11 @@ export const AuthorSettings = () => {
 
         <Collapsible>
             <CollapsibleTrigger className='flex justify-between w-full items-center'>
-                <div className='cursor-pointer flex items-center mb-2'>
-                    Autor
-                </div>
+                <div className='cursor-pointer flex items-center'>Autor</div>
                 <ChevronsUpDown size={20} className='ml-2' />
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <div className='space-y-4'>
+                <div className='space-y-4 mt-2'>
                     <div className=''>
                         <div className='flex justify-between items-center py-1'>
                             <Label htmlFor='name'>Nombre</Label>

@@ -21,7 +21,7 @@ export default async function Home() {
             NextAuth is adding the callback to the url instead of redirecting to the callbackUrl on signup
             Not ideal, but for now, we are using this to redirect to the callbackUrl manually
             */}
-            <RedirectTweak />
+            {/* <RedirectTweak /> */}
             <Hero />
 
             <section className='flex flex-col gap-8 relative'>

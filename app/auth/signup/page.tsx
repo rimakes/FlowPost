@@ -7,7 +7,7 @@ import Link from 'next/link';
 import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
 import { RegisterForm } from '@/components/auth/register-form';
-import { SwitchLink } from '@/components/auth/switch-link';
+import { SwitchLink } from '@/components/auth/Switch-link';
 
 export default function SignUp() {
     return (

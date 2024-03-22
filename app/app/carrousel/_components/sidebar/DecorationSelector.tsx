@@ -1,6 +1,10 @@
 'use client';
 import { TDecorationId } from '@/types/types';
-import { SlideDecoration, decorationMap } from '../slideParts/SlideDecoration';
+import {
+    SlideDecoration,
+    decorationMap,
+    decorationNamesMap,
+} from '../slideParts/SlideDecoration';
 import { Button } from '@/components/ui/button';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { ChevronDown } from 'lucide-react';
@@ -28,6 +32,20 @@ export function DecorationSelector({
     } = useContext(CarouselContext);
     const { font, background, primary, accent } = colorPalette;
 
+    // TODO: This is a bit of a hack, but it works for now
+    const notBackground = (design: string) => {
+        if (
+            [
+                'VerticalGradient',
+                'HorizontalGradient',
+                'Prism',
+                'Starts',
+                'Paper',
+            ].includes(design)
+        )
+            return true;
+    };
+
     return (
         <>
             <ToggleableCollapsible
@@ -46,16 +64,20 @@ export function DecorationSelector({
                         </Button>
                     </DialogTrigger>
                     <DialogContent className='overflow-y-scroll max-h-full'>
-                        <div className='grid grid-cols-2 gap-2 '>
+                        <div className='grid grid-cols-2 gap-2 gap-x-4 m-auto'>
                             {Object.keys(decorationMap).map(
                                 (decoration, index) => {
                                     return (
                                         <div
-                                            key={index}
-                                            className='relative border-border px-4 py-4 text-[0.75em] w-40 aspect-square
-                                            rounded-full overflow-hidden border boroder-border cursor-pointer'
+                                            key={decoration}
+                                            className='relative border-border px-4 py-4 w-40 aspect-square
+                                            rounded-md overflow-hidden border cursor-pointer'
                                             style={{
-                                                backgroundColor: background,
+                                                backgroundColor: notBackground(
+                                                    decoration
+                                                )
+                                                    ? undefined
+                                                    : background,
                                                 color: font,
                                             }}
                                             onClick={() => {
@@ -73,9 +95,17 @@ export function DecorationSelector({
                                                 backgroundColor={background}
                                                 accentColor={accent}
                                                 primaryColor={primary}
+                                                className='z-50'
                                             />
-                                            <p className='absolute top-8 text-lg font-semibold'>
-                                                {decoration}
+                                            <p
+                                                className='absolute m-auto inset-0 text-lg font-semibold flex justify-center items-center text-center z-10
+                                            '
+                                                style={{
+                                                    color: font,
+                                                }}
+                                            >
+                                                {/* @ts-ignore */}
+                                                {decorationNamesMap[decoration]}
                                             </p>
                                         </div>
                                     );

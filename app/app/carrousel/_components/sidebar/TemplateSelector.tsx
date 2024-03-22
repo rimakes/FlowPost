@@ -37,6 +37,7 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                                         onClick={() => setCurrentSlideTo(index)}
                                     >
                                         <TextOnlySlide
+                                            slideNumber={1}
                                             title={
                                                 carousel.slides[index].title!
                                                     .content

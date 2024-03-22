@@ -16,10 +16,7 @@ export function SlideAvatar({
             <div
                 className='relative rounded-full border-4 w-24 aspect-square overflow-hidden'
                 style={{
-                    borderColor:
-                        mode === 'light'
-                            ? `${colorPalette.primary}`
-                            : `${colorPalette.accent}`,
+                    borderColor: colorPalette.primary,
                 }}
             >
                 <Image

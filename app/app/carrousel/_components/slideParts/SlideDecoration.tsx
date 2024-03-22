@@ -18,6 +18,7 @@ type DecorativeElementsProps = {
     cover?: boolean;
     cta?: boolean;
     alternateColors?: boolean;
+    className?: string;
 };
 
 type DecorationProps = Omit<DecorativeElementsProps, 'decorationid'>;
@@ -297,6 +298,47 @@ const Trending = ({
     );
 };
 
+const Starts = ({
+    fontColor,
+    backgroundColor,
+    primaryColor,
+    accentColor,
+}: DecorationProps) => {
+    return (
+        <div
+            className='absolute h-full w-full top-0 left-0 -z-10'
+            style={{
+                // backgroundColor: '#ffffff',
+                backgroundAttachment: 'fixed',
+            }}
+        >
+            <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
+                <defs>
+                    <linearGradient id='a' x1='0' x2='0' y1='0' y2='1'>
+                        <stop offset='0' stop-color={backgroundColor} />
+                        <stop offset='1' stop-color={primaryColor} />
+                    </linearGradient>
+                </defs>
+                <pattern
+                    id='b'
+                    width='24'
+                    height='24'
+                    patternUnits='userSpaceOnUse'
+                >
+                    <circle fill='#ffffff' cx='12' cy='12' r='12' />
+                </pattern>
+                <rect width='100%' height='100%' fill='url(#a)' />
+                <rect
+                    width='100%'
+                    height='100%'
+                    fill='url(#b)'
+                    fill-opacity='0.1'
+                />
+            </svg>
+        </div>
+    );
+};
+
 const VerticalGradient = ({
     fontColor,
     backgroundColor,
@@ -336,9 +378,14 @@ const HorizontalGradient = ({
     );
 };
 
-const Paper = ({ primaryColor, accentColor }: DecorationProps) => {
+const Paper = ({ primaryColor, accentColor, className }: DecorationProps) => {
     return (
-        <div className={`absolute h-full w-full top-0 left-0 -z-10`}>
+        <div
+            className={cn(
+                `absolute h-full w-full top-0 left-0 -z-10`,
+                className
+            )}
+        >
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
                 <defs>
                     <filter id='roughpaper'>
@@ -521,56 +568,19 @@ const Organic = ({
     );
 };
 
-const Starts = ({
-    fontColor,
-    backgroundColor,
-    primaryColor,
-    accentColor,
-}: DecorationProps) => {
-    return (
-        <div
-            className='absolute h-full w-full top-0 left-0 -z-10'
-            style={{
-                // backgroundColor: '#ffffff',
-                backgroundAttachment: 'fixed',
-            }}
-        >
-            <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
-                <defs>
-                    <linearGradient id='a' x1='0' x2='0' y1='0' y2='1'>
-                        <stop offset='0' stop-color={backgroundColor} />
-                        <stop offset='1' stop-color={primaryColor} />
-                    </linearGradient>
-                </defs>
-                <pattern
-                    id='b'
-                    width='24'
-                    height='24'
-                    patternUnits='userSpaceOnUse'
-                >
-                    <circle fill='#ffffff' cx='12' cy='12' r='12' />
-                </pattern>
-                <rect width='100%' height='100%' fill='url(#a)' />
-                <rect
-                    width='100%'
-                    height='100%'
-                    fill='url(#b)'
-                    fill-opacity='0.1'
-                />
-            </svg>
-        </div>
-    );
-};
-
 const Prism = ({
     fontColor,
     backgroundColor,
     primaryColor,
     accentColor,
+    className,
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0 -z-10'
+            className={cn(
+                `absolute h-full w-full top-0 left-0 z-10`,
+                className
+            )}
             style={{
                 backgroundAttachment: 'fixed',
                 backgroundSize: 'cover',
@@ -579,7 +589,7 @@ const Prism = ({
             <svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'>
                 <defs>
                     <linearGradient
-                        id='a'
+                        id='prism-a'
                         gradientUnits='userSpaceOnUse'
                         x1='0'
                         x2='0'
@@ -592,7 +602,7 @@ const Prism = ({
                     </linearGradient>
                     <pattern
                         patternUnits='userSpaceOnUse'
-                        id='b'
+                        id='prism-b'
                         width='540'
                         height='450'
                         x='0'
@@ -837,8 +847,20 @@ const Prism = ({
                         </g>
                     </pattern>
                 </defs>
-                <rect x='0' y='0' fill='url(#a)' width='100%' height='100%' />
-                <rect x='0' y='0' fill='url(#b)' width='100%' height='100%' />
+                <rect
+                    x='0'
+                    y='0'
+                    fill='url(#prism-a)'
+                    width='100%'
+                    height='100%'
+                />
+                <rect
+                    x='0'
+                    y='0'
+                    fill='url(#prism-b)'
+                    width='100%'
+                    height='100%'
+                />
             </svg>
         </div>
     );
@@ -986,9 +1008,28 @@ export const decorationMap = {
     VerticalGradient,
     Starts,
     Paper,
-    Prism,
     Balls,
+    Prism,
     HorizontalGradient,
+    // Rounded,
+    // Grain,
+    // Organic,
+    // Sky,
+    // Grid,
+    // Blobs,
+};
+export const decorationNamesMap = {
+    Squares: 'Cuadrados',
+    Topo: 'Topo',
+    Arrows: 'Flechas',
+    Bubbles: 'Burbujas',
+    Trending: 'Trending',
+    VerticalGradient: 'Gradiente Vertical',
+    Starts: 'Estrellas',
+    Paper: 'Papel',
+    Prism: 'Prisma',
+    Balls: 'Bolas',
+    HorizontalGradient: 'Gradiente Horizontal',
     // Rounded,
     // Grain,
     // Organic,

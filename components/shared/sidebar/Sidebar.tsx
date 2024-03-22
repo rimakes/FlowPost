@@ -147,7 +147,7 @@ export const MenuItem = ({
                 pathname === href
                     ? 'lg:border-r-4 border-primary bg-primary/5'
                     : '',
-                collapsed ? 'justify-center' : '',
+                collapsed ? 'justify-center lg:border-r-0' : '',
                 status === 'próximamente' ? 'cursor-not-allowed' : ''
             )}
         >
@@ -219,7 +219,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                         max={100}
                         className='h-2 border border-primary/10 rounded-full'
                     />
-                    <p className='opacity-75'>Estas usando un free trial</p>
+                    <p className='opacity-75'>Estás usando un free trial</p>
                 </>
             )}
         </div>

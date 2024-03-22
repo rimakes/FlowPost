@@ -27,6 +27,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ImageSearch } from '@/components/shared/ImageSearch';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -53,17 +56,11 @@ export function SlideSettings({
         setBackgroundImage,
         getCompleteBrand,
         setDesign,
+        editImage,
     } = useContext(CarouselContext);
-    const [query, setQuery] = useState<string>('');
-    const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+    const [backgroundImagequery, setbackgroundImageQuery] =
+        useState<string>('');
     const [status, setStatus] = useState<TStatus>('idle');
-
-    const onSearch = async () => {
-        if (query === '') return toast('Debes ingresar un término de búsqueda');
-        const pictures = await getPexelImages(query);
-        console.log('pictures', pictures);
-        setPhotoUrls(pictures);
-    };
 
     if (!isActive) return null;
     return (
@@ -111,76 +108,38 @@ export function SlideSettings({
                     })}
                 </SelectContent>
             </Select>
-            {/* <div>
-                <Switch
-                    id='title'
-                    checked={slide.title!.isShown}
-                    onCheckedChange={toggleSlideHasTitle}
-                />
-                <Label htmlFor='title'>Título</Label>
-            </div>
-            <div>
-                <Switch
-                    id='tagline'
-                    checked={slide.tagline!.isShown}
-                    onCheckedChange={toggleSlideHasTagline}
-                />
-                <Label htmlFor='tagline'>Tagline</Label>
-            </div>
-            <div>
-                <Label htmlFor='paragraph'>Párrafo 1</Label>
-                <Switch
-                    id='tagline'
-                    checked={slide.paragraphs[0]?.isShown}
-                    onCheckedChange={toggleSlideHasParagraph}
-                />
-            </div>
-            <div>
-                <Label htmlFor='paragraph'>Etiqueta desliza</Label>
-                <Switch
-                id='tagline'
-                checked={carousel.settings.showSwipeLabel}
-                onCheckedChange={toggleShowSwipeLabel}
-                />
-            </div> */}
             <Separator />
-            <form
-                className='overflow-x-auto flex flex-col gap-2'
-                action={onSearch}
-            >
-                <Label htmlFor='paragraph'>Imagen de fondo</Label>
-                <div className='flex gap-2'>
-                    <Input
-                        className='inline-block'
-                        value={query}
-                        onChange={(event) => {
-                            setQuery(event.target.value);
-                        }}
-                        placeholder='Ej. "Coches" · Imágenes por pexels.com'
+            <Label htmlFor='paragraph'>Textos</Label>
+            <div className='flex flex-wrap gap-2'>
+                <div className='flex flex-col items-center'>
+                    Título
+                    <Checkbox
+                        checked={slide.title?.isShown!}
+                        onCheckedChange={toggleSlideHasTitle}
                     />
-                    <Button disabled={status === 'loading'}>
-                        {status === 'loading' ? 'Buscando...' : 'Buscar'}
-                    </Button>
                 </div>
-                <div className='flex gap-2 items-center overflow-x-auto max-w-[22rem]'>
-                    {photoUrls.map((url) => (
-                        <div
-                            key={url}
-                            className='relative h-24 aspect-square rounded-md overflow-hidden shrink-0'
-                        >
-                            <Image
-                                src={url}
-                                className='object-cover cursor-pointer'
-                                alt=''
-                                fill
-                                onClick={() => {
-                                    setBackgroundImage(url);
-                                }}
-                            />
-                        </div>
-                    ))}
+                <div className='flex flex-col items-center'>
+                    Tagline
+                    <Checkbox
+                        checked={slide.tagline?.isShown!}
+                        onCheckedChange={toggleSlideHasTagline}
+                    />
                 </div>
-            </form>
+                <div className='flex flex-col items-center'>
+                    Párrafos
+                    <Checkbox
+                        checked={slide.paragraphs[0]?.isShown!}
+                        onCheckedChange={toggleSlideHasParagraph}
+                    />
+                </div>
+            </div>
+            <div className='flex gap-2'></div>
+            <Separator />
+            <ImageSearch getImages={getPexelImages} onImageSelect={editImage} />
+            <ImageSearch
+                getImages={getPexelImages}
+                onImageSelect={setBackgroundImage}
+            />
             <Label htmlFor='opacity'>Opacidad</Label>
             <Slider
                 defaultValue={[slide.backgroundImage?.opacity!]}

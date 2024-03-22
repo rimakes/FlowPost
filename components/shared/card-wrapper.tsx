@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Heading } from './Heading';
-import { Social } from '../auth/social';
 import { Separator } from '../ui/separator';
+import { Social } from '../auth/Social';
 
 type CardWrapperProps = {
     children: React.ReactNode;

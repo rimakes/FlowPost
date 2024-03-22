@@ -10,6 +10,7 @@ import { NextAuthOptions } from 'next-auth';
 import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/dist/server/api-utils';
+import console from 'console';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -194,17 +195,16 @@ export const authOptions: NextAuthOptions = {
         },
 
         // called anytime the user is redirected to a callback URL (e.g. on signin or signout).
-        async redirect({ url, baseUrl }) {
-            // Allows relative callback URLs
-            // if (url.startsWith('/')) {
-            //     console.log('url -->', `${baseUrl}${url}`);
-            //     return `${baseUrl}${url}`;
-            // }
-            // // Allows callback URLs on the same origin
-            // // REVIEW
-            // else if (new URL(url).origin === baseUrl) return url;
-            return url;
-        },
+
+        // async redirect({ url, baseUrl }) {
+        //     // Allows relative callback URLs
+        //     console.log('url-->', url);
+        //     console.log('baseUrl-->', baseUrl);
+        //     if (url.startsWith('/')) return `${baseUrl}${url}`;
+        //     // Allows callback URLs on the same origin
+        //     else if (new URL(url).origin === baseUrl) return url;
+        //     return baseUrl;
+        // },
 
         // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or
         // updated (i.e whenever a session is accessed in the client). The returned value will be encrypted,
@@ -218,7 +218,7 @@ export const authOptions: NextAuthOptions = {
             console.log({ account });
             console.log({ profile });
             console.log({ session });
-            console.log({ trigger });
+            console.log('trigger-->', { trigger });
 
             if (trigger === 'update' && session.brands) {
                 token.brands = session.brands;
@@ -275,6 +275,18 @@ export const authOptions: NextAuthOptions = {
                     brands: token.brands,
                 },
             };
+        },
+    },
+
+    events: {
+        async createUser({ user }) {
+            console.log('User created EVENT', user);
+        },
+        async linkAccount(message) {
+            console.log('Account linked EVENT', message);
+        },
+        async signIn(message) {
+            console.log('Sign in EVENT', message);
         },
     },
 

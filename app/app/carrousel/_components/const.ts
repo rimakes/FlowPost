@@ -51,7 +51,7 @@ export const fakeSlides: TSlide[] = [
             opacity: 0.1,
             caption: 'some random caption',
         },
-        bigCharacter: 'R',
+        bigCharacter: { content: 'R', isShown: true },
         design: 'TextOnlySlide',
     },
     {
@@ -103,7 +103,7 @@ export const fakeSlides: TSlide[] = [
             opacity: 0.1,
             caption: 'some random caption',
         },
-        bigCharacter: 'R',
+        bigCharacter: { content: 'R', isShown: true },
         design: 'TextOnlySlide',
     },
 ];

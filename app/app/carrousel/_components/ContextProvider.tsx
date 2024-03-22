@@ -32,7 +32,7 @@ const INITIAL_STATE = {
     editTitle: (newTitle: string) => {},
     editTagline: (newTagline: string) => {},
     editDescription: (newDescription: string) => {},
-    editImage: (newImage: string) => {},
+    editProfilePicture: (newImage: string) => {},
     editName: (newName: string) => {},
     editHandle: (newHandle: string) => {},
     setCurrentSlideTo: (newSlide: number) => {},
@@ -70,6 +70,9 @@ const INITIAL_STATE = {
     },
     setDesign: (design: TSlideDesignNames) => {},
     editParagraphs: (newParagraphs: string[]) => {},
+    editHeader: (newHeader: string) => {},
+    editBigCharacter: (newCharacter: string) => {},
+    editImage: (newImage: string) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -124,6 +127,12 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const editImage = (newImage: string) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.slides[currentSlide].image!.url = newImage;
+        setCarousel(newCarousel);
+    };
+
     const editTagline = (newTagline: string) => {
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].tagline!.content = newTagline;
@@ -154,6 +163,23 @@ export function CarouselContextProvider({
         setCarousel((prev) => {
             const newCarousel = deepCopy(prev);
             newCarousel.author.pictureUrl = newImage;
+            return newCarousel;
+        });
+    };
+
+    const editHeader = (newHeader: string) => {
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.slides[currentSlide].slideHeading!.content = newHeader;
+            return newCarousel;
+        });
+    };
+
+    const editBigCharacter = (newCharacter: string) => {
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.slides[currentSlide].bigCharacter!.content =
+                newCharacter;
             return newCarousel;
         });
     };
@@ -220,8 +246,9 @@ export function CarouselContextProvider({
 
     const toggleSlideHasParagraph = () => {
         const newCarousel = deepCopy(carousel);
+        if (!newCarousel.slides[currentSlide].paragraphs[0]) return;
         newCarousel.slides[currentSlide].paragraphs[0].isShown =
-            !newCarousel.slides[currentSlide].paragraphs[0].isShown;
+            !newCarousel.slides[currentSlide].paragraphs[0]?.isShown;
         setCarousel(newCarousel);
     };
 
@@ -393,6 +420,9 @@ export function CarouselContextProvider({
     return (
         <CarouselContext.Provider
             value={{
+                editImage,
+                editBigCharacter,
+                editHeader,
                 editParagraphs,
                 setDesign,
                 getCompleteBrand,
@@ -410,7 +440,7 @@ export function CarouselContextProvider({
                 editTitle,
                 editTagline,
                 editDescription,
-                editImage: editProfilePicture,
+                editProfilePicture,
                 editName,
                 editHandle,
                 setCurrentSlideTo,

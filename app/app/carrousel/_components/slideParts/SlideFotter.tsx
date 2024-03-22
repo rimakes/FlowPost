@@ -24,9 +24,6 @@ export function SlideFotter({
     mode,
     swipeLabel = null,
 }: SlideFotterProps) {
-    const fontColor =
-        mode === 'light' ? colorPalette.font : colorPalette.background;
-
     return (
         <div
             className={cn(
@@ -34,7 +31,7 @@ export function SlideFotter({
                 className
             )}
             style={{
-                color: fontColor,
+                color: colorPalette.font,
             }}
         >
             <div className='flex items-center gap-4'>
@@ -49,12 +46,11 @@ export function SlideFotter({
                 <div
                     className='w-6'
                     style={{
-                        borderTop: `1px solid ${fontColor}`,
+                        borderTop: `1px solid ${colorPalette.font}`,
                     }}
                 />
                 <NameAndHandle
                     colorPalette={colorPalette}
-                    mode={mode}
                     name={name}
                     handle={handle}
                 />

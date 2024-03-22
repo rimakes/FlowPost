@@ -23,14 +23,14 @@ import { type } from 'os';
 import { useState } from 'react';
 import { Message } from './message';
 import { appConfig } from '@/config/shipper.appconfig';
-import { Social } from './social';
+import { Social } from './Social';
 
 type LoginFormProps = {
     isRedirected?: boolean;
     onAuth?: () => void;
 };
 
-export function LoginForm({ isRedirected, onAuth }: LoginFormProps) {
+export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
     const form = useForm({
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
@@ -67,8 +67,7 @@ export function LoginForm({ isRedirected, onAuth }: LoginFormProps) {
     };
 
     return (
-        <>
-            {error}
+        <div className='flex flex-col gap-4'>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -135,10 +134,10 @@ export function LoginForm({ isRedirected, onAuth }: LoginFormProps) {
                             `Entrar`
                         )}
                     </Button>
-                    <Social />
                 </form>
             </Form>
-        </>
+            <Social />
+        </div>
     );
 }
 

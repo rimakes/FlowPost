@@ -15,6 +15,7 @@ type CoverSlideProps = {
     tagline: string;
     className?: string;
     mode?: TMode;
+    slideNumber?: number;
 };
 
 export const CoverSlide = ({
@@ -23,11 +24,12 @@ export const CoverSlide = ({
     tagline,
     className = '',
     mode = 'light',
+    slideNumber,
 }: CoverSlideProps) => {
     const titleRef = useRef('');
     const taglineRef = useRef('');
 
-    const { editTitle, editDescription, editTagline } =
+    const { editTitle, editDescription, editTagline, carousel } =
         useContext(CarouselContext);
     // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
@@ -75,6 +77,9 @@ export const CoverSlide = ({
                     style={{
                         fontSize: '1.8rem',
                         lineHeight: 1.1,
+                        display: carousel.slides[slideNumber!].title?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
                 <ContentEditable
@@ -92,6 +97,9 @@ export const CoverSlide = ({
                     style={{
                         fontSize: '1.25rem',
                         lineHeight: 1.1,
+                        display: carousel.slides[slideNumber!].tagline?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
                 <SlideProfileCard

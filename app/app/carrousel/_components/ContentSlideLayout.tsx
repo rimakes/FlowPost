@@ -64,14 +64,8 @@ export const ContentSlideLayout = forwardRef<
         const colorPalette: TColorPalette = {
             primary: brand.colorPalette.primary,
             accent: brand.colorPalette.accent,
-            background:
-                mode === 'dark'
-                    ? brand.colorPalette.font
-                    : brand.colorPalette.background,
-            font:
-                mode === 'dark'
-                    ? brand.colorPalette.background
-                    : brand.colorPalette.font,
+            background: brand.colorPalette.background,
+            font: brand.colorPalette.font,
         };
 
         return (

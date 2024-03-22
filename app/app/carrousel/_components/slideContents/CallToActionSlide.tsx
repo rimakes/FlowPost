@@ -16,6 +16,7 @@ type CallToActionSlideProps = {
     className?: string;
     paragraphs: string[];
     mode?: TMode;
+    slideNumber?: number;
 };
 
 export const CallToActionSlide = ({
@@ -25,6 +26,7 @@ export const CallToActionSlide = ({
     paragraphs,
     className = '',
     mode = 'light',
+    slideNumber,
 }: CallToActionSlideProps) => {
     const titleRef = useRef('');
     const taglineRef = useRef('');
@@ -32,7 +34,7 @@ export const CallToActionSlide = ({
     // We need this to force a re-render when the slide is hydrated so the refs are updated
     const [isHydrated, setIsHydrated] = useState(false);
 
-    const { editTitle, editDescription, editTagline } =
+    const { carousel, editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
 
     useEffect(() => {
@@ -88,6 +90,9 @@ export const CallToActionSlide = ({
                     style={{
                         fontSize: '1.875rem',
                         lineHeight: 1.1,
+                        display: carousel.slides[slideNumber!].title?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
 
@@ -106,6 +111,9 @@ export const CallToActionSlide = ({
                     style={{
                         fontSize: '1.125rem',
                         lineHeight: 1.1,
+                        display: carousel.slides[slideNumber!].tagline?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
                 <ContentEditable
@@ -124,6 +132,10 @@ export const CallToActionSlide = ({
                         fontSize: '0.8rem',
                         fontWeight: 300,
                         lineHeight: 1.5,
+                        display: carousel.slides[slideNumber!].paragraphs[0]
+                            ?.isShown
+                            ? 'block'
+                            : 'none',
                     }}
                 />
                 <SlideProfileCard

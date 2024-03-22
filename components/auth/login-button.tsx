@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { LoginForm } from './login-form';
-import { SwitchLink } from './switch-link';
 import { cn } from '@/lib/utils';
+import { SwitchLink } from './Switch-link';
 
 type LoginButtonProps = {
     mode: 'modal' | 'redirect';
@@ -33,7 +33,7 @@ export function LoginButton({ mode, children, className }: LoginButtonProps) {
                 <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent>
                     <>
-                        <LoginForm />
+                        <LoginForm isRedirected={true} />
                         <SwitchLink signUp resetPassword />
                     </>
                 </DialogContent>

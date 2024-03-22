@@ -14,6 +14,7 @@ import {
 import { DemoWidget } from './Demo';
 import Link from 'next/link';
 import { GetAccessButton } from './GetAccessButton';
+import Highlight from '../utils/Hightlight';
 
 export default function Hero({ className = '' }) {
     return (
@@ -36,30 +37,17 @@ export default function Hero({ className = '' }) {
                         </span>
                         <p className='font-pj mt-5 text-4xl font-bold leading-tight text-base-content sm:text-5xl sm:leading-tight lg:text-6xl lg:leading-tight'>
                             Convierte tus{' '}
-                            <span className='relative text-primary/70'>
+                            <span className='relative text-primary/60'>
                                 pensamientos
-                                <span
-                                    className={`${handwritten.className} absolute top-0 right-0 text-base text-indigo-600 rotate-12`}
-                                >
-                                    desestructurados
-                                </span>
-                                <span
-                                    className={`${handwritten.className} absolute top-0 left-0 text-base text-indigo-600 -rotate-12`}
-                                >
-                                    sin `gancho`
-                                </span>
-                                <span
-                                    className={`${handwritten.className} absolute -bottom-2 right-0 text-base text-indigo-600 -rotate-[10deg]`}
-                                >
-                                    sin copywritting
-                                </span>
                             </span>{' '}
                             en
                             <span className='relative inline-flex sm:inline'>
                                 <span className='absolute inset-0 h-full w-full bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] opacity-30 blur-lg filter'></span>
                                 <span className='relative'>
                                     {' '}
-                                    Post de Linkedin que convierten
+                                    <Highlight>
+                                        Carrusels de Linkedin que convierten
+                                    </Highlight>
                                 </span>
                             </span>
                         </p>

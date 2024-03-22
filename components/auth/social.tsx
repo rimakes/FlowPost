@@ -1,3 +1,5 @@
+'use client';
+
 import { Separator } from '@radix-ui/react-separator';
 import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
@@ -9,10 +11,12 @@ export function Social({}) {
             <h4>También puedes acceder con</h4>
             <Button
                 variant='outline'
+                type='button'
                 className='w-full'
                 onClick={async () => {
                     const res = await signIn('google', {
-                        callbackUrl: '/app',
+                        callbackUrl: '/app/saved',
+                        redirect: true,
                     });
                 }}
             >
@@ -23,10 +27,11 @@ export function Social({}) {
             </Button>
             <Button
                 variant='outline'
+                type='button'
                 className='w-full'
                 onClick={async () => {
                     const res = await signIn('linkedin', {
-                        callbackUrl: 'http://localhost:3000/app',
+                        callbackUrl: '/app',
                     });
                     console.log({ res });
                 }}

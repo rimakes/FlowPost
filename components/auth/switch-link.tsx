@@ -15,7 +15,7 @@ export function SwitchLink({
     className,
 }: SwitchLinkProps) {
     return (
-        <div className={cn(``, className)}>
+        <div className={cn(`flex flex-col gap-2`, className)}>
             {signUp && (
                 <div className='text-sm'>
                     ¿No tienes cuenta?{' '}

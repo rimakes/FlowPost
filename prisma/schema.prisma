@@ -169,7 +169,7 @@ type Slide {
     paragraphs      DisplayableText[]
     slideHeading    DisplayableText?
     settings        SlideOverrides?
-    bigCharacter    String?
+    bigCharacter    DisplayableText?
     listFirstItem   Int?
     image           Image?
     backgroundImage Image?

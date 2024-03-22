@@ -85,4 +85,12 @@
     /* position: absolute !important; */
     /* background: #5ab987 !important; */
     /* } */
+
+    .slideStyles {
+        --bold-color: #5ab987;
+    }
+
+    .slideStyles b {
+        color: var(--bold-color);
+    }
 }
