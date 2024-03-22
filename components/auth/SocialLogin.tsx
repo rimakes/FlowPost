@@ -4,7 +4,7 @@ import { Separator } from '@radix-ui/react-separator';
 import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
 
-export function Social({}) {
+export function SocialLogin({}) {
     return (
         <div className='flex flex-col items-center space-y-2 w-full'>
             <Separator />
@@ -20,9 +20,6 @@ export function Social({}) {
                     });
                 }}
             >
-                {
-                    //TODO: review callback después de logearse con google
-                }
                 Google
             </Button>
             <Button

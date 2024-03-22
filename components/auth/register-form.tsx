@@ -22,7 +22,7 @@ import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
 import { Message } from './message';
 import { useState } from 'react';
-import { Social } from './Social';
+import { SocialLogin } from './SocialLogin';
 
 export function RegisterForm({}) {
     const form = useForm({
@@ -171,7 +171,7 @@ export function RegisterForm({}) {
             </Form>
 
             <Separator />
-            <Social />
+            <SocialLogin />
         </div>
     );
 }

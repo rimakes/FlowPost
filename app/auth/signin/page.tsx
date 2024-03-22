@@ -8,7 +8,7 @@ import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
 import { LoginForm } from '@/components/auth/login-form';
 import { Message } from '@/components/auth/message';
-import { SwitchLink } from '@/components/auth/Switch-link';
+import { SwitchLogin } from '@/components/auth/SwithLogin';
 
 export default function SignIn() {
     return (
@@ -23,7 +23,7 @@ export default function SignIn() {
                             {/* Form */}
                             <LoginForm />
                             {/* Footer */}
-                            <SwitchLink signUp resetPassword />
+                            <SwitchLogin signUp resetPassword />
                         </div>
                     </div>
                 </div>

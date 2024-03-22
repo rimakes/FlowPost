@@ -9,7 +9,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Heading } from './Heading';
 import { Separator } from '../ui/separator';
-import { Social } from '../auth/Social';
+import { SocialLogin } from '../auth/SocialLogin';
 
 type CardWrapperProps = {
     children: React.ReactNode;
@@ -38,7 +38,7 @@ export function CardWrapper({
                 <>
                     <CardFooter className='flex-col'>
                         <Separator />
-                        <Social />
+                        <SocialLogin />
                     </CardFooter>
                 </>
             )}

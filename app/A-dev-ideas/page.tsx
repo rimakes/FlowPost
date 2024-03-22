@@ -4,7 +4,7 @@ import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
 import { IdeasPageClient } from './IdeasPageClient';
 import Editor from '@/components/editor/editor';
-import { Social } from '@/components/auth/Social';
+import { SocialLogin } from '@/components/auth/SocialLogin';
 
 export default function IdeasPage() {
     return (
@@ -17,7 +17,7 @@ export default function IdeasPage() {
             <Separator />
             <IdeasPageClient />
             <Editor />
-            <Social />
+            <SocialLogin />
         </div>
     );
 }

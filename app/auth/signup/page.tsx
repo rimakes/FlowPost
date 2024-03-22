@@ -7,7 +7,7 @@ import Link from 'next/link';
 import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
 import { RegisterForm } from '@/components/auth/register-form';
-import { SwitchLink } from '@/components/auth/Switch-link';
+import { SwitchLogin } from '@/components/auth/SwithLogin';
 
 export default function SignUp() {
     return (
@@ -25,7 +25,7 @@ export default function SignUp() {
                             {/* Form */}
                             <RegisterForm />
                             {/* Footer */}
-                            <SwitchLink signIn className='mt-5' />
+                            <SwitchLogin signIn className='mt-5' />
                         </div>
                     </div>
                 </div>

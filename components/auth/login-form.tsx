@@ -23,7 +23,7 @@ import { type } from 'os';
 import { useState } from 'react';
 import { Message } from './message';
 import { appConfig } from '@/config/shipper.appconfig';
-import { Social } from './Social';
+import { SocialLogin } from './SocialLogin';
 
 type LoginFormProps = {
     isRedirected?: boolean;
@@ -136,7 +136,7 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                     </Button>
                 </form>
             </Form>
-            <Social />
+            <SocialLogin />
         </div>
     );
 }
