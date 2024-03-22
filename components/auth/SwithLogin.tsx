@@ -8,6 +8,7 @@ type SwitchLinkProps = {
     className?: string;
 };
 
+// SwitchLogin component
 export function SwitchLogin({
     signIn,
     signUp,
