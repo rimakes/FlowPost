@@ -303,7 +303,6 @@ export const createWebmFile = async (formData: FormData) => {
 };
 
 export const getPexelImages = async (query: string) => {
-    console.log(query);
     const pictures = await axios.get(
         `https://api.pexels.com/v1/search?query=${query}&page=1&per_page=20&locale=es-ES`,
         {

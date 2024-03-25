@@ -63,7 +63,7 @@ export function Dropzone({
                 // Here you can add event handlers that will be executed BEFORE the ones registered by the library
             })}
             className={cn(
-                `p-4 border border-primary/20 border-dashed rounded`,
+                `border border-primary/20 border-dashed rounded !py-0`,
                 className
             )}
         >

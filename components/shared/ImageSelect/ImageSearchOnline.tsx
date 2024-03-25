@@ -1,43 +1,40 @@
+import { getPexelImages } from '@/app/_actions/writter-actions';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { TStatus } from '@/types/types';
 import Image from 'next/image';
-import { toast } from 'sonner';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
 import { useState } from 'react';
-import { Button } from '../ui/button';
+import { toast } from 'sonner';
 
-type ImageSearchProps = {
-    // query: string;
-    // setPhotoUrls: (urls: string[]) => void;
-    getImages: (query: string) => Promise<string[]>;
+type ImageSearchOnlineProps = {
     onImageSelect: (url: string) => void;
 };
-export function ImageSearch({
-    // query,
-    // setPhotoUrls,
-    getImages,
+
+export const ImageSearchOnline = ({
     onImageSelect,
-}: ImageSearchProps) {
+}: ImageSearchOnlineProps) => {
     const [query, setQuery] = useState('');
     const [imageUrls, setImageUrls] = useState<string[]>([]);
+    const [status, setStatus] = useState<TStatus>('idle');
 
     const onSearch = async () => {
         if (query === '') return toast('Debes ingresar un término de búsqueda');
-        const pictures = await getImages(query);
+        const pictures = await getPexelImages(query);
         console.log('pictures', pictures);
         setImageUrls(pictures);
     };
 
     return (
         <form className='overflow-x-auto flex flex-col gap-2' action={onSearch}>
-            <Label htmlFor='paragraph'>Imagen</Label>
-            <div className='flex gap-2'>
+            {/* <Label htmlFor='paragraph'>Imagen</Label> */}
+            <div className='flex gap-2 items-center p-1'>
                 <Input
                     className='inline-block'
                     value={query}
                     onChange={(event) => {
                         setQuery(event.target.value);
                     }}
-                    placeholder='Ej. "Coches" · Imágenes por pexels.com'
+                    placeholder='Ej. "Coches" Imágenes por pexels.com'
                 />
                 <Button disabled={status === 'loading'}>
                     {status === 'loading' ? 'Buscando...' : 'Buscar'}
@@ -56,6 +53,8 @@ export function ImageSearch({
                             fill
                             onClick={() => {
                                 onImageSelect(url);
+                                setStatus('success');
+                                setStatus('idle');
                             }}
                         />
                     </div>
@@ -63,4 +62,4 @@ export function ImageSearch({
             </div>
         </form>
     );
-}
+};

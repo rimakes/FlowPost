@@ -207,3 +207,8 @@ export type AppNotifications = {
 
 export type AppNotificationName = keyof AppNotifications;
 export type AppNotificationType = 'info' | 'warning' | 'error' | 'success';
+
+export type ImageWithDataUrl = {
+    url: string;
+    dataUrl: string;
+};

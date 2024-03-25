@@ -2,6 +2,7 @@ import { TBrand } from '@/types/types';
 import { useRef, useContext, useEffect, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import ContentEditable from 'react-contenteditable';
+import { Editable } from '@/components/shared/Editable';
 
 type BigNumberSlideProps = {
     title: string;
@@ -18,19 +19,8 @@ export const BigNumberSlide = ({
     tagline,
     slideNumber,
 }: BigNumberSlideProps) => {
-    const titleRef = useRef('');
-    const taglineRef = useRef('');
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const [isHydrated, setIsHydrated] = useState(false);
-
-    const { editTitle, editDescription, editTagline, carousel } =
+    const { carousel, editTitle, editDescription, editTagline } =
         useContext(CarouselContext);
-
-    useEffect(() => {
-        if (title) titleRef.current = title;
-        if (tagline) taglineRef.current = tagline;
-        setIsHydrated(true);
-    }, [tagline, title]);
 
     return (
         <>
@@ -59,18 +49,12 @@ export const BigNumberSlide = ({
                     alignItems: 'start',
                 }}
             >
-                <ContentEditable
-                    onChange={(event) => {
-                        titleRef.current = event.target.value;
-                        editTitle(event.target.value);
-                    }}
-                    html={titleRef.current}
+                <Editable
+                    value={title}
+                    setValue={editTitle}
                     className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
+                 focus:outline-none focus:ring-0 focus:border-transparent
+                 '
                     style={{
                         fontSize: '5em',
                         fontFamily: brand.fontPalette.primary,
@@ -80,15 +64,12 @@ export const BigNumberSlide = ({
                     }}
                 />
 
-                <ContentEditable
-                    onChange={(event) => {
-                        taglineRef.current = event.target.value;
-                        editTagline(event.target.value);
-                    }}
-                    html={taglineRef.current}
+                <Editable
+                    value={tagline}
+                    setValue={editTagline}
                     className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
+                focus:outline-none focus:ring-0 focus:border-transparent
+                '
                     style={{
                         fontSize: '1.25rem',
                         lineHeight: 1.1,

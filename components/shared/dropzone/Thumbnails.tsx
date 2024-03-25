@@ -32,16 +32,20 @@ export function Thumbnails({
                         classNamesThumbnails
                     )}
                 >
-                    <Image
-                        src={file.preview}
-                        // Revoke data uri after image is loaded, otherwise we will keep the memory used by the image
-                        onLoad={() => {
-                            URL.revokeObjectURL(file.preview);
-                        }}
-                        fill
-                        alt='Image preview'
-                        className={cn(`object-cover`, classNamesImage)}
-                    />
+                    {!file ? (
+                        <div>no file</div>
+                    ) : (
+                        <Image
+                            src={file.preview}
+                            // Revoke data uri after image is loaded, otherwise we will keep the memory used by the image
+                            onLoad={() => {
+                                URL.revokeObjectURL(file.preview);
+                            }}
+                            fill
+                            alt='Image preview'
+                            className={cn(`object-cover`, classNamesImage)}
+                        />
+                    )}
                 </div>
             ))}
         </>

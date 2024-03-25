@@ -150,11 +150,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 />
             </div>
             <Separator className='mt-2 mb-2' />
-            <Popover
-                open={colorsPopOverisOpen}
-                onOpenChange={setColorsPopOverisOpen}
-            >
-                <PopoverTrigger className='w-full flex items-center justify-between'>
+
+            <Collapsible>
+                <CollapsibleTrigger className='flex justify-between w-full items-center'>
                     <div className='cursor-pointer flex items-center'>
                         Colores{' '}
                         <ColorPalette
@@ -164,9 +162,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                         />
                     </div>
                     <ChevronsUpDown size={20} className='ml-2' />
-                </PopoverTrigger>
-                <PopoverContent>
-                    <>
+                </CollapsibleTrigger>
+                <CollapsibleContent className='mt-4'>
+                    <div className='p-2 border rounded-md border-dashed bg-gray-50'>
                         <ColorPaletteSelect
                             colorPalette={carousel.settings.colorPalette}
                             onChange={onSetColorPalette}
@@ -178,9 +176,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                                 onCheckedChange={toggleAlternateColors}
                             />
                         </div>
-                    </>
-                </PopoverContent>
-            </Popover>
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
             <Separator className='mt-2 mb-2' />
             <Collapsible>
                 <CollapsibleTrigger className='flex justify-between w-full items-center'>

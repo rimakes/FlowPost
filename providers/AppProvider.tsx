@@ -2,7 +2,8 @@
 
 import { deepCopy } from '@/lib/utils';
 import { AppNotifications } from '@/types/types';
-import { useLocalStorage } from '@uidotdev/usehooks';
+import { useLocalStorage } from '@mantine/hooks';
+// import { useLocalStorage } from '@uidotdev/usehooks';
 import {
     createContext,
     Dispatch,
@@ -35,15 +36,19 @@ export default function AppProvider({
     children: React.ReactNode;
 }) {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+    // REVIEW: Why this hook is problematic?
+    // https://github.com/uidotdev/usehooks/issues/218
     const [notifications, setNotifications] = useLocalStorage<AppNotifications>(
-        'notifications',
         {
-            profileSetup: {
-                done: false,
-                dimissals: 0,
-                lastInteraction: new Date(),
-                lastShown: new Date(),
-                type: 'info',
+            key: 'notifications',
+            defaultValue: {
+                profileSetup: {
+                    done: false,
+                    dimissals: 0,
+                    lastInteraction: new Date(),
+                    lastShown: new Date(),
+                    type: 'info',
+                },
             },
         }
     );

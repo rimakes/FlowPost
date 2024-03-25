@@ -62,7 +62,9 @@ export const PostWritterResult = ({
                 <div className='relative'>
                     <Textarea
                         rows={20}
-                        className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]`}
+                        className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
+                        focus-visible:ring-0
+                        `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}
                         onChange={(e) => {

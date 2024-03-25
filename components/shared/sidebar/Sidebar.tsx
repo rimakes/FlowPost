@@ -219,7 +219,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                         max={100}
                         className='h-2 border border-primary/10 rounded-full'
                     />
-                    <p className='opacity-75'>Estás usando un free trial</p>
+                    <p className='opacity-75'>Ests usando un free trial</p>
                 </>
             )}
         </div>

@@ -213,12 +213,12 @@ export const authOptions: NextAuthOptions = {
         // is called on a new session, after the user signs in. In subsequent calls, only token will be available.
         // whatever this callback returns will be the token that is stored in the cookie.
         async jwt({ token, user, account, profile, session, trigger }) {
-            console.log({ token });
-            console.log({ user });
-            console.log({ account });
-            console.log({ profile });
-            console.log({ session });
-            console.log('trigger-->', { trigger });
+            // console.log({ token });
+            // console.log({ user });
+            // console.log({ account });
+            // console.log({ profile });
+            // console.log({ session });
+            // console.log('trigger-->', { trigger });
 
             if (trigger === 'update' && session.brands) {
                 token.brands = session.brands;
@@ -280,13 +280,13 @@ export const authOptions: NextAuthOptions = {
 
     events: {
         async createUser({ user }) {
-            console.log('User created EVENT', user);
+            // console.log('User created EVENT', user);
         },
         async linkAccount(message) {
-            console.log('Account linked EVENT', message);
+            // console.log('Account linked EVENT', message);
         },
         async signIn(message) {
-            console.log('Sign in EVENT', message);
+            // console.log('Sign in EVENT', message);
         },
     },
 

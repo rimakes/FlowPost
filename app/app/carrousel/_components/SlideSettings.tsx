@@ -8,6 +8,7 @@ import {
     ArrowLeft,
     ArrowLeftIcon,
     ArrowRightIcon,
+    ChevronsUpDown,
     Plus,
     Trash2,
 } from 'lucide-react';
@@ -29,7 +30,12 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ImageSearch } from '@/components/shared/ImageSearch';
+import { ImageSelect } from '@/components/shared/ImageSelect/ImageSelect';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -87,71 +93,106 @@ export function SlideSettings({
                 <ArrowLeftIcon />
             </Button>
 
-            <Label htmlFor='slide-type'>Tipo de slide</Label>
-            <Select
-                value={slide.design!}
-                onValueChange={(value) => {
-                    setDesign(value as TSlideDesignNames);
-                }}
-            >
-                <SelectTrigger id='slide-type'>
-                    <SelectValue placeholder='Selecciona' />
-                </SelectTrigger>
-                <SelectContent>
-                    {Object.keys(designMap).map((design, index) => {
-                        return (
-                            <SelectItem key={index} value={design}>
-                                {/* @ts-ignore */}
-                                {designNamesMap[design]}
-                            </SelectItem>
-                        );
-                    })}
-                </SelectContent>
-            </Select>
-            <Separator />
-            <Label htmlFor='paragraph'>Textos</Label>
-            <div className='flex flex-wrap gap-2'>
-                <div className='flex flex-col items-center'>
-                    Título
-                    <Checkbox
-                        checked={slide.title?.isShown!}
-                        onCheckedChange={toggleSlideHasTitle}
-                    />
-                </div>
-                <div className='flex flex-col items-center'>
-                    Tagline
-                    <Checkbox
-                        checked={slide.tagline?.isShown!}
-                        onCheckedChange={toggleSlideHasTagline}
-                    />
-                </div>
-                <div className='flex flex-col items-center'>
-                    Párrafos
-                    <Checkbox
-                        checked={slide.paragraphs[0]?.isShown!}
-                        onCheckedChange={toggleSlideHasParagraph}
-                    />
-                </div>
+            <div className='flex gap-2 items-center justify-between'>
+                <Label htmlFor='slide-type' className='whitespace-nowrap'>
+                    Tipo de slide
+                </Label>
+                <Select
+                    value={slide.design!}
+                    onValueChange={(value) => {
+                        setDesign(value as TSlideDesignNames);
+                    }}
+                >
+                    <SelectTrigger id='slide-type'>
+                        <SelectValue placeholder='Selecciona' />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.keys(designMap).map((design, index) => {
+                            return (
+                                <SelectItem key={index} value={design}>
+                                    {/* @ts-ignore */}
+                                    {designNamesMap[design]}
+                                </SelectItem>
+                            );
+                        })}
+                    </SelectContent>
+                </Select>
             </div>
-            <div className='flex gap-2'></div>
-            <Separator />
-            <ImageSearch getImages={getPexelImages} onImageSelect={editImage} />
-            <ImageSearch
-                getImages={getPexelImages}
-                onImageSelect={setBackgroundImage}
-            />
-            <Label htmlFor='opacity'>Opacidad</Label>
-            <Slider
-                defaultValue={[slide.backgroundImage?.opacity!]}
-                value={[slide.backgroundImage?.opacity!]}
-                onValueChange={(value) => {
-                    setBackgroundImage(undefined, { opacity: value[0] });
-                }}
-                min={0}
-                max={1}
-                step={0.01}
-                id='opacity'
-            />
+
+            <div>
+                <Collapsible className=''>
+                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
+                        <Label htmlFor='paragraph'>Textos</Label>
+                        <ChevronsUpDown size={20} className='ml-2' />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div className='flex flex-wrap gap-2'>
+                            <div className='flex flex-col items-center'>
+                                Título
+                                <Checkbox
+                                    checked={slide.title?.isShown!}
+                                    onCheckedChange={toggleSlideHasTitle}
+                                />
+                            </div>
+                            <div className='flex flex-col items-center'>
+                                Tagline
+                                <Checkbox
+                                    checked={slide.tagline?.isShown!}
+                                    onCheckedChange={toggleSlideHasTagline}
+                                />
+                            </div>
+                            <div className='flex flex-col items-center'>
+                                Párrafos
+                                <Checkbox
+                                    checked={slide.paragraphs[0]?.isShown!}
+                                    onCheckedChange={toggleSlideHasParagraph}
+                                />
+                            </div>
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
+            </div>
+            <div>
+                <Collapsible>
+                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
+                        <Label htmlFor='paragraph'>Imagen</Label>
+                        <ChevronsUpDown size={20} className='ml-2' />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <ImageSelect onImageSelect={editImage} />
+                    </CollapsibleContent>
+                </Collapsible>
+            </div>
+
+            <div>
+                <Collapsible>
+                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
+                        <Label htmlFor='paragraph'>Imagen de fondo</Label>
+                        <ChevronsUpDown size={20} className='ml-2' />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <ImageSelect onImageSelect={setBackgroundImage} />
+                        <div className='flex items-baseline gap-2'>
+                            <Label htmlFor='opacity' className='mb-2'>
+                                Opacidad
+                            </Label>
+                            <Slider
+                                defaultValue={[slide.backgroundImage?.opacity!]}
+                                value={[slide.backgroundImage?.opacity!]}
+                                onValueChange={(value) => {
+                                    setBackgroundImage(undefined, {
+                                        opacity: value[0],
+                                    });
+                                }}
+                                min={0}
+                                max={1}
+                                step={0.01}
+                                id='opacity'
+                            />
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
+            </div>
         </div>
     );
 }

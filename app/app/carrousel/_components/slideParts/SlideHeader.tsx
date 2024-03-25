@@ -22,7 +22,7 @@ export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
                     visibility: heading?.isShown ? 'visible' : 'hidden',
                 }}
             />
-            <span>{slideNumber}</span>
+            <span>{slideNumber === 0 ? null : slideNumber}</span>
         </div>
     );
 }

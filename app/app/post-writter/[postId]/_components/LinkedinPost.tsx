@@ -180,7 +180,7 @@ const StatsBar = () => {
                 </div>
                 <p className='text-xs text-primary/50'>357</p>
             </div>
-            <div className='flex gap-2 text-xs text-primary/50'>
+            <div className='flex gap-2 text-xs text-primary/50 items-center'>
                 <p>209 comments · 23 reposts</p>
             </div>
         </div>
