@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
         console.log('Checking for scheduled posts');
 
         const now = new Date();
+        console.log('Time Now', now);
         const startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
 
