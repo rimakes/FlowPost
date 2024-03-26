@@ -1,11 +1,10 @@
-import { TBrand, TOrientation } from '@/types/types';
+import { TBrand } from '@/types/types';
 import Image from 'next/image';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
-import ContentEditable from 'react-contenteditable';
-import { useContext, useEffect, useRef, useState } from 'react';
-import image from 'next/image';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ImageAndTextVertical = {
     brand: TBrand;
@@ -25,54 +24,31 @@ export const ImageAndTextHorizontal = ({
     imageCaption,
 }: ImageAndTextVertical) => {
     const ArrowElement = imageLocation === 'right' ? ArrowRight : ArrowLeftIcon;
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const titleRef = useRef('');
-    const paragraphsRef = useRef(['']);
-    const imageCaptionRef = useRef('');
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const [isHydrated, setIsHydrated] = useState(false);
 
-    const { editTitle, editParagraphs } = useContext(CarouselContext);
+    const {
+        editTitle,
+        carousel: { slides },
+        editParagraphN,
+    } = useContext(CarouselContext);
 
-    useEffect(() => {
-        if (title) titleRef.current = title;
-        if (description) paragraphsRef.current = [description];
-        if (imageCaption) imageCaptionRef.current = imageCaption;
-        setIsHydrated(true);
-    }, [description, imageCaption, title]);
+    const isTitleShown = slides[0].title?.isShown;
+    const isDescriptionShown = slides[0].paragraphs[0]?.isShown;
+    const editFirstParagraph = editParagraphN.bind(null, 0);
 
     return (
         <div className='flex flex-col h-full p-2 py-6 gap-6 isolate z-10'>
             <div>
-                <ContentEditable
-                    onChange={(event) => {
-                        titleRef.current = event.target.value;
-                        editTitle(event.target.value);
-                    }}
-                    html={titleRef.current}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    style={{
-                        fontSize: '2rem',
-                        lineHeight: 1.1,
-                    }}
+                <SimpleEditor
+                    defaultValue={title}
+                    onDebouncedUpdate={editTitle}
+                    slideElement='title'
+                    isShown={isTitleShown}
                 />
-
-                <ContentEditable
-                    onChange={(event) => {
-                        paragraphsRef.current[0] = event.target.value;
-                        editParagraphs([event.target.value]);
-                    }}
-                    html={paragraphsRef.current[0]}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    style={{
-                        fontSize: '1rem',
-                        lineHeight: 1.3,
-                        fontWeight: 200,
-                    }}
+                <SimpleEditor
+                    defaultValue={description}
+                    onDebouncedUpdate={editFirstParagraph}
+                    slideElement='paragraph'
+                    isShown={isDescriptionShown}
                 />
             </div>
             <div
@@ -108,16 +84,12 @@ export const ImageAndTextHorizontal = ({
                     }}
                 />
 
-                <ContentEditable
-                    onChange={(event) => {
-                        imageCaptionRef.current = event.target.value;
-                        // editimageCaption([event.target.value]);
-                    }}
-                    html={imageCaptionRef.current}
-                    className='                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
+                <SimpleEditor
+                    defaultValue={imageCaption}
+                    // onDebouncedUpdate={editParagraphs}
+                    slideElement='imageCaption'
+                    isShown={true}
                 />
-                {/* <p>This is provision of the image caption</p> */}
             </div>
         </div>
     );

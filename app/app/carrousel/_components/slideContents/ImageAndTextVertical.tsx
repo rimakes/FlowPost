@@ -3,6 +3,7 @@ import { TBrand, TOrientation } from '@/types/types';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ImageAndTextVertical = {
     brand: TBrand;
@@ -10,6 +11,7 @@ type ImageAndTextVertical = {
     description: string;
     image: string;
     imageFirst?: boolean;
+    slideNumber: number;
 };
 
 export const ImageAndTextVertical = ({
@@ -18,14 +20,17 @@ export const ImageAndTextVertical = ({
     description,
     image,
     imageFirst = false,
+    slideNumber,
 }: ImageAndTextVertical) => {
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const [isHydrated, setIsHydrated] = useState(false);
-    const { editTitle, editDescription } = useContext(CarouselContext);
+    const {
+        editTitle,
+        editDescription,
+        carousel: { slides },
+    } = useContext(CarouselContext);
 
-    useEffect(() => {
-        setIsHydrated(true);
-    }, []);
+    const isTitleShown = slides[slideNumber].title?.isShown;
+    const isDescriptionShown = slides[slideNumber].paragraphs[0]?.isShown;
+
     return (
         <div className='flex flex-col h-full p-2 py-6 gap-6 z-10 isolate'>
             <div
@@ -44,23 +49,17 @@ export const ImageAndTextVertical = ({
             </div>
             <div>
                 {/* TODO: Check if we can do this on the other designs too */}
-                <Editable
-                    setValue={editTitle}
-                    value={title}
-                    style={{
-                        fontSize: '2rem',
-                        lineHeight: 1.1,
-                    }}
+                <SimpleEditor
+                    onDebouncedUpdate={editTitle}
+                    defaultValue={title}
+                    slideElement='title'
+                    isShown={isTitleShown}
                 />
-
-                <Editable
-                    setValue={editDescription}
-                    value={description}
-                    style={{
-                        fontSize: '1rem',
-                        lineHeight: 1.3,
-                        fontWeight: 200,
-                    }}
+                <SimpleEditor
+                    onDebouncedUpdate={editDescription}
+                    defaultValue={description}
+                    slideElement='paragraph'
+                    isShown={isDescriptionShown}
                 />
             </div>
         </div>

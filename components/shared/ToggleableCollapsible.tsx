@@ -46,7 +46,13 @@ export const ToggleableCollapsible = ({
                         />
                         <Label htmlFor='name'>{label}</Label>
                     </div>
-                    {enabled && <ChevronsUpDown size={20} className='ml-2' />}
+                    <ChevronsUpDown
+                        size={20}
+                        className='ml-2'
+                        style={{
+                            opacity: enabled ? 1 : 0,
+                        }}
+                    />
                 </div>
             </CollapsibleTrigger>
             <CollapsibleContent className='py-4'>{children}</CollapsibleContent>

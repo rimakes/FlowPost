@@ -1,12 +1,7 @@
 import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
-import { ASPECT_RATIOS_MAP } from '../const';
 import { SlideProfileCard } from '../slideParts/SlideProfileCard';
-import { SlideProgressBar } from '../slideParts/SlideProgressBar';
-import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
-import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
-import ContentEditable from 'react-contenteditable';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
@@ -27,19 +22,12 @@ export const CoverSlide = ({
     mode = 'light',
     slideNumber,
 }: CoverSlideProps) => {
-    const titleRef = useRef('');
-    const taglineRef = useRef('');
-
-    const { editTitle, editDescription, editTagline, carousel } =
-        useContext(CarouselContext);
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const [isHydrated, setIsHydrated] = useState(false);
-
-    useEffect(() => {
-        if (title) titleRef.current = title;
-        if (tagline) taglineRef.current = tagline;
-        setIsHydrated(true);
-    }, [tagline, title]);
+    const {
+        editTitle,
+        editDescription,
+        editTagline,
+        carousel: { slides },
+    } = useContext(CarouselContext);
 
     return (
         <>
@@ -66,52 +54,18 @@ export const CoverSlide = ({
                 <SimpleEditor
                     className=''
                     defaultValue={title}
-                    onDebouncedUpdate={(editor) => {
-                        const value = editor?.getHTML();
-                        editTitle(value!);
-                    }}
+                    onDebouncedUpdate={editTitle}
                     slideElement='title'
-                    isShown={carousel.slides[slideNumber!].title?.isShown}
+                    isShown={slides[slideNumber!].title?.isShown}
                 />
-                <ContentEditable
-                    onChange={(event) => {
-                        titleRef.current = event.target.value;
-                        editTitle(event.target.value);
-                    }}
-                    html={titleRef.current}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
-                    style={{
-                        fontSize: '1.8rem',
-                        lineHeight: 1.1,
-                        display: carousel.slides[slideNumber!].title?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
-                />
-                <ContentEditable
-                    onChange={(event) => {
-                        taglineRef.current = event.target.value;
-                        editTagline(event.target.value);
-                    }}
-                    html={taglineRef.current}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
-                    style={{
-                        fontSize: '1.25rem',
-                        lineHeight: 1.1,
-                        display: carousel.slides[slideNumber!].tagline?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
+
+                <SimpleEditor
+                    className=''
+                    defaultValue={tagline}
+                    onDebouncedUpdate={editTagline}
+                    slideElement='tagline'
+                    isShown={slides[slideNumber!].tagline?.isShown}
+                    style={{}}
                 />
                 <SlideProfileCard
                     colorPalette={brand.colorPalette}

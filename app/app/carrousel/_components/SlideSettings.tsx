@@ -8,11 +8,14 @@ import {
     ArrowLeft,
     ArrowLeftIcon,
     ArrowRightIcon,
+    Bold,
     ChevronsUpDown,
+    Italic,
     Plus,
     Trash2,
+    Underline,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { TSlide, TSlideDesignNames, TStatus } from '@/types/types';
 import { Input } from '@/components/ui/input';
@@ -36,6 +39,8 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Toggle } from '@/components/ui/toggle';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -64,9 +69,6 @@ export function SlideSettings({
         setDesign,
         editImage,
     } = useContext(CarouselContext);
-    const [backgroundImagequery, setbackgroundImageQuery] =
-        useState<string>('');
-    const [status, setStatus] = useState<TStatus>('idle');
 
     if (!isActive) return null;
     return (
@@ -122,32 +124,34 @@ export function SlideSettings({
             <div>
                 <Collapsible className=''>
                     <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
-                        <Label htmlFor='paragraph'>Textos</Label>
+                        <Label htmlFor='paragraph'>Mostrar / Ocultar</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                         <div className='flex flex-wrap gap-2'>
-                            <div className='flex flex-col items-center'>
-                                Título
-                                <Checkbox
-                                    checked={slide.title?.isShown!}
-                                    onCheckedChange={toggleSlideHasTitle}
-                                />
-                            </div>
-                            <div className='flex flex-col items-center'>
-                                Tagline
-                                <Checkbox
-                                    checked={slide.tagline?.isShown!}
-                                    onCheckedChange={toggleSlideHasTagline}
-                                />
-                            </div>
-                            <div className='flex flex-col items-center'>
-                                Párrafos
-                                <Checkbox
-                                    checked={slide.paragraphs[0]?.isShown!}
-                                    onCheckedChange={toggleSlideHasParagraph}
-                                />
-                            </div>
+                            <CheckLabel
+                                id='Título'
+                                checked={slide.title?.isShown!}
+                                onCheckedChange={toggleSlideHasTitle}
+                            />
+
+                            <CheckLabel
+                                id='Tagline'
+                                checked={slide.tagline?.isShown!}
+                                onCheckedChange={toggleSlideHasTagline}
+                            />
+
+                            <CheckLabel
+                                id='Párrafos'
+                                checked={slide.paragraphs[0]?.isShown!}
+                                onCheckedChange={toggleSlideHasParagraph}
+                            />
+
+                            {/* <CheckLabel
+                                id='LetraFondo'
+                                checked={slide.paragraphs[1]?.isShown!}
+                                onCheckedChange={toggleSlideHasParagraph}
+                            /> */}
                         </div>
                     </CollapsibleContent>
                 </Collapsible>
@@ -248,6 +252,46 @@ export const SlideActions = () => {
                 Mover
                 <ArrowRightIcon />
             </Button>
+        </div>
+    );
+};
+
+type CheckedLabelProps = {
+    id: string;
+    checked: boolean;
+    onCheckedChange: (checked: boolean) => void;
+};
+
+export const CheckLabel = ({
+    id,
+    checked,
+    onCheckedChange,
+}: CheckedLabelProps) => {
+    return (
+        <div
+            className={buttonVariants({
+                variant: 'secondary',
+                size: 'sm',
+                className: 'flex gap-2 items-center',
+            })}
+            style={{
+                opacity: checked ? 1 : 0.5,
+            }}
+        >
+            <Label
+                htmlFor={id}
+                className='h-full w-full flex items-center justify-center'
+            >
+                {id}
+            </Label>
+            <Checkbox
+                id={id}
+                checked={checked}
+                onCheckedChange={onCheckedChange}
+                style={{
+                    display: 'none',
+                }}
+            />
         </div>
     );
 };

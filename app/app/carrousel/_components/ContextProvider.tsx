@@ -74,6 +74,7 @@ const INITIAL_STATE = {
     editHeader: (newHeader: string) => {},
     editBigCharacter: (newCharacter: string) => {},
     editImage: (newImage: string) => {},
+    editParagraphN: (index: number, newParagraph: string) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -157,6 +158,13 @@ export function CarouselContextProvider({
                 };
             }
         );
+        setCarousel(newCarousel);
+    };
+
+    const editParagraphN = (index: number, newParagraph: string) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.slides[currentSlide].paragraphs[index].content =
+            newParagraph;
         setCarousel(newCarousel);
     };
 
@@ -462,6 +470,7 @@ export function CarouselContextProvider({
                 setCarouselAspectRatio,
                 setDecorationId,
                 setBackgroundImage,
+                editParagraphN,
             }}
         >
             {children}

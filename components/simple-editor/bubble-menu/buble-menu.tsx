@@ -1,5 +1,5 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from '@tiptap/react';
-import { BoldIcon, ItalicIcon } from 'lucide-react';
+import { BoldIcon, ItalicIcon, Undo } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { EditorState } from '@tiptap/pm/state';

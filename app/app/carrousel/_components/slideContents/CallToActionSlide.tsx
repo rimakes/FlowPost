@@ -8,6 +8,7 @@ import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
 import { useRef, useContext, useEffect, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import { CarouselContext } from '../ContextProvider';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CallToActionSlideProps = {
     brand: TBrand;
@@ -28,21 +29,16 @@ export const CallToActionSlide = ({
     mode = 'light',
     slideNumber,
 }: CallToActionSlideProps) => {
-    const titleRef = useRef('');
-    const taglineRef = useRef('');
-    const paragraphsRef = useRef<string[]>([]);
-    // We need this to force a re-render when the slide is hydrated so the refs are updated
-    const [isHydrated, setIsHydrated] = useState(false);
+    const {
+        carousel: { slides },
+        editTitle,
+        editDescription,
+        editTagline,
+    } = useContext(CarouselContext);
 
-    const { carousel, editTitle, editDescription, editTagline } =
-        useContext(CarouselContext);
-
-    useEffect(() => {
-        if (title) titleRef.current = title;
-        if (tagline) taglineRef.current = tagline;
-        if (paragraphs) paragraphsRef.current = paragraphs;
-        setIsHydrated(true);
-    }, [paragraphs, tagline, title]);
+    const isTitleShown = slides[slideNumber!].title?.isShown;
+    const isTaglineShown = slides[slideNumber!].tagline?.isShown;
+    const isParagraphShown = slides[slideNumber!].paragraphs[0]?.isShown;
 
     return (
         <>
@@ -75,69 +71,27 @@ export const CallToActionSlide = ({
                     }}
                 />
 
-                <ContentEditable
-                    onChange={(event) => {
-                        titleRef.current = event.target.value;
-                        editTitle(event.target.value);
-                    }}
-                    html={titleRef.current}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
-                    style={{
-                        fontSize: '1.875rem',
-                        lineHeight: 1.1,
-                        display: carousel.slides[slideNumber!].title?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
+                <SimpleEditor
+                    defaultValue={title}
+                    onDebouncedUpdate={editTitle}
+                    slideElement='title'
+                    isShown={isTitleShown}
                 />
 
-                <ContentEditable
-                    onChange={(event) => {
-                        taglineRef.current = event.target.value;
-                        editTagline(event.target.value);
-                    }}
-                    html={taglineRef.current}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
-                    style={{
-                        fontSize: '1.125rem',
-                        lineHeight: 1.1,
-                        display: carousel.slides[slideNumber!].tagline?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
+                <SimpleEditor
+                    defaultValue={tagline}
+                    onDebouncedUpdate={editTagline}
+                    slideElement='tagline'
+                    isShown={isTaglineShown}
                 />
-                <ContentEditable
-                    onChange={(event) => {
-                        paragraphsRef.current[0] = event.target.value;
-                        editDescription(event.target.value);
-                    }}
-                    html={paragraphsRef.current[0]}
-                    className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
-                    '
-                    // style={{
-                    //     display: hasParagraphs ? 'block' : 'none',
-                    // }}
-                    style={{
-                        fontSize: '0.8rem',
-                        fontWeight: 300,
-                        lineHeight: 1.5,
-                        display: carousel.slides[slideNumber!].paragraphs[0]
-                            ?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
+
+                <SimpleEditor
+                    defaultValue={paragraphs[0]}
+                    onDebouncedUpdate={editDescription}
+                    slideElement='paragraph'
+                    isShown={isParagraphShown}
                 />
+
                 <SlideProfileCard
                     colorPalette={brand.colorPalette}
                     fontPalette={brand.fontPalette}

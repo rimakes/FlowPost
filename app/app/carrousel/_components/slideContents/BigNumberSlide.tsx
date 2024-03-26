@@ -1,8 +1,7 @@
 import { TBrand } from '@/types/types';
-import { useRef, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
-import ContentEditable from 'react-contenteditable';
-import { Editable } from '@/components/shared/Editable';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type BigNumberSlideProps = {
     title: string;
@@ -19,8 +18,14 @@ export const BigNumberSlide = ({
     tagline,
     slideNumber,
 }: BigNumberSlideProps) => {
-    const { carousel, editTitle, editDescription, editTagline } =
-        useContext(CarouselContext);
+    const {
+        carousel: { slides },
+        editTitle,
+        editTagline,
+    } = useContext(CarouselContext);
+
+    const isTittleShown = slides[slideNumber!].title?.isShown;
+    const isTaglineShown = slides[slideNumber!].tagline?.isShown;
 
     return (
         <>
@@ -43,42 +48,22 @@ export const BigNumberSlide = ({
                     {bigCharacter}
                 </div>
             </div>
-            <div
-                className='flex-grow  flex flex-col justify-center z-10'
+            <SimpleEditor
+                onDebouncedUpdate={editTitle}
+                slideElement='title'
+                defaultValue={title}
+                isShown={isTittleShown}
                 style={{
-                    alignItems: 'start',
+                    fontSize: '5rem',
                 }}
-            >
-                <Editable
-                    value={title}
-                    setValue={editTitle}
-                    className='text-[2em]
-                 focus:outline-none focus:ring-0 focus:border-transparent
-                 '
-                    style={{
-                        fontSize: '5rem',
-                        fontFamily: brand.fontPalette.primary,
-                        display: carousel.slides[slideNumber!].title?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
-                />
+            />
 
-                <Editable
-                    value={tagline}
-                    setValue={editTagline}
-                    className='text-[2em]
-                focus:outline-none focus:ring-0 focus:border-transparent
-                '
-                    style={{
-                        fontSize: '1.25rem',
-                        lineHeight: 1.1,
-                        display: carousel.slides[slideNumber!].tagline?.isShown
-                            ? 'block'
-                            : 'none',
-                    }}
-                />
-            </div>
+            <SimpleEditor
+                onDebouncedUpdate={editTagline}
+                slideElement='tagline'
+                defaultValue={tagline}
+                isShown={isTaglineShown}
+            />
         </>
     );
 };

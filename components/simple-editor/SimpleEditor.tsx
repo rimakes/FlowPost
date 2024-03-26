@@ -7,6 +7,7 @@ import {
     Editor as TipTapEditor,
     EditorContent,
     useEditor,
+    EditorOptions,
 } from '@tiptap/react';
 import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
@@ -20,12 +21,13 @@ import { cn } from '@/lib/utils';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
 
-type TSlideElement = 'title' | 'tagline' | 'paragraph';
+type TSlideElement = 'title' | 'tagline' | 'paragraph' | 'imageCaption';
 
 const defaultStylesMap = {
-    title: 'overflow-hidden text-[1.8rem] leading-[1.1]',
-    tagline: 'text-lg',
-    paragraph: 'text-base',
+    title: 'overflow-hidden text-[2.5rem] leading-[1.1]',
+    tagline: 'text-[1.25rem] leading-[1.1]',
+    paragraph: 'text-[1rem] leading-[1.5] font-[200]',
+    imageCaption: 'text-[0.75rem] leading-[1.1]',
 };
 
 export default function SimpleEditor({
@@ -33,7 +35,7 @@ export default function SimpleEditor({
      * Additional classes to add to the editor container.
      * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
      */
-    className = 'relative min-h-full w-full sm:mb-[calc(20vh)] p-8',
+    className = 'relative w-full',
     /**
      * The default value to use for the editor.
      * Defaults to defaultEditorContent.
@@ -62,7 +64,7 @@ export default function SimpleEditor({
      * Defaults to () => {}.
      */
     // eslint-disable-next-line no-unused-vars
-    onDebouncedUpdate = (editor: TipTapEditor | undefined) => {},
+    onDebouncedUpdate = (html: string) => {},
 
     /**
      * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
@@ -94,7 +96,8 @@ export default function SimpleEditor({
 
     const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
         const json = editor.getJSON();
-        onDebouncedUpdate(editor);
+        const html = editor.getHTML();
+        onDebouncedUpdate(html);
 
         if (!disableLocalStorage) {
             setContent(json);
@@ -116,8 +119,8 @@ export default function SimpleEditor({
             debouncedUpdates(e);
             // }
         },
-        autofocus: 'end',
-    });
+        autofocus: false,
+    } as EditorOptions);
 
     // Default: Hydrate the editor with the content from localStorage.
     // If disableLocalStorage is true, hydrate the editor with the defaultValue.
@@ -140,6 +143,7 @@ export default function SimpleEditor({
             <div className={cn(``, className)}>
                 <EditorContent
                     editor={editor}
+                    autoFocus={false}
                     ref={editorRef}
                     className={` ${defaultStylesMap[slideElement]}`}
                     style={{
