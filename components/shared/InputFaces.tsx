@@ -13,12 +13,6 @@ type InputFacesProps = {
 export const InputFaces = ({ value, setValue, className }: InputFacesProps) => {
     return (
         <ul className={cn(`inline-flex gap-4`, className)}>
-            <Button
-                type='button'
-                onClick={() => {
-                    setValue('no');
-                }}
-            ></Button>
             <li className='relative'>
                 <input
                     id='emoji-rate-option-no'

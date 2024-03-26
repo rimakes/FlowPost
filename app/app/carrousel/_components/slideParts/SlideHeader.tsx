@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import { Editable } from '@/components/shared/Editable';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type SlideHeaderProps = {
     slideNumber: number;
@@ -15,13 +16,15 @@ export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
 
     return (
         <div className={cn(`flex justify-between`, className)}>
-            <Editable
-                value={heading?.content || ''}
-                setValue={(value) => editHeader(value)}
+            <SimpleEditor
+                defaultValue={heading?.content}
+                onDebouncedUpdate={editHeader}
+                isShown={heading?.isShown}
                 style={{
-                    visibility: heading?.isShown ? 'visible' : 'hidden',
+                    fontSize: '0.7rem',
                 }}
             />
+
             <span>{slideNumber === 0 ? null : slideNumber}</span>
         </div>
     );

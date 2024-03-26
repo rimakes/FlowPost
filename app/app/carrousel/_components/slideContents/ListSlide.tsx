@@ -1,8 +1,9 @@
 import { TBrand } from '@/types/types';
-import { useContext, useId, useRef } from 'react';
+import { useContext, useId, useMemo, useRef } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import { Check } from 'lucide-react';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
+import { randomUUID } from 'crypto';
 
 type ListSlideProps = {
     brand: TBrand;
@@ -26,16 +27,17 @@ export const ListSlide = ({
     } = useContext(CarouselContext);
     const titleRef = useRef('');
 
-    const paragraphArray =
-        paragraphs.length === 0
+    const paragraphArray = useMemo(() => {
+        return paragraphs.length === 0
             ? []
             : paragraphs.map((p, index) => {
                   return {
-                      id: useId(),
+                      id: randomUUID(),
                       content: p,
                       editParagraph: editParagraphN.bind(null, index),
                   };
               });
+    }, [paragraphs]);
 
     const isTitleShown = slides[slideNumber!].title?.isShown;
 

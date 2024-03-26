@@ -23,6 +23,68 @@ type ResData = {
     data: IData;
 };
 
+type TUploadRegisterResponse = {
+    data: {
+        value: {
+            uploadMechanism: {
+                'com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest': {
+                    uploadUrl: string;
+                    headers: any;
+                };
+            };
+            mediaArtifact: string;
+            asset: string;
+            assetRealTimeTopic: string;
+        };
+    };
+};
+
+export const registerUploadImageToLinkedin = async (
+    providerAccountId: String | undefined,
+    accessToken: String | null | undefined
+) => {
+    const registerUploadUrl =
+        'https://api.linkedin.com/v2/assets?action=registerUpload';
+
+    const registerUploadBody = {
+        registerUploadRequest: {
+            recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],
+            owner: `urn:li:person:${providerAccountId}`,
+            serviceRelationships: [
+                {
+                    relationshipType: 'OWNER',
+                    identifier: 'urn:li:userGeneratedContent',
+                },
+            ],
+        },
+    };
+
+    const config = {
+        method: 'post',
+        url: registerUploadUrl,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Cookie: 'lidc="b=VB85:s=V:r=V:a=V:p=V:g=5482:u=10:x=1:i=1709636502:t=1709720825:v=2:sig=AQEdKe_Tph37ThQKHeYqJGIgReeL6-NO"; bcookie="v=2&bc3682ee-a45b-45f5-8b9a-7d73f17ea686"',
+            'X-Restli-Protocol-Version': '2.0.0',
+        },
+        data: JSON.stringify(registerUploadBody),
+    };
+
+    const res: TUploadRegisterResponse = await axios(config);
+
+    return res.data.value.uploadMechanism[
+        'com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'
+    ].uploadUrl;
+};
+
+export const uploadImageToLinkedin = async (
+    uploadUrl: string,
+    image: string
+) => {
+    return;
+};
+
 export const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,

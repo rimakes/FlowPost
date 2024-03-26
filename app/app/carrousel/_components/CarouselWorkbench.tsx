@@ -72,9 +72,7 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
             <div className='carousel flex overflow-hidden md:pl-8 lg:pl-56 2xl:pl-96'>
                 {carousel.slides.map((slide, index) => (
                     <SlideWithSettings
-                        brand={getCompleteBrand() as TBrand}
                         key={index} //TODO: Better no index
-                        isActive={currentSlide === index}
                         slide={slide}
                         slideNumber={index}
                         numberOfSlides={carousel.slides.length}
@@ -98,11 +96,9 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
 
 type SlideWithSettingsProps = {
     className?: string;
-    isActive: boolean;
     slide: TSlide;
     slideNumber: number;
     numberOfSlides: number;
-    brand: TBrand;
     children?: ReactNode;
     decorationId?: TDecorationId;
     mode: TMode;
@@ -110,19 +106,21 @@ type SlideWithSettingsProps = {
 
 export const SlideWithSettings = ({
     className,
-    isActive,
     slide,
     slideNumber,
     numberOfSlides,
-    brand,
-    children,
     decorationId,
     mode,
 }: SlideWithSettingsProps) => {
-    const { setCurrentSlideTo, currentSlide, addRef, carousel } =
-        useContext(CarouselContext);
+    const {
+        setCurrentSlideTo,
+        currentSlide,
+        addRef,
+        carousel,
+        getCompleteBrand,
+    } = useContext(CarouselContext);
     const slideRef = useRef<HTMLDivElement>(null);
-    console.log('slide design', slide.design);
+    const isActive = currentSlide === slideNumber;
     const DesignElement = slide.design
         ? designMap[slide.design as TSlideDesignNames]
         : TextOnlySlide;
@@ -132,6 +130,7 @@ export const SlideWithSettings = ({
         addRef(slideRef, slideNumber);
     }, [addRef, slideNumber]);
 
+    const brand = getCompleteBrand() as TBrand;
     const adjustedBrand: TBrand =
         mode === 'dark'
             ? {

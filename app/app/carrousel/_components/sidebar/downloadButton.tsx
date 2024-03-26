@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/spinner';
+import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 
 type ImageFormat = 'pdf' | 'svg';
 
@@ -24,8 +25,6 @@ export function DownloadButton({}) {
     if (arrayOfRefs.length === 0) return null;
 
     const onDownload = async (format: ImageFormat) => {
-        // get the current time
-        const now = new Date();
         setStatus('loading');
         let dataUrl;
         let link = document.createElement('a');
@@ -44,7 +43,17 @@ export function DownloadButton({}) {
                         pdf.addPage();
                     }
                 }
-                pdf.save('download.pdf');
+                const savedPdf = pdf.save('download.pdf');
+                const blob = pdf.output('arraybuffer');
+                const formData = new FormData();
+                formData.append(
+                    'file',
+                    new Blob([blob], { type: 'application/pdf' })
+                );
+
+                await uploadFileToCloudinary(formData);
+
+                console.log({ savedPdf });
 
                 break;
             case 'svg':

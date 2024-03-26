@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
 import { Progress } from '@/components/ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
+import Editor from '@/components/editor/editor';
 
 type GeneratedPostProps = {
     className?: string;
