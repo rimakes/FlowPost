@@ -10,6 +10,8 @@ type NewTScheduledPost = TScheduledPost & {
     linkedinPost: TLinkedinPost;
 };
 
+export const dynamic = 'force-dynamic';
+
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
 export async function GET(req: NextRequest) {
     try {
