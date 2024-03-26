@@ -91,6 +91,7 @@ export const postOnLinkedIn = async (
     accessToken: String | null | undefined
 ): Promise<ResData> => {
     try {
+        console.log('Posting on LinkedIn postonlinkedin function');
         const body = {
             author: `urn:li:person:${providerAccountId}`,
             lifecycleState: 'PUBLISHED',

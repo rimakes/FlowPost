@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
-import { registerUploadImageToLinkedin } from '../../_actions/schedule-actions';
+import {
+    postOnLinkedIn,
+    registerUploadImageToLinkedin,
+} from '../../_actions/schedule-actions';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import axios from 'axios';
 
@@ -75,50 +78,3 @@ export async function GET(req: NextRequest) {
         );
     }
 }
-
-const postOnLinkedIn = async (
-    providerAccountId: String | undefined,
-    content: String | null | undefined,
-    accessToken: String | null | undefined
-) => {
-    try {
-        const body = {
-            author: `urn:li:person:${providerAccountId}`,
-            lifecycleState: 'PUBLISHED',
-            specificContent: {
-                'com.linkedin.ugc.ShareContent': {
-                    shareCommentary: {
-                        text: content,
-                    },
-                    shareMediaCategory: 'NONE',
-                },
-            },
-            visibility: {
-                'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-            },
-        };
-
-        const config = {
-            method: 'post',
-            url: process.env.LINKEDIN_POST_URL,
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-                Cookie: 'lidc="b=VB85:s=V:r=V:a=V:p=V:g=5482:u=10:x=1:i=1709636502:t=1709720825:v=2:sig=AQEdKe_Tph37ThQKHeYqJGIgReeL6-NO"; bcookie="v=2&bc3682ee-a45b-45f5-8b9a-7d73f17ea686"',
-                'X-Restli-Protocol-Version': '2.0.0',
-            },
-            data: JSON.stringify(body),
-        };
-
-        const response = await axios(config);
-
-        console.log(
-            'Post successfully posted on LinkedIn:',
-            response?.data?.id
-        );
-        return response;
-    } catch (error) {
-        console.error('Error posting on LinkedIn:', error);
-        throw error;
-    }
-};
