@@ -37,7 +37,7 @@ export const ListSlide = ({
                       editParagraph: editParagraphN.bind(null, index),
                   };
               });
-    }, [paragraphs]);
+    }, [paragraphs, editParagraphN]);
 
     const isTitleShown = slides[slideNumber!].title?.isShown;
 
