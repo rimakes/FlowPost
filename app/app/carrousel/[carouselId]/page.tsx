@@ -29,9 +29,29 @@ export default async function CarouselPage({ params }: props) {
     const userBrands = await getBrandsByUserId(session?.user.id!);
 
     const { carouselId } = params;
-
     let carousel = fakeCarousel as TCarousel;
 
+    // If the carousel is new and the user has brands, we set the carousel settings to the first brand
+    if (userBrands.length > 0 && carouselId === 'new') {
+        carousel = {
+            id: 'new',
+            ...fakeCarousel,
+            settings: {
+                colorPalette: userBrands[0].colorPalette,
+                fontPalette: userBrands[0].fontPalette,
+                aspectRatio: 'PORTRAIT',
+                backgroundPattern: 'Bubbles',
+                showDecoration: true,
+            },
+            author: {
+                handle: userBrands[0].handle,
+                name: userBrands[0].name,
+                pictureUrl: userBrands[0].imageUrl,
+            },
+        } as TCarousel;
+    }
+
+    // If the carousel is not new, we fetch it from the database
     if (!(carouselId === 'new')) {
         const dbCarousel = await prisma?.carousel.findUnique({
             where: {

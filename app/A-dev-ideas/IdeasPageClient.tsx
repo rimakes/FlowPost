@@ -53,66 +53,7 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
 
     return (
         <>
-            <div>
-                <Input className='max-w-sm' value={''} />
-                <Button
-                    onClick={async () => {
-                        const searchResults: z.infer<
-                            typeof googleSearchResultsSchema
-                        > = await getSearchResults(
-                            'Guerra de Ucrania principales estadísticas'
-                        );
-
-                        console.log(searchResults);
-                    }}
-                >
-                    Buscar
-                </Button>
-            </div>
             <div className='flex flex-col sm:flex-row gap-2'>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit, onError)}
-                        className='flex-1'
-                    >
-                        <FormField
-                            control={form.control}
-                            name='topic'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className=''>
-                                        ¿Sobre qué quieres recibir ideas?
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder='Ej. Marketing, Tecnología, Ecommerce, CRO, etc'
-                                        />
-                                    </FormControl>
-                                    <FormDescription></FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <Button
-                            className='flex gap-2'
-                            disabled={status === 'loading'}
-                        >
-                            {status === 'loading' ? (
-                                <>
-                                    <Spinner />
-                                    Generando ideas
-                                </>
-                            ) : (
-                                <>
-                                    <Sparkles size={20} />
-                                    Generar ideas
-                                </>
-                            )}
-                        </Button>
-                    </form>
-                </Form>
                 <div className='flex-1'>
                     <h2>Ideas</h2>
                     <p className='text-xs text-primary/50'>

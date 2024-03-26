@@ -1,6 +1,7 @@
 'use client';
 
 import { addTime, toggleSlot } from '@/app/_actions/schedule-actions';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -20,6 +21,7 @@ import {
     TSlot,
     TimeMap,
 } from '@/types/types';
+import { Separator } from '@radix-ui/react-separator';
 import { table } from 'console';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
@@ -97,83 +99,79 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
     const timeSlots = Object.keys(optimisticTimeMap);
 
     return (
-        <table className='w-full'>
-            <thead>
-                <tr>
-                    <th></th> {/* empty */}
-                    {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
-                        <th key={index}>
-                            {daysOfTheWeekMapNew[day as DayOfTheWeekNumber]}
-                        </th>
-                    ))}
-                </tr>
-            </thead>
-            {/* body */}
-            <tbody>
-                {timeSlots.sort().map((time, index) => (
-                    <tr key={index}>
-                        <td>{time}</td>
+        <>
+            <table className='w-full'>
+                <thead>
+                    <tr>
+                        <th></th> {/* empty */}
                         {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
-                            <td key={index}>
-                                <Input
-                                    type='checkbox'
-                                    checked={optimisticTimeMap[time].includes(
-                                        day as DayOfTheWeekNumber
-                                    )}
-                                    onChange={() =>
-                                        startTransition(() => {
-                                            {
-                                                optimisticallyToggleTimeSlot({
-                                                    dayOfTheWeek: day,
-                                                    time,
-                                                });
-                                                toggleSlot(
-                                                    time,
-                                                    day as DayOfTheWeekNumber,
-                                                    data?.user.settingsId!
-                                                );
-                                            }
-                                        })
-                                    }
-                                />
-                            </td>
+                            <th key={index}>
+                                {daysOfTheWeekMapNew[day as DayOfTheWeekNumber]}
+                            </th>
                         ))}
                     </tr>
-                ))}
-
-                <tr>
-                    <td>
-                        <Select
-                            onValueChange={(value) => {
-                                startTransition(() => {
-                                    OptimisticallyAddTimeArray(
-                                        TimeOfTheDay[value as TNameTimeOfDay]
-                                    );
-                                    addTime(
-                                        TimeOfTheDay[value as TNameTimeOfDay],
-                                        data?.user.settingsId!
-                                    );
-                                });
-                            }}
-                        >
-                            <SelectTrigger>Añadir</SelectTrigger>
-                            <SelectContent>
-                                <>
-                                    {timeOfTheDayNames.map((time, index) => (
-                                        <SelectItem key={index} value={time}>
-                                            {
-                                                TimeOfTheDay[
-                                                    time as TNameTimeOfDay
-                                                ]
-                                            }
-                                        </SelectItem>
-                                    ))}
-                                </>
-                            </SelectContent>
-                        </Select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                {/* body */}
+                <tbody>
+                    {timeSlots.sort().map((time, index) => (
+                        <tr key={index}>
+                            <td>{time}</td>
+                            {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
+                                <td key={index} className='text-center'>
+                                    <Checkbox
+                                        // type='checkbox'
+                                        className=''
+                                        checked={optimisticTimeMap[
+                                            time
+                                        ].includes(day as DayOfTheWeekNumber)}
+                                        onCheckedChange={() =>
+                                            startTransition(() => {
+                                                {
+                                                    optimisticallyToggleTimeSlot(
+                                                        {
+                                                            dayOfTheWeek: day,
+                                                            time,
+                                                        }
+                                                    );
+                                                    toggleSlot(
+                                                        time,
+                                                        day as DayOfTheWeekNumber,
+                                                        data?.user.settingsId!
+                                                    );
+                                                }
+                                            })
+                                        }
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <Select
+                onValueChange={(value) => {
+                    startTransition(() => {
+                        OptimisticallyAddTimeArray(
+                            TimeOfTheDay[value as TNameTimeOfDay]
+                        );
+                        addTime(
+                            TimeOfTheDay[value as TNameTimeOfDay],
+                            data?.user.settingsId!
+                        );
+                    });
+                }}
+            >
+                <SelectTrigger>Añadir hora</SelectTrigger>
+                <SelectContent>
+                    <>
+                        {timeOfTheDayNames.map((time, index) => (
+                            <SelectItem key={index} value={time}>
+                                {TimeOfTheDay[time as TNameTimeOfDay]}
+                            </SelectItem>
+                        ))}
+                    </>
+                </SelectContent>
+            </Select>
+        </>
     );
 }

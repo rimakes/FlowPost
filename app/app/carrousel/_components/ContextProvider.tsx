@@ -19,6 +19,7 @@ import {
     TPosition,
     TSlideDesignNames,
 } from '@/types/types';
+import { usePathname } from 'next/navigation';
 
 export type TArrayOfRefs = RefObject<HTMLDivElement>[];
 

@@ -1,12 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-    Linkedin,
-    LinkedinIcon,
-    LucideLinkedin,
-    PenSquare,
-} from 'lucide-react';
+import { LucideLinkedin, PenSquare } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useContext } from 'react';

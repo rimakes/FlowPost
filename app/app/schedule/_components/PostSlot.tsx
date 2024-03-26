@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { MoreHorizontal } from 'lucide-react';
+import { CheckCircle, MoreHorizontal } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { DraftModalContent } from './DraftModalContent';
 import { SchedulerContext } from './SchedulerProvider';
@@ -27,6 +27,7 @@ type PostSlotProps = {
     userProfileImageUrl: string | undefined;
     className?: string;
     date: Date;
+    isPublished?: boolean;
 };
 
 export const PostSlot = ({
@@ -36,6 +37,7 @@ export const PostSlot = ({
     time,
     userProfileImageUrl,
     className,
+    isPublished,
     date,
 }: PostSlotProps) => {
     const [draftDialogIsOpen, setdraftDialogIsOpen] = useState(false);
@@ -47,7 +49,7 @@ export const PostSlot = ({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
-                    className='text-primary/50 p-0'
+                    className='text-primary/50 p-0 h-4'
                     variant={'ghost'}
                     size={'icon'}
                 >
@@ -110,11 +112,17 @@ export const PostSlot = ({
     return (
         <div
             className={cn(
-                `w-full h-40 bg-primary/5 rounded-md flex flex-col p-2 border border-dashed border-border`,
-                !isAvailable && 'bg-primary/10'
+                `w-full h-40 bg-primary/5 rounded-md flex flex-col p-2 border border-dashed border-border relative`,
+                !isAvailable && 'bg-primary/10',
+                className
             )}
         >
             <div className='flex justify-between flex-wrap items-center p-2'>
+                {isPublished && (
+                    <div className='absolute -bottom-1 -right-1'>
+                        <CheckCircle size={20} className='' />
+                    </div>
+                )}
                 <p className='text-[12px]'>{time}</p>
                 <div className='flex gap-1 justify-center items-center'>
                     <Avatar className='h-4 w-4'>

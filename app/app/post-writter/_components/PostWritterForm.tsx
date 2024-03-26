@@ -91,7 +91,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     };
 
     const onSubmit = async (data: PostRequest) => {
-        const res = await requestPost(data);
+        await requestPost(data);
         toast.success('Post creado');
     };
 
@@ -108,13 +108,11 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 
     const buttonContent = form.formState.isSubmitting ? (
         <>
-            {' '}
             <Spinner className='mr-2 h-5 w-5' />
             Creando post{' '}
         </>
     ) : (
         <>
-            {' '}
             <Sparkles className='mr-2 h-5 w-5' />
             Crear post{' '}
         </>

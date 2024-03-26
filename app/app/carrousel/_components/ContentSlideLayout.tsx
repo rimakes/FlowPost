@@ -74,6 +74,7 @@ export const ContentSlideLayout = forwardRef<
                 className={cn(
                     `slide border-0 border-border p-6 text-[0.75em]
     relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between isolate
+    relative border-8 border-red-500
     `,
                     className,
                     isActive
@@ -86,6 +87,19 @@ export const ContentSlideLayout = forwardRef<
                 }}
                 onClick={() => setIsActive(true)}
             >
+                {!isCoverOrCTA && (
+                    <SlideFotter
+                        colorPalette={brand.colorPalette}
+                        fontPalette={brand.fontPalette}
+                        imageUrl={brand.imageUrl}
+                        name={brand.name}
+                        handle={brand.handle}
+                        mode={mode}
+                        swipeLabel={<ArrowRight className='h-10 w-10' />}
+                        className='absolute bottom-0 left-0 w-full p-6'
+                    />
+                )}
+
                 {backgroundImage && (
                     <SlideBackground
                         imageUrl={backgroundImage.url}
@@ -114,18 +128,6 @@ export const ContentSlideLayout = forwardRef<
                     <SlideHeader slideNumber={currentSlide} className='z-20' />
                 )}
                 {children}
-                {!isCoverOrCTA && (
-                    <SlideFotter
-                        colorPalette={brand.colorPalette}
-                        fontPalette={brand.fontPalette}
-                        imageUrl={brand.imageUrl}
-                        name={brand.name}
-                        handle={brand.handle}
-                        mode={mode}
-                        swipeLabel={<ArrowRight className='h-10 w-10' />}
-                        className='absolute bottom-0 left-0 w-full p-6'
-                    />
-                )}
             </div>
         );
     }

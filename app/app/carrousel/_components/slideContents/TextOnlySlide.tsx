@@ -37,7 +37,7 @@ export const TextOnlySlide = ({
                 }}
                 html={titleRef.current}
                 className='text-[2em]
-                    focus:outline-none focus:ring-0 focus:border-transparent
+                    focus:outline-none focus:ring-0 focus:border-transparent overflow-hidden
                     '
                 // style={{
                 //     display: hasParagraphs ? 'block' : 'none',
@@ -57,7 +57,7 @@ export const TextOnlySlide = ({
                         editTagline(event.target.value);
                     }}
                     html={paragraphRef.current}
-                    className='text-[1rem] focus:outline-none focus:ring-0 focus:border-transparent'
+                    className='text-[1rem] focus:outline-none focus:ring-0 focus:border-transparent overflow-hidden'
                     style={{
                         fontSize: '1rem',
                         lineHeight: 1.5,

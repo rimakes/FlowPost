@@ -20,6 +20,7 @@ import { get } from 'http';
 import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
 import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
 import { designMap } from './slideContents/contentMaps';
+import { usePathname } from 'next/navigation';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {

@@ -8,6 +8,7 @@ import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
 import ContentEditable from 'react-contenteditable';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
+import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CoverSlideProps = {
     brand: TBrand;
@@ -61,6 +62,16 @@ export const CoverSlide = ({
                         backgroundColor: brand.colorPalette.accent,
                         opacity: 0.3,
                     }}
+                />
+                <SimpleEditor
+                    className=''
+                    defaultValue={title}
+                    onDebouncedUpdate={(editor) => {
+                        const value = editor?.getHTML();
+                        editTitle(value!);
+                    }}
+                    slideElement='title'
+                    isShown={carousel.slides[slideNumber!].title?.isShown}
                 />
                 <ContentEditable
                     onChange={(event) => {

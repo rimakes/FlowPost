@@ -63,7 +63,7 @@ export const PostWritterResult = ({
                     <Textarea
                         rows={20}
                         className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
-                        focus-visible:ring-0
+                        focus-visible:!ring-trans focus-visible:outline-none 
                         `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}

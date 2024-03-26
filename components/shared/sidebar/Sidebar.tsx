@@ -184,7 +184,7 @@ export const MenuItem = ({
     return (
         <TooltipProvider>
             <Tooltip>
-                <TooltipTrigger asChild>
+                <TooltipTrigger className='w-full'>
                     <MenuLink />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -208,7 +208,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
         >
             <div className='flex justify-between'>
                 {!collapsed && <p>Palabras usadas</p>}
-                <p className=''>
+                <p className='text-center'>
                     0 <span>/ 1000</span>
                 </p>
             </div>
@@ -229,7 +229,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: Sparkles,
-        label: 'Escritor Automático',
+        label: 'Escriba con IA',
         href: '/app/post-writter',
         shortLabel: 'Posts',
         status: 'active',

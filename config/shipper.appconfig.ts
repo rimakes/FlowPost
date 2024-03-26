@@ -21,7 +21,7 @@ export const appConfig = {
     },
 
     general: {
-        appName: 'CoverAI',
+        appName: 'PerBrand',
     },
 
     colors: {

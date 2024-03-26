@@ -56,7 +56,7 @@ export const BigNumberSlide = ({
                  focus:outline-none focus:ring-0 focus:border-transparent
                  '
                     style={{
-                        fontSize: '5em',
+                        fontSize: '5rem',
                         fontFamily: brand.fontPalette.primary,
                         display: carousel.slides[slideNumber!].title?.isShown
                             ? 'block'

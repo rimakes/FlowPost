@@ -53,7 +53,7 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
         <div className='flex flex-col justify-start gap-12'>
             <ModalHeader
                 title={`Consigue ${appConfig.general.appName}+`}
-                subtitle='Usa PerBrand sin limitaciones'
+                subtitle={`Usa ${appConfig.general.appName} sin limitaciones`}
             />
             <Separator className='-mt-4 -mb-4' />
             <div className='flex flex-col gap-6 p-2'>

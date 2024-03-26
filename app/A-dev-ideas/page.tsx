@@ -16,7 +16,9 @@ export default function IdeasPage() {
             />
             <Separator />
             <IdeasPageClient />
-            <Editor />
+            <Editor className='w-1/2' />
+            <Editor className='w-1/2' />
+            <Editor className='w-1/2' />
             <SocialLogin />
         </div>
     );

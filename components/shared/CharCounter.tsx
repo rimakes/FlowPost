@@ -6,7 +6,7 @@ type CharCounterProps = {
 };
 export function CharCounter({ usedChars, maxChars }: CharCounterProps) {
     const charCounterClasses = cn(
-        `absolute bottom-0 right-2 text-xs text-yellow-700/50`,
+        `absolute -bottom-5 right-0 text-xs text-yellow-700/50`,
         usedChars < maxChars && 'text-red-500',
         usedChars > Math.round(maxChars / 2) && 'text-green-500',
         usedChars > maxChars && 'text-destructive'

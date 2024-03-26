@@ -38,25 +38,27 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
                 {weekDaysArray.map((date, i) => {
                     const daySlots = formattedSchedule[getDay(date)] || [];
 
-                    const postsOfTheDay = userPosts.filter((post) => {
+                    const dayPosts = userPosts.filter((post) => {
                         return isSameDay(date, post.scheduledPost[0]?.date);
                     });
 
-                    const formattePostsOfTheDay: PostOrSlot[] =
-                        postsOfTheDay.map((post) => {
+                    const formattedDayPosts: PostOrSlot[] = dayPosts.map(
+                        (post) => {
                             return {
                                 hasPost: true,
                                 time: post.scheduledPost[0].time,
                                 postContent: post.content,
                                 postId: post.scheduledPost[0].linkedinPostId!,
+                                isPublished: post.published,
                             };
-                        });
+                        }
+                    );
 
                     const formattedDaySlots: PostOrSlot[] = daySlots
                         .filter(
                             // filter out the slots that already have a post
                             (time) =>
-                                !formattePostsOfTheDay.some(
+                                !formattedDayPosts.some(
                                     (post) => post.time === time
                                 )
                         )
@@ -67,7 +69,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
 
                     const mergedSlotsAndPosts = [
                         ...formattedDaySlots,
-                        ...formattePostsOfTheDay,
+                        ...formattedDayPosts,
                     ];
 
                     return (

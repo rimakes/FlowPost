@@ -9,7 +9,7 @@ type Editable = {
     className?: string;
 };
 export function Editable({ value, setValue, style, className }: Editable) {
-    const elementRef = useRef<any>();
+    const elementRef = useRef<any>('');
     const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {

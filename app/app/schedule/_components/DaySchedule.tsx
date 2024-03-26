@@ -57,6 +57,7 @@ export function DaySchedule({ slots, className, date }: DayScheduleProps) {
                                 time={slot.time}
                                 userProfileImageUrl={userProfileImageUrl!}
                                 date={date}
+                                isPublished={slot.isPublished}
                             />
                         );
                     })}

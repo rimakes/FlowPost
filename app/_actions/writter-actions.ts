@@ -27,6 +27,8 @@ import image from 'next/image';
 import axios from 'axios';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
 
 export async function createLinkedinPost(
     post: string,
@@ -87,7 +89,9 @@ export async function deleteCarousel(carouselId: string) {
 }
 
 export async function createLinkedinCarousel(post: TLinkedinPost) {
-    console.log('post!!!', post);
+    const session = await getServerSession(authOptions);
+    const userId = session?.user.id;
+
     const model = new ChatOpenAI({
         temperature: 0.8,
         modelName: 'gpt-4-0613',
@@ -149,7 +153,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 
     const firstBrand = await db.brand.findFirst({
         where: {
-            authorId: post.userId!,
+            authorId: userId,
         },
     });
 
@@ -240,7 +244,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 export async function upsertCarousel(carousel: TCarousel, userId: string) {
     const { author, settings, slides } = carousel;
 
-    if (carousel.id === undefined) {
+    if (carousel.id === 'new' || carousel.id === undefined) {
         const newCarousel = await db.carousel.create({
             data: {
                 slides,

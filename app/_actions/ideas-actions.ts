@@ -3,9 +3,8 @@
 import { retryAsyncFunction } from '@/lib/utils';
 import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { promptGenerateCarousel } from '../app/saved/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
-import { SlideSchemaPrompt, arrayOfIdeasSchema } from '@/types/schemas';
+import { arrayOfIdeasSchema } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { generateIdeasPrompt } from '../app/ideas/const';
 import axios from 'axios';

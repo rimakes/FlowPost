@@ -20,7 +20,15 @@ import { cn } from '@/lib/utils';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
 
-export default function Editor({
+type TSlideElement = 'title' | 'tagline' | 'paragraph';
+
+const defaultStylesMap = {
+    title: 'overflow-hidden text-[1.8rem] leading-[1.1]',
+    tagline: 'text-lg',
+    paragraph: 'text-base',
+};
+
+export default function SimpleEditor({
     /**
      * Additional classes to add to the editor container.
      * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
@@ -30,7 +38,7 @@ export default function Editor({
      * The default value to use for the editor.
      * Defaults to defaultEditorContent.
      */
-    defaultValue = defaultEditorContent,
+    defaultValue = '...',
     /**
      * A list of extensions to use for the editor, in addition to the default Novel extensions.
      * Defaults to [].
@@ -66,18 +74,21 @@ export default function Editor({
      * The key to use for storing the editor's value in local storage.
      * Defaults to "novel__content".
      */
-    storageKey = 'novel__content',
+    storageKey = 'editor__content',
 
     /**
      * Disable local storage read/save.
      * Defaults to false.
      */
     disableLocalStorage = true,
+
+    slideElement = 'paragraph' as TSlideElement,
+    isShown = true,
+
+    style = {},
 }) {
     // TODO: change to mantine
     const [content, setContent] = useLocalStorage(storageKey, defaultValue);
-    const [elementRef, openFullScreen, closeFullscreen, isFullScreenActive] =
-        useFullScreen();
 
     const [hydrated, setHydrated] = useState(false);
 
@@ -101,19 +112,6 @@ export default function Editor({
             const lastTwo = getPrevText(e.editor, {
                 chars: 2,
             });
-            // if (lastTwo === "++" && !isLoading) {
-            //   e.editor.commands.deleteRange({
-            //     from: selection.from - 2,
-            //     to: selection.from,
-            //   });
-            //   complete(
-            //     getPrevText(e.editor, {
-            //       chars: 5000,
-            //     }),
-            //   );
-            //   // complete(e.editor.storage.markdown.getMarkdown());
-            //   // va.track("Autocomplete Shortcut Used");
-            // } else {
             onUpdate();
             debouncedUpdates(e);
             // }
@@ -138,32 +136,17 @@ export default function Editor({
 
     return (
         <>
-            <Button onClick={openFullScreen}>Full</Button>
-
-            <div
-                id='custom-editor'
-                ref={elementRef}
-                onClick={() => {
-                    editor?.chain().focus().run();
-                }}
-                className={cn(`bg-background`)}
-            >
-                <FullScreenToolBar
-                    openFullScreen={openFullScreen}
-                    closeFullscreen={closeFullscreen}
-                    className={isFullScreenActive ? 'flex' : 'hidden'}
+            {editor && <EditorBubbleMenu editor={editor} />}
+            <div className={cn(``, className)}>
+                <EditorContent
+                    editor={editor}
+                    ref={editorRef}
+                    className={` ${defaultStylesMap[slideElement]}`}
+                    style={{
+                        display: isShown ? 'block' : 'none',
+                        ...style,
+                    }}
                 />
-
-                {editor && <EditorBubbleMenu editor={editor} />}
-                {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
-                <div className={cn(``, className)}>
-                    <TopMenu editor={editor} handleDownload={() => {}} />
-                    <EditorContent
-                        editor={editor}
-                        ref={editorRef}
-                        className='flex-1'
-                    />
-                </div>
             </div>
         </>
     );

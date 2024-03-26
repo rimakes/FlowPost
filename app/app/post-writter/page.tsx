@@ -25,7 +25,7 @@ export default function PostWritterPage({
                 subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'
             />
             <Separator />
-            <div className='mt-6 2xl:flex gap-8'>
+            <div className='flex flex-col mt-6 2xl:flex-row gap-8'>
                 <PostWritterContextProvider>
                     <PostWritterForm className='flex-1' />
                     <PostWritterResult className='flex-1' />

@@ -189,6 +189,7 @@ export type PostOrSlot = {
     hasPost: boolean;
     postId?: string;
     postContent?: string;
+    isPublished?: boolean;
     time: string;
 };
 
