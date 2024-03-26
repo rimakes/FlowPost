@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
     }
 }
 
-export const postOnLinkedIn = async (
+const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,
     accessToken: String | null | undefined
