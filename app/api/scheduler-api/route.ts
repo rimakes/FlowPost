@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
 
             if (!userAccount) return;
 
-            console.log('search if there is a carousel for this post');
+            console.log('search if there is a carousel for this post 22.29');
 
             const carousel = await db.carousel.findFirst({
                 where: {
