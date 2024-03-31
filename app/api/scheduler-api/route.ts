@@ -62,6 +62,8 @@ export async function GET(req: NextRequest) {
                 },
             });
 
+            console.log('Carousel', carousel);
+
             let asset;
             // console.log('Carousel', carousel?.pdfUrl);
             if (carousel?.pdfUrl) {
@@ -81,7 +83,7 @@ export async function GET(req: NextRequest) {
                     userAccount?.access_token
                 );
             }
-
+            console.log('Posting on linkedin');
             const posted = await postOnLinkedIn(
                 userAccount?.providerAccountId,
                 post?.linkedinPost?.content,
