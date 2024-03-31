@@ -2,27 +2,25 @@
 
 import { addTime, toggleSlot } from '@/app/_actions/schedule-actions';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
 } from '@/components/ui/select';
+import { TimeOfTheDay, daysOfTheWeekMapNew } from '@/config/const';
 import {
-    DaysOfTheWeek,
-    TimeOfTheDay,
-    daysOfTheWeekMapNew,
-} from '@/config/const';
-import { deepCopy, loadSchedulePerTime, range } from '@/lib/utils';
+    capitalizeFirstLetter,
+    deepCopy,
+    loadWeekdaysPerTime,
+} from '@/lib/utils';
 import {
     DayOfTheWeekNumber,
     TNameTimeOfDay,
     TSlot,
     TimeMap,
 } from '@/types/types';
-import { Separator } from '@radix-ui/react-separator';
-import { table } from 'console';
+import { compareAsc, format, parse } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
 
@@ -31,10 +29,9 @@ type SchedulerInputProps = {
 };
 
 export function SchedulerInput({ schedule }: SchedulerInputProps) {
-    console.log('rendering SchedulerInput');
     const { data } = useSession();
-    const scheduleHash = useMemo(
-        () => loadSchedulePerTime(schedule),
+    const weekdaysPerTimeMap = useMemo(
+        () => loadWeekdaysPerTime(schedule),
         [schedule]
     );
     let [isPending, startTransition] = useTransition();
@@ -42,7 +39,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
     const [optimisticTimeMap, optimisticallySetTimeMap] = useOptimistic<
         TimeMap,
         TimeMap
-    >(scheduleHash, (state, newState) => {
+    >(weekdaysPerTimeMap, (state, newState) => {
         return newState;
     });
 
@@ -53,7 +50,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
         // Check if the time array of the new time slot exists
         const timeArrayExists = newState[newTimeSlot.time];
 
-        // if it does not exist, we need to create it and add the slot
+        // if it does not exist, we need to create it and add the slot of the given day
         if (!timeArrayExists) {
             newState[newTimeSlot.time] = [
                 newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber,
@@ -61,11 +58,12 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
         }
 
         if (timeArrayExists) {
+            // if the time exists, we need to check if the day exists
             const slotExists = newState[newTimeSlot.time].includes(
                 newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber
             );
 
-            // If the slot does not exist, we need to add it
+            // If the day/slot does not exist, we need to add it
             if (!slotExists) {
                 newState[newTimeSlot.time].push(
                     newTimeSlot.dayOfTheWeek as DayOfTheWeekNumber
@@ -103,49 +101,65 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
             <table className='w-full'>
                 <thead>
                     <tr>
-                        <th></th> {/* empty */}
+                        <th className='invisible'>Hora</th> {/* empty */}
                         {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
                             <th key={index}>
-                                {daysOfTheWeekMapNew[day as DayOfTheWeekNumber]}
+                                {capitalizeFirstLetter(
+                                    daysOfTheWeekMapNew[
+                                        day as DayOfTheWeekNumber
+                                    ]
+                                )}
                             </th>
                         ))}
                     </tr>
                 </thead>
                 {/* body */}
                 <tbody>
-                    {timeSlots.sort().map((time, index) => (
-                        <tr key={index}>
-                            <td>{time}</td>
-                            {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
-                                <td key={index} className='text-center'>
-                                    <Checkbox
-                                        // type='checkbox'
-                                        className=''
-                                        checked={optimisticTimeMap[
-                                            time
-                                        ].includes(day as DayOfTheWeekNumber)}
-                                        onCheckedChange={() =>
-                                            startTransition(() => {
-                                                {
-                                                    optimisticallyToggleTimeSlot(
-                                                        {
-                                                            dayOfTheWeek: day,
+                    {timeSlots
+                        .sort((a, b) => {
+                            const timeA = parse(a, 'hh:mm aa', new Date());
+                            const timeb = parse(b, 'hh:mm aa', new Date());
+                            return compareAsc(timeA, timeb);
+                        })
+                        .map((time, index) => (
+                            <tr key={index}>
+                                <td>{time}</td>
+                                {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
+                                    <td key={index} className='text-center'>
+                                        <Checkbox
+                                            // type='checkbox'
+                                            className=''
+                                            checked={optimisticTimeMap[
+                                                time
+                                            ].includes(
+                                                day as DayOfTheWeekNumber
+                                            )}
+                                            onCheckedChange={() =>
+                                                startTransition(() => {
+                                                    {
+                                                        optimisticallyToggleTimeSlot(
+                                                            // optimistic change
+                                                            {
+                                                                dayOfTheWeek:
+                                                                    day,
+                                                                time,
+                                                            }
+                                                        );
+                                                        toggleSlot(
+                                                            //db change
                                                             time,
-                                                        }
-                                                    );
-                                                    toggleSlot(
-                                                        time,
-                                                        day as DayOfTheWeekNumber,
-                                                        data?.user.settingsId!
-                                                    );
-                                                }
-                                            })
-                                        }
-                                    />
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
+                                                            day as DayOfTheWeekNumber,
+                                                            data?.user
+                                                                .settingsId!
+                                                        );
+                                                    }
+                                                })
+                                            }
+                                        />
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
                 </tbody>
             </table>
             <Select

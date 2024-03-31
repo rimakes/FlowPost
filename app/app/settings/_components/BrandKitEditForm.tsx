@@ -85,7 +85,7 @@ export function BrandKitEditForm({
         if (isNewPicture) {
             const cloudinaryResponse = await uploadFileToCloudinary(formData);
             console.log('cld response!', cloudinaryResponse);
-            data.imageUrl = cloudinaryResponse as string;
+            data.imageUrl = cloudinaryResponse.url as string;
         }
         await saveBrandKit(
             { ...data, id: form.getValues('id') },

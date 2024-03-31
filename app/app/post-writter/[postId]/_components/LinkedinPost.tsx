@@ -3,8 +3,8 @@
 import { fakeSlides } from '@/app/app/carrousel/_components/const';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { TLinkedinPost } from '@/types/types';
+import { cn, fromPdfUrlToThumnailUrl } from '@/lib/utils';
+import { TCarousel, TLinkedinPost } from '@/types/types';
 import {
     Cross,
     Globe,
@@ -25,9 +25,13 @@ import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from '../../_components/PostWritterProvider';
 
-type LinkedinPostProps = { className?: string };
-export function LinkedinPost({ className }: LinkedinPostProps) {
+type LinkedinPostProps = { className?: string; carousel: TCarousel };
+
+export function LinkedinPost({ className, carousel }: LinkedinPostProps) {
     const { post } = useContext(PostWritterContext);
+    const thumbnailUrl = carousel.publicId
+        ? fromPdfUrlToThumnailUrl(carousel.publicId!, 1)
+        : undefined;
     return (
         <div
             className={cn(
@@ -40,7 +44,10 @@ export function LinkedinPost({ className }: LinkedinPostProps) {
             <Separator />
             <PostHeader post={post} />
             <PostContent post={post} />
-            <PostImage post={post} />
+            <PostImage
+                dataUrl={carousel?.thumbnailDataUrl!}
+                pdfUrl={thumbnailUrl}
+            />
             <StatsBar />
             <Separator />
             <PostActionsBar />
@@ -108,11 +115,11 @@ const AddCommentBar = () => {
 
 const PostActionsBar = () => {
     return (
-        <div className='flex gap-2 justify-between items-center p-2'>
+        <div className='flex justify-between items-center p-2'>
             <div className='h-10 w-10 bg-muted rounded-full' />
             <Button
                 variant='ghost'
-                className='flex gap-1.5 text-primary/60'
+                className='flex gap-1 text-primary/60'
                 size='sm'
             >
                 <ThumbsUp size={20} />
@@ -120,7 +127,7 @@ const PostActionsBar = () => {
             </Button>
             <Button
                 variant='ghost'
-                className='flex gap-1.5 text-primary/60'
+                className='flex gap-1 text-primary/60'
                 size='sm'
             >
                 <MessageSquareText size={20} />
@@ -128,7 +135,7 @@ const PostActionsBar = () => {
             </Button>
             <Button
                 variant='ghost'
-                className='flex gap-1.5 text-primary/60'
+                className='flex gap-1 text-primary/60'
                 size='sm'
             >
                 <Repeat2 size={20} />
@@ -136,7 +143,7 @@ const PostActionsBar = () => {
             </Button>
             <Button
                 variant='ghost'
-                className='flex gap-1.5 text-primary/60'
+                className='flex gap-1 text-primary/60'
                 size='sm'
             >
                 <Send size={20} />
@@ -187,9 +194,32 @@ const StatsBar = () => {
     );
 };
 
-const PostImage = ({ post }: { post: TLinkedinPost }) => {
+const PostImage = ({
+    dataUrl,
+    pdfUrl,
+}: {
+    dataUrl: string;
+    pdfUrl: string | undefined;
+}) => {
     return (
-        <div className='aspect-[1080/1350] w-[calc(100%+1rem)] -ml-2 bg-muted'></div>
+        <div className='!aspect-[1080/1350]  w-[calc(100%+1rem)] -ml-2 bg-muted relative shrink-0'>
+            {/* {dataUrl && (
+                <Image
+                    src={dataUrl}
+                    layout='fill'
+                    alt='post image'
+                    className='object-contain'
+                />
+            )} */}
+            {pdfUrl && (
+                <Image
+                    src={pdfUrl}
+                    layout='fill'
+                    alt='post image'
+                    className='object-contain'
+                />
+            )}
+        </div>
     );
 };
 

@@ -109,6 +109,9 @@ export const fakeSlides: TSlide[] = [
 ];
 
 export const fakeCarousel: Omit<TCarousel, 'id'> = {
+    title: 'some random title',
+    linkedinPostId: '',
+    publicId: '',
     userId: '65eeff20491ef024dbdae302',
     slides: fakeSlides,
     author: {
@@ -142,6 +145,8 @@ export const fakeCarousel: Omit<TCarousel, 'id'> = {
         showSwipeLabel: true,
         showDecoration: true,
     },
+    pdfUrl: '',
+    thumbnailDataUrl: '',
 };
 
 // REVIEW: This took a while!!!!

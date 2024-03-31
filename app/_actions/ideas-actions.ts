@@ -18,7 +18,7 @@ export const generateIdeas = async (topic: string) => {
         callbacks: [
             {
                 handleLLMNewToken(token) {
-                    console.log(token);
+                    // console.log(token);
                 },
             },
         ],
@@ -49,8 +49,6 @@ export const getSearchResults = async (query: string) => {
     const res = await axios.get(
         `https://www.googleapis.com/customsearch/v1?key=${process.env.NEXT_PUBLIC_SEARCH_API_KEY}&cx=${process.env.NEXT_PUBLIC_SEARCH_ENGINE_ID}&dateRestrict=m3&q=${query}`
     );
-    console.log(res.data);
-
     return res.data.items;
 };
 

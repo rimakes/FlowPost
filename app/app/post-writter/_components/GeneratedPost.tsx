@@ -10,13 +10,13 @@ import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
 import {
     createLinkedinCarousel,
-    createLinkedinPost,
+    upsertLinkedinPost,
 } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { TStatus } from '@/types/types';
 import { Progress } from '@/components/ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
@@ -46,6 +46,9 @@ export const PostWritterResult = ({
     const [status, setStatus] = useState<Status>('idle');
     const { post, setPost } = useContext(PostWritterContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
+
+    const searchParams = useSearchParams();
+    const carouselId = searchParams.get('cid') || undefined;
 
     if (status === 'loading')
         return (
@@ -90,11 +93,17 @@ export const PostWritterResult = ({
                         hover:bg-primary/10'
                         label='Guardar post'
                         onClick={async () => {
-                            await createLinkedinPost(
+                            const dbpost = await upsertLinkedinPost(
                                 post.content,
                                 post.id,
-                                data?.user?.id!
+                                data?.user?.id!,
+                                carouselId
                             );
+                            setPost(dbpost);
+                            const newUrl = `/app/post-writter/${dbpost.id}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
+
+                            window.history.replaceState(null, 'unused', newUrl);
+
                             toast('Post guardado');
                         }}
                     />

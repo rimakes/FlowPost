@@ -7,6 +7,7 @@ import {
     TLinkedinPost,
 } from '@/types/types';
 import axios from 'axios';
+import { parse, setHours } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 
 // REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
@@ -26,19 +27,14 @@ type ResData = {
 type TUploadRegisterResponse = {
     data: {
         value: {
-            uploadMechanism: {
-                'com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest': {
-                    uploadUrl: string;
-                    headers: any;
-                };
-            };
-            mediaArtifact: string;
-            asset: string;
-            assetRealTimeTopic: string;
+            uploadUrl: string;
+            document: string;
         };
     };
 };
-
+/**
+ * This function gets the url to upload an image to LinkedIn
+ */
 export const registerUploadImageToLinkedin = async (
     providerAccountId: String | undefined,
     accessToken: String | null | undefined
@@ -73,62 +69,179 @@ export const registerUploadImageToLinkedin = async (
 
     const res: TUploadRegisterResponse = await axios(config);
 
-    return res.data.value.uploadMechanism[
-        'com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'
-    ].uploadUrl;
+    return {
+        uploadUrl: res.data.value.uploadUrl,
+        asset: res.data.value.document,
+    };
+};
+/**
+ * This function gets the url to upload an image to LinkedIn
+ */
+export const registerUploadDocumentToLinkedin = async (
+    providerAccountId: String | undefined,
+    accessToken: String | null | undefined
+) => {
+    const registerUploadUrl =
+        'https://api.linkedin.com/rest/documents?action=initializeUpload';
+
+    const registerUploadBody = {
+        initializeUploadRequest: {
+            owner: `urn:li:person:${providerAccountId}`,
+        },
+    };
+
+    const config = {
+        method: 'post',
+        url: registerUploadUrl,
+        headers: {
+            'LinkedIn-Version': '202403',
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            // Cookie: 'lidc="b=VB85:s=V:r=V:a=V:p=V:g=5482:u=10:x=1:i=1709636502:t=1709720825:v=2:sig=AQEdKe_Tph37ThQKHeYqJGIgReeL6-NO"; bcookie="v=2&bc3682ee-a45b-45f5-8b9a-7d73f17ea686"',
+            // 'X-Restli-Protocol-Version': '2.0.0',
+        },
+        data: JSON.stringify(registerUploadBody),
+    };
+
+    console.log('config registerUploadDocumentToLinkedin:', config);
+    let res: TUploadRegisterResponse;
+
+    try {
+        res = await axios(config);
+    } catch (error) {
+        console.error('Error registering document to LinkedIn:');
+        throw error;
+    }
+
+    return {
+        uploadUrl: res.data.value.uploadUrl,
+        asset: res.data.value.document,
+    };
 };
 
 export const uploadImageToLinkedin = async (
     uploadUrl: string,
-    image: string
+    imageUrl: string,
+    accessToken: String | null | undefined
 ) => {
-    return;
+    let imageData;
+
+    try {
+        const response = await axios.get(imageUrl, {
+            responseType: 'arraybuffer', // This ensures the data is returned as Buffer
+        });
+
+        imageData = response.data;
+    } catch (error) {
+        console.error(
+            'Unable to retrieve image data from the provided URL ##1'
+        );
+        throw error;
+    }
+
+    // Upload the image data to LinkedIn
+    const config = {
+        method: 'post',
+        url: uploadUrl,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/octet-stream',
+            Cookie: 'lidc="b=VB85:s=V:r=V:a=V:p=V:g=5482:u=10:x=1:i=1709636502:t=1709720825:v=2:sig=AQEdKe_Tph37ThQKHeYqJGIgReeL6-NO"; bcookie="v=2&bc3682ee-a45b-45f5-8b9a-7d73f17ea686"',
+            'X-Restli-Protocol-Version': '2.0.0',
+        },
+        data: imageData,
+    };
+
+    console.log('config:', config);
+
+    try {
+        const res = await axios(config);
+        console.log('Image uploaded to LinkedIn!:', res);
+        return res.status;
+    } catch (error) {
+        console.error('Unable to upload image to LinkedIn. ##2');
+        throw error;
+    }
 };
 
 export const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,
-    accessToken: String | null | undefined
+    accessToken: String | null | undefined,
+    title: string,
+    asset?: string
 ): Promise<ResData> => {
     try {
         console.log('Posting on LinkedIn postonlinkedin function');
         const body = {
             author: `urn:li:person:${providerAccountId}`,
-            lifecycleState: 'PUBLISHED',
-            specificContent: {
-                'com.linkedin.ugc.ShareContent': {
-                    shareCommentary: {
-                        text: content,
-                    },
-                    shareMediaCategory: 'NONE',
+            commentary: content,
+            visibility: 'PUBLIC',
+            distribution: {
+                feedDistribution: 'MAIN_FEED',
+                targetEntities: [],
+                thirdPartyDistributionChannels: [],
+            },
+            content: {
+                media: {
+                    title: title,
+                    id: asset,
                 },
             },
-            visibility: {
-                'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-            },
+            lifecycleState: 'PUBLISHED',
+            isReshareDisabledByAuthor: false,
         };
+
+        // {
+        //     author: documentOwner.data.owner,
+        //     // author: `urn:li:person:${providerAccountId}`,
+        //     lifecycleState: 'PUBLISHED',
+        //     specificContent: {
+        //         'com.linkedin.ugc.ShareContent': {
+        //             shareCommentary: {
+        //                 text: content,
+        //             },
+        //             shareMediaCategory: asset ? 'DOCUMENT' : 'NONE',
+        //             media: asset
+        //                 ? [
+        //                       {
+        //                           status: 'READY',
+        //                           description: {
+        //                               text: 'Image',
+        //                           },
+        //                           media: asset,
+        //                           title: {
+        //                               text: 'Image',
+        //                           },
+        //                       },
+        //                   ]
+        //                 : [],
+        //         },
+        //     },
+        //     visibility: {
+        //         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
+        //     },
+        // };
 
         const config = {
             method: 'post',
-            url: process.env.LINKEDIN_POST_URL,
+            url: 'https://api.linkedin.com/rest/posts', // REVIEW: why is not the url on the .env file?
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
                 Cookie: 'lidc="b=VB85:s=V:r=V:a=V:p=V:g=5482:u=10:x=1:i=1709636502:t=1709720825:v=2:sig=AQEdKe_Tph37ThQKHeYqJGIgReeL6-NO"; bcookie="v=2&bc3682ee-a45b-45f5-8b9a-7d73f17ea686"',
                 'X-Restli-Protocol-Version': '2.0.0',
+                'LinkedIn-Version': '202403',
             },
             data: JSON.stringify(body),
         };
-
+        console.log('Just before axios call');
         const response = await axios(config);
 
-        console.log(
-            'Post successfully posted on LinkedIn:',
-            response?.data?.id
-        );
         return response;
     } catch (error) {
-        console.error('Error posting on LinkedIn:', error);
+        console.error('Error posting on LinkedIn ***:');
+        console.error(error);
         throw error;
     }
 };
@@ -217,8 +330,6 @@ export const addTime = async (time: string, settingsId: string) => {
     });
 
     revalidatePath('/app/schedule');
-    // validateData();
-
     return updatedSettings;
 };
 
@@ -228,6 +339,16 @@ export const schedulePost = async (
     date: Date,
     time: string
 ) => {
+    let [timeString, period] = time.split(' ');
+
+    // Parse the time from format 'hh:mmPM' to 24h format and set it to the date
+    let parsedTime = parse(time, 'hh:mm aa', new Date());
+
+    const hours = parsedTime.getHours();
+    const minutes = parsedTime.getMinutes();
+
+    date.setHours(hours, minutes);
+
     const newSchedule = db.scheduledPost.create({
         data: {
             linkedinPostId: postId,
@@ -264,4 +385,29 @@ export const deletePost = async (postId: string) => {
     revalidatePath('/app/schedule');
 
     return deletedPost;
+};
+
+export const findPostsByUserId = async (userId: string) => {
+    return db.linkedinPost.findMany({
+        where: {
+            userId: userId,
+        },
+        include: {
+            scheduledPost: true,
+        },
+    });
+};
+
+export const getScheduleByUserId = async (userId: string) => {
+    const userSettings = await db.settings.findFirst({
+        where: {
+            user: {
+                is: {
+                    id: userId,
+                },
+            },
+        },
+    });
+
+    return userSettings?.schedule;
 };

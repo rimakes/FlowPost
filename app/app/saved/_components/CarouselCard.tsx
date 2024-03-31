@@ -12,6 +12,7 @@ import {
     deleteLinkedinPost,
 } from '@/app/_actions/writter-actions';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 type CarouselCardProps = { carousel: TCarousel; className?: string };
 export function CarouselCard({ carousel, className }: CarouselCardProps) {
@@ -32,12 +33,26 @@ export function CarouselCard({ carousel, className }: CarouselCardProps) {
                 className='flex flex-col gap-2'
                 onClick={() => router.push(`/app/carrousel/${carousel.id}`)}
             >
-                <h2 className='text-center text-lg font-bold grow'>
-                    {carousel.slides[0].title?.content}
-                </h2>
                 <div>
-                    <p>{carousel.slides[0].paragraphs[0]?.content}</p>
-                    <p>{carousel.slides[0].tagline?.content}</p>
+                    {!carousel.thumbnailDataUrl && (
+                        <>
+                            <h2 className='text-center text-lg font-bold grow'>
+                                {carousel.slides[0].title?.content}
+                            </h2>
+                            <p>{carousel.slides[0].paragraphs[0]?.content}</p>
+                            <p>{carousel.slides[0].tagline?.content}</p>
+                        </>
+                    )}
+                    {carousel.thumbnailDataUrl && (
+                        <div className='h-60 relative m-auto'>
+                            <Image
+                                src={carousel.thumbnailDataUrl}
+                                alt=''
+                                fill
+                                className='object-contain'
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
             <CarouselActions carousel={carousel} className='mt-auto' />

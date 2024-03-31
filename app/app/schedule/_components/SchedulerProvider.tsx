@@ -1,22 +1,23 @@
 'use client';
 
-import { LinkedinPost } from '@prisma/client';
+import { TLinkedinPost, TScheduledPost } from '@/types/types';
+import { LinkedinPost, Prisma } from '@prisma/client';
 import { ReactNode, createContext, useState } from 'react';
 
 type SchedulerProviderProps = {
-    userPosts: any;
+    userPosts: (LinkedinPost & { scheduledPost: TScheduledPost[] })[];
     children: ReactNode;
 };
 
 const currentDate = new Date();
-const standardizedDate = new Date(
+const standardizedDate = new Date( // so we get the start of the day
     currentDate.getFullYear(),
     currentDate.getMonth(),
     currentDate.getDate()
 );
 
 const INITIAL_STATE = {
-    userPosts: {} as LinkedinPost[],
+    userPosts: {} as (LinkedinPost & { scheduledPost: TScheduledPost[] })[],
     onNextWeek: () => {},
     onPrevWeek: () => {},
     startDate: standardizedDate,
@@ -32,14 +33,12 @@ export function SchedulerProvider({
     const [startDate, setStartDate] = useState<Date>(() => standardizedDate);
 
     const onNextWeek = () => {
-        console.log('next week!!!');
         const newStartDate = new Date(startDate);
         newStartDate.setDate(newStartDate.getDate() + 7);
         setStartDate(newStartDate);
     };
 
     const onPrevWeek = () => {
-        console.log('prev week!!!');
         const newStartDate = new Date(startDate);
         newStartDate.setDate(newStartDate.getDate() - 7);
         setStartDate(newStartDate);

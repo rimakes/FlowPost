@@ -30,10 +30,11 @@ import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 
-export async function createLinkedinPost(
+export async function upsertLinkedinPost(
     post: string,
     id: string,
-    authorId: string
+    authorId: string,
+    carouselId?: string
 ) {
     let linkedinPost: TLinkedinPost;
     console.log('Guardando post');
@@ -48,6 +49,9 @@ export async function createLinkedinPost(
                     pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
                 },
                 userId: authorId,
+                carousel: carouselId
+                    ? { connect: { id: carouselId } }
+                    : undefined,
             },
         });
     } else {
@@ -64,6 +68,9 @@ export async function createLinkedinPost(
                     pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
                 },
                 userId: authorId,
+                carousel: carouselId
+                    ? { connect: { id: carouselId } }
+                    : undefined,
             },
         });
     }
@@ -242,7 +249,18 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 }
 
 export async function upsertCarousel(carousel: TCarousel, userId: string) {
-    const { author, settings, slides } = carousel;
+    const {
+        author,
+        settings,
+        slides,
+        thumbnailDataUrl,
+        pdfUrl,
+        publicId,
+        title,
+    } = carousel;
+
+    console.log('upserting');
+    console.log({ title });
 
     if (carousel.id === 'new' || carousel.id === undefined) {
         const newCarousel = await db.carousel.create({
@@ -250,7 +268,15 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
                 slides,
                 settings,
                 author,
-                userId,
+                User: {
+                    connect: {
+                        id: userId,
+                    },
+                },
+                thumbnailDataUrl,
+                pdfUrl,
+                publicId,
+                title,
             },
         });
 
@@ -264,8 +290,15 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
         data: {
             slides,
             settings,
-            userId,
+            User: {
+                connect: {
+                    id: userId,
+                },
+            },
             author,
+            thumbnailDataUrl,
+            pdfUrl,
+            title,
         },
     });
 

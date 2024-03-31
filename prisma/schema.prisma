@@ -155,6 +155,8 @@ model LinkedinPost {
     scheduledPost ScheduledPost[] // One-to-many relation: One LinkedIn post can be part of multiple scheduled posts
     User          User?           @relation(fields: [userId], references: [id])
     userId        String?         @db.ObjectId
+
+    carousel Carousel[] //REVIEW: Prisma does not support nullable unique (as should be the linkedinPostId in the Carousel model to make a 1-to-1 relationship), so we are using 1-to-m for now
 }
 
 type DisplayableText {
@@ -215,14 +217,22 @@ type FontPalette {
 }
 
 model Carousel {
-    id         String           @id @default(auto()) @map("_id") @db.ObjectId
-    slides     Slide[]
+    id               String           @id @default(auto()) @map("_id") @db.ObjectId
+    slides           Slide[]
+    pdfUrl           String?
+    publicId         String?
+    thumbnailDataUrl String?
+    createdAt        DateTime         @default(now())
+    updatedAt        DateTime         @updatedAt
+    title            String?
     // Author is an embedded type. We are not using brand, because the user may want to create a carousel that is not related to a brand he/she has created previously (aka, he may want to create a one-off carousel)
-    author     Author
-    swipeLabel String           @default("Desliza")
-    settings   CarouselSettings
-    User       User?            @relation(fields: [userId], references: [id])
-    userId     String?          @db.ObjectId
+    author           Author
+    swipeLabel       String           @default("Desliza")
+    settings         CarouselSettings
+    User             User?            @relation(fields: [userId], references: [id])
+    userId           String?          @db.ObjectId
+    linkedinPost     LinkedinPost?    @relation(fields: [linkedinPostId], references: [id])
+    linkedinPostId   String?          @db.ObjectId
 }
 
 type CarouselSettings {
@@ -233,7 +243,7 @@ type CarouselSettings {
     backgroundPattern String       @default("none")
 
     showSwipeLabel        Boolean     @default(true)
-    alternateColors       Boolean     @default(true)
+    alternateColors       Boolean     @default(false)
     showCounter           Boolean     @default(true)
     showAuthor            Boolean     @default(true)
     showDecoration        Boolean     @default(true)

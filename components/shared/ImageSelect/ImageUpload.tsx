@@ -33,7 +33,7 @@ export const ImageUpload = ({ onImageSelect }: ImageUploadProps) => {
 
         const cloudinaryResponse = await uploadFileToCloudinary(formData);
         console.log('cld response!', cloudinaryResponse);
-        const uploadedImageUrl = cloudinaryResponse as string;
+        const uploadedImageUrl = cloudinaryResponse.url as string;
         setStatus('success');
         // router.refresh();
         toast.success('Imagen subida correctamente');

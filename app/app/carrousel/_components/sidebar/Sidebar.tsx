@@ -43,6 +43,8 @@ import {
 } from '@/components/ui/collapsible';
 import { useSession } from 'next-auth/react';
 import { fontTypeMap } from '@/config/const';
+import { ContinueButton } from './ContinueButton';
+import { toCanvas, toSvg } from 'html-to-image';
 
 type CarouselSidebarProps = {
     brands: TBrand[];
@@ -98,6 +100,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         editProfilePicture,
         editName,
         editHandle,
+        arrayOfRefs,
     } = useContext(CarouselContext);
 
     const router = useRouter();
@@ -214,8 +217,10 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <div className='flex flex-col justify-between gap-2 mt-8'>
                 <Button
                     onClick={async () => {
-                        console.log(carousel);
-                        console.log(carousel.author.pictureUrl);
+                        const canvas = await toCanvas(arrayOfRefs[0].current!);
+                        const dataUrl = canvas.toDataURL();
+                        carousel.thumbnailDataUrl = dataUrl;
+
                         const savedCarousel = await upsertCarousel(
                             carousel,
                             data?.user.id!
@@ -229,6 +234,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     <Save size={20} className='ml-2' />
                 </Button>
                 <DownloadButton />
+                <ContinueButton />
             </div>
         </div>
     );

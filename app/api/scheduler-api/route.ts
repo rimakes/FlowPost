@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import {
     postOnLinkedIn,
+    registerUploadDocumentToLinkedin,
     registerUploadImageToLinkedin,
+    uploadImageToLinkedin,
 } from '../../_actions/schedule-actions';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import axios from 'axios';
@@ -41,6 +43,8 @@ export async function GET(req: NextRequest) {
 
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
+            console.log('Post to be published', post);
+
             const userAccount = await db.account.findFirst({
                 where: {
                     userId: post?.userId,
@@ -50,24 +54,53 @@ export async function GET(req: NextRequest) {
 
             if (!userAccount) return;
 
-            console.log('Posting on LinkedIn');
+            console.log('search if there is a carousel for this post');
+
+            const carousel = await db.carousel.findFirst({
+                where: {
+                    linkedinPostId: post.linkedinPostId,
+                },
+            });
+
+            let asset;
+            // console.log('Carousel', carousel?.pdfUrl);
+            if (carousel?.pdfUrl) {
+                const documentRegister = await registerUploadDocumentToLinkedin(
+                    userAccount?.providerAccountId,
+                    userAccount?.access_token
+                );
+
+                const { uploadUrl } = documentRegister;
+                asset = documentRegister.asset;
+
+                await uploadImageToLinkedin(
+                    uploadUrl,
+                    carousel?.pdfUrl!,
+                    userAccount?.access_token
+                );
+            }
+
             const posted: { data: { id: string } } = await postOnLinkedIn(
                 userAccount?.providerAccountId,
                 post?.linkedinPost?.content,
-                userAccount?.access_token
+                userAccount?.access_token,
+                carousel?.title!,
+                asset
             );
 
-            if (posted?.data?.id && post?.linkedinPostId !== null) {
-                await db.linkedinPost.update({
-                    where: {
-                        id: post?.linkedinPostId,
-                    },
-                    data: {
-                        published: true,
-                        publishedAt: new Date(),
-                    },
-                });
-            }
+            // if (posted?.data?.id && post?.linkedinPostId !== null) {
+            //     // if post is successfully posted on linkedin
+            //     await db.linkedinPost.update({
+            //         // update the linkedin post to published
+            //         where: {
+            //             id: post?.linkedinPostId,
+            //         },
+            //         data: {
+            //             published: true,
+            //             publishedAt: new Date(),
+            //         },
+            //     });
+            // }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 200 });
     } catch (error) {

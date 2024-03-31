@@ -75,6 +75,8 @@ const INITIAL_STATE = {
     editBigCharacter: (newCharacter: string) => {},
     editImage: (newImage: string) => {},
     editParagraphN: (index: number, newParagraph: string) => {},
+    setPdfUrl: (url: string) => {},
+    setCarousel: (carousel: TCarousel | ((prev: TCarousel) => TCarousel)) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -426,9 +428,17 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
+    const setPdfUrl = (url: string) => {
+        const newCarousel = deepCopy(carousel);
+        newCarousel.pdfUrl = url;
+        setCarousel(newCarousel);
+    };
+
     return (
         <CarouselContext.Provider
             value={{
+                setCarousel,
+                setPdfUrl,
                 editImage,
                 editBigCharacter,
                 editHeader,

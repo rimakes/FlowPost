@@ -109,7 +109,8 @@ export const getVoiceToneById = (id: number) => {
 };
 
 export const capitalizeFirstLetter = (string: string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    const newString = string.toLowerCase();
+    return newString.charAt(0).toUpperCase() + newString.slice(1);
 };
 
 export const uploadFileToCloudinary = async (file: File) => {};
@@ -149,7 +150,7 @@ export async function retryAsyncFunction<T>(
  * }
  * @param schedule The schedule to load, as an array of TSlots
  */
-export const loadSchedulePerTime = (schedule: TSlot[]) => {
+export const loadWeekdaysPerTime = (schedule: TSlot[]) => {
     const timeMap: TimeMap = {};
     schedule.forEach((slot) => {
         const previousArray = timeMap[`${slot.time}`] || [];
@@ -159,12 +160,30 @@ export const loadSchedulePerTime = (schedule: TSlot[]) => {
     return timeMap;
 };
 
+/**
+ * Load the schedule into a day map of the form:
+ * {
+ * 'monday': ['10:00', '11:00'],
+ * 'tuesday': ['10:00', '11:00'],
+ * ...
+ * }
+ */
 export const loadSchedulePerDay = (schedule: TSlot[]) => {
     const dayMap: DayMap = {};
     schedule.forEach((slot) => {
-        const previousArray = (dayMap[slot.dayOfTheWeek] || []) as string[];
-        previousArray.push(slot.time);
-        dayMap[slot.dayOfTheWeek] = previousArray;
+        dayMap[slot.dayOfTheWeek] && dayMap[slot.dayOfTheWeek].length > 0
+            ? dayMap[slot.dayOfTheWeek].push(slot.time)
+            : (dayMap[slot.dayOfTheWeek] = [slot.time]);
     });
     return dayMap;
+};
+
+export const fromPdfUrlToThumnailUrl = (
+    pdfId: string,
+    page: number
+    // width = 200,
+    // height = 250
+) => {
+    return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_fill,pg_${page}/${pdfId}.jpg`;
+    // return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/w_${width},h_${height},c_fill,pg_${page}/${pdfId}.jpg`;
 };

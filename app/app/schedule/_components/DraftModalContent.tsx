@@ -42,6 +42,12 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
     const { userPosts } = useContext(SchedulerContext);
     const { data } = useSession();
 
+    const postsWithoutSchedule = userPosts.filter(
+        (post) => post.scheduledPost.length === 0
+    );
+
+    const [hours, minutes] = time.split(':').map((t) => parseInt(t));
+
     return (
         <div className='relative w-full mx-auto overflow-hidden bg-white rounded-xl'>
             <div className='py-5'>
@@ -54,7 +60,7 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
             <div>
                 <div className='overflow-y-auto max-h-[80vh] lg:max-h-[80vh]'>
                     <div className='relative gap-4 columns-1 md:columns-2 sm:gap-6 first:mt-1'>
-                        {userPosts.map((post, key) => {
+                        {postsWithoutSchedule.map((post, key) => {
                             return (
                                 <div
                                     key={key}
@@ -67,15 +73,20 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                         <Separator />
                                         <Button
                                             onClick={() => {
+                                                const scheduleDate = new Date(
+                                                    date
+                                                );
+                                                scheduleDate.setHours(
+                                                    hours,
+                                                    minutes
+                                                );
                                                 schedulePost(
                                                     post.id,
                                                     data?.user.id!,
-                                                    date,
-                                                    // new Date(),
+                                                    scheduleDate,
                                                     time
                                                 );
                                                 onSelect();
-                                                console.log('post.id', post.id);
                                             }}
                                             variant={'outline'}
                                         >

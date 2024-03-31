@@ -2,18 +2,22 @@ import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
 import { PostWritterResult } from '../_components/GeneratedPost';
 import { PostWritterContextProvider } from '../_components/PostWritterProvider';
-import { TLinkedinPost } from '@/types/types';
+import { TCarousel, TLinkedinPost } from '@/types/types';
 import { LinkedinPost } from './_components/LinkedinPost';
 import Editor from '@/components/editor/editor';
+import { db } from '@/lib/prisma';
+import { notFound } from 'next/navigation';
 
 type PostWritterPageProps = {
     params: {
         postId: string;
     };
+    searchParams: any;
 };
 
 export default async function PostWritterPage({
     params,
+    searchParams,
 }: PostWritterPageProps) {
     const postId = params.postId;
 
@@ -42,6 +46,24 @@ export default async function PostWritterPage({
         }
     }
 
+    let carouselId = searchParams['cid'] as string;
+
+    console.log('carouselId', carouselId);
+    let carousel: TCarousel = {} as TCarousel;
+    if (carouselId) {
+        try {
+            carousel = (await db.carousel.findUnique({
+                where: {
+                    id: carouselId,
+                },
+            })) as TCarousel;
+            console.log('carousel', carousel);
+        } catch (error) {
+            console.error('Error getting carousel', error);
+            notFound();
+        }
+    }
+
     return (
         <>
             <Heading className='mt-6' title='Edita tu post' subtitle='' />
@@ -53,7 +75,10 @@ export default async function PostWritterPage({
                         isEditable={true}
                         showEditableSwitch={false}
                     />
-                    <LinkedinPost className='flex-1 mx-auto max-h-[50%]' />
+                    <LinkedinPost
+                        className='flex-1 mx-auto'
+                        carousel={carousel}
+                    />
                 </PostWritterContextProvider>
             </div>
         </>

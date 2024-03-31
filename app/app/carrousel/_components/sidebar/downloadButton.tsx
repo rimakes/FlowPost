@@ -10,15 +10,20 @@ import {
     DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { CarouselContext } from '../ContextProvider';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/spinner';
 import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
+import { cn } from '@/lib/utils';
 
 type ImageFormat = 'pdf' | 'svg';
 
-export function DownloadButton({}) {
+type DownloadButtonProps = {
+    className?: string;
+};
+
+export function DownloadButton({ className }: DownloadButtonProps) {
     const [status, setStatus] = useState<TStatus>('idle');
     const { arrayOfRefs } = useContext(CarouselContext);
 
@@ -70,12 +75,12 @@ export function DownloadButton({}) {
 
     const downloadButton =
         status === 'loading' ? (
-            <Button disabled={true}>
+            <Button disabled={true} className={cn(``, className)}>
                 Descargando...
                 <Spinner className='ml-2' />
             </Button>
         ) : (
-            <Button>
+            <Button className={cn(``, className)}>
                 Descargar
                 <Download className='ml-2' />
             </Button>

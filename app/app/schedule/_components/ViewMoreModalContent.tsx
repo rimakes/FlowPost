@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { TLinkedinPost } from '@/types/types';
+import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import { LinkedinPost } from '@prisma/client';
 import { PenSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 type ViewMoreModalContentProps = {
-    post: LinkedinPost;
+    post: LinkedinPost & { scheduledPost: TScheduledPost[] };
 };
 export function ViewMoreModalContent({ post }: ViewMoreModalContentProps) {
     const router = useRouter();
