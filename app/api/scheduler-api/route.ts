@@ -92,6 +92,10 @@ export async function GET(req: NextRequest) {
 
             console.log('Posted STATUS', posted.status);
 
+            return NextResponse.json(
+                { message: 'Scheduled on Linkedin' },
+                { status: posted.status }
+            );
             if (posted.status === 201 && post?.linkedinPostId !== null) {
                 // if post is successfully posted on linkedin
                 await db.linkedinPost.update({
@@ -104,10 +108,6 @@ export async function GET(req: NextRequest) {
                         publishedAt: new Date(),
                     },
                 });
-                return NextResponse.json(
-                    { message: 'Scheduled on Linkedin' },
-                    { status: 201 }
-                );
             }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
