@@ -106,7 +106,7 @@ export async function GET(req: NextRequest) {
                 });
             }
         });
-        return NextResponse.json({ message: 'Scheduled' }, { status: 200 });
+        return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
     } catch (error) {
         console.log(error);
         return NextResponse.json(
