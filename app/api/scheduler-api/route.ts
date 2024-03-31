@@ -56,11 +56,14 @@ export async function GET(req: NextRequest) {
 
             console.log('search if there is a carousel for this post 22.29');
 
-            const carousel = await db.carousel.findFirst({
-                where: {
-                    linkedinPostId: post.linkedinPostId,
-                },
-            });
+            let carousel;
+            try {
+                carousel = await db.carousel.findFirst({
+                    where: { linkedinPostId: post.linkedinPostId },
+                });
+            } catch (error) {
+                console.error('Error fetching Carousel:', error);
+            }
 
             console.log('Carousel', carousel);
 
