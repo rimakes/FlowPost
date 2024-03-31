@@ -15,7 +15,12 @@ export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
     const heading = carousel.slides[slideNumber].slideHeading;
 
     return (
-        <div className={cn(`flex justify-between`, className)}>
+        <div
+            className={cn(
+                `slide-header flex justify-between absolute top-4 left-0 w-full px-8`,
+                className
+            )}
+        >
             <SimpleEditor
                 defaultValue={heading?.content}
                 onDebouncedUpdate={editHeader}

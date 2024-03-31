@@ -32,6 +32,7 @@ export function LinkedinPost({ className, carousel }: LinkedinPostProps) {
     const thumbnailUrl = carousel.publicId
         ? fromPdfUrlToThumnailUrl(carousel.publicId!, 1)
         : undefined;
+
     return (
         <div
             className={cn(
@@ -44,10 +45,7 @@ export function LinkedinPost({ className, carousel }: LinkedinPostProps) {
             <Separator />
             <PostHeader post={post} />
             <PostContent post={post} />
-            <PostImage
-                dataUrl={carousel?.thumbnailDataUrl!}
-                pdfUrl={thumbnailUrl}
-            />
+            <PostImage imageUrl={thumbnailUrl!} />
             <StatsBar />
             <Separator />
             <PostActionsBar />
@@ -65,7 +63,7 @@ const Comments = () => {
                     <div className='relative rounded-full h-10 w-10'>
                         <Image
                             src='/images/placeholders/user.png'
-                            layout='fill'
+                            fill
                             alt='profile'
                         />
                     </div>
@@ -96,11 +94,7 @@ const AddCommentBar = () => {
     return (
         <div className='flex gap-2 items-center'>
             <div className='relative rounded-full h-12 w-12 bg-muted'>
-                <Image
-                    src='/images/placeholders/user.png'
-                    layout='fill'
-                    alt='profile'
-                />
+                <Image src='/images/placeholders/user.png' fill alt='profile' />
             </div>
             <div className='flex gap-2 items-center justify-between w-full border border-inherit text-primary/50 text-sm rounded-full p-3'>
                 <p>Add a comment...</p>
@@ -194,31 +188,18 @@ const StatsBar = () => {
     );
 };
 
-const PostImage = ({
-    dataUrl,
-    pdfUrl,
-}: {
-    dataUrl: string;
-    pdfUrl: string | undefined;
-}) => {
+const PostImage = ({ imageUrl }: { imageUrl: string }) => {
+    if (!imageUrl) {
+        return null;
+    }
     return (
         <div className='!aspect-[1080/1350]  w-[calc(100%+1rem)] -ml-2 bg-muted relative shrink-0'>
-            {/* {dataUrl && (
-                <Image
-                    src={dataUrl}
-                    layout='fill'
-                    alt='post image'
-                    className='object-contain'
-                />
-            )} */}
-            {pdfUrl && (
-                <Image
-                    src={pdfUrl}
-                    layout='fill'
-                    alt='post image'
-                    className='object-contain'
-                />
-            )}
+            <Image
+                src={imageUrl}
+                fill
+                alt='post image'
+                className='object-fill'
+            />
         </div>
     );
 };
@@ -232,7 +213,7 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
     );
     const ContentClosed = (
         <>
-            <p className='text-primary line-clamp-3 whitespace-pre-wrap'>
+            <p className='text-primary line-clamp-3 whitespace-pre-wrap mb-6'>
                 {post.content}
             </p>
             <span
@@ -267,12 +248,8 @@ const PostHeader = ({ post }: { post: TLinkedinPost }) => {
     return (
         <div className='flex gap-2 items-center justify-between'>
             <div className='flex gap-2'>
-                <div className=' relative h-20 w-20 bg-muted rounded-full'>
-                    <Image
-                        src={post.author.pictureUrl}
-                        layout='fill'
-                        alt='profile'
-                    />
+                <div className=' relative h-20 w-20 bg-muted rounded-full overflow-hidden'>
+                    <Image src={post.author.pictureUrl} fill alt='profile' />
                 </div>
                 <div className='flex flex-col gap-1'>
                     <div className='flex gap-1 items-center'>
@@ -303,7 +280,7 @@ const EngagementBar = () => {
                 <div className='relative rounded-full h-7 w-7 bg-muted'>
                     <Image
                         src='/images/placeholders/user.png'
-                        layout='fill'
+                        fill
                         alt='profile'
                     />
                 </div>

@@ -4,23 +4,17 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { GalleryHorizontal, Save } from 'lucide-react';
+import { Save } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from './PostWritterProvider';
 import { useSession } from 'next-auth/react';
-import {
-    createLinkedinCarousel,
-    upsertLinkedinPost,
-} from '@/app/_actions/writter-actions';
+import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
-import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
+import { useSearchParams } from 'next/navigation';
 import { TStatus } from '@/types/types';
-import { Progress } from '@/components/ui/progress';
-import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
-import Editor from '@/components/editor/editor';
 
 type GeneratedPostProps = {
     className?: string;
@@ -30,8 +24,6 @@ type GeneratedPostProps = {
     setEditDetailsModal?: any;
     showEditableSwitch?: boolean;
 };
-
-type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export const PostWritterResult = ({
     className,
@@ -43,7 +35,7 @@ export const PostWritterResult = ({
 }: GeneratedPostProps) => {
     const { data } = useSession();
 
-    const [status, setStatus] = useState<Status>('idle');
+    const [status, setStatus] = useState<TStatus>('idle');
     const { post, setPost } = useContext(PostWritterContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
 
@@ -94,8 +86,7 @@ export const PostWritterResult = ({
                         label='Guardar post'
                         onClick={async () => {
                             const dbpost = await upsertLinkedinPost(
-                                post.content,
-                                post.id,
+                                post,
                                 data?.user?.id!,
                                 carouselId
                             );

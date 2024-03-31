@@ -1,14 +1,12 @@
 'use client';
 
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Button } from '@/components/ui/button';
 import { Editor } from '@tiptap/react';
 import {
     GalleryHorizontalIcon,
     ImageIcon,
     Paperclip,
     Redo2,
-    Sheet,
     Undo2,
     VideoIcon,
 } from 'lucide-react';

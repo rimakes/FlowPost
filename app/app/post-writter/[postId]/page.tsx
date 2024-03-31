@@ -7,6 +7,8 @@ import { LinkedinPost } from './_components/LinkedinPost';
 import Editor from '@/components/editor/editor';
 import { db } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
+import { getUserBrandKits } from '@/app/_actions/settings-actions';
+import { getServerSession } from 'next-auth';
 
 type PostWritterPageProps = {
     params: {
@@ -21,14 +23,17 @@ export default async function PostWritterPage({
 }: PostWritterPageProps) {
     const postId = params.postId;
 
+    const session = await getServerSession();
+    const brands = await getUserBrandKits(session?.user.id!);
+
     let post: TLinkedinPost = {
         userId: '',
         id: 'new',
         content: '',
         author: {
-            handle: 'Ricardo Sala',
-            name: 'Ricardo Sala',
-            pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+            handle: brands[0].handle,
+            name: brands[0].name,
+            pictureUrl: brands[0].imageUrl,
         },
         publishedAt: new Date(),
         published: false,
@@ -48,7 +53,6 @@ export default async function PostWritterPage({
 
     let carouselId = searchParams['cid'] as string;
 
-    console.log('carouselId', carouselId);
     let carousel: TCarousel = {} as TCarousel;
     if (carouselId) {
         try {
@@ -57,7 +61,6 @@ export default async function PostWritterPage({
                     id: carouselId,
                 },
             })) as TCarousel;
-            console.log('carousel', carousel);
         } catch (error) {
             console.error('Error getting carousel', error);
             notFound();

@@ -22,6 +22,7 @@ type IData = {
 };
 type ResData = {
     data: IData;
+    status: number;
 };
 
 type TUploadRegisterResponse = {
@@ -103,7 +104,6 @@ export const registerUploadDocumentToLinkedin = async (
         data: JSON.stringify(registerUploadBody),
     };
 
-    console.log('config registerUploadDocumentToLinkedin:', config);
     let res: TUploadRegisterResponse;
 
     try {
@@ -152,8 +152,6 @@ export const uploadImageToLinkedin = async (
         data: imageData,
     };
 
-    console.log('config:', config);
-
     try {
         const res = await axios(config);
         console.log('Image uploaded to LinkedIn!:', res);
@@ -172,7 +170,6 @@ export const postOnLinkedIn = async (
     asset?: string
 ): Promise<ResData> => {
     try {
-        console.log('Posting on LinkedIn postonlinkedin function');
         const body = {
             author: `urn:li:person:${providerAccountId}`,
             commentary: content,
@@ -192,37 +189,6 @@ export const postOnLinkedIn = async (
             isReshareDisabledByAuthor: false,
         };
 
-        // {
-        //     author: documentOwner.data.owner,
-        //     // author: `urn:li:person:${providerAccountId}`,
-        //     lifecycleState: 'PUBLISHED',
-        //     specificContent: {
-        //         'com.linkedin.ugc.ShareContent': {
-        //             shareCommentary: {
-        //                 text: content,
-        //             },
-        //             shareMediaCategory: asset ? 'DOCUMENT' : 'NONE',
-        //             media: asset
-        //                 ? [
-        //                       {
-        //                           status: 'READY',
-        //                           description: {
-        //                               text: 'Image',
-        //                           },
-        //                           media: asset,
-        //                           title: {
-        //                               text: 'Image',
-        //                           },
-        //                       },
-        //                   ]
-        //                 : [],
-        //         },
-        //     },
-        //     visibility: {
-        //         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-        //     },
-        // };
-
         const config = {
             method: 'post',
             url: 'https://api.linkedin.com/rest/posts', // REVIEW: why is not the url on the .env file?
@@ -235,7 +201,6 @@ export const postOnLinkedIn = async (
             },
             data: JSON.stringify(body),
         };
-        console.log('Just before axios call');
         const response = await axios(config);
 
         return response;
@@ -363,7 +328,6 @@ export const schedulePost = async (
 };
 
 export const unschedulePost = async (postId: string) => {
-    console.log('Deleted schedule:', postId);
     const deletedSchedule = await db.scheduledPost.deleteMany({
         where: {
             linkedinPostId: postId,

@@ -3,7 +3,10 @@
 import { GalleryHorizontal } from 'lucide-react';
 import { ButtonWithTooltip } from './ButtonWithTooltip';
 import { toast } from 'sonner';
-import { createLinkedinCarousel } from '@/app/_actions/writter-actions';
+import {
+    createLinkedinCarousel,
+    upsertLinkedinPost,
+} from '@/app/_actions/writter-actions';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { TLinkedinPost } from '@/types/types';
@@ -37,9 +40,21 @@ export function CreateCarouselButton({
             )}
             label='Crear carrusel'
             onClick={async () => {
+                let postId = post.id;
+
+                if (postId === 'new') {
+                    const dbpost = await upsertLinkedinPost(post);
+                    postId = dbpost.id;
+                }
+
                 toast.success('Creando carrusel. Espera unos segundos...');
                 setStatus('loading');
-                const newCarousel = await createLinkedinCarousel(post);
+
+                const newCarousel = await createLinkedinCarousel({
+                    ...post,
+                    id: postId,
+                });
+
                 setStatus('idle');
                 router.push(`/app/carrousel/${newCarousel.id}`);
             }}

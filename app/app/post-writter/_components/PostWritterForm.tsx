@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn, getPostTemplateById } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Sparkles } from 'lucide-react';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { VOICE_TONES, VoiceTone } from '../config/const';
@@ -29,10 +29,9 @@ import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/spinner';
 import { useSearchParams } from 'next/navigation';
-import { CreateCarouselButton } from '@/components/shared/CreateCarouselButon';
 
 const MAX_LENGTH = 1000;
-const MIN_LENGTH = 50;
+const MIN_LENGTH = 10;
 const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
 const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
 

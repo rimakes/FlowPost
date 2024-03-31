@@ -48,22 +48,24 @@ export const BigNumberSlide = ({
                     {bigCharacter}
                 </div>
             </div>
-            <SimpleEditor
-                onDebouncedUpdate={editTitle}
-                slideElement='title'
-                defaultValue={title}
-                isShown={isTittleShown}
-                style={{
-                    fontSize: '5rem',
-                }}
-            />
+            <div>
+                <SimpleEditor
+                    onDebouncedUpdate={editTitle}
+                    slideElement='title'
+                    defaultValue={title}
+                    isShown={isTittleShown}
+                    style={{
+                        fontSize: '5rem',
+                    }}
+                />
 
-            <SimpleEditor
-                onDebouncedUpdate={editTagline}
-                slideElement='tagline'
-                defaultValue={tagline}
-                isShown={isTaglineShown}
-            />
+                <SimpleEditor
+                    onDebouncedUpdate={editTagline}
+                    slideElement='tagline'
+                    defaultValue={tagline}
+                    isShown={isTaglineShown}
+                />
+            </div>
         </>
     );
 };

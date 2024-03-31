@@ -3,11 +3,9 @@ import { db } from '@/lib/prisma';
 import {
     postOnLinkedIn,
     registerUploadDocumentToLinkedin,
-    registerUploadImageToLinkedin,
     uploadImageToLinkedin,
 } from '../../_actions/schedule-actions';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
-import axios from 'axios';
 
 type NewTScheduledPost = TScheduledPost & {
     linkedinPost: TLinkedinPost;
@@ -43,7 +41,7 @@ export async function GET(req: NextRequest) {
 
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
-            console.log('Post to be published', post);
+            // console.log('Post to be published', post);
 
             const userAccount = await db.account.findFirst({
                 where: {
@@ -80,7 +78,7 @@ export async function GET(req: NextRequest) {
                 );
             }
 
-            const posted: { data: { id: string } } = await postOnLinkedIn(
+            const posted = await postOnLinkedIn(
                 userAccount?.providerAccountId,
                 post?.linkedinPost?.content,
                 userAccount?.access_token,
@@ -88,19 +86,19 @@ export async function GET(req: NextRequest) {
                 asset
             );
 
-            // if (posted?.data?.id && post?.linkedinPostId !== null) {
-            //     // if post is successfully posted on linkedin
-            //     await db.linkedinPost.update({
-            //         // update the linkedin post to published
-            //         where: {
-            //             id: post?.linkedinPostId,
-            //         },
-            //         data: {
-            //             published: true,
-            //             publishedAt: new Date(),
-            //         },
-            //     });
-            // }
+            if (posted.status === 201 && post?.linkedinPostId !== null) {
+                // if post is successfully posted on linkedin
+                await db.linkedinPost.update({
+                    // update the linkedin post to published
+                    where: {
+                        id: post?.linkedinPostId,
+                    },
+                    data: {
+                        published: true,
+                        publishedAt: new Date(),
+                    },
+                });
+            }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 200 });
     } catch (error) {

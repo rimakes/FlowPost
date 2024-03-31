@@ -1,14 +1,10 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import { retryAsyncFunction, wait } from '@/lib/utils';
-import { Pure, TCarousel, TLinkedinPost, TSlide } from '@/types/types';
-import { LinkedinPost, BlogPost, Prisma } from '@prisma/client';
-import { MutableRefObject } from 'react';
+import { retryAsyncFunction } from '@/lib/utils';
+import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
 import fs from 'fs';
 import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
-import path from 'path';
-import cloudinary from 'cloudinary';
 import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { promptGenerateCarousel } from '../app/saved/prompts';
@@ -20,10 +16,8 @@ import {
     ImageAndTextHorizontalSchema,
     ListSlideSchema,
     OnlyTextSlideSchema,
-    SlideSchemaPrompt,
 } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
-import image from 'next/image';
 import axios from 'axios';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
@@ -31,22 +25,25 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 
 export async function upsertLinkedinPost(
-    post: string,
-    id: string,
-    authorId: string,
+    post: TLinkedinPost,
+    authorId?: string,
     carouselId?: string
 ) {
+    const {
+        id,
+        content,
+        author: { handle, name, pictureUrl },
+    } = post;
+
     let linkedinPost: TLinkedinPost;
-    console.log('Guardando post');
     if (id === 'new') {
-        console.log('El post es nuevo');
         linkedinPost = await db.linkedinPost.create({
             data: {
-                content: post,
+                content,
                 author: {
-                    handle: 'Ricardo Sala',
-                    name: 'Ricardo Sala',
-                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                    handle,
+                    name,
+                    pictureUrl, // placeholder or the image of the user
                 },
                 userId: authorId,
                 carousel: carouselId
@@ -55,17 +52,16 @@ export async function upsertLinkedinPost(
             },
         });
     } else {
-        console.log('El post es existente');
         linkedinPost = await db.linkedinPost.update({
             where: {
                 id: id,
             },
             data: {
-                content: post,
+                content,
                 author: {
-                    handle: 'Ricardo Sala',
-                    name: 'Ricardo Sala',
-                    pictureUrl: '/images/placeholders/user.png', // placeholder or the image of the user
+                    handle,
+                    name,
+                    pictureUrl, // placeholder or the image of the user
                 },
                 userId: authorId,
                 carousel: carouselId
@@ -105,9 +101,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
         streaming: true,
         callbacks: [
             {
-                handleLLMNewToken(token) {
-                    // console.log(token);
-                },
+                handleLLMNewToken(token) {},
             },
         ],
     });
@@ -131,8 +125,6 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 
     const chain = RunnableSequence.from([promptTemplate, model, parser]);
 
-    console.log('Creating carousel...');
-
     const fn = () =>
         chain.invoke(
             {
@@ -143,7 +135,6 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
         );
 
     const generatedSlides = await retryAsyncFunction(fn, 3, 1000);
-    console.log('SLIDES!!!!', generatedSlides);
 
     // Check if in the slides there is one that requires an image, and if so get the query
     const imageSlide = generatedSlides.findIndex(
@@ -165,7 +156,6 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
     });
 
     const formattedSlides: TSlide[] = generatedSlides.map((slide) => {
-        console.log('slide', slide);
         return {
             slideHeading: { content: slide.title, isShown: true },
             listFirstItem: 1,
@@ -242,6 +232,11 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                 aspectRatio: 'PORTRAIT',
                 backgroundPattern: 'Bubbles',
             },
+            linkedinPost: {
+                connect: {
+                    id: post.id,
+                },
+            },
         },
     });
 
@@ -299,6 +294,7 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
             thumbnailDataUrl,
             pdfUrl,
             title,
+            publicId,
         },
     });
 

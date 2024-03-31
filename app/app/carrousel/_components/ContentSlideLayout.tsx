@@ -72,7 +72,7 @@ export const ContentSlideLayout = forwardRef<
             <div
                 ref={ref}
                 className={cn(
-                    `slide border-0 border-border p-6 text-[0.75em] relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-between isolate relative`,
+                    `slide border-0 border-border p-6 text-[0.75em] relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-center isolate relative`,
                     className,
                     isActive
                         ? ''

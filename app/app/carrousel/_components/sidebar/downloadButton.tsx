@@ -80,7 +80,7 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                 <Spinner className='ml-2' />
             </Button>
         ) : (
-            <Button className={cn(``, className)}>
+            <Button className={cn(``, className)} variant={'secondary'}>
                 Descargar
                 <Download className='ml-2' />
             </Button>

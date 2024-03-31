@@ -46,7 +46,11 @@ export function ContinueButton({}) {
     if (arrayOfRefs.length === 0) return null;
 
     const onAsignToPost = () => {
-        router.push(`/app/post-writter/new?cid=${carousel.id}`);
+        carousel.linkedinPostId
+            ? router.push(
+                  `/app/post-writter/${carousel.linkedinPostId}?cid=${carousel.id}`
+              )
+            : router.push(`/app/post-writter/new?cid=${carousel.id}`);
     };
 
     const onCarouselLoad = async () => {
@@ -135,7 +139,7 @@ export function ContinueButton({}) {
                     <Label>Título del carrusel</Label>
                     <Input
                         placeholder='Como crear hooks de linkedin en 5 pasos'
-                        value={carousel.title!}
+                        value={carousel.title || ''}
                         onChange={(e) =>
                             setCarousel({ ...carousel, title: e.target.value })
                         }
@@ -153,6 +157,7 @@ export function ContinueButton({}) {
                                             fill
                                             alt='carousel slide'
                                             className='object-contain'
+                                            placeholder={'empty'}
                                         />
                                     </div>
                                 ))}
