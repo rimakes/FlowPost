@@ -104,6 +104,10 @@ export async function GET(req: NextRequest) {
                         publishedAt: new Date(),
                     },
                 });
+                return NextResponse.json(
+                    { message: 'Scheduled on Linkedin' },
+                    { status: 201 }
+                );
             }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
