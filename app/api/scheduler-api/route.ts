@@ -96,19 +96,19 @@ export async function GET(req: NextRequest) {
                 { message: 'Scheduled on Linkedin' },
                 { status: posted.status }
             );
-            if (posted.status === 201 && post?.linkedinPostId !== null) {
-                // if post is successfully posted on linkedin
-                await db.linkedinPost.update({
-                    // update the linkedin post to published
-                    where: {
-                        id: post?.linkedinPostId,
-                    },
-                    data: {
-                        published: true,
-                        publishedAt: new Date(),
-                    },
-                });
-            }
+            // if (posted.status === 201 && post?.linkedinPostId !== null) {
+            //     // if post is successfully posted on linkedin
+            //     await db.linkedinPost.update({
+            //         // update the linkedin post to published
+            //         where: {
+            //             id: post?.linkedinPostId,
+            //         },
+            //         data: {
+            //             published: true,
+            //             publishedAt: new Date(),
+            //         },
+            //     });
+            // }
         });
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
     } catch (error) {
