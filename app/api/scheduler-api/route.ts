@@ -65,6 +65,7 @@ export async function GET(req: NextRequest) {
             let asset;
             // console.log('Carousel', carousel?.pdfUrl);
             if (carousel?.pdfUrl) {
+                console.log('Registering document to linkedin');
                 const documentRegister = await registerUploadDocumentToLinkedin(
                     userAccount?.providerAccountId,
                     userAccount?.access_token
@@ -73,6 +74,7 @@ export async function GET(req: NextRequest) {
                 const { uploadUrl } = documentRegister;
                 asset = documentRegister.asset;
 
+                console.log('Uploading document to linkedin');
                 await uploadImageToLinkedin(
                     uploadUrl,
                     carousel?.pdfUrl!,
@@ -87,6 +89,8 @@ export async function GET(req: NextRequest) {
                 carousel?.title!,
                 asset
             );
+
+            console.log('Posted STATUS', posted.status);
 
             if (posted.status === 201 && post?.linkedinPostId !== null) {
                 // if post is successfully posted on linkedin
