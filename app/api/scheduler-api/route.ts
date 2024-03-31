@@ -39,6 +39,8 @@ export async function GET(req: NextRequest) {
             },
         })) as NewTScheduledPost[];
 
+        console.log('Posts to be published', pendingToPublishPosts);
+
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
             // console.log('Post to be published', post);
