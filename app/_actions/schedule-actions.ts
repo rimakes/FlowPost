@@ -105,9 +105,9 @@ export const registerUploadDocumentToLinkedin = async (
     };
 
     let res: TUploadRegisterResponse;
-
     try {
         res = await axios(config);
+        console.log('registering RES', res);
     } catch (error) {
         console.error('Error registering document to LinkedIn:');
         throw error;
