@@ -157,7 +157,8 @@ export function ContinueButton({}) {
                                             fill
                                             alt='carousel slide'
                                             className='object-contain'
-                                            placeholder={'empty'}
+                                            placeholder={'blur'}
+                                            blurDataURL={url}
                                         />
                                     </div>
                                 ))}

@@ -115,6 +115,9 @@ export const capitalizeFirstLetter = (string: string) => {
 
 export const uploadFileToCloudinary = async (file: File) => {};
 
+/**
+ * Retry an async function a number of times with a delay between each attempt.
+ */
 export async function retryAsyncFunction<T>(
     fn: () => Promise<T>,
     maxAttempts: number = 3,

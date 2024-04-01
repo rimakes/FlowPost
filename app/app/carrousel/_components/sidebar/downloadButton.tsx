@@ -1,14 +1,7 @@
 'use client';
 
 import { Download } from 'lucide-react';
-import { toPng, toSvg } from 'html-to-image';
 import { useContext, useEffect, useRef, useState } from 'react';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
 import { CarouselContext } from '../ContextProvider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
@@ -16,6 +9,13 @@ import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/spinner';
 import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { cn } from '@/lib/utils';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { toPng } from 'html-to-image';
 
 type ImageFormat = 'pdf' | 'svg';
 
@@ -43,12 +43,17 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                 });
                 // REVIEW: How can we optimize this?
                 for (let i = 0; i < arrayOfRefs.length; i++) {
-                    await addSlidetoCaroulse(arrayOfRefs[i].current!, pdf);
+                    if (i === 4) {
+                        console.log(
+                            arrayOfRefs[i].current!.querySelector('img')?.src
+                        );
+                    }
+                    await addSlidetoCarousel(arrayOfRefs[i].current!, pdf);
                     if (i !== arrayOfRefs.length - 1) {
                         pdf.addPage();
                     }
                 }
-                const savedPdf = pdf.save('download.pdf');
+                pdf.save('download.pdf');
                 const blob = pdf.output('arraybuffer');
                 const formData = new FormData();
                 formData.append(
@@ -58,18 +63,16 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
                 await uploadFileToCloudinary(formData);
 
-                console.log({ savedPdf });
-
                 break;
-            case 'svg':
-                dataUrl = toSvg(arrayOfRefs[0].current!);
-                link.download = `logo.svg`;
-                break;
+            // case 'svg':
+            //     dataUrl = toSvg(arrayOfRefs[0].current!);
+            //     link.download = `logo.svg`;
+            //     link.href = await dataUrl;
+            //     document.body.appendChild(link);
+            //     link.click();
+            //     document.body.removeChild(link);
+            //     break;
         }
-        // // link.href = await dataUrl;
-        // document.body.appendChild(link);
-        // link.click();
-        // document.body.removeChild(link);
         setStatus('idle');
     };
 
@@ -88,19 +91,23 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>{downloadButton}</DropdownMenuTrigger>
-            <DropdownMenuContent className='flex flex-col gap-2'>
-                <DropdownMenuItem
+            <DropdownMenuTrigger asChild className=''>
+                {downloadButton}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className='flex flex-col items-center gap-2 z-10 bg-background'>
+                {/* <DropdownMenuItem
                     onClick={() => {
                         onDownload('svg');
                     }}
+                    className='justify-center w-full'
                 >
                     SVG
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem
                     onClick={() => {
                         onDownload('pdf');
                     }}
+                    className='justify-center w-full'
                 >
                     PDF
                 </DropdownMenuItem>
@@ -109,11 +116,21 @@ export function DownloadButton({ className }: DownloadButtonProps) {
     );
 }
 
-const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    const dataUrl = await toPng(htmlElement, {
+const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
+    var staticNode = htmlElement.cloneNode(true) as HTMLDivElement;
+
+    // appending the clone to the body
+    document.body.appendChild(staticNode);
+
+    console.log(htmlElement.outerHTML); // or innerHTML or clonedNode.outerHTML
+
+    const dataUrl = await toPng(staticNode, {
         quality: 1,
         pixelRatio: 4,
     });
+
+    console.log('dataUrl', dataUrl);
+
     pdf.addImage({
         imageData: dataUrl,
         format: 'WEBP',
@@ -124,3 +141,23 @@ const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
         compression: 'FAST', // or 'SLOW' for better compression
     });
 };
+
+async function loadImage(element: any) {
+    return new Promise((resolve, reject) => {
+        if (element.complete) {
+            resolve(element);
+        } else {
+            element.onload = () => resolve(element);
+            element.onerror = reject;
+        }
+    });
+}
+
+function prefetchImage(url: string) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = resolve;
+        img.onerror = reject;
+    });
+}
