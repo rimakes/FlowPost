@@ -117,18 +117,15 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 }
 
 const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    var staticNode = htmlElement.cloneNode(true) as HTMLDivElement;
+    // This prints the correct image url!!!!
+    console.log(htmlElement.querySelector('img')?.src);
 
-    // appending the clone to the body
-    document.body.appendChild(staticNode);
-
-    console.log(htmlElement.outerHTML); // or innerHTML or clonedNode.outerHTML
-
-    const dataUrl = await toPng(staticNode, {
+    const dataUrl = await toPng(htmlElement, {
         quality: 1,
         pixelRatio: 4,
     });
 
+    // ...but this prints the wrong image url!!!!!!
     console.log('dataUrl', dataUrl);
 
     pdf.addImage({
