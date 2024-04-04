@@ -86,12 +86,6 @@ export const getPostTemplateById = (id: string) => {
     return template;
 };
 
-export const getAllPostTemplates = () => {
-    const template = POST_TEMPLATES;
-
-    return template;
-};
-
 export const getAllPostCategories = () => {
     const categories = POST_CATEGORIES;
 

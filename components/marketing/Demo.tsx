@@ -36,7 +36,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
 
     return (
         <div className='rounded-md border border-border shadow-md w-full p-4 gap-4 flex flex-col relative bg-white'>
-            <div className='anchor -top-32 absolute' id='try-it' />
+            <div className='anchor lg:-top-32 -top-32 absolute' id='try-it' />
             <p>Para elegir otros estilos y plantillas, prueba Perbrand+</p>
             <Dialog open={isVoiceModalOpen} onOpenChange={setIsVoiceModalOpen}>
                 <DialogTrigger asChild>

@@ -22,7 +22,6 @@ type NotificationMenuProps = {
     notifications: Notification[];
 };
 
-//BOILER: This could work but they use https://headwayapp.co/
 export const NotificationMenu = ({}: NotificationMenuProps) => {
     return (
         <Popover>

@@ -1,15 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Pen } from 'lucide-react';
 import { useState } from 'react';
-import {
-    cn,
-    getAllPostCategories,
-    getAllPostTemplates,
-    getPostTemplateById,
-} from '@/lib/utils';
+import { cn, getPostTemplateById } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { PostCategory, PostTemplate } from '@prisma/client';
 import { Pure } from '@/types/types';
+import { POST_TEMPLATES } from '../config/prompts';
+import { POST_CATEGORIES } from '../config/const';
 
 type SelectPostTemplateProps = {
     setSelected: (selected: string) => void;
@@ -21,21 +18,19 @@ export const SelectPostTemplate = ({
     const [selectedCategory, setSelectedCategory] = useState<
         Pure<PostCategory>
     >({
-        id: '1',
+        id: '0',
         name: 'todos',
         tags: [``],
         description: '',
     });
-    const [selectedPreviewIndex, setSelectedPreviewIndex] = useState('2');
+    const [selectedPreviewIndex, setSelectedPreviewIndex] = useState('0');
 
-    const selectedCategoryTemplates = getAllPostTemplates().filter(
-        (template) => {
-            return (
-                template.tags.includes(selectedCategory.name) ||
-                selectedCategory.name === 'todos'
-            );
-        }
-    );
+    const selectedCategoryTemplates = POST_TEMPLATES.filter((template) => {
+        return (
+            template.tags.includes(selectedCategory.name) ||
+            selectedCategory.name === 'todos'
+        );
+    });
 
     const selectedTemplate = getPostTemplateById(selectedPreviewIndex);
 
@@ -51,7 +46,7 @@ export const SelectPostTemplate = ({
             <div className='flex flex-col gap-2'>
                 <Label className='text-sm font-semibold'>Categorías</Label>
                 <div className='flex flex-wrap gap-2 border-0 border-green-400 max-h-24 overflow-x-auto'>
-                    {getAllPostCategories().map((category) => {
+                    {POST_CATEGORIES.map((category) => {
                         return (
                             <Button
                                 key={category.id}

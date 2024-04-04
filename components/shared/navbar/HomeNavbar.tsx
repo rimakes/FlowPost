@@ -1,17 +1,10 @@
 'use client';
 
 import { Button, buttonVariants } from '@/components/ui/button';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import { HeadwayScript } from '@/scripts/headway';
-import { PenLine, ChevronsUpDown, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logo from '../logo';
-import { SelectAccountMenu } from './SelectAccountMenu';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import {
@@ -27,7 +20,6 @@ export function HomeNavbar({ className }: { className?: string }) {
     const { data } = useSession();
 
     return (
-        // BOILER: Change this in boilerplate
         <header
             className={cn(
                 `px-4 sm:px-6 lg:px-8 sticky top-0 bg-background border-b border-border z-30 py-4`,

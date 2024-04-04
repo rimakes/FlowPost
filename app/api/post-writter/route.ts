@@ -6,7 +6,7 @@ import { User } from '@prisma/client';
 import { RegisterFormValues } from '@/schemas/auth-schemas';
 import { getPostTemplateById, getVoiceToneById, wait } from '@/lib/utils';
 import {
-    CustomFormSchema,
+    WritterFormSchema,
     PostRequest,
 } from '@/app/app/post-writter/_components/PostWritterForm';
 import { z } from 'zod';
@@ -18,6 +18,9 @@ import {
     generalInstructions,
     writterPrompt,
 } from '@/app/app/post-writter/config/prompts';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
+import { db } from '@/lib/prisma';
 
 export async function POST(req: NextRequest) {
     try {
@@ -31,7 +34,7 @@ export async function POST(req: NextRequest) {
                 }: WritterReq<'WRITE'> = body;
 
                 if (
-                    description === 'string' ||
+                    description === 'string' || //TODO:  what is this?
                     typeof templateId !== 'string' ||
                     typeof toneId !== 'number'
                 ) {
@@ -56,8 +59,22 @@ export async function POST(req: NextRequest) {
                     ],
                 });
 
+                // Get the custom AISettings from the user
+                const data = await getServerSession(authOptions);
+                const settings = await db.settings.findFirst({
+                    where: {
+                        user: {
+                            id: data!.user.id,
+                        },
+                    },
+                });
+                const iaSettings = settings?.iaSettings;
+
                 const promptTemplate = PromptTemplate.fromTemplate(
                     `
+                    ${iaSettings?.shortBio ? `Eres ${iaSettings?.shortBio} y` : 'Eres un experto en tu campo y'} ${iaSettings?.topics ? `hablas sobre ${iaSettings?.topics}` : 'hablas sobre temas de interés'}.
+                    ${iaSettings?.other ? `Además, ${iaSettings?.other}` : ''}
+
                     Escribe el mejor post de linkedin que puedas siguiendo esta plantilla o ejemplo pero en un tono {tone}:
 
                     ___PLANTILLA-O-EJEMPLO___
@@ -87,57 +104,6 @@ export async function POST(req: NextRequest) {
                     // `${writterPrompt} ${getPostTemplateById(templateId).content} ${promptEnd}`
                 );
 
-                // Este es un post que ha funcionado muy muy bien en linkedin:
-
-                //     ___PLANTILLA___
-                //     Most people suck at boosting ecommerce conversion rates.
-
-                //         But if you avoid these 5 common mistakes, I guarantee you won’t.
-
-                //         Ignoring Customer Feedback 🔁
-                //         → Not utilizing customer insights effectively.
-
-                //         Do this instead
-                //         ↳ Regularly gather and analyze customer feedback.
-                //         ↳ Implement changes based on consistent customer pain points.
-
-                //         Poor Website Navigation ⛵
-                //         → Complicated, unclear user journey.
-
-                //         Do this instead
-                //         ↳ Streamline site structure for easy navigation.
-                //         ↳ Ensure clear, concise menus and call-to-action buttons.
-
-                //         Neglecting Mobile Users 📱
-                //         → Website not optimized for mobile.
-
-                //         Do this instead
-                //         ↳ Optimize website for mobile responsiveness.
-                //         ↳ Test regularly on different devices and browsers.
-
-                //         Underestimating Product Descriptions 💬
-                //         → Vague, uninformative product details.
-
-                //         Do this instead
-                //         ↳ Provide detailed, compelling product descriptions.
-                //         ↳ Include high-quality images and videos.
-
-                //         Ignoring Checkout Optimization 💳
-                //         → Long, complicated checkout process.
-
-                //         Do this instead
-                //         ↳ Simplify the checkout process, reduce steps.
-                //         ↳ Offer multiple payment options and guest checkout.
-
-                //         A 2% conversion rate might seem okay, but it's far from the ceiling. Small tweaks in approach, focusing on customer experience, and optimizing your website can significantly boost your conversion rates.
-
-                //         Start implementing these changes today, and watch your ecommerce store thrive. Remember, it's not just about driving traffic, but converting that traffic effectively. Raise your standards, and aim for conversion rates that truly reflect your store's potential!.
-                //     ___END_PLANTILLA___
-
-                //     __INSTRUCTIONS__
-                //     Quiero que escribas un post que utilice las mismas ténicas de copywritting y estructura, pero que hable de {userPrompt}.
-
-                //     Además, tu post debe estar list para compartir (formato, emojis, etc), y estar escrito en un tono muy {tone} y escrito en español localizado en España.
                 const outputParser = new HttpResponseOutputParser({});
 
                 // We create a chain that pipes our prompt template into the model, and then the model into the output parser

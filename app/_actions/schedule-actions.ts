@@ -172,22 +172,31 @@ export const postOnLinkedIn = async (
     try {
         const body = {
             author: `urn:li:person:${providerAccountId}`,
-            commentary: content,
+            commentary:
+                `This is a test to see what the problem is...( ${content}`.replace(
+                    /[\(*\)\[\]\{\}<>@|~_]/gm,
+                    (x) => '\\' + x
+                ),
             visibility: 'PUBLIC',
             distribution: {
                 feedDistribution: 'MAIN_FEED',
                 targetEntities: [],
                 thirdPartyDistributionChannels: [],
             },
-            content: {
-                media: {
-                    title: title,
-                    id: asset,
-                },
-            },
+            content: asset
+                ? {
+                      media: {
+                          title: title,
+                          id: asset,
+                      },
+                  }
+                : undefined,
+
             lifecycleState: 'PUBLISHED',
             isReshareDisabledByAuthor: false,
         };
+
+        console.log({ body });
 
         const config = {
             method: 'post',

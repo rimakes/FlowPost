@@ -141,12 +141,48 @@ export function BrandKitEditForm({
                                 <div className='flex gap-4 justify-stretch items-center'>
                                     <Thumbnails
                                         files={pictures}
-                                        classNamesThumbnails='h-24 w-24 rounded-full'
+                                        classNamesThumbnails='h-24 w-24 rounded-full shrink-0'
                                     />
                                     <Dropzone
                                         onDrop={onDrop}
-                                        className='h-28 py-2 flex flex-col items-center justify-center flex-grow'
-                                    ></Dropzone>
+                                        className='dropzone h-28 py-2 flex gap-4 items-center justify-center flex-grow'
+                                    >
+                                        {session && session!.user.image && (
+                                            <div className=' flex-1 flex flex-col items-center'>
+                                                <p className='text-primary/70'>
+                                                    También puedes
+                                                </p>
+                                                <Button
+                                                    className='mt-2 whitespace-normal'
+                                                    variant={'outline'}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        form.setValue(
+                                                            'imageUrl',
+                                                            session?.user.image!
+                                                        );
+                                                        console.log(
+                                                            'session',
+                                                            session?.user
+                                                        );
+                                                        setPictures([
+                                                            // @ts-ignore
+                                                            {
+                                                                preview:
+                                                                    session
+                                                                        ?.user
+                                                                        .image!,
+                                                            },
+                                                        ]);
+                                                    }}
+                                                    type='button'
+                                                >
+                                                    Usar tu foto de Linkedin
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </Dropzone>
                                 </div>
                             </FormControl>
                             <FormDescription></FormDescription>

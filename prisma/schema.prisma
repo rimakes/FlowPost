@@ -81,9 +81,17 @@ model Settings {
     // RELATIONS
 
     // Settings fields
-    darkMode Boolean    @default(false)
-    schedule TimeSlot[]
-    user     User?
+    darkMode   Boolean     @default(false)
+    iaSettings IaSettings?
+    schedule   TimeSlot[]
+    user       User?
+}
+
+type IaSettings {
+    autoPostGeneration Boolean @default(false)
+    shortBio           String
+    topics             String // EJ. ["marketing", "technology", "business", "other"]
+    other              String
 }
 
 type TimeSlot {

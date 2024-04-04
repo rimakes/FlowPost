@@ -39,18 +39,17 @@ type PostWritterFormProps = {
     className?: string;
 };
 
-export type PostRequest = z.infer<typeof CustomFormSchema>;
-export const CustomFormSchema = z.object({
+export type PostRequest = z.infer<typeof WritterFormSchema>;
+export const WritterFormSchema = z.object({
     description: z
         .string()
         .min(MIN_LENGTH, tooShortError)
         .max(MAX_LENGTH, tooLongError),
     toneId: z.number(),
-    // templateId can't be null, but I want to refine the message error when it is null
     templateId: z
         .string()
         .nullable()
-        .refine((value) => value !== null, {
+        .refine((value) => value !== null && value !== '', {
             message: 'Selecciona una plantilla',
         }),
 });
@@ -65,9 +64,9 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     const urlDescription = searchParams.get('description');
 
     const form = useForm({
-        resolver: zodResolver(CustomFormSchema),
+        resolver: zodResolver(WritterFormSchema),
         defaultValues: {
-            description: urlDescription || description,
+            description: urlDescription || description, // If we have both, we use the one from the url
             toneId,
             templateId,
         },
@@ -90,7 +89,11 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     };
 
     const onSubmit = async (data: PostRequest) => {
-        await requestPost(data);
+        try {
+            await requestPost(data);
+        } catch (error) {
+            return toast.error('Ha habido un error, revisa los campos');
+        }
         toast.success('Post creado');
     };
 
@@ -108,12 +111,12 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     const buttonContent = form.formState.isSubmitting ? (
         <>
             <Spinner className='mr-2 h-5 w-5' />
-            Creando post{' '}
+            Creando post
         </>
     ) : (
         <>
             <Sparkles className='mr-2 h-5 w-5' />
-            Crear post{' '}
+            Crear post
         </>
     );
 
@@ -140,6 +143,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                             {...field}
                                         />
                                         <CharCounter
+                                            minChars={MIN_LENGTH}
                                             maxChars={MAX_LENGTH}
                                             usedChars={
                                                 form.watch('description').length

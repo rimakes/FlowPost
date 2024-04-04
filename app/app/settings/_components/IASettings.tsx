@@ -19,35 +19,49 @@ import { z } from 'zod';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
 import { TStatus } from '@/types/types';
 import { toast } from 'sonner';
+import { Textarea } from '@/components/ui/textarea';
+import { saveIASettings } from '@/app/_actions/settings-actions';
+import { Message } from '@/components/auth/message';
 
 const iaSettingsSchema = z.object({
     autoPostGeneration: z.boolean(),
     shortBio: z.string(),
-    topics: z.array(z.string()),
+    topics: z.string(), //TODO: in the future, this should be an array of strings
+    other: z.string(),
 });
 
 type IaSettings = z.infer<typeof iaSettingsSchema>;
 
-export const IASettings = () => {
-    const { data } = useSession();
+export const IASettings = ({
+    userIaSettings,
+}: {
+    userIaSettings?: IaSettings;
+}) => {
+    const { data: session } = useSession();
     const [status, setStatus] = useState<TStatus>('idle');
 
     const form = useForm({
         resolver: zodResolver(iaSettingsSchema),
         defaultValues: {
             autoPostGeneration: true,
-            shortBio: '',
-            topics: [],
+            shortBio: userIaSettings?.shortBio || '',
+            topics: userIaSettings?.topics || '',
+            other: userIaSettings?.other || '',
         },
     });
 
-    const onSubmit = (data: IaSettings) => {
+    const onSubmit = async (data: IaSettings) => {
         setStatus('loading');
-        console.log(data);
-        setStatus('success');
-        toast.success('Configuración guardada');
-        setStatus('idle');
+        toast.promise(saveIASettings(session?.user.id!, data), {
+            loading: 'Guardando configuración',
+            success: 'Configuración guardada',
+            error: 'Error al guardar la configuración',
+            finally: () => {
+                setStatus('idle');
+            },
+        });
     };
+
     const onError = (error: any) => {
         toast('Error al guardar la configuración', {});
     };
@@ -58,10 +72,20 @@ export const IASettings = () => {
                 subtitle='Creará contenido para ti basado en tus preferencias'
             />
             <div className='max-w-md mt-4'>
+                <Message>
+                    <p>
+                        Configurar tu IA puede dar lugar a resultados muy
+                        repetitivos.
+                    </p>
+                    <p>
+                        Si quieres más variedad, incluye varios temas y déjalo
+                        muy abierto, o borra tus preferencias y guarda
+                    </p>
+                </Message>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit, onError)}
-                        className='flex flex-col gap-4 items-start'
+                        className='flex flex-col gap-4 items-stretch'
                     >
                         <FormField
                             control={form.control}
@@ -91,17 +115,41 @@ export const IASettings = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>
-                                        ¿Sobre que quieres escribir?
+                                        ¿Sobre qué quieres escribir?
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder='Ecommerce, Marketing, Tecnología'
                                             {...field}
+                                            className=''
                                         />
                                     </FormControl>
                                     <FormDescription>
                                         La IA lo utilizará para darte ideas de
                                         contenido
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='other'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        ¿Algo más que quieres que tengamos en
+                                        cuenta?
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            placeholder='Vendo un curso de copywriting y quiero que la IA me ayude a promocionarlo.'
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormDescription>
+                                        La IA intentará tenerlo en cuenta al
+                                        crear contenido
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

@@ -1,6 +1,5 @@
 'use client';
 
-import { apiClient } from '@/lib/apiClient';
 import { createContext, use, useContext, useState } from 'react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
@@ -20,8 +19,8 @@ const INITIAL_STATE = {
     } as TLinkedinPost,
     postRequest: {
         description: ``,
-        templateId: '',
         toneId: 1,
+        templateId: '',
     } as PostRequest,
     setPost: (post: TLinkedinPost) => {},
 };
@@ -59,12 +58,13 @@ export function PostWritterContextProvider({
     );
 
     const requestPost = async (data: PostRequest) => {
+        const { description, templateId, toneId } = data;
         const reqBody: WritterReq<'WRITE'> = {
             action: 'WRITE',
             data: {
-                description: data.description,
-                templateId: data.templateId,
-                toneId: data.toneId,
+                description,
+                templateId,
+                toneId,
             },
         };
 
@@ -73,14 +73,17 @@ export function PostWritterContextProvider({
             body: JSON.stringify(reqBody),
         });
 
+        if (res.status !== 200) {
+            throw new Error('Error al escribir el post');
+        }
         // The fetch response body is a readable stream.
         const readableStream = res.body;
 
         if (readableStream) {
-            // We need to decode the stream into readable text, so we cerate a TextDecoderStream
-            const decoder = new TextDecoderStream('utf-8');
+            // We need to decode the stream into readable text, so we create a TextDecoderStream
+            const decoderStream = new TextDecoderStream('utf-8');
             // ...and pipe our stream to it --> the result is a decoded readable stream
-            const transformedStream = readableStream.pipeThrough(decoder);
+            const transformedStream = readableStream.pipeThrough(decoderStream);
             // From which we can create a reader
             const reader = transformedStream.getReader();
 
@@ -90,7 +93,7 @@ export function PostWritterContextProvider({
             // Read the stream
             while (true) {
                 // the read data has the shape { done: boolean, value: text }
-                // The value is text becuase we used a TextDecoderStream, right? Answer: Yes, if we hadn't used it, the value would be a Uint8Array (similar to a Buffer)
+
                 const { done, value } = await reader.read();
                 if (done) {
                     break;

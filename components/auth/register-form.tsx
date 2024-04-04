@@ -153,7 +153,7 @@ export function RegisterForm({}) {
                             </FormItem>
                         )}
                     />
-                    <Message message={error} variant={'error'} />
+                    <Message variant={'error'}>{error}</Message>
                     <Button
                         type='submit'
                         disabled={form.formState.isSubmitting}

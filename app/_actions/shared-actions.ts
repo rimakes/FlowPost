@@ -2,6 +2,7 @@
 
 import { db } from '@/lib/prisma';
 import cloudinary from 'cloudinary';
+import { revalidatePath } from 'next/cache';
 import streamifier from 'streamifier';
 
 export const getBrandsByUserId = async (userId: string) => {
@@ -82,4 +83,8 @@ export const getPageNFromCloudinary = async (imageId: string, n: number) => {
     );
 
     return image;
+};
+
+export const revalidateAllPaths = async () => {
+    revalidatePath('/app', 'layout');
 };

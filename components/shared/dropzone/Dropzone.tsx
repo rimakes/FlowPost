@@ -46,7 +46,7 @@ export function Dropzone({
     );
 
     const dragInactiveElement = propDragInactiveElement || (
-        <p className='flex flex-col items-center text-center gap-2'>
+        <p className='flex !flex-1 flex-col items-center text-center gap-2'>
             Arrastra o clicka aquí
             <span className='text-primary/60 text-sm'>
                 para seleccionar tu archivo

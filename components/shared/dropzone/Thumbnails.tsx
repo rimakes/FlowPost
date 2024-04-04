@@ -22,11 +22,13 @@ export function Thumbnails({
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
+    console.log({ files });
+
     return (
         <>
             {files.map((file) => (
                 <div
-                    key={file.name}
+                    key={file.preview}
                     className={cn(
                         `w-8 h-8 relative overflow-hidden`,
                         classNamesThumbnails

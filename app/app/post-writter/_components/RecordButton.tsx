@@ -14,7 +14,11 @@ type PrefersToRecordProps = {
 
 export function RecordButton({ onRecord, text }: PrefersToRecordProps) {
     const onMicAllowed = useCallback((isAllowed: boolean) => {
-        toast(isAllowed ? 'Ya puedes grabarte!!' : 'Microphone is denied');
+        toast.success(
+            isAllowed
+                ? 'Clicka en el micrófono para empezar a grabarte'
+                : 'Microphone is denied'
+        );
     }, []);
     const [isMicroAllowed, setIsMicroAllowed] = useState(false);
     const {
@@ -34,8 +38,7 @@ export function RecordButton({ onRecord, text }: PrefersToRecordProps) {
             setIsMicroAllowed(true);
             initMediaRecorder();
             return;
-        }
-        if (isRecording) {
+        } else if (isRecording) {
             stopRecording();
         } else {
             startRecording();

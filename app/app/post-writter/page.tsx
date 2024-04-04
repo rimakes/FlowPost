@@ -19,6 +19,8 @@ export default async function PostWritterPage({
         searchParams['description'] as string
     );
 
+    const carouselId = searchParams['carouselId'];
+
     const session = await getServerSession();
     const brands = await getBrandsByUserId(session!.user.id);
 

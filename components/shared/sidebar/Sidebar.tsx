@@ -287,4 +287,3 @@ const SECONDARY_MENU_ITEMS: MenuItem[] = [
     //     status: 'active',
     // },
 ];
-// BOILER: Para roadmap, usar canny.io

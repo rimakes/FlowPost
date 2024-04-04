@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { User, Check, PlusCircle, Settings } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export const SelectAccountMenu = () => {
@@ -13,9 +14,20 @@ export const SelectAccountMenu = () => {
             <div className='flex flex-col'>
                 <div className='p-2 cur'>
                     <div className='flex justify-between w-full border-1 border-red-500'>
-                        <div className='flex gap-2 border-0 border-indigo-500'>
+                        <div className='flex items-center gap-4 border-0 border-indigo-500'>
                             {/* REVIEW: I need to learn how to keep size ratios in these cases! */}
-                            <User className='w-10 h-full bg-primary/10 rounded-lg border border-primary/20' />
+                            {data?.user.image ? (
+                                <div className='relative h-10 w-10 rounded-full overflow-hidden'>
+                                    <Image
+                                        src={data?.user.image}
+                                        alt='User'
+                                        fill
+                                        className='object-cover'
+                                    />
+                                </div>
+                            ) : (
+                                <User className='w-10 h-full bg-primary/10 rounded-lg border border-primary/20' />
+                            )}
                             <div className='flex flex-col gap-1'>
                                 <p className='font-semibold'>
                                     {data?.user.name || 'Cargando...'}

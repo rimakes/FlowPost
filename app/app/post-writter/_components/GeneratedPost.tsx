@@ -13,7 +13,7 @@ import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { TStatus } from '@/types/types';
 
 type GeneratedPostProps = {
@@ -23,6 +23,7 @@ type GeneratedPostProps = {
     minHeight?: number;
     setEditDetailsModal?: any;
     showEditableSwitch?: boolean;
+    carouselId?: string;
 };
 
 export const PostWritterResult = ({
@@ -32,6 +33,7 @@ export const PostWritterResult = ({
     minHeight,
     setEditDetailsModal,
     showEditableSwitch = true,
+    carouselId,
 }: GeneratedPostProps) => {
     const { data } = useSession();
 
@@ -39,8 +41,7 @@ export const PostWritterResult = ({
     const { post, setPost } = useContext(PostWritterContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
 
-    const searchParams = useSearchParams();
-    const carouselId = searchParams.get('cid') || undefined;
+    const router = useRouter();
 
     if (status === 'loading')
         return (
@@ -91,10 +92,7 @@ export const PostWritterResult = ({
                                 carouselId
                             );
                             setPost(dbpost);
-                            const newUrl = `/app/post-writter/${dbpost.id}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
-
-                            window.history.replaceState(null, 'unused', newUrl);
-
+                            router.push(`/app/post-writter/${dbpost.id}`);
                             toast('Post guardado');
                         }}
                     />

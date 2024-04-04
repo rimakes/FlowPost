@@ -46,11 +46,11 @@ export function ContinueButton({}) {
     if (arrayOfRefs.length === 0) return null;
 
     const onAsignToPost = () => {
+        router.refresh();
+
         carousel.linkedinPostId
-            ? router.push(
-                  `/app/post-writter/${carousel.linkedinPostId}?cid=${carousel.id}`
-              )
-            : router.push(`/app/post-writter/new?cid=${carousel.id}`);
+            ? router.push(`/app/post-writter/${carousel.linkedinPostId}`)
+            : router.push(`/app/post-writter/new`);
     };
 
     const onCarouselLoad = async () => {
@@ -81,8 +81,6 @@ export function ContinueButton({}) {
         const canvas = await toCanvas(arrayOfRefs[0].current!);
         const dataUrl = canvas.toDataURL();
 
-        console.log('res', res);
-
         const savedCarousel = await upsertCarousel(
             {
                 ...carousel,
@@ -103,10 +101,6 @@ export function ContinueButton({}) {
             const url = fromPdfUrlToThumnailUrl(res.publicId, index + 1);
             setThumbnailUrls((prev) => [...prev, url]);
         });
-
-        toast.success('Carrusel Guardado!');
-        setIsOpen(true);
-        setStatus('idle');
     };
 
     const buttonText =
@@ -124,7 +118,21 @@ export function ContinueButton({}) {
 
     return (
         <>
-            <Button onClick={onCarouselLoad}>{buttonText}</Button>
+            <Button
+                onClick={() => {
+                    toast.promise(onCarouselLoad(), {
+                        loading: 'Creando pdf y guardando tu carrusel...',
+                        success: 'Carrusel cargado y guardado',
+                        error: 'Error al crear carrusel',
+                        finally: () => {
+                            setIsOpen(true);
+                            setStatus('idle');
+                        },
+                    });
+                }}
+            >
+                {buttonText}
+            </Button>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className=' md:max-w-5xl'>
                     <DialogHeader className='text justify-center items-center'>
@@ -192,17 +200,20 @@ export function ContinueButton({}) {
 }
 
 const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    const dataUrl = await toPng(htmlElement, {
-        quality: 1,
-        pixelRatio: 4,
-    });
-    pdf.addImage({
-        imageData: dataUrl,
-        format: 'WEBP',
-        x: 0,
-        y: 0,
-        height: 1350,
-        width: 1080,
-        compression: 'FAST', // or 'SLOW' for better compression
-    });
+    try {
+        const dataUrl = await toPng(htmlElement, {
+            quality: 1,
+            pixelRatio: 4,
+            includeQueryParams: true,
+        });
+        pdf.addImage({
+            imageData: dataUrl,
+            format: 'WEBP',
+            x: 0,
+            y: 0,
+            height: 1350,
+            width: 1080,
+            compression: 'FAST', // or 'SLOW' for better compression
+        });
+    } catch (error) {}
 };

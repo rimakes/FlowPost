@@ -9,11 +9,10 @@ import { defaultValues } from '@/config/const';
 import { useSession } from 'next-auth/react';
 import { AppContext } from '@/providers/AppProvider';
 import { getDate, getDay, differenceInCalendarDays } from 'date-fns';
+import { wait } from '@/lib/utils';
 
 type AppModalsProps = {};
 export function AppModals({}: AppModalsProps) {
-    // If there is a ?modal= query parameter, show the modal
-    const query = useSearchParams();
     // TODO: how do I simplify it so I don't depend on sessions? can we use the AppProvider?
     const { data, update } = useSession();
     const [isOpen, setIsOpen] = useState(false);
@@ -25,14 +24,15 @@ export function AppModals({}: AppModalsProps) {
     } = useContext(AppContext);
 
     const todayDay = new Date();
-    const daysSinceLastInteraction = differenceInCalendarDays(
-        todayDay,
-        profileSetup?.lastInteraction!
-    );
+    const daysSinceLastInteraction = profileSetup?.lastInteraction
+        ? differenceInCalendarDays(todayDay, profileSetup?.lastInteraction!)
+        : undefined;
     const hasBrands = data?.user?.brands?.length! > 0;
 
     const profileSetupNotification =
-        !hasBrands && !profileSetup?.done && daysSinceLastInteraction > 0;
+        !hasBrands &&
+        !profileSetup?.done &&
+        (profileSetup?.dimissals! === 0 || daysSinceLastInteraction! > 0);
 
     useEffect(() => {
         if (profileSetupNotification) {
@@ -60,6 +60,8 @@ export function AppModals({}: AppModalsProps) {
                     defaultValues={defaultValues}
                     onSave={async () => {
                         setIsOpen(false);
+                        // Let the modal time to close
+                        await wait(500);
                         brandCreated();
                     }}
                 />

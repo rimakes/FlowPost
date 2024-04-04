@@ -21,7 +21,6 @@ export default function Navbar({ className }: { className?: string }) {
     const router = useRouter();
 
     return (
-        // BOILER: Change this in boilerplate
         <header
             className={cn(
                 `px-4 sm:px-6 lg:px-8 sticky top-0 border-b border-border z-30 py-4 bg-background`,

@@ -24,7 +24,14 @@ export const authOptions: NextAuthOptions = {
 
                 // create new settings for the user
                 const newSettings = await db.settings.create({
-                    data: {},
+                    data: {
+                        iaSettings: {
+                            autoPostGeneration: false,
+                            other: '',
+                            shortBio: '',
+                            topics: '',
+                        },
+                    },
                 });
 
                 return {
@@ -74,7 +81,14 @@ export const authOptions: NextAuthOptions = {
                 // console.log('profile:-', profile);
 
                 const newSettings = await db.settings.create({
-                    data: {},
+                    data: {
+                        iaSettings: {
+                            autoPostGeneration: false,
+                            other: '',
+                            shortBio: '',
+                            topics: '',
+                        },
+                    },
                 });
 
                 return {

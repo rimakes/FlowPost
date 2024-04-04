@@ -17,7 +17,7 @@ export const appConfig = {
         /**
          * This is the page where the user will be redirected after login
          */
-        defaultLogingRedirect: '/app/scheduler',
+        defaultLogingRedirect: '/app',
     },
 
     general: {

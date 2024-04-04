@@ -2,8 +2,9 @@
 
 import { TExtendedFile } from '@/components/shared/dropzone/Thumbnails';
 import { db } from '@/lib/prisma';
+import { wait } from '@/lib/utils';
 import { Pure } from '@/types/types';
-import { Brand } from '@prisma/client';
+import { Brand, Prisma } from '@prisma/client';
 import cloudinary from 'cloudinary';
 
 export const saveBrandKit = async (
@@ -64,16 +65,34 @@ export const deleteBrand = async (brandId: string) => {
     return brand;
 };
 
-export const saveIASettings = async (file: TExtendedFile) => {
-    // get a file reader
-    const reader = new FileReader();
-    // read the file
-
-    cloudinary.v2.config({
-        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
+export const saveIASettings = async (
+    userId: string,
+    iaSettings: Prisma.IaSettingsCreateInput
+) => {
+    console.log('saving settings', iaSettings);
+    // TODO: This should be an upsert, but there is the problem with null in mongodb...
+    const updatedSettings = await db.settings.updateMany({
+        where: {
+            user: {
+                id: userId,
+            },
+        },
+        data: {
+            iaSettings: iaSettings,
+        },
     });
 
-    const uploadStream = cloudinary.v2.uploader.upload_stream({});
+    return updatedSettings;
+};
+
+export const getUserSettings = async (userId: string) => {
+    const settings = db.settings.findFirst({
+        where: {
+            user: {
+                id: userId,
+            },
+        },
+    });
+
+    return settings;
 };

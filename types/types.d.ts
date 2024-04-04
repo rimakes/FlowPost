@@ -197,7 +197,7 @@ export type AppNotificacion = {
     lastShown: Date;
     dimissals: number;
     done: boolean;
-    lastInteraction: Date;
+    lastInteraction: Date | undefined;
     type: AppNotificationType;
     message?: string;
 };

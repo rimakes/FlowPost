@@ -15,7 +15,6 @@ type PostCardProps = {
 export function PostCard({ post }: PostCardProps) {
     const router = useRouter();
     return (
-        // BOILER: Save in the boiler the way to do the stretch effect
         <div
             key={post.id}
             className='border border-border rounded-md flex flex-col [--outter-padding:1rem] p-[var(--outter-padding)] isolate'

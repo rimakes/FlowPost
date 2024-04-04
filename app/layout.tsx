@@ -25,7 +25,6 @@ export default function RootLayout({
                     <Theme
                         attribute='class'
                         defaultTheme='light'
-                        enableSystem
                         disableTransitionOnChange
                     >
                         {children}

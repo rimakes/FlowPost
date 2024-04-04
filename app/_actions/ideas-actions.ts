@@ -9,6 +9,8 @@ import { RunnableSequence } from '@langchain/core/runnables';
 import { generateIdeasPrompt } from '../app/ideas/const';
 import axios from 'axios';
 import { db } from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth';
 
 export const generateIdeas = async (topic: string) => {
     const model = new ChatOpenAI({
@@ -24,7 +26,24 @@ export const generateIdeas = async (topic: string) => {
         ],
     });
 
-    const promptTemplate = PromptTemplate.fromTemplate(generateIdeasPrompt);
+    // Get the custom AISettings from the user
+    const data = await getServerSession(authOptions);
+    const settings = await db.settings.findFirst({
+        where: {
+            user: {
+                id: data!.user.id,
+            },
+        },
+    });
+    const iaSettings = settings?.iaSettings;
+
+    const customizedSettings = `
+                    ${iaSettings?.shortBio ? `Eres ${iaSettings?.shortBio} y` : 'Eres un experto en tu campo y'} ${iaSettings?.topics ? `hablas sobre ${iaSettings?.topics}` : 'hablas sobre temas de interés'}.
+                    ${iaSettings?.other ? `Además, ${iaSettings?.other}` : ''}`;
+
+    const promptTemplate = PromptTemplate.fromTemplate(
+        customizedSettings + generateIdeasPrompt
+    );
 
     const parser = StructuredOutputParser.fromZodSchema(arrayOfIdeasSchema);
 

@@ -115,13 +115,10 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                             </FormItem>
                         )}
                     />
-                    <Message
-                        message={
-                            errors[errorRes as TSigninErrors] ||
-                            errors[error as TSigninErrors]
-                        }
-                        variant={'error'}
-                    />
+                    <Message variant={'error'}>
+                        {errors[errorRes as TSigninErrors] ||
+                            errors[error as TSigninErrors]}
+                    </Message>
 
                     <Button
                         type='submit'

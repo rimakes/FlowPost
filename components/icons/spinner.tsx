@@ -1,5 +1,3 @@
-// BOILER: update. I just added the className prop to the Spinner component
-
 import { cn } from '@/lib/utils';
 
 type SpinnerProps = {

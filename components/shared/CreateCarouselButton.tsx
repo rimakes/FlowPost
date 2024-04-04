@@ -13,15 +13,22 @@ import { TLinkedinPost } from '@/types/types';
 import { Progress } from '../ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
+import { promises } from 'dns';
+import { revalidatePath } from 'next/cache';
+import { revalidateAllPaths } from '@/app/_actions/shared-actions';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
     className?: string;
+    children?: React.ReactNode;
 };
 export function CreateCarouselButton({
     post,
     className,
+    children,
 }: CrearCarouselButonProps) {
+    const { data } = useSession();
     const router = useRouter();
     const [status, setStatus] = useState('idle');
     const [progressValue, showProgressBar] = useDeterminedProgressBar({
@@ -40,23 +47,42 @@ export function CreateCarouselButton({
             )}
             label='Crear carrusel'
             onClick={async () => {
-                let postId = post.id;
-
-                if (postId === 'new') {
-                    const dbpost = await upsertLinkedinPost(post);
-                    postId = dbpost.id;
+                if (post.content.length < 30) {
+                    toast.error(
+                        'El contenido del post debe tener al menos 30 caracteres'
+                    );
+                    return;
                 }
 
-                toast.success('Creando carrusel. Espera unos segundos...');
                 setStatus('loading');
 
-                const newCarousel = await createLinkedinCarousel({
-                    ...post,
-                    id: postId,
-                });
+                const upsertPostAndCreateCarousel = async () => {
+                    const updatedPost = await upsertLinkedinPost(
+                        post,
+                        data?.user?.id!
+                    );
 
-                setStatus('idle');
-                router.push(`/app/carrousel/${newCarousel.id}`);
+                    const carouselRes =
+                        await createLinkedinCarousel(updatedPost);
+
+                    return carouselRes;
+                };
+
+                let carouselId: string;
+
+                toast.promise(upsertPostAndCreateCarousel, {
+                    loading: 'Creando carrusel...',
+                    success: (data) => {
+                        carouselId = data.id;
+                        return 'Carrusel creado';
+                    },
+                    error: 'Error al crear carrusel',
+
+                    finally: () => {
+                        setStatus('idle');
+                        router.push(`/app/carrousel/${carouselId}`);
+                    },
+                });
             }}
         >
             {status !== 'idle' && (
@@ -78,3 +104,13 @@ export function CreateCarouselButton({
         </ButtonWithTooltip>
     );
 }
+
+// Aprender a programar tienes tres grandes ventajas (pon cada una con una foto):
+
+// 1. Puedes crear tus propias ideas
+// 2. Pudes trabajar desde donde quieras
+// 3. Te entiendes con los desarrolladores de tu empresa
+
+// Podrías incluso trabajar desde esta terraza!!!!
+
+// Y tú, ¿A qué esperas?

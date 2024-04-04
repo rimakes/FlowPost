@@ -136,17 +136,27 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
 
     const generatedSlides = await retryAsyncFunction(fn, 3, 1000);
 
-    // Check if in the slides there is one that requires an image, and if so get the query
-    const imageSlide = generatedSlides.findIndex(
-        (slide) => slide.design === 'ImageAndTextHorizontal'
-    );
+    // Check if in the slides there is one or more that require an image (aka ImageAndTextHorizontal or ImageAndTextVertical)
 
-    if (imageSlide !== -1) {
-        // @ts-ignore
-        const query = generatedSlides[imageSlide].image;
-        const images = await getPexelImages(query);
-        // @ts-ignore
-        generatedSlides[imageSlide].image = images[0];
+    const imageSlideIndexes: number[] = [];
+
+    generatedSlides.forEach((slide, index) => {
+        if (slide.design === 'ImageAndTextHorizontal') {
+            imageSlideIndexes.push(index);
+        }
+    });
+
+    if (imageSlideIndexes.length !== 0) {
+        await Promise.all(
+            imageSlideIndexes.map(async (index) => {
+                // @ts-ignore
+                const query = generatedSlides[index].image;
+                const images = await getPexelImages(query);
+                const randomImage = images[0];
+                // @ts-ignore
+                generatedSlides[index].image = randomImage;
+            })
+        );
     }
 
     const firstBrand = await db.brand.findFirst({
@@ -237,6 +247,11 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                     id: post.id,
                 },
             },
+            User: {
+                connect: {
+                    id: userId,
+                },
+            },
         },
     });
 
@@ -253,9 +268,6 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
         publicId,
         title,
     } = carousel;
-
-    console.log('upserting');
-    console.log({ title });
 
     if (carousel.id === 'new' || carousel.id === undefined) {
         const newCarousel = await db.carousel.create({

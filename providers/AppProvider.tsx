@@ -3,12 +3,12 @@
 import { deepCopy } from '@/lib/utils';
 import { AppNotifications } from '@/types/types';
 import { useLocalStorage } from '@mantine/hooks';
-// import { useLocalStorage } from '@uidotdev/usehooks';
 import {
     createContext,
     Dispatch,
     SetStateAction,
     useContext,
+    useEffect,
     useState,
 } from 'react';
 
@@ -50,6 +50,7 @@ export default function AppProvider({
                     type: 'info',
                 },
             },
+            getInitialValueInEffect: false,
         }
     );
 

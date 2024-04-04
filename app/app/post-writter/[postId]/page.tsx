@@ -9,6 +9,8 @@ import { db } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { getUserBrandKits } from '@/app/_actions/settings-actions';
 import { getServerSession } from 'next-auth';
+import { signIn } from 'next-auth/react';
+import { authOptions } from '@/auth';
 
 type PostWritterPageProps = {
     params: {
@@ -23,7 +25,7 @@ export default async function PostWritterPage({
 }: PostWritterPageProps) {
     const postId = params.postId;
 
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     const brands = await getUserBrandKits(session?.user.id!);
 
     let post: TLinkedinPost = {
@@ -39,6 +41,8 @@ export default async function PostWritterPage({
         published: false,
     };
 
+    let carousel: TCarousel = {} as TCarousel;
+
     if (!(postId === 'new')) {
         const dbPost = await prisma?.linkedinPost.findUnique({
             where: {
@@ -46,24 +50,27 @@ export default async function PostWritterPage({
             },
         });
 
-        if (dbPost) {
-            post = dbPost;
+        console.log('dbPost', dbPost?.userId);
+        console.log('session', session?.user.id);
+
+        if (!dbPost || dbPost?.userId !== session?.user.id) {
+            return notFound();
         }
-    }
 
-    let carouselId = searchParams['cid'] as string;
+        post = dbPost;
 
-    let carousel: TCarousel = {} as TCarousel;
-    if (carouselId) {
-        try {
-            carousel = (await db.carousel.findUnique({
-                where: {
-                    id: carouselId,
-                },
-            })) as TCarousel;
-        } catch (error) {
-            console.error('Error getting carousel', error);
-            notFound();
+        const carousels = await db.carousel.findMany({
+            where: {
+                linkedinPostId: postId,
+            },
+        });
+
+        console.log('carousels', carousels);
+
+        const lastCarousel = carousels[carousels.length - 1];
+
+        if (lastCarousel) {
+            carousel = lastCarousel;
         }
     }
 
@@ -77,6 +84,7 @@ export default async function PostWritterPage({
                         className='flex-1'
                         isEditable={true}
                         showEditableSwitch={false}
+                        carouselId={carousel.id}
                     />
                     <LinkedinPost
                         className='flex-1 mx-auto'

@@ -4,7 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AccountSettings } from './_components/AccountSettings';
 import { IASettings } from './_components/IASettings';
 import { BrandKitsSettings } from './_components/BrandKitsSettings';
-import { getUserBrandKits } from '@/app/_actions/settings-actions';
+import {
+    getUserBrandKits,
+    getUserSettings,
+} from '@/app/_actions/settings-actions';
 import { signIn } from 'next-auth/react';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
@@ -17,6 +20,8 @@ export default async function IdeasPage() {
     }
 
     const userBrandKits = await getUserBrandKits(session!.user.id);
+    const userSettings = await getUserSettings(session!.user.id);
+
     return (
         <>
             <Heading
@@ -44,7 +49,9 @@ export default async function IdeasPage() {
                     <TabsContent value='password'></TabsContent>
                     <TabsContent value='team'></TabsContent>
                     <TabsContent value='ai'>
-                        <IASettings />
+                        <IASettings
+                            userIaSettings={userSettings?.iaSettings!}
+                        />
                     </TabsContent>
                     <TabsContent value='brands'>
                         <BrandKitsSettings userBrandKits={userBrandKits} />

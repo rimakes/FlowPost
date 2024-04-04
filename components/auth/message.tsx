@@ -1,10 +1,11 @@
-import { cn } from '@/lib/utils';
+import { cn, wait } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { AlertTriangle, CheckCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle, X } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 interface FormErrorProps extends VariantProps<typeof messageVariants> {
-    message: string | null;
     className?: string;
+    children?: React.ReactNode;
 }
 
 const messageVariants = cva(
@@ -26,23 +27,46 @@ const messageVariants = cva(
     }
 );
 
-export function Message({ message, className, variant }: FormErrorProps) {
-    if (!message) return null;
+export function Message({ children, className, variant }: FormErrorProps) {
+    const [isShown, setIsShown] = useState(true);
+    const divRef = useRef<HTMLDivElement>(null);
+
+    if (!children) return null;
+
+    if (!isShown) return null;
+
     const icon = (() => {
         switch (variant) {
             case 'error':
-                return <AlertTriangle className='w-5 h-5' />;
+                return <AlertTriangle className='w-5 h-5 shrink-0' />;
             case 'success':
-                return <CheckCircle className='w-5 h-5' />;
+                return <CheckCircle className='w-5 h-5  shrink-0' />;
             default:
-                return <AlertTriangle className='w-5 h-5' />;
+                return <AlertTriangle className='w-5 h-5 shrink-0' />;
         }
     })();
 
     return (
-        <div className={cn(messageVariants({ variant, className }))}>
+        <div
+            className={cn(
+                messageVariants({ variant, className }),
+                'relative transition-all duration-500 '
+            )}
+            ref={divRef}
+        >
+            <X
+                className='absolute top-2 right-2 w-4 h-4 cursor-pointer'
+                onClick={async () => {
+                    divRef.current?.classList.add(
+                        'opacity-0',
+                        '-translate-y-10'
+                    );
+                    await wait(700);
+                    setIsShown(false);
+                }}
+            />
             {icon}
-            <p>{message}</p>
+            <p>{children}</p>
         </div>
     );
 }

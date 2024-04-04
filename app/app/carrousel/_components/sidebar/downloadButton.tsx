@@ -123,6 +123,9 @@ const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
     const dataUrl = await toPng(htmlElement, {
         quality: 1,
         pixelRatio: 4,
+        // REVIEW: This was causing the issue! <Image> component use the query params
+        // indeed, with Next <Image> component, the src is url path is the same for all images and the query params are used to fetch the image that is needed specifically. As toPng was removing the query params, the image was not being fetched correctly.
+        includeQueryParams: true,
     });
 
     // ...but this prints the wrong image url!!!!!!

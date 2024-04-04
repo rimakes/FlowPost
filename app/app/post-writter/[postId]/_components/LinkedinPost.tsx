@@ -1,12 +1,13 @@
 'use client';
 
 import { fakeSlides } from '@/app/app/carrousel/_components/const';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn, fromPdfUrlToThumnailUrl } from '@/lib/utils';
 import { TCarousel, TLinkedinPost } from '@/types/types';
 import {
     Cross,
+    GalleryHorizontal,
     Globe,
     Globe2,
     ImageIcon,
@@ -24,6 +25,8 @@ import {
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from '../../_components/PostWritterProvider';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
+import Link from 'next/link';
 
 type LinkedinPostProps = { className?: string; carousel: TCarousel };
 
@@ -45,7 +48,7 @@ export function LinkedinPost({ className, carousel }: LinkedinPostProps) {
             <Separator />
             <PostHeader post={post} />
             <PostContent post={post} />
-            <PostImage imageUrl={thumbnailUrl!} />
+            <PostImage imageUrl={thumbnailUrl!} carouselId={carousel.id} />
             <StatsBar />
             <Separator />
             <PostActionsBar />
@@ -188,18 +191,53 @@ const StatsBar = () => {
     );
 };
 
-const PostImage = ({ imageUrl }: { imageUrl: string }) => {
-    if (!imageUrl) {
-        return null;
-    }
+const PostImage = ({
+    imageUrl,
+    carouselId,
+}: {
+    imageUrl: string;
+    carouselId: string;
+}) => {
+    const { post } = useContext(PostWritterContext);
+
+    const isCarouselCreated = !!carouselId;
+    const isCarouselProcessed = isCarouselCreated && imageUrl;
+
+    console.log({ isCarouselCreated, isCarouselProcessed });
+
     return (
-        <div className='!aspect-[1080/1350]  w-[calc(100%+1rem)] -ml-2 bg-muted relative shrink-0'>
-            <Image
-                src={imageUrl}
-                fill
-                alt='post image'
-                className='object-fill'
-            />
+        <div
+            className={`!aspect-[1080/1350]  w-[calc(100%+1rem)] -ml-2 bg-muted relative shrink-0`}
+        >
+            {isCarouselProcessed && (
+                <Image
+                    src={imageUrl}
+                    fill
+                    alt='post image'
+                    className='object-fill'
+                />
+            )}
+
+            {!isCarouselCreated && (
+                <div className='flex flex-col justify-center items-center h-full'>
+                    <p>Crea un carrusel</p>
+                    <p>👇</p>
+                    <CreateCarouselButton post={post} className='flex-none' />
+                </div>
+            )}
+
+            {isCarouselCreated && !isCarouselProcessed && (
+                <div className='flex flex-col justify-center items-center h-full'>
+                    <p>Procesa el carrusel para poder publicarlo</p>
+                    <p>👇</p>
+                    <Link
+                        className={buttonVariants({ variant: 'outline' })}
+                        href={`/app/carrousel/${carouselId}`}
+                    >
+                        Ir al carrusel
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };
