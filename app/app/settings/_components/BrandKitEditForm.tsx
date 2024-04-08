@@ -82,15 +82,33 @@ export function BrandKitEditForm({
         const formData = new FormData();
         formData.append('file', pictures[0]);
 
+        let cloudinaryResponse;
+
         if (isNewPicture) {
-            const cloudinaryResponse = await uploadFileToCloudinary(formData);
+            try {
+                cloudinaryResponse = await uploadFileToCloudinary(formData);
+            } catch (error) {
+                toast.error('Error al subir la imagen');
+                setStatus('error');
+                return;
+            }
             console.log('cld response!', cloudinaryResponse);
             data.imageUrl = cloudinaryResponse.url as string;
         }
-        await saveBrandKit(
-            { ...data, id: form.getValues('id') },
-            session!.user.id
-        );
+        try {
+            await saveBrandKit(
+                { ...data, id: form.getValues('id') },
+                session!.user.id
+            );
+        } catch (error) {
+            toast.error(
+                'Error al guardar la marca. Por favor, intenta de nuevo.'
+            );
+            console.error(error);
+            setStatus('error');
+            return;
+        }
+
         setStatus('success');
         router.refresh();
         toast.success('Marca guardada');
