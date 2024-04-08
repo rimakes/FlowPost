@@ -60,7 +60,9 @@ export const uploadFileToCloudinary = async (
 
     let result;
     try {
+        console.log('promise', promise);
         result = await promise;
+        console.log('result', result);
     } catch (error) {
         console.log('error', error);
         // @ts-ignore
