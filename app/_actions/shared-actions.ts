@@ -58,7 +58,14 @@ export const uploadFileToCloudinary = async (
         console.log('file piped to cloudinary');
     });
 
-    const result = await promise;
+    let result;
+    try {
+        result = await promise;
+    } catch (error) {
+        console.log('error', error);
+        // @ts-ignore
+        console.log('errorMessage', error.errorMessage);
+    }
 
     console.log('result', result);
 
