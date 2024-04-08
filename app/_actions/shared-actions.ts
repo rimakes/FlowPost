@@ -58,8 +58,11 @@ export const uploadFileToCloudinary = async (
         console.log('file piped to cloudinary');
     });
 
-    console.log({ promise });
-    return promise as Promise<{ url: string; publicId: string }>;
+    const result = await promise;
+
+    console.log('result', result);
+
+    return result as Promise<{ url: string; publicId: string }>;
 };
 
 export const getPageNFromCloudinary = async (imageId: string, n: number) => {
