@@ -43,7 +43,7 @@ export default async function PostWritterPage({
     let carousel = {} as TCarousel;
 
     if (!(postId === 'new')) {
-        const dbPost = await prisma?.linkedinPost.findUnique({
+        const dbPost = await db?.linkedinPost.findUnique({
             where: {
                 id: postId,
             },

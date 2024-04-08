@@ -7,8 +7,8 @@ import {
     createLinkedinCarousel,
     upsertLinkedinPost,
 } from '@/app/_actions/writter-actions';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { TLinkedinPost } from '@/types/types';
 import { Progress } from '../ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
@@ -36,6 +36,14 @@ export function CreateCarouselButton({
         interval: 2000,
         increment: 5,
     });
+    const isMounted = useRef(false);
+    const pathName = usePathname();
+    useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
     return (
         <ButtonWithTooltip
@@ -80,7 +88,9 @@ export function CreateCarouselButton({
 
                     finally: () => {
                         setStatus('idle');
-                        router.push(`/app/carrousel/${carouselId}`);
+                        console.log('pathName', pathName);
+                        isMounted.current &&
+                            router.push(`/app/carrousel/${carouselId}`);
                     },
                 });
             }}

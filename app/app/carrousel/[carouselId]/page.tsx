@@ -9,6 +9,7 @@ import { getBrandsByUserId } from '@/app/_actions/shared-actions';
 import { authOptions } from '@/auth';
 import { CarouselWorkbench } from '../_components/CarouselWorkbench';
 import { Session, getServerSession } from 'next-auth';
+import { db } from '@/lib/prisma';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -53,7 +54,7 @@ export default async function CarouselPage({ params }: props) {
 
     // If the carousel is not new, we fetch it from the database
     if (!(carouselId === 'new')) {
-        const dbCarousel = await prisma?.carousel.findUnique({
+        const dbCarousel = await db?.carousel.findUnique({
             where: {
                 id: carouselId,
             },
