@@ -133,7 +133,9 @@ export const LinkedinConnectRequest = () => {
                         <div className='flex flex-col gap-4 sm:justify-center sm:items-center sm:flex-row'>
                             <Button
                                 onClick={() => {
-                                    signIn('linkedin', {});
+                                    const promise = signIn('linkedin', {
+                                        callbackUrl: '/app/schedule',
+                                    });
                                 }}
                                 className='inline-flex items-center justify-center gap-2 transition-all duration-150 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm font-semibold hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 bg-blue-500 text-white'
                             >

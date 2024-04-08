@@ -1,6 +1,6 @@
 import NextAuth, { DefaultSession } from 'next-auth';
 import { JWT } from '@auth/core/jwt';
-import { Brand } from '@prisma/client';
+import { Brand, Subscription } from '@prisma/client';
 
 declare module 'next-auth' {
     /**
@@ -13,6 +13,7 @@ declare module 'next-auth' {
             settingsId: string;
             hasAccountLinked: boolean;
             brands: Brand[];
+            stripeSubscription: Subscription | null;
         } & DefaultSession['user'];
     }
     // Popular interfaces to augment
@@ -42,6 +43,7 @@ declare module '@auth/core/jwt' {
         id: string;
         settingsId: string;
         hasAccountLinked: boolean;
+        stripeSubscription: Subscription | null;
         brands: Brand[];
     }
 }

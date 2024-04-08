@@ -13,40 +13,58 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { TStatus } from '@/types/types';
+import { SettingsRes } from '@/app/api/settings/[userId]/route';
+import { wait } from '@/lib/utils';
 
 const generalSettingsSchema = z.object({
     name: z.string(),
 });
 
-type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
+export type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
 
 export const AccountSettings = () => {
-    const { data } = useSession();
+    const { data: session, update } = useSession();
+    const user = session?.user;
+
+    const [status, setStatus] = useState<TStatus>('idle');
 
     const form = useForm({
         resolver: zodResolver(generalSettingsSchema),
         defaultValues: {
-            name: data?.user?.name || '',
-            image: data?.user?.image || '',
+            name: user?.name || '',
+            image: user?.image || '',
         },
     });
 
     useEffect(() => {
-        if (data?.user.name) {
+        if (user?.name) {
             form.reset({
-                name: data.user.name,
+                name: user.name,
                 // @ts-ignore
-                image: data.user.image,
+                image: session.user.image,
             });
         }
-    }, [data, form, form.reset]);
+    }, [session, form, form.reset, user?.name]);
 
-    const onSubmit = (values: GeneralSettingsForm) => {
-        console.log(values);
+    const onSubmit = async (values: GeneralSettingsForm) => {
+        setStatus('loading');
+        const res = await fetch(`/api/settings/${session?.user.id}`, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'GENERAL', data: values }),
+        });
+
+        if (res.ok) {
+            const data: SettingsRes<'GENERAL'> = await res.json();
+            // @ts-ignore
+            const { name } = data.data;
+            setStatus('success');
+            await update({ ...user, name });
+        }
     };
 
     return (
@@ -77,27 +95,12 @@ export const AccountSettings = () => {
                                 </FormItem>
                             )}
                         />
-                        {/* <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nombre</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder='Ej. Juan'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}
-                        <Button type='submit' className='mt-4'>
-                            Guardar
+                        <Button
+                            type='submit'
+                            className='mt-4'
+                            disabled={status === 'loading'}
+                        >
+                            {status !== 'loading' ? 'Guardar' : 'Guardando...'}
                         </Button>
                     </form>
                 </Form>

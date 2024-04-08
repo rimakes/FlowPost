@@ -74,7 +74,6 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
                 }
             );
 
-            console.log('merged', merged);
             return merged;
         });
 

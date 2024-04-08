@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { ApiRequestBody, ApiResponse } from '@/types/types';
 import { register } from '@/lib/register-user';
@@ -21,6 +20,7 @@ import {
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
     try {
@@ -38,8 +38,6 @@ export async function POST(req: NextRequest) {
                     typeof templateId !== 'string' ||
                     typeof toneId !== 'number'
                 ) {
-                    console.log(description, templateId, toneId);
-                    console.log('MISSING_DATA');
                     return NextResponse.json(
                         { error: 'Datos incorrectos, prueba de nuevo' },
                         { status: 400 }

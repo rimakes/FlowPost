@@ -21,8 +21,10 @@ import { toast } from 'sonner';
 import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
 import { Message } from './message';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SocialLogin } from './SocialLogin';
+
+// BOILER: I have fixed the button disabled state and fixed the error message
 
 export function RegisterForm({}) {
     const form = useForm({
@@ -38,6 +40,8 @@ export function RegisterForm({}) {
     const [error, setError] = useState<string | null>(null);
 
     const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
+        setError(null);
+
         const body: RegisterReq<'CREATE'> = {
             action: 'CREATE',
             data: {
@@ -47,7 +51,7 @@ export function RegisterForm({}) {
                 confirmPassword: values.confirmPassword,
             },
         };
-        apiClient
+        return apiClient
             .post('/register', body)
             .then((res) => {
                 signIn('credentials', {
@@ -153,7 +157,7 @@ export function RegisterForm({}) {
                             </FormItem>
                         )}
                     />
-                    <Message variant={'error'}>{error}</Message>
+                    {error && <Message variant={'error'}>{error}</Message>}
                     <Button
                         type='submit'
                         disabled={form.formState.isSubmitting}

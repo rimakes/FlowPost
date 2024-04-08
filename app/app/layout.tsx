@@ -1,13 +1,14 @@
-'use client';
-
 import Feedback from '@/components/shared/feedback';
 import Navbar from '@/components/shared/navbar/Navbar';
 import { Sidebar } from '@/components/shared/sidebar/Sidebar';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import AppProvider from '@/providers/AppProvider';
 import { Clock, Zap } from 'lucide-react';
 import { AppModals } from '../_components/AppModals';
+import { getSubscription } from '../_actions/shared-actions';
+import Link from 'next/link';
+import { ToolBanner } from '@/components/shared/ToolBanner';
 
 export default function DefaultLayout({
     children,
@@ -33,31 +34,3 @@ export default function DefaultLayout({
         </AppProvider>
     );
 }
-
-type ToolBannerProps = {
-    className?: string;
-};
-
-export const ToolBanner = ({ className }: ToolBannerProps) => {
-    return (
-        <div
-            className={cn(
-                `gap-2 bg-muted p-2 flex justify-center items-center text-sm`,
-                className
-            )}
-        >
-            <Clock className='w-5 h-5 mr-2' />
-            Estás en un Free trial
-            <Button
-                variant={'default'}
-                size={'sm'}
-                className='rounded-full
-        text-xs
-        '
-            >
-                <Zap className='w-4 h-4 mr-2 fill-primary-foreground' />
-                Elige plan
-            </Button>
-        </div>
-    );
-};

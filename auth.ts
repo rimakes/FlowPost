@@ -155,7 +155,7 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/',
         newUser: '/', // New users will be directed here on first sign in
-        error: '/auth/signin', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
+        error: '/app/schedule', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
     },
 
     debug: process.env.NODE_ENV === 'development', // Set to true to display debug messages
@@ -210,15 +210,15 @@ export const authOptions: NextAuthOptions = {
 
         // called anytime the user is redirected to a callback URL (e.g. on signin or signout).
 
-        // async redirect({ url, baseUrl }) {
-        //     // Allows relative callback URLs
-        //     console.log('url-->', url);
-        //     console.log('baseUrl-->', baseUrl);
-        //     if (url.startsWith('/')) return `${baseUrl}${url}`;
-        //     // Allows callback URLs on the same origin
-        //     else if (new URL(url).origin === baseUrl) return url;
-        //     return baseUrl;
-        // },
+        async redirect({ url, baseUrl }) {
+            // Allows relative callback URLs
+            // console.log('url-->', url);
+            // console.log('baseUrl-->', baseUrl);
+            if (url.startsWith('/')) return `${baseUrl}${url}`;
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
 
         // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or
         // updated (i.e whenever a session is accessed in the client). The returned value will be encrypted,
@@ -234,8 +234,17 @@ export const authOptions: NextAuthOptions = {
             // console.log({ session });
             // console.log('trigger-->', { trigger });
 
+            if (trigger === 'update' && session.name) {
+                console.log('session.name', session.name);
+                token.name = session.name;
+            }
+
             if (trigger === 'update' && session.brands) {
                 token.brands = session.brands;
+            }
+
+            if (trigger === 'update' && session.stripeSubscription) {
+                token.brands = session.stripeSubscription;
             }
 
             // When the user signes in for the first time, we want to add some extra information to the token
@@ -263,6 +272,7 @@ export const authOptions: NextAuthOptions = {
                 token.name = user.name;
                 token.settingsId = dbUser?.settingsId;
                 token.brands = brandsOfUser;
+                token.stripeSubscription = dbUser?.stripeSubscription;
             }
 
             return token;
@@ -275,18 +285,20 @@ export const authOptions: NextAuthOptions = {
         // When using database sessions, the User (user) object is passed as an argument.
         // When using JSON Web Tokens for sessions, the JWT payload (token) is provided instead.
         async session({ session, token, user }) {
-            // console.log('session from session callback', session);
+            // console.log('session from session callback', token.name);
             if (session && session.user) {
             }
             return {
                 ...session,
                 user: {
                     ...session.user,
+                    name: token.name,
                     id: token.id,
                     role: token.role,
                     settingsId: token.settingsId,
                     hasAccountLinked: token.hasAccountLinked,
                     brands: token.brands,
+                    stripeSubscription: token.stripeSubscription,
                 },
             };
         },

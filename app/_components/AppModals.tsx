@@ -1,14 +1,12 @@
 'use client';
 
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useSearchParams } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
-import { BrandKitCard } from '../app/settings/_components/BrandKitCard';
 import { BrandKitEditForm } from '../app/settings/_components/BrandKitEditForm';
 import { defaultValues } from '@/config/const';
 import { useSession } from 'next-auth/react';
 import { AppContext } from '@/providers/AppProvider';
-import { getDate, getDay, differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 import { wait } from '@/lib/utils';
 
 type AppModalsProps = {};

@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import {
     postOnLinkedIn,
@@ -6,6 +5,7 @@ import {
     uploadImageToLinkedin,
 } from '../../_actions/schedule-actions';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
+import { NextRequest, NextResponse } from 'next/server';
 
 type NewTScheduledPost = TScheduledPost & {
     linkedinPost: TLinkedinPost;

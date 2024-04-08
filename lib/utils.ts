@@ -14,6 +14,7 @@ import {
 import * as PrismaClient from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { db } from './prisma';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -183,4 +184,54 @@ export const fromPdfUrlToThumnailUrl = (
 ) => {
     return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_fill,pg_${page}/${pdfId}.jpg`;
     // return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/w_${width},h_${height},c_fill,pg_${page}/${pdfId}.jpg`;
+};
+
+export type UserSubscriptionPlan = {
+    isPro: boolean;
+    priceId: string | null;
+    currentPeriodEnd: Date | null;
+};
+
+const GRACE_PERIOD_MS = 86_400_000;
+export async function getUserSubscription(
+    userId: string
+): Promise<UserSubscriptionPlan> {
+    const user = await db.user.findUnique({
+        where: {
+            id: userId,
+        },
+        select: {
+            stripeSubscription: {
+                select: {
+                    priceId: true,
+                    currentPeriodEnd: true,
+                },
+            },
+        },
+    });
+
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    const priceId = user.stripeSubscription?.priceId || null;
+    const currentPeriodEnd = user.stripeSubscription?.currentPeriodEnd || null;
+    if (!priceId || !currentPeriodEnd) {
+        throw new Error('No se encontró una suscripción activa');
+    }
+
+    const isPro =
+        priceId && currentPeriodEnd?.getTime()! + GRACE_PERIOD_MS > Date.now();
+
+    const subscription = {
+        priceId,
+        currentPeriodEnd,
+        isPro: !!isPro,
+    };
+
+    return subscription;
+}
+
+export const absoluteUrl = (path?: string) => {
+    return `${process.env.NEXT_PUBLIC_HOSTNAME}${path}`;
 };

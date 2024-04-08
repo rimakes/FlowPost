@@ -31,7 +31,7 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
         },
     });
 
-    const [status, setStatus] = useState<TStatus>('success');
+    const [status, setStatus] = useState<TStatus>('idle');
     const [ideas, setIdeas] = useState<string[]>([]);
     const onSubmit = async (data: any) => {
         setStatus('loading');

@@ -11,8 +11,14 @@ import {
 import { signIn } from 'next-auth/react';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
+import { PlanSettings } from './_components/PlanSettings';
+import { TPageProps } from '@/types/types';
+import { db } from '@/lib/prisma';
+import { getSubscription } from '@/app/_actions/shared-actions';
 
-export default async function IdeasPage() {
+export default async function IdeasPage({ params, searchParams }: TPageProps) {
+    const tab = searchParams['tab'] as string;
+
     const session: Session | null = await getServerSession(authOptions);
 
     if (!session) {
@@ -21,6 +27,8 @@ export default async function IdeasPage() {
 
     const userBrandKits = await getUserBrandKits(session!.user.id);
     const userSettings = await getUserSettings(session!.user.id);
+
+    const subscription = await getSubscription();
 
     return (
         <>
@@ -31,14 +39,12 @@ export default async function IdeasPage() {
             />
             <Separator />
             <div className='mt-6 space-y-4 2xl:flex gap-8'>
-                <Tabs defaultValue='general' className='w-full'>
+                <Tabs defaultValue={tab || 'general'} className='w-full'>
                     <div className='overflow-x-auto mb-8 '>
                         <TabsList className='flex gap-2 w-fit'>
                             <TabsTrigger value='general'>General</TabsTrigger>
-                            <TabsTrigger value='password'>
-                                Subscripción
-                            </TabsTrigger>
-                            <TabsTrigger value='team'>Equipo</TabsTrigger>
+                            <TabsTrigger value='plan'>Subscripción</TabsTrigger>
+                            {/* <TabsTrigger value='team'>Equipo</TabsTrigger> */}
                             <TabsTrigger value='ai'>IA</TabsTrigger>
                             <TabsTrigger value='brands'>Tus Marcas</TabsTrigger>
                         </TabsList>
@@ -46,8 +52,10 @@ export default async function IdeasPage() {
                     <TabsContent value='general'>
                         <AccountSettings />
                     </TabsContent>
-                    <TabsContent value='password'></TabsContent>
-                    <TabsContent value='team'></TabsContent>
+                    <TabsContent value='plan'>
+                        <PlanSettings subscription={subscription} />
+                    </TabsContent>
+                    {/* <TabsContent value='team'></TabsContent> */}
                     <TabsContent value='ai'>
                         <IASettings
                             userIaSettings={userSettings?.iaSettings!}

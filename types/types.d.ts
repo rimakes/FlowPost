@@ -56,6 +56,7 @@ export type ApiResponse<T = undefined, E = ApiError> =
           pagination?: PaginationInfo;
       }
     | {
+          data: T;
           statusCode: HttpStatusCode;
           message: string;
           ok: false;
@@ -212,4 +213,9 @@ export type AppNotificationType = 'info' | 'warning' | 'error' | 'success';
 export type ImageWithDataUrl = {
     url: string;
     dataUrl: string;
+};
+
+export type TPageProps = {
+    params: { slug: string };
+    searchParams: { [key: string]: string | string[] | undefined };
 };

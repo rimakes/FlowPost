@@ -1,5 +1,7 @@
 'use client';
 
+// BOILER: Message component updated
+
 // import zod
 import { z } from 'zod';
 import {
@@ -115,10 +117,13 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                             </FormItem>
                         )}
                     />
-                    <Message variant={'error'}>
-                        {errors[errorRes as TSigninErrors] ||
-                            errors[error as TSigninErrors]}
-                    </Message>
+                    {(errors[errorRes as TSigninErrors] ||
+                        errors[error as TSigninErrors]) && (
+                        <Message variant={'error'}>
+                            {errors[errorRes as TSigninErrors] ||
+                                errors[error as TSigninErrors]}
+                        </Message>
+                    )}
 
                     <Button
                         type='submit'

@@ -21,7 +21,6 @@ type PostWritterPageProps = {
 
 export default async function PostWritterPage({
     params,
-    searchParams,
 }: PostWritterPageProps) {
     const postId = params.postId;
 
@@ -33,15 +32,15 @@ export default async function PostWritterPage({
         id: 'new',
         content: '',
         author: {
-            handle: brands[0].handle,
-            name: brands[0].name,
-            pictureUrl: brands[0].imageUrl,
+            handle: brands[0]?.handle || '@ric_sala',
+            name: brands[0]?.name || 'Ricardo Sala',
+            pictureUrl: brands[0]?.imageUrl || '/images/placeholders/user.png',
         },
         publishedAt: new Date(),
         published: false,
     };
 
-    let carousel: TCarousel = {} as TCarousel;
+    let carousel = {} as TCarousel;
 
     if (!(postId === 'new')) {
         const dbPost = await prisma?.linkedinPost.findUnique({
@@ -50,22 +49,18 @@ export default async function PostWritterPage({
             },
         });
 
-        console.log('dbPost', dbPost?.userId);
-        console.log('session', session?.user.id);
-
         if (!dbPost || dbPost?.userId !== session?.user.id) {
             return notFound();
         }
 
         post = dbPost;
 
+        // TODO: For now this is a "hack" to deal with the mongo null limitation
         const carousels = await db.carousel.findMany({
             where: {
                 linkedinPostId: postId,
             },
         });
-
-        console.log('carousels', carousels);
 
         const lastCarousel = carousels[carousels.length - 1];
 

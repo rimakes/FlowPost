@@ -13,7 +13,7 @@ import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
 
 type GeneratedPostProps = {
@@ -60,7 +60,7 @@ export const PostWritterResult = ({
                     <Textarea
                         rows={20}
                         className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
-                        focus-visible:!ring-trans focus-visible:outline-none 
+                        focus-visible:!ring-trans focus-visible:outline-none
                         `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}

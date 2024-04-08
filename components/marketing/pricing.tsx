@@ -3,10 +3,9 @@ import { appConfig } from '@/config/shipper.appconfig';
 // import Highlight from '../utils/highlight';
 import { getStripeInstance } from '@/lib/stripe';
 import FeaturedLogo from '../icons/featured-logo';
-import { CheckoutButton } from './check-out-button';
+import { CheckoutButton } from './CheckoutButton';
 import Stripe from 'stripe';
-import Highlight from '../utils/Hightlight';
-import { primaryFont, secondaryFont } from '@/config/fonts';
+import { secondaryFont } from '@/config/fonts';
 
 export const Pricing = async () => {
     const stripe = await getStripeInstance();

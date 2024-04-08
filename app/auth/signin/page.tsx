@@ -6,9 +6,10 @@ export const metadata = {
 import Link from 'next/link';
 import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
-import { LoginForm } from '@/components/auth/login-form';
+import { LoginForm } from '@/components/auth/LoginForm';
 import { Message } from '@/components/auth/message';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
+import { Suspense } from 'react';
 
 export default function SignIn() {
     return (
@@ -21,7 +22,10 @@ export default function SignIn() {
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8 space-y-4'>
                             {/* Form */}
-                            <LoginForm />
+
+                            <Suspense>
+                                <LoginForm />
+                            </Suspense>
                             {/* Footer */}
                             <SwitchLogin signUp resetPassword />
                         </div>

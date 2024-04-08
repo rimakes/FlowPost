@@ -17,17 +17,13 @@ model User {
     email String? @unique
     image String?
 
-    // For Stripe
-    customerId             String? //TODO:  should I add @unique @map(name:"stripe_customer_id")
-    priceId                String? //TODO:  should I add @unique @map(name:"stripe_price_id")
-    productId              String? //TODO:  ...
-    stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-    // TODO: prefix all maps of stripe with "stripe"?
-    emailVerified          DateTime?
-    hashedPassword         String?
-    createdAt              DateTime  @default(now())
-    updatedAt              DateTime  @updatedAt
-    role                   UserRole  @default(USER)
+    stripeCustomerId   String? //TODO:  should I add @unique @map(name:"stripe_customer_id")
+    stripeSubscription Subscription?
+    emailVerified      DateTime?
+    hashedPassword     String?
+    createdAt          DateTime      @default(now())
+    updatedAt          DateTime      @updatedAt
+    role               UserRole      @default(USER)
 
     settingsId    String?        @unique @db.ObjectId
     settings      Settings?      @relation(fields: [settingsId], references: [id])
@@ -37,6 +33,19 @@ model User {
     carousels     Carousel[]
     ideas         Idea[]
     brands        Brand[]
+}
+
+enum SubscriptionStatus {
+    UNPAID
+    PAID
+}
+
+type Subscription {
+    priceId          String?
+    // status           SubscriptionStatus
+    productId        String? //TODO:  ...
+    subscriptionId   String?
+    currentPeriodEnd DateTime?
 }
 
 model Account {

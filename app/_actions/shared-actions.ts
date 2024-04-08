@@ -1,7 +1,9 @@
 'use server';
 
+import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
 import cloudinary from 'cloudinary';
+import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import streamifier from 'streamifier';
 
@@ -87,4 +89,14 @@ export const getPageNFromCloudinary = async (imageId: string, n: number) => {
 
 export const revalidateAllPaths = async () => {
     revalidatePath('/app', 'layout');
+};
+
+export const getSubscription = async () => {
+    const session = await getServerSession(authOptions);
+
+    const user = await db.user.findUnique({
+        where: { id: session!.user.id },
+    });
+
+    return user?.stripeSubscription;
 };

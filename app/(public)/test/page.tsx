@@ -1,5 +1,5 @@
 'use client';
-import { LoginForm } from '@/components/auth/login-form';
+import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/register-form';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/shared/theme-toggle';

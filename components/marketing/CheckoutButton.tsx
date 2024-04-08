@@ -2,6 +2,9 @@
 
 import { apiClient } from '@/lib/apiClient';
 import { useState } from 'react';
+import { Button } from '../ui/button';
+import Spinner from '../icons/spinner';
+import { TStatus } from '@/types/types';
 
 type CheckoutButtonProps = {
     priceId: string;
@@ -9,16 +12,17 @@ type CheckoutButtonProps = {
 };
 
 export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<TStatus>('idle');
 
     const handlePayment = async () => {
-        setIsLoading(true);
+        setStatus('loading');
 
         try {
             const res = await apiClient.post('/stripe/checkout', {
+                mode: 'subscription',
                 priceId,
-                successUrl: window.location.href,
-                cancelUrl: window.location.href,
+                successUrl: `${window.location.href}?success=true&priceId=${priceId}`,
+                cancelUrl: `${window.location.href}?canceled=true`,
             });
 
             window.location.href = res.data.url;
@@ -26,19 +30,16 @@ export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
             console.error(e);
         }
 
-        setIsLoading(false);
+        setStatus('idle');
     };
 
     return (
-        <button
-            className='group btn btn-primary btn-block'
-            onClick={() => handlePayment()}
-        >
-            {isLoading ? (
-                <span className='loading loading-spinner loading-xs'></span>
+        <Button className='flex gap-2 group' onClick={() => handlePayment()}>
+            {status === 'loading' ? (
+                <Spinner />
             ) : (
                 <svg
-                    className='h-5 w-5 fill-primary-content transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-110'
+                    className='h-5 w-5 fill-current transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-110'
                     viewBox='0 0 375 509'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
@@ -47,6 +48,6 @@ export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
                 </svg>
             )}
             {children}
-        </button>
+        </Button>
     );
 };

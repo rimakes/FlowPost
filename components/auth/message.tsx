@@ -28,10 +28,8 @@ const messageVariants = cva(
 );
 
 export function Message({ children, className, variant }: FormErrorProps) {
-    const [isShown, setIsShown] = useState(true);
+    const [isShown, setIsShown] = useState(() => true);
     const divRef = useRef<HTMLDivElement>(null);
-
-    if (!children) return null;
 
     if (!isShown) return null;
 

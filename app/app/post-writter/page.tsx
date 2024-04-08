@@ -5,16 +5,13 @@ import { PostWritterResult } from './_components/GeneratedPost';
 import { PostWritterContextProvider } from './_components/PostWritterProvider';
 import { getServerSession } from 'next-auth';
 import { getBrandsByUserId } from '@/app/_actions/shared-actions';
-
-type PostWritterPageProps = {
-    params: { slug: string };
-    searchParams: { [key: string]: string | string[] | undefined };
-};
+import { TPageProps } from '@/types/types';
+import { Suspense } from 'react';
 
 export default async function PostWritterPage({
     params,
     searchParams,
-}: PostWritterPageProps) {
+}: TPageProps) {
     const description = decodeURIComponent(
         searchParams['description'] as string
     );
@@ -34,7 +31,9 @@ export default async function PostWritterPage({
             <Separator />
             <div className='flex flex-col mt-6 2xl:flex-row gap-8'>
                 <PostWritterContextProvider firstBrand={brands[0]}>
-                    <PostWritterForm className='flex-1' />
+                    <Suspense>
+                        <PostWritterForm className='flex-1' />
+                    </Suspense>
                     <PostWritterResult className='flex-1' />
                 </PostWritterContextProvider>
             </div>

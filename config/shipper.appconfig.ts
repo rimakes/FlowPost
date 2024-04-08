@@ -108,27 +108,27 @@ export const appConfig = {
     // ### PLANS
     plans: [
         {
-            featured: false,
-            name: 'Basic',
-            description: 'Basic Plan yo!',
-            price: '$10/month',
-            stripePriceId: 'price_1NpoWVInQyVRXAJyBgaid9PD',
-            features: [
-                { name: 'this is a test' },
-                { name: 'this is a test' },
-                { name: 'this is a test' },
-            ],
+            // featured: false,
+            // name: 'Basic',
+            // description: 'Basic Plan yo!',
+            // price: '$10/month',
+            stripePriceId: 'price_1OSkLCB6M9fLIRyeYQAXIGnv',
+            // features: [
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            // ],
         },
         {
-            name: 'Pro',
-            description: 'Pro Plan yo!',
-            price: '$49/month',
+            // name: 'Pro',
+            // description: 'Pro Plan yo!',
+            // price: '$49/month',
             stripePriceId: 'price_456',
-            features: [
-                { name: 'this is a test' },
-                { name: 'this is a test' },
-                { name: 'this is a test' },
-            ],
+            // features: [
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            // ],
         },
     ],
 };

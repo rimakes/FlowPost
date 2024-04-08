@@ -1,3 +1,5 @@
+'use client';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -43,7 +45,7 @@ export const Sidebar = ({}: SidebarProps) => {
        flex gap-2 lg:flex-col lg:p-2 
 sticky bottom-0 lg:z-2 bg-background border-r
 border-t
-isolate
+isolate z-10
 transition-[width] duration-300
  ${collapsed ? 'lg:w-16' : 'lg:w-72'}`}
         >
@@ -187,7 +189,7 @@ export const MenuItem = ({
                 <TooltipTrigger className='w-full'>
                     <MenuLink />
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className='z-50'>
                     {status !== 'active'
                         ? 'Estamos desarrollando esta funcionalidad 🏗️'
                         : label}
@@ -229,7 +231,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 const MAIN_MENU_ITEMS: MenuItem[] = [
     {
         icon: Sparkles,
-        label: 'Escriba con IA',
+        label: 'Escribe con IA',
         href: '/app/post-writter',
         shortLabel: 'Posts',
         status: 'active',

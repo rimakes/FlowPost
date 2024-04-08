@@ -20,6 +20,7 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
+import { Move, MoveIcon } from 'lucide-react';
 
 type TSlideElement = 'title' | 'tagline' | 'paragraph' | 'imageCaption';
 
