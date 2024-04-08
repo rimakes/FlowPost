@@ -87,6 +87,7 @@ export function BrandKitEditForm({
         if (isNewPicture) {
             try {
                 cloudinaryResponse = await uploadFileToCloudinary(formData);
+                console.log('cloudinaryResponse', cloudinaryResponse);
             } catch (error) {
                 toast.error('Error al subir la imagen');
                 setStatus('error');
