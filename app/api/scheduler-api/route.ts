@@ -44,6 +44,8 @@ export async function GET(req: NextRequest) {
         pendingToPublishPosts.forEach((post) => {
             console.log('Post Date', post.date);
             console.log('Now', now);
+            console.log('pub = false', post.linkedinPost.published === false);
+            console.log('published', post.linkedinPost.published);
             const isBeforeNow = post.date < now;
             console.log('Is Before Now', isBeforeNow);
             const isAfterStartOfDay = post.date > startOfDay;
