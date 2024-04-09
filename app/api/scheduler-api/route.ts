@@ -32,9 +32,9 @@ export async function GET(req: NextRequest) {
                     gte: startOfDay,
                     lt: now,
                 },
-                // linkedinPost: {
-                //     published: false,
-                // },
+                linkedinPost: {
+                    published: false,
+                },
             },
             include: {
                 linkedinPost: true,
