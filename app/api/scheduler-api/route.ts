@@ -41,6 +41,14 @@ export async function GET(req: NextRequest) {
 
         console.log('Posts to be published', pendingToPublishPosts);
 
+        if (pendingToPublishPosts.length === 0) {
+            console.log('No post to be published');
+            return NextResponse.json(
+                { message: 'No post to be published' },
+                { status: 200 }
+            );
+        }
+
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
             // console.log('Post to be published', post);
@@ -115,6 +123,7 @@ export async function GET(req: NextRequest) {
             //     });
             // }
         });
+
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
     } catch (error) {
         console.log(error);
