@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
         });
 
         console.log('Posts to be published', pendingToPublishPosts);
-        return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
+        // return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
 
         if (pendingToPublishPosts.length === 0) {
             console.log('No post to be published');
@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
 
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
-            // console.log('Post to be published', post);
+            console.log('LOOP: Post to be published', post);
 
             const userAccount = await db.account.findFirst({
                 where: {
@@ -78,7 +78,10 @@ export async function GET(req: NextRequest) {
                 },
             });
 
-            if (!userAccount) return;
+            if (!userAccount) {
+                console.log('No linkedin account found');
+                return;
+            }
 
             console.log('search if there is a carousel for this post 22.29');
 
