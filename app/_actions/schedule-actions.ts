@@ -172,11 +172,10 @@ export const postOnLinkedIn = async (
     try {
         const body = {
             author: `urn:li:person:${providerAccountId}`,
-            commentary:
-                `This is a test to see what the problem is...( ${content}`.replace(
-                    /[\(*\)\[\]\{\}<>@|~_]/gm,
-                    (x) => '\\' + x
-                ),
+            commentary: `${content}`.replace(
+                /[\(*\)\[\]\{\}<>@|~_]/gm,
+                (x) => '\\' + x
+            ),
             visibility: 'PUBLIC',
             distribution: {
                 feedDistribution: 'MAIN_FEED',

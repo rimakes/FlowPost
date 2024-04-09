@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
                 return;
             }
 
-            console.log('search if there is a carousel for this post 22.29');
+            console.log('search if there is a carousel for this post');
 
             let carousel;
             try {
@@ -126,23 +126,23 @@ export async function GET(req: NextRequest) {
 
             console.log('Posted STATUS', posted.status);
 
-            return NextResponse.json(
-                { message: 'Scheduled on Linkedin' },
-                { status: posted.status }
-            );
-            // if (posted.status === 201 && post?.linkedinPostId !== null) {
-            //     // if post is successfully posted on linkedin
-            //     await db.linkedinPost.update({
-            //         // update the linkedin post to published
-            //         where: {
-            //             id: post?.linkedinPostId,
-            //         },
-            //         data: {
-            //             published: true,
-            //             publishedAt: new Date(),
-            //         },
-            //     });
-            // }
+            // return NextResponse.json(
+            //     { message: 'Scheduled on Linkedin' },
+            //     { status: posted.status }
+            // );
+            if (posted.status === 201 && post?.linkedinPostId !== null) {
+                // if post is successfully posted on linkedin
+                await db.linkedinPost.update({
+                    // update the linkedin post to published
+                    where: {
+                        id: post?.linkedinPostId,
+                    },
+                    data: {
+                        published: true,
+                        publishedAt: new Date(),
+                    },
+                });
+            }
         });
 
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
