@@ -4,5 +4,10 @@
             "path": "/api/scheduler-api",
             "schedule": "* * * * *"
         }
-    ]
+    ],
+    "functions": {
+        "app/api/**/*": {
+            "maxDuration": 30
+        }
+    }
 }
