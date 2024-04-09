@@ -10,6 +10,8 @@ import { getSubscription } from '../_actions/shared-actions';
 import Link from 'next/link';
 import { ToolBanner } from '@/components/shared/ToolBanner';
 
+export const maxDuration = 60; // This function can run for a maximum of 5 seconds
+
 export default function DefaultLayout({
     children,
 }: {
