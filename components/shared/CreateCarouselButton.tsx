@@ -82,15 +82,20 @@ export function CreateCarouselButton({
                     loading: 'Creando carrusel...',
                     success: (data) => {
                         carouselId = data.id;
+                        toast.success('Carrusel creado', {
+                            action: {
+                                label: 'Ver carrusel',
+                                onClick: () => {
+                                    router.push(`/app/carrousel/${carouselId}`);
+                                },
+                            },
+                        });
                         return 'Carrusel creado';
                     },
                     error: 'Error al crear carrusel',
 
                     finally: () => {
                         setStatus('idle');
-                        console.log('pathName', pathName);
-                        isMounted.current &&
-                            router.push(`/app/carrousel/${carouselId}`);
                     },
                 });
             }}
