@@ -27,15 +27,15 @@ export async function GET(req: NextRequest) {
 
         // finding the posts from the start of the day till end of day that are not published AND SHOULD BE PUBLISHED BY NOW
         let pendingToPublishPosts = (await db.scheduledPost.findMany({
-            // where: {
-            //     date: {
-            //         gte: startOfDay,
-            //         lt: now,
-            //     },
-            //     // linkedinPost: {
-            //     //     published: false,
-            //     // },
-            // },
+            where: {
+                date: {
+                    gte: startOfDay,
+                    lt: now,
+                },
+                // linkedinPost: {
+                //     published: false,
+                // },
+            },
             include: {
                 linkedinPost: true,
             },
