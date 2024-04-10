@@ -366,6 +366,7 @@ export const findPostsByUserId = async (userId: string) => {
         },
         include: {
             scheduledPost: true,
+            carousel: true,
         },
     });
 };

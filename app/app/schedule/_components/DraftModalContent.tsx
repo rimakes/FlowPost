@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { SchedulerContext } from './SchedulerProvider';
 import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';
+import { Badge } from '@/components/ui/badge';
 
 type DraftModalContentProps = {
     onSelect: () => void;
@@ -71,7 +72,13 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                             {post?.content}
                                         </p>
                                         <Separator />
+                                        {post.carousel.length === 0 && (
+                                            <Badge className='ml-1'>
+                                                Sin Carrusel
+                                            </Badge>
+                                        )}
                                         <Button
+                                            className='w-full'
                                             onClick={() => {
                                                 const scheduleDate = new Date(
                                                     date

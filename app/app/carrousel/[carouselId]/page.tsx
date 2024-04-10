@@ -32,6 +32,8 @@ export default async function CarouselPage({ params }: props) {
     const { carouselId } = params;
     let carousel = fakeCarousel as TCarousel;
 
+    console.log('userBrand1', userBrands[0]);
+
     // If the carousel is new and the user has brands, we set the carousel settings to the first brand
     if (userBrands.length > 0 && carouselId === 'new') {
         carousel = {
@@ -51,6 +53,8 @@ export default async function CarouselPage({ params }: props) {
             },
         } as TCarousel;
     }
+
+    console.log('carousel', carousel);
 
     // If the carousel is not new, we fetch it from the database
     if (!(carouselId === 'new')) {

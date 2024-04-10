@@ -131,6 +131,11 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         });
     };
 
+    console.log(
+        'carousel.settings.colorPalette',
+        carousel.settings.colorPalette
+    );
+
     return (
         <div
             className={cn(`sidebar basis-60 grow p-4 flex flex-col`, className)}
@@ -157,7 +162,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <Collapsible>
                 <CollapsibleTrigger className='flex justify-between w-full items-center'>
                     <div className='cursor-pointer flex items-center'>
-                        Colores{' '}
+                        Colores
                         <ColorPalette
                             colors={carousel.settings.colorPalette}
                             onClick={() => {}}
@@ -251,23 +256,21 @@ export const FontPaletteSelector = ({
 }: FontPaletteSelectorProps) => {
     return (
         <div className='flex flex-col gap-4'>
-            {Object.keys(fontPalette)
-                .sort()
-                .map((fontType) => (
-                    <div
-                        key={fontType}
-                        className='cursor-pointer flex flex-col items-start'
-                    >
-                        {/*@ts-ignore  */}
-                        {fontTypeMap[fontType]}
-                        <FontSelector
-                            font={fontPalette[fontType as TFont] as TFontName}
-                            setFontPalette={(font: TFontName) =>
-                                setFontByType(fontType as TFont, font)
-                            }
-                        />
-                    </div>
-                ))}
+            {Object.keys(fontPalette).map((fontType) => (
+                <div
+                    key={fontType}
+                    className='cursor-pointer flex flex-col items-start'
+                >
+                    {/*@ts-ignore  */}
+                    {fontTypeMap[fontType]}
+                    <FontSelector
+                        font={fontPalette[fontType as TFont] as TFontName}
+                        setFontPalette={(font: TFontName) =>
+                            setFontByType(fontType as TFont, font)
+                        }
+                    />
+                </div>
+            ))}
         </div>
     );
 };

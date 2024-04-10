@@ -1,11 +1,13 @@
 'use client';
 
-import { TLinkedinPost, TScheduledPost } from '@/types/types';
+import { TCarousel, TLinkedinPost, TScheduledPost } from '@/types/types';
 import { LinkedinPost, Prisma } from '@prisma/client';
 import { ReactNode, createContext, useState } from 'react';
 
 type SchedulerProviderProps = {
-    userPosts: (LinkedinPost & { scheduledPost: TScheduledPost[] })[];
+    userPosts: (LinkedinPost & { scheduledPost: TScheduledPost[] } & {
+        carousel: TCarousel[];
+    })[];
     children: ReactNode;
 };
 
@@ -17,7 +19,9 @@ const standardizedDate = new Date( // so we get the start of the day
 );
 
 const INITIAL_STATE = {
-    userPosts: {} as (LinkedinPost & { scheduledPost: TScheduledPost[] })[],
+    userPosts: {} as (LinkedinPost & { scheduledPost: TScheduledPost[] } & {
+        carousel: TCarousel[];
+    })[],
     onNextWeek: () => {},
     onPrevWeek: () => {},
     startDate: standardizedDate,

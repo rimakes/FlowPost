@@ -86,11 +86,7 @@
     /* background: #5ab987 !important; */
     /* } */
 
-    .slideStyles {
-        --bold-color: #5ab987;
-    }
-
-    .slideStyles b {
+    .slideStyles strong {
         color: var(--bold-color);
     }
 }

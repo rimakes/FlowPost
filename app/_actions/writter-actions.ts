@@ -233,6 +233,7 @@ export async function createLinkedinCarousel(post: TLinkedinPost) {
                     font: firstBrand?.colorPalette.font ?? '#FFFFFF',
                     background:
                         firstBrand?.colorPalette.background ?? '#000000',
+                    primary: firstBrand?.colorPalette.primary ?? '#000000',
                 },
                 fontPalette: {
                     handWriting: firstBrand?.fontPalette.handWriting ?? 'inter',

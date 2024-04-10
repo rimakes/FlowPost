@@ -20,12 +20,14 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
-import { Move, MoveIcon } from 'lucide-react';
+import { Menu, Move, MoveIcon, Settings, Settings2 } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Slider } from '../ui/slider';
 
 type TSlideElement = 'title' | 'tagline' | 'paragraph' | 'imageCaption';
 
 const defaultStylesMap = {
-    title: 'overflow-hidden text-[2.5rem] leading-[1.1]',
+    title: 'text-[2.5rem] leading-[1.1]',
     tagline: 'text-[1.25rem] leading-[1.1]',
     paragraph: 'text-[1rem] leading-[1.5] font-[200]',
     imageCaption: 'text-[0.75rem] leading-[1.1]',
@@ -141,7 +143,7 @@ export default function SimpleEditor({
     return (
         <>
             {editor && <EditorBubbleMenu editor={editor} />}
-            <div className={cn(``, className)}>
+            <div className={cn(`relative group`, className)}>
                 <EditorContent
                     editor={editor}
                     autoFocus={false}

@@ -34,7 +34,7 @@ export const BigNumberSlide = ({
                 style={{
                     fontSize: '40em',
                     color: brand.colorPalette.accent,
-                    opacity: 0.2,
+                    opacity: 0.4,
                 }}
             >
                 <div
@@ -54,9 +54,6 @@ export const BigNumberSlide = ({
                     slideElement='title'
                     defaultValue={title}
                     isShown={isTittleShown}
-                    style={{
-                        fontSize: '5rem',
-                    }}
                 />
 
                 <SimpleEditor
