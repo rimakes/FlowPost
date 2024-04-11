@@ -5,7 +5,8 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { LoginForm } from './LoginForm';
 import { cn } from '@/lib/utils';
 import { SwitchLogin } from './SwithLogin';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 type LoginButtonProps = {
     mode: 'modal' | 'redirect';
@@ -15,6 +16,8 @@ type LoginButtonProps = {
 
 export function LoginButton({ mode, children, className }: LoginButtonProps) {
     const router = useRouter();
+    const session = useSession();
+    const [isOpen, setIsOpen] = useState(false);
 
     if (mode === 'redirect')
         return (
@@ -30,7 +33,14 @@ export function LoginButton({ mode, children, className }: LoginButtonProps) {
 
     if (mode === 'modal')
         return (
-            <Dialog>
+            <Dialog
+                // BOILER: isOpen and onOpenChange updated so it redirects to app if user is logged in
+                open={isOpen}
+                onOpenChange={(isOpen) => {
+                    if (session.data?.user) return router.push('/app');
+                    setIsOpen(isOpen);
+                }}
+            >
                 <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent>
                     <>

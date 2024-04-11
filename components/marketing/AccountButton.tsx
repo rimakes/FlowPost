@@ -6,8 +6,8 @@ import { apiClient } from '@/lib/apiClient';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 
-type AccountButtonProps = {};
-export function AccountButton({}: AccountButtonProps) {
+type AccountButtonProps = React.ComponentProps<typeof Button>;
+export function AccountButton({ ...props }: AccountButtonProps) {
     const [status, setStatus] = useState('idle');
 
     const navigateToPortal = async () => {
@@ -35,5 +35,9 @@ export function AccountButton({}: AccountButtonProps) {
         setStatus('idle');
     };
 
-    return <Button onClick={navigateToPortal}>Ver plan</Button>;
+    return (
+        <Button {...props} onClick={navigateToPortal}>
+            Gestionar plan
+        </Button>
+    );
 }

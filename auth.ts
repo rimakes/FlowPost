@@ -153,8 +153,8 @@ export const authOptions: NextAuthOptions = {
 
     // custom pages
     pages: {
-        signIn: '/',
-        newUser: '/', // New users will be directed here on first sign in
+        signIn: '/auth/signin',
+        newUser: '/app', // New users will be directed here on first sign in
         error: '/app/schedule', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
     },
 

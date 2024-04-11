@@ -59,10 +59,15 @@ export async function POST(req: NextRequest) {
 
                 // Get the custom AISettings from the user
                 const data = await getServerSession(authOptions);
+                let userId = data?.user?.id;
+
+                // If the user is not logged in, use a "demo" user so she/he can create posts as well
+                if (!userId) userId = '6612d5fa2d7c90dd54bf695a';
+
                 const settings = await db.settings.findFirst({
                     where: {
                         user: {
-                            id: data!.user.id,
+                            id: userId,
                         },
                     },
                 });

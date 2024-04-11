@@ -72,14 +72,14 @@ export const IASettings = ({
                 subtitle='Creará contenido para ti basado en tus preferencias'
             />
             <div className='max-w-md mt-4'>
-                <Message>
+                <Message className='mb-4'>
                     <p>
-                        Configurar tu IA puede dar lugar a resultados muy
+                        Configurar tu IA puede dar lugar a resultados
                         repetitivos.
                     </p>
                     <p>
                         Si quieres más variedad, incluye varios temas y déjalo
-                        muy abierto, o borra tus preferencias y guarda
+                        muy abierto, o no pongas preferencias
                     </p>
                 </Message>
                 <Form {...form}>

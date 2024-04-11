@@ -37,8 +37,8 @@ export default async function CarouselPage({ params }: props) {
     // If the carousel is new and the user has brands, we set the carousel settings to the first brand
     if (userBrands.length > 0 && carouselId === 'new') {
         carousel = {
-            id: 'new',
             ...fakeCarousel,
+            id: 'new',
             settings: {
                 colorPalette: userBrands[0].colorPalette,
                 fontPalette: userBrands[0].fontPalette,

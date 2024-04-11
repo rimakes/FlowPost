@@ -15,6 +15,7 @@ import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
+import { CarouselContext } from '../../carrousel/_components/ContextProvider';
 
 type GeneratedPostProps = {
     className?: string;
@@ -24,6 +25,8 @@ type GeneratedPostProps = {
     setEditDetailsModal?: any;
     showEditableSwitch?: boolean;
     carouselId?: string;
+    isDemo?: boolean;
+    onDemoCarouselCreated?: () => void;
 };
 
 export const PostWritterResult = ({
@@ -34,11 +37,14 @@ export const PostWritterResult = ({
     setEditDetailsModal,
     showEditableSwitch = true,
     carouselId,
+    isDemo,
+    onDemoCarouselCreated: onDemoCarouselCreatedProp = () => {},
 }: GeneratedPostProps) => {
     const { data } = useSession();
 
     const [status, setStatus] = useState<TStatus>('idle');
     const { post, setPost } = useContext(PostWritterContext);
+    const { setCarousel } = useContext(CarouselContext);
     const [isEditableOverride, setIsEditableOverride] = useState(false);
 
     const router = useRouter();
@@ -69,7 +75,7 @@ export const PostWritterResult = ({
                         }}
                     />
                     {showEditableSwitch && (
-                        <div className='absolute right-2 bottom-2 flex items-center gap-2 text-xs text-primary/70'>
+                        <div className='absolute right-2 bottom-0 flex items-center gap-2 text-xs text-primary/70'>
                             <Label>Permitir edición</Label>
                             <Switch
                                 checked={isEditableOverride}
@@ -86,6 +92,18 @@ export const PostWritterResult = ({
                         hover:bg-primary/10'
                         label='Guardar post'
                         onClick={async () => {
+                            if (isDemo)
+                                return toast.info(
+                                    'Para guardar y programar tus post, hazte Pro ahora',
+                                    {
+                                        action: {
+                                            label: 'Hazte Pro',
+                                            onClick: () => {
+                                                router.push('/auth/signup');
+                                            },
+                                        },
+                                    }
+                                );
                             const dbpost = await upsertLinkedinPost(
                                 post,
                                 data?.user?.id!,
@@ -96,7 +114,15 @@ export const PostWritterResult = ({
                             toast('Post guardado');
                         }}
                     />
-                    <CreateCarouselButton post={post} className='relative' />
+                    <CreateCarouselButton
+                        isDemo={isDemo}
+                        post={post}
+                        onDemoCarouselCreated={(carousel) => {
+                            setCarousel(carousel);
+                            onDemoCarouselCreatedProp();
+                        }}
+                        className='relative'
+                    />
                 </div>
             </div>
         </div>

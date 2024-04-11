@@ -15,6 +15,9 @@ import { DemoWidget } from './Demo';
 import Link from 'next/link';
 import { GetAccessButton } from './GetAccessButton';
 import Highlight from '../utils/Hightlight';
+import { PostWritterContextProvider } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { CarouselContextProvider } from '@/app/app/carrousel/_components/ContextProvider';
+import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 
 export default function Hero({ className = '' }) {
     return (
@@ -72,21 +75,14 @@ export default function Hero({ className = '' }) {
                     </div>
                 </div>
 
-                <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-stretch'>
-                    <DemoWidget />
+                <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-center'>
+                    <CarouselContextProvider initialCarousel={fakeCarousel}>
+                        <PostWritterContextProvider>
+                            <DemoWidget />
+                        </PostWritterContextProvider>
+                    </CarouselContextProvider>
                 </div>
             </section>
-            {/* <div className='flex border-8 border-green-500 w-full'>
-                <div className='w-1/2 border-8 border-border'>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                </div>
-                <div className='border border-red-500 w-1/2'></div>
-            </div> */}
         </>
     );
 }

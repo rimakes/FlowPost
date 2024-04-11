@@ -20,7 +20,7 @@ export default function SignUp() {
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8'>
                             <h1 className='text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6'>
-                                Create your Account ✨
+                                Crea tu cuenta ✨
                             </h1>
                             {/* Form */}
                             <RegisterForm />

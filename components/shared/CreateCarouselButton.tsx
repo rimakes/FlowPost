@@ -9,24 +9,25 @@ import {
 } from '@/app/_actions/writter-actions';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { TLinkedinPost } from '@/types/types';
+import { TCarousel, TLinkedinPost } from '@/types/types';
 import { Progress } from '../ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
-import { promises } from 'dns';
-import { revalidatePath } from 'next/cache';
-import { revalidateAllPaths } from '@/app/_actions/shared-actions';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
     className?: string;
     children?: React.ReactNode;
+    isDemo?: boolean;
+    onDemoCarouselCreated?: (carousel: TCarousel) => void;
 };
 export function CreateCarouselButton({
     post,
     className,
     children,
+    isDemo,
+    onDemoCarouselCreated = () => {},
 }: CrearCarouselButonProps) {
     const { data } = useSession();
     const router = useRouter();
@@ -82,6 +83,10 @@ export function CreateCarouselButton({
                     loading: 'Creando carrusel...',
                     success: (data) => {
                         carouselId = data.id;
+                        if (isDemo) {
+                            onDemoCarouselCreated(data);
+                        }
+
                         toast.success('Carrusel creado', {
                             action: {
                                 label: 'Ver carrusel',
@@ -90,13 +95,13 @@ export function CreateCarouselButton({
                                 },
                             },
                         });
+                        console.log('Carrusel creado');
                         return 'Carrusel creado';
                     },
-                    error: 'Error al crear carrusel',
-
                     finally: () => {
                         setStatus('idle');
                     },
+                    error: 'Error al crear carrusel',
                 });
             }}
         >

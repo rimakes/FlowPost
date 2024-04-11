@@ -108,7 +108,8 @@ export const fakeSlides: TSlide[] = [
     },
 ];
 
-export const fakeCarousel: Omit<TCarousel, 'id'> = {
+export const fakeCarousel: TCarousel = {
+    id: 'fake',
     title: 'some random title',
     linkedinPostId: '',
     publicId: '',

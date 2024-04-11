@@ -109,7 +109,7 @@ export const appConfig = {
     plans: [
         {
             // featured: false,
-            // name: 'Basic',
+            name: 'Basic',
             // description: 'Basic Plan yo!',
             // price: '$10/month',
             stripePriceId: 'price_1OSkLCB6M9fLIRyeYQAXIGnv',
@@ -120,10 +120,10 @@ export const appConfig = {
             // ],
         },
         {
-            // name: 'Pro',
+            name: 'Pro',
             // description: 'Pro Plan yo!',
             // price: '$49/month',
-            stripePriceId: 'price_456',
+            stripePriceId: 'price_1OSk7dB6M9fLIRye1TUxFWCl',
             // features: [
             //     { name: 'this is a test' },
             //     { name: 'this is a test' },

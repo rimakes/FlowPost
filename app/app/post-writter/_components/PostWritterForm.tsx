@@ -28,7 +28,10 @@ import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/spinner';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { appConfig } from '@/config/shipper.appconfig';
+import { AppContext } from '@/providers/AppProvider';
+import { signIn } from 'next-auth/react';
 
 const MAX_LENGTH = 1000;
 const MIN_LENGTH = 10;
@@ -265,15 +268,20 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 type VoiceToneSelectorProps = {
     selectedTone: VoiceTone['id'];
     onSelectTone: (value: VoiceTone['id']) => void;
+    availableTones?: VoiceTone['id'][];
 };
 
 export const VoiceToneSelector = ({
     selectedTone,
     onSelectTone,
+    availableTones = VOICE_TONES.map((tone) => tone.id),
 }: VoiceToneSelectorProps) => {
+    const router = useRouter();
+
     return (
         <div className='flex flex-wrap gap-2'>
             {VOICE_TONES.map((tone) => {
+                const isAvailable = availableTones.includes(tone.id);
                 return (
                     <Button
                         type='button'
@@ -281,8 +289,27 @@ export const VoiceToneSelector = ({
                         variant={
                             selectedTone === tone.id ? 'default' : 'outline'
                         }
-                        className='flex gap-2 rounded-full'
-                        onClick={() => onSelectTone(tone.id)}
+                        className={`${!isAvailable && 'opacity-50'} flex gap-2 rounded-full`}
+                        onClick={() => {
+                            if (!isAvailable) {
+                                toast.info(
+                                    `Este tono solo está disponible en el plan ${appConfig.general.appName} Pro`,
+                                    {
+                                        // TODO: It's getting behind the dialog backdrop
+                                        icon: '🔒',
+                                        action: {
+                                            label: 'Hazte Pro',
+                                            onClick: () => {
+                                                // TODO: it would be better to pen the "get access" dialog
+                                                router.push('/auth/signup');
+                                            },
+                                        },
+                                    }
+                                );
+                                return;
+                            }
+                            onSelectTone(tone.id);
+                        }}
                     >
                         <span className='h-5 w-5'>{tone.emoji}</span>
                         {tone.name}

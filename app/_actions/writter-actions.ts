@@ -92,8 +92,12 @@ export async function deleteCarousel(carouselId: string) {
 }
 
 export async function createLinkedinCarousel(post: TLinkedinPost) {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user.id;
+    // Get the custom AISettings from the user
+    const data = await getServerSession(authOptions);
+    let userId = data?.user?.id;
+
+    // If the user is not logged in, use a "demo" user so she/he can create posts as well
+    if (!userId) userId = '6612d5fa2d7c90dd54bf695a';
 
     const model = new ChatOpenAI({
         temperature: 0.8,

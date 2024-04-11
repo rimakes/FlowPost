@@ -39,7 +39,7 @@ export const POST_TEMPLATES: Omit<
 `,
     },
     {
-        id: '2',
+        id: '1',
         name: 'Lo que Me Impresiona',
         tags: ['professional', 'informative', 'contrarian'],
         content: `
@@ -63,7 +63,7 @@ export const POST_TEMPLATES: Omit<
 `,
     },
     {
-        id: '3',
+        id: '2',
         name: 'La Mayoría Fracasa',
         tags: ['aprendizajes', 'informative', 'contrarian'],
         content: `
@@ -117,7 +117,7 @@ Haz esto en su lugar
 `,
     },
     {
-        id: '4',
+        id: '3',
         name: '¿Quién Lo Dice?',
         tags: ['lecciones', 'tips', 'ideas'],
         content: `

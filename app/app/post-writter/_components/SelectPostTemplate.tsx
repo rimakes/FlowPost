@@ -7,13 +7,17 @@ import { PostCategory, PostTemplate } from '@prisma/client';
 import { Pure } from '@/types/types';
 import { POST_TEMPLATES } from '../config/prompts';
 import { POST_CATEGORIES } from '../config/const';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 type SelectPostTemplateProps = {
     setSelected: (selected: string) => void;
+    availablePostTemplateIds?: PostTemplate['id'][];
 };
 
 export const SelectPostTemplate = ({
     setSelected,
+    availablePostTemplateIds,
 }: SelectPostTemplateProps) => {
     const [selectedCategory, setSelectedCategory] = useState<
         Pure<PostCategory>
@@ -24,6 +28,7 @@ export const SelectPostTemplate = ({
         description: '',
     });
     const [selectedPreviewIndex, setSelectedPreviewIndex] = useState('0');
+    const router = useRouter();
 
     const selectedCategoryTemplates = POST_TEMPLATES.filter((template) => {
         return (
@@ -70,14 +75,34 @@ export const SelectPostTemplate = ({
             <div className='flex grow min-h-0 border-0 border-yellow-600'>
                 <div className='sidebar basis-64 grow overflow-y-scroll border-0 border-blue-500 max-h-full'>
                     {selectedCategoryTemplates.map((template, index) => {
+                        const isAvailable = availablePostTemplateIds?.includes(
+                            template.id
+                        );
                         return (
                             <div
                                 // TODO: change the key to something more unique
                                 key={template.id}
-                                className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex === template.id && 'bg-muted border-r-8 border-r-primary'} ${index}`}
-                                onClick={() =>
-                                    setSelectedPreviewIndex(template.id)
-                                }
+                                className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex === template.id && 'bg-muted border-r-8 border-r-primary'} ${index} ${!isAvailable && 'opacity-50'} }`}
+                                onClick={() => {
+                                    console.log(template.id);
+                                    if (!isAvailable) {
+                                        toast.info(
+                                            'Esta plantilla no está disponible para tu plan',
+                                            {
+                                                action: {
+                                                    label: 'Hazte Pro',
+                                                    onClick: () => {
+                                                        router.push(
+                                                            '/auth/signup'
+                                                        );
+                                                    },
+                                                },
+                                            }
+                                        );
+                                        return;
+                                    }
+                                    setSelectedPreviewIndex(template.id);
+                                }}
                             >
                                 <h3 className='font-semibold overflow-hidden line-clamp-2'>
                                     {template.name}
