@@ -30,13 +30,16 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+        // Check if there's a user session
         const session = await getServerSession(authOptions);
 
-        const user = await db.user.findUnique({
-            where: { id: session?.user?.id },
-        });
+        let user;
 
-        console.log('user from stripe api', user);
+        if (session?.user?.id) {
+            user = await db.user.findUnique({
+                where: { id: session?.user?.id },
+            });
+        }
 
         const { priceId, mode, successUrl, cancelUrl, couponId } = body;
 

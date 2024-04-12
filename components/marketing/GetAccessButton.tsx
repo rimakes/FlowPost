@@ -4,18 +4,46 @@ import { FC, useState } from 'react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Separator } from '../ui/separator';
-import { MoreHorizontal, Palette, Shield, Sparkle } from 'lucide-react';
+import {
+    Calendar,
+    CalendarPlus,
+    GalleryHorizontal,
+    Info,
+    LayoutDashboard,
+    MoreHorizontal,
+    Newspaper,
+    Palette,
+    PersonStanding,
+    Rocket,
+    Save,
+    Shield,
+    Sparkle,
+    Star,
+    UserSquare,
+} from 'lucide-react';
 import { appConfig } from '@/config/shipper.appconfig';
+import { Rating } from '../shared/rating';
+import { CheckoutButton } from './CheckoutButton';
+import { cn } from '@/lib/utils';
 
-type GetAccessButtonProps = {};
-export function GetAccessButton({}: GetAccessButtonProps) {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+type GetAccessButtonProps = {
+    buttonProps?: React.ComponentProps<typeof Button>;
+    className?: string;
+};
+export function GetAccessButton({
+    buttonProps,
+    className,
+}: GetAccessButtonProps) {
     const [step, setStep] = useState(1);
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='flex shadow-xl' onClick={() => {}}>
+                <Button
+                    className={cn(`flex shadow-xl`, className)}
+                    {...buttonProps}
+                    onClick={() => {}}
+                >
                     Consigue {appConfig.general.appName}+
                 </Button>
             </DialogTrigger>
@@ -33,14 +61,14 @@ export function GetAccessButton({}: GetAccessButtonProps) {
 
 type ModalHeaderProps = {
     title: string;
-    subtitle: string;
+    subtitle?: string;
 };
 
 export const ModalHeader = ({ title, subtitle }: ModalHeaderProps) => {
     return (
         <div className='flex flex-col gap-2 p-2 items-center'>
             <h1 className='text-2xl font-bold text-center'>{title}</h1>
-            <p className='text-sm text-primary/70'>{subtitle}</p>
+            {subtitle && <p className='text-sm text-primary/70'>{subtitle}</p>}
         </div>
     );
 };
@@ -70,10 +98,13 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
                 >
                     Consigue {appConfig.general.appName}+
                 </Button>
-                <p className='flex gap-2 text-xs items-center text-primary/50'>
-                    <Shield className='h-4 w-4' />
-                    Devolución gratuita 7 días
-                </p>
+                <div className='flex flex-col gap-2 text-sm italic items-center text-primary/50 text-center'>
+                    <Rating value={5} />
+                    <p className=''>
+                        &quot;He pasado de dedicar 4 horas a la semana a crear
+                        un post y carrusel, a crear 7 en 10 minutos&quot;
+                    </p>
+                </div>
             </div>
         </div>
     );
@@ -98,55 +129,147 @@ const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
 };
 
 const SecondStep = () => {
+    const [seletectedPlan, setSeletectedPlan] = useState<string | null>(null);
+
     return (
-        <div className='flex flex-col justify-start gap-12'>
-            <ModalHeader
-                title={`Elige tu plan de ${appConfig.general.appName}+`}
-                subtitle='y empieza a disfrutar de todas las funcionalidades'
-            />
+        <div className='flex flex-col justify-between gap-12 min-h-[600px]'>
+            <ModalHeader title={`Elige tu plan`} />
             <Separator className='-mt-4 -mb-4' />
-            <div className='flex flex-col gap-6 p-2'>
-                {modalItems.map((item, index) => (
-                    <ModalItem key={index} {...item} />
+            <div className='flex flex-col justify-start items-center gap-6 p-2 grow'>
+                <div className='text-center'>
+                    <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
+                    <p className='text-xl font-bold'>Ahorra hasta un 75%</p>
+                </div>
+            </div>
+            <div className='flex flex-col gap-4'>
+                {appConfig.plans.map((plan, index) => (
+                    <PriceCard
+                        key={plan.stripePriceId}
+                        name={plan.name}
+                        compareAtPrice={plan.comparedAtPriceString}
+                        price={plan.priceString}
+                        comment={plan.comment}
+                        isSelected={seletectedPlan === plan.stripePriceId}
+                        handleClick={() => {
+                            setSeletectedPlan(plan.stripePriceId);
+                        }}
+                    >
+                        {plan.name === 'Anual' && (
+                            <div className='flex gap-2 bg-primary rounded-full p-2 py-1  items-center justify-center absolute -top-2 right-0'>
+                                {' '}
+                                <Star className='text-primary-foreground fill-current h-4 w-4' />{' '}
+                                <p className='text-sm text-primary-foreground'>
+                                    Ahorra 75%
+                                </p>
+                            </div>
+                        )}
+                    </PriceCard>
                 ))}
+            </div>
+            <div className='flex flex-col items-center'>
+                <p className='mb-4 text-sm'>Nos has visto en</p>
+                <div className='flex justify-between w-full'>
+                    <Sparkle className='h-8 w-8' />
+                    <PersonStanding className='h-8 w-8' />
+                    <Newspaper className='h-8 w-8' />
+                    <Info className='h-8 w-8' />
+                    <MoreHorizontal className='h-8 w-8' />
+                </div>
             </div>
             <Separator className='-mt-4 -mb-4' />
             <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
-                <Button>Consigue {appConfig.general.appName}+</Button>
+                <CheckoutButton priceId={seletectedPlan}>
+                    Consigue {appConfig.general.appName}+
+                </CheckoutButton>
                 <p className='flex gap-2 text-xs items-center text-primary/50'>
                     <Shield className='h-4 w-4' />
-                    Devolución gratuita 7 días
+                    Cancela tu subscripción en cualquier momento
                 </p>
             </div>
         </div>
     );
 };
 
+type PriceCardProps = {
+    name: string;
+    compareAtPrice: string;
+    price: string;
+    comment?: string;
+    children?: React.ReactNode;
+    handleClick: () => void;
+    isSelected: boolean;
+};
+
+export const PriceCard = ({
+    name,
+    compareAtPrice,
+    price,
+    comment,
+    children,
+    handleClick = () => {},
+    isSelected = false,
+}: PriceCardProps) => {
+    return (
+        <div
+            className={`
+        border-4 rounded-lg flex gap-4 p-4 items-center relative transision-all duration-300
+        ${isSelected ? 'border-primary' : ''}
+        `}
+            onClick={handleClick}
+        >
+            <div
+                className={`
+            rounded-full h-3 w-3 bg-muted  transision-all
+            ${isSelected ? 'bg-primary' : ''}
+            
+            `}
+            />
+            <div>
+                <h3 className='text-xl'>
+                    <span className='line-through text-primary/30'>
+                        {compareAtPrice}
+                    </span>{' '}
+                    <span className='font-bold'>{price}</span>
+                </h3>
+                {comment && (
+                    <p className='text-sm text-primary/50'>{comment}</p>
+                )}
+            </div>
+            {children}
+        </div>
+    );
+};
+
 const modalItems: ModalItemProps[] = [
     {
+        icon: UserSquare,
+        title: 'Personaliza tus publicaciones',
+        description: 'Usa tu foto, tus colores, tu letra, tu tono de voz...',
+    },
+    {
+        icon: CalendarPlus,
+        title: 'Programa tus post y carrusels',
+        description: `Deja tu semana o mes organizado sin salir de ${appConfig.general.appName}`,
+    },
+    {
+        icon: LayoutDashboard,
+        title: 'Accede a más de 30 plantillas',
+        description: 'Hemos recopilado más de 30 plantillas virales para ti',
+    },
+    {
+        icon: GalleryHorizontal,
+        title: '50 carrusels y posts al mes',
+        description: 'Y si necesitas más, escríbenos y te lo ampliamos',
+    },
+    {
         icon: Palette,
-        title: 'Plantillas ilimitadas',
-        description: 'Usa todas las plantillas que quieras asdf asdf asdf adsf',
-    },
-    {
-        icon: Sparkle,
         title: 'Guarda tus ajustes de marca',
-        description: 'Usa todas las plantillas que quieras asdf asdf asdf adsf',
+        description: 'Crea distintas marcas y guarda su estilo, foto, etc',
     },
     {
-        icon: Palette,
-        title: 'Plantillas ilimitadas',
-        description: 'Usa todas las plantillas que quieras asdf asdf asdf adsf',
-    },
-    {
-        icon: Sparkle,
-        title: 'Guarda tus ajustes de marca',
-        description: 'Usa todas las plantillas que quieras asdf asdf asdf adsf',
-    },
-    {
-        icon: MoreHorizontal,
+        icon: Rocket,
         title: 'Más en camino!',
         description:
-            'Añado funcionalidades cada semana basadas en tus sugerencias',
+            'Funcionalidades nuevas cada semana basadas en tus sugerencias',
     },
 ];

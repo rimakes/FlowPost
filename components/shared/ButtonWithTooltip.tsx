@@ -7,7 +7,7 @@ import {
 } from '../ui/tooltip';
 import { Button, ButtonProps } from '../ui/button';
 import { cn } from '@/lib/utils';
-import { ComponentProps } from 'react';
+import { ComponentProps, forwardRef } from 'react';
 
 type ButtonWithTooltipCustomProps = {
     label?: string;
@@ -17,20 +17,24 @@ type ButtonWithTooltipCustomProps = {
     children?: React.ReactNode;
 };
 
-export const ButtonWithTooltip = ({
-    icon,
-    className,
-    label,
-    onClick,
-    children,
-    ...props
-}: ButtonProps & ButtonWithTooltipCustomProps) => {
+export const ButtonWithTooltipComponent = (
+    {
+        icon,
+        className,
+        label,
+        onClick,
+        children,
+        ...props
+    }: ButtonProps & ButtonWithTooltipCustomProps,
+    ref: React.ForwardedRef<HTMLButtonElement>
+) => {
     return (
         <>
             <TooltipProvider>
                 <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
                         <Button
+                            ref={ref}
                             onClick={onClick}
                             className={cn(``, className)}
                             {...props}
@@ -45,3 +49,5 @@ export const ButtonWithTooltip = ({
         </>
     );
 };
+
+export const ButtonWithTooltip = forwardRef(ButtonWithTooltipComponent);

@@ -62,11 +62,11 @@ export const PostWritterResult = ({
             <Label>Post generado</Label>
 
             <div className='border border-muted p-2 space-y-2'>
-                <div className='relative'>
+                <div className='relative pb-6'>
                     <Textarea
                         rows={20}
                         className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
-                        focus-visible:!ring-trans focus-visible:outline-none
+                        focus-visible:!ring-transparent focus-visible:outline-none
                         `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}

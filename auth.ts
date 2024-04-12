@@ -11,6 +11,8 @@ import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/dist/server/api-utils';
 import console from 'console';
+import { sendEmail } from './lib/mailgun';
+import { signinEmail } from './emails/signinEmail';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -148,6 +150,24 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             from: appConfig.email.fromNoReply,
+            async sendVerificationRequest(params) {
+                const {
+                    identifier: email,
+                    url,
+                    token,
+                    provider,
+                    theme,
+                } = params;
+                const { host } = new URL(url);
+
+                await sendEmail(
+                    email,
+                    'Recuperación de contraseña',
+                    'Recupera tu contraseña',
+                    signinEmail({ url, host, theme }),
+                    'noreply@test.com'
+                );
+            },
         }),
     ],
 

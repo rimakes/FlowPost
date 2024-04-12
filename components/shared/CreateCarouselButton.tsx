@@ -8,12 +8,13 @@ import {
     upsertLinkedinPost,
 } from '@/app/_actions/writter-actions';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { TCarousel, TLinkedinPost } from '@/types/types';
 import { Progress } from '../ui/progress';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
+import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
@@ -45,9 +46,11 @@ export function CreateCarouselButton({
             isMounted.current = false;
         };
     }, []);
+    const context = useContext(PostWritterContext);
 
     return (
         <ButtonWithTooltip
+            ref={context.createCarouselButtonRef}
             icon={<GalleryHorizontal />}
             disabled={status === 'loading'}
             className={cn(

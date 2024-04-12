@@ -25,8 +25,8 @@ model User {
     updatedAt          DateTime      @updatedAt
     role               UserRole      @default(USER)
 
-    settingsId    String?        @unique @db.ObjectId
-    settings      Settings?      @relation(fields: [settingsId], references: [id])
+    settingsId    String         @unique @db.ObjectId
+    settings      Settings       @relation(fields: [settingsId], references: [id])
     account       Account[]
     posts         BlogPost[]
     linkedinPosts LinkedinPost[]
@@ -73,8 +73,8 @@ model VerificationToken {
     identifier String
     token      String   @unique
     expires    DateTime
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+
+    @@unique([identifier, token])
 }
 
 enum UserRole {

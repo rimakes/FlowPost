@@ -109,7 +109,10 @@ export const appConfig = {
     plans: [
         {
             // featured: false,
-            name: 'Basic',
+            name: 'Anual',
+            comparedAtPriceString: '348€',
+            priceString: '87€ / año',
+            comment: '= 9€/mes, cobrando anualmente',
             // description: 'Basic Plan yo!',
             // price: '$10/month',
             stripePriceId: 'price_1OSkLCB6M9fLIRyeYQAXIGnv',
@@ -120,10 +123,14 @@ export const appConfig = {
             // ],
         },
         {
-            name: 'Pro',
+            name: 'Mensual',
+            comparedAtPriceString: '29€',
+            priceString: '19€ / mes',
             // description: 'Pro Plan yo!',
             // price: '$49/month',
             stripePriceId: 'price_1OSk7dB6M9fLIRye1TUxFWCl',
+            comment: undefined,
+
             // features: [
             //     { name: 'this is a test' },
             //     { name: 'this is a test' },

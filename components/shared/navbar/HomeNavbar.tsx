@@ -55,7 +55,11 @@ export function HomeNavbar({ className }: { className?: string }) {
                         orientation='vertical'
                         className='separator self-stretch h-auto'
                     />
-                    <GetAccessButton />
+                    <GetAccessButton
+                        buttonProps={{
+                            variant: 'outline',
+                        }}
+                    />
                 </div>
 
                 <DropdownMenu>

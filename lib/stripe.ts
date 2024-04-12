@@ -104,7 +104,7 @@ export const findCheckoutSession = async (sessionId: string) => {
 
         return session;
     } catch (e) {
-        console.error(e);
+        console.error('ERROR FINDCHECKOIUTSESSION FN - ', e);
         return null;
     }
 };

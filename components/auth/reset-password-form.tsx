@@ -18,31 +18,37 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { resetPasswordFormSchema } from '@/schemas/auth-schemas';
 import { appConfig } from '@/config/shipper.appconfig';
+import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 
-export function ResetPasswordForm({}) {
+type ResetPasswordFormProps = {
+    defaultValues?: {
+        email: string;
+    };
+};
+
+export function ResetPasswordForm({ defaultValues }: ResetPasswordFormProps) {
     const form = useForm({
         resolver: zodResolver(resetPasswordFormSchema),
-        defaultValues: {
+        defaultValues: defaultValues || {
             email: 'ricardo@grouz.io',
         },
     });
 
     // @ts-ignore
     const onSubmit = async (values) => {
-        console.log('values', values);
-        try {
-            // TODO: It's throwing an error due to a bug in the library: https://github.com/nextauthjs/next-auth/issues/9279.
-            // will be fixed in the next release.
-            const response = await signIn('email', {
+        toast.promise(
+            signIn('email', {
                 callbackUrl: appConfig.routes.defaultLogingRedirect,
-                email: values.email,
+                email: 'ricardo@grouz.io',
                 redirect: false,
-            });
-
-            console.log('response', response);
-        } catch (error) {
-            console.log('error', error);
-        }
+            }),
+            {
+                loading: 'Enviando link...',
+                success: 'Link enviado, por favor revisa tu correo',
+                error: 'Error al enviar el link',
+            }
+        );
     };
 
     return (
@@ -66,7 +72,8 @@ export function ResetPasswordForm({}) {
                                     />
                                 </FormControl>
                                 <FormDescription>
-                                    Email con el que te diste de alta en TATTUO
+                                    Email con el que te diste de alta en{' '}
+                                    {appConfig.general.appName}
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

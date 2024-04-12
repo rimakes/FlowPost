@@ -31,7 +31,7 @@ export default function Hero({ className = '' }) {
                     className
                 )}
             >
-                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex-1'>
                     <div className='mx-auto max-w-2xl text-center'>
                         <span
                             className={`${handwritten.className} px-6 text-3xl text-base-muted-content text-indigo-700`}
@@ -56,7 +56,11 @@ export default function Hero({ className = '' }) {
                         </p>
 
                         <div className='mt-9 flex flex-wrap items-center justify-center gap-5 px-8 sm:space-x-5 sm:px-0'>
-                            <GetAccessButton />
+                            <GetAccessButton
+                                buttonProps={{
+                                    variant: 'outline',
+                                }}
+                            />
 
                             <Link
                                 className={`${buttonVariants({ variant: 'outline' })}`}
@@ -75,7 +79,7 @@ export default function Hero({ className = '' }) {
                     </div>
                 </div>
 
-                <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-center'>
+                <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-center flex-1'>
                     <CarouselContextProvider initialCarousel={fakeCarousel}>
                         <PostWritterContextProvider>
                             <DemoWidget />

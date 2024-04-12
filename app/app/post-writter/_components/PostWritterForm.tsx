@@ -33,10 +33,10 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { AppContext } from '@/providers/AppProvider';
 import { signIn } from 'next-auth/react';
 
-const MAX_LENGTH = 1000;
-const MIN_LENGTH = 10;
-const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
-const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
+export const MAX_LENGTH = 1000;
+export const MIN_LENGTH = 10;
+export const tooShortError = `Demasiado corto. Escribe al menos ${MIN_LENGTH} caracteres`;
+export const tooLongError = `Demasiado largo. Escribe menos de ${MAX_LENGTH} caracteres`;
 
 type PostWritterFormProps = {
     className?: string;
@@ -48,7 +48,12 @@ export const WritterFormSchema = z.object({
         .string()
         .min(MIN_LENGTH, tooShortError)
         .max(MAX_LENGTH, tooLongError),
-    toneId: z.number(),
+    toneId: z
+        .number()
+        .nullable()
+        .refine((value) => value !== null, {
+            message: 'Selecciona un tono',
+        }),
     templateId: z
         .string()
         .nullable()
@@ -177,7 +182,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                 </FormLabel>
                                 <FormControl>
                                     <VoiceToneSelector
-                                        selectedTone={field.value}
+                                        selectedTone={field.value || 0}
                                         onSelectTone={onSelectTone}
                                     />
                                 </FormControl>
@@ -266,7 +271,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
 }
 
 type VoiceToneSelectorProps = {
-    selectedTone: VoiceTone['id'];
+    selectedTone?: VoiceTone['id'];
     onSelectTone: (value: VoiceTone['id']) => void;
     availableTones?: VoiceTone['id'][];
 };

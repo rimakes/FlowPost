@@ -11,6 +11,7 @@ import ReactPlayer from 'react-player';
 import { VideoClient } from '@/components/marketing/VideoClient';
 import Highlight from '@/components/utils/Hightlight';
 import { RedirectTweak } from './RedirectTweak';
+import { Pricing2 } from '@/components/marketing/Pricing2';
 
 export default async function Home() {
     // const session = await auth();
@@ -97,7 +98,7 @@ export default async function Home() {
                 </div>
             </section>
 
-            <Pricing />
+            <Pricing2 />
             <DemoVideo
                 title={
                     <h2
@@ -111,7 +112,7 @@ export default async function Home() {
                         <p>¿Necesitas ver a Perbrand en acción?</p>
                         <p>
                             ¡No hay problema! Aquí te dejo un vídeo enseñando
-                            cómo crear tu primer post y carrusel para Linkeding
+                            cómo crear tu primer post y carrusel para Linkedin
                             😊
                         </p>
                     </div>

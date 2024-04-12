@@ -1,6 +1,8 @@
+'use client';
+
 import { cn, wait } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { AlertTriangle, CheckCircle, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 interface FormErrorProps extends VariantProps<typeof messageVariants> {
@@ -18,6 +20,7 @@ const messageVariants = cva(
                 error: 'bg-destructive/10 text-destructive border-destructive/20 border-l-4 border-l-destructive/50',
                 success:
                     'bg-emerald-400/10 text-emerald-400 border-emerald-400/20 border-l-4 border-l-emerald-400/50',
+                info: 'bg-blue-400/10 text-blue-400 border-blue-400/20 border-l-4 border-l-blue-400/50',
             },
         },
 
@@ -39,6 +42,8 @@ export function Message({ children, className, variant }: FormErrorProps) {
                 return <AlertTriangle className='w-5 h-5 shrink-0' />;
             case 'success':
                 return <CheckCircle className='w-5 h-5  shrink-0' />;
+            case 'info':
+                return <Info className='w-5 h-5  shrink-0' />;
             default:
                 return <AlertTriangle className='w-5 h-5 shrink-0' />;
         }

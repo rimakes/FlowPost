@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, use, useContext, useState } from 'react';
+import { createContext, use, useContext, useRef, useState } from 'react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
@@ -22,6 +22,7 @@ const INITIAL_STATE = {
         toneId: 1,
         templateId: '',
     } as PostRequest,
+    createCarouselButtonRef: null as React.RefObject<HTMLButtonElement> | null,
     setPost: (post: TLinkedinPost) => {},
 };
 
@@ -56,6 +57,7 @@ export function PostWritterContextProvider({
     const [postRequest, setPostRequest] = useState<PostRequest>(
         INITIAL_STATE.postRequest
     );
+    const createCarouselButtonRef = useRef<HTMLButtonElement>(null);
 
     const requestPost = async (data: PostRequest) => {
         const { description, templateId, toneId } = data;
@@ -117,6 +119,7 @@ export function PostWritterContextProvider({
                 postRequest,
                 requestPost,
                 setPost,
+                createCarouselButtonRef,
             }}
         >
             {children}

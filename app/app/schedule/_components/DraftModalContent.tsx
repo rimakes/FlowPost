@@ -77,6 +77,11 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                                 Sin Carrusel
                                             </Badge>
                                         )}
+                                        {post.carousel.length > 0 && (
+                                            <Badge className='ml-1 bg-green-600'>
+                                                Con carrusel
+                                            </Badge>
+                                        )}
                                         <Button
                                             className='w-full'
                                             onClick={() => {
@@ -101,7 +106,7 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                                 size={18}
                                                 className='mr-2'
                                             />
-                                            Select
+                                            Seleccionar
                                         </Button>
                                     </div>
                                 </div>

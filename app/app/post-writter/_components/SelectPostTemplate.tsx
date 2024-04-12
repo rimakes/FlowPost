@@ -17,7 +17,7 @@ type SelectPostTemplateProps = {
 
 export const SelectPostTemplate = ({
     setSelected,
-    availablePostTemplateIds,
+    availablePostTemplateIds = POST_TEMPLATES.map((template) => template.id),
 }: SelectPostTemplateProps) => {
     const [selectedCategory, setSelectedCategory] = useState<
         Pure<PostCategory>
@@ -129,6 +129,7 @@ export const SelectPostTemplate = ({
                 </Button>
 
                 <Button
+                    type='button'
                     onClick={() => setSelected(selectedPreviewIndex)}
                     className='flex-1'
                 >

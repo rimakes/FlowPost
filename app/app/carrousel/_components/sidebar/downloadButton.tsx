@@ -83,19 +83,20 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                 <Spinner className='ml-2' />
             </Button>
         ) : (
-            <Button className={cn(``, className)} variant={'secondary'}>
+            <Button className={cn(`w-full`, className)} variant={'secondary'}>
                 Descargar
                 <Download className='ml-2' />
             </Button>
         );
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild className=''>
-                {downloadButton}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='flex flex-col items-center gap-2 z-10 bg-background'>
-                {/* <DropdownMenuItem
+        <div className='z-50 isolate'>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild className=''>
+                    {downloadButton}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='flex flex-col items-center gap-2 z-50 bg-background isolate'>
+                    {/* <DropdownMenuItem
                     onClick={() => {
                         onDownload('svg');
                     }}
@@ -103,16 +104,17 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                 >
                     SVG
                 </DropdownMenuItem> */}
-                <DropdownMenuItem
-                    onClick={() => {
-                        onDownload('pdf');
-                    }}
-                    className='justify-center w-full'
-                >
-                    PDF
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+                    <DropdownMenuItem
+                        onClick={() => {
+                            onDownload('pdf');
+                        }}
+                        className='PDF-button justify-center w-full z-[9999]'
+                    >
+                        PDF
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </div>
     );
 }
 

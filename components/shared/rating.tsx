@@ -46,7 +46,7 @@ const RatingPoint = ({
             {status === 'full' && (
                 <FullIcon
                     fill='true'
-                    className='absolute left-0 top-0 h-3 w-3 fill-current'
+                    className='absolute left-0 top-0 h-3 w-3 fill-current text-current'
                 />
             )}
         </div>

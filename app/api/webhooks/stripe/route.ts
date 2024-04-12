@@ -3,17 +3,11 @@ import Stripe from 'stripe';
 import { findCheckoutSession, stripe } from '@/lib/stripe';
 import { appConfig } from '@/config/shipper.appconfig';
 import { db } from '@/lib/prisma';
-import { User } from 'lucide-react';
-import { setMonth } from 'date-fns';
-import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { signIn } from 'next-auth/react';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-// This is where we receive Stripe webhook events
-// It used to update the user data, send emails, etc...
-// By default, it'll store the user in the database
-// See more: https://shipfa.st/docs/features/payments
 export async function POST(request: NextRequest) {
     const body = await request.text();
 
@@ -43,9 +37,6 @@ export async function POST(request: NextRequest) {
     try {
         switch (eventType) {
             case StripeWebhooks.Completed: {
-                // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
-                // ✅ Grant access to the product
-
                 const sessionId = session?.id;
 
                 const customerId = session?.customer;
@@ -85,11 +76,14 @@ export async function POST(request: NextRequest) {
                 let user;
 
                 // Get or create the user. userId is normally pass in the checkout session (clientReferenceID) to identify the user when we get the webhook event
+                console.log('retrieving or creating user');
                 if (userId) {
                     // If we passed a userId from the client, we can use it to find the user in our db
                     user = await db.user.findUnique({ where: { id: userId } });
                     // @ts-ignore
                 } else if (customer.email) {
+                    // @ts-ignore
+                    console.log('searching user by email', customer.email);
                     // otherwise, we can use the email to find the user
                     user = await db.user.findUnique({
                         // @ts-ignore
@@ -98,12 +92,20 @@ export async function POST(request: NextRequest) {
 
                     // or create a new user if it doesn't exist
                     if (!user) {
+                        console.log(
+                            'creating new user with email: ',
+                            // @ts-ignore
+                            customer.email
+                        );
                         user = await db.user.create({
                             data: {
                                 // @ts-ignore
                                 email: customer.email,
                                 // @ts-ignore
                                 name: customer.name,
+                                settings: {
+                                    create: {},
+                                },
                             },
                         });
                     }

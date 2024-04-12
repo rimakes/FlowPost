@@ -5,9 +5,10 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import Spinner from '../icons/spinner';
 import { TStatus } from '@/types/types';
+import { toast } from 'sonner';
 
 type CheckoutButtonProps = {
-    priceId: string;
+    priceId?: string | null;
     children: React.ReactNode;
 };
 
@@ -16,12 +17,17 @@ export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
 
     const handlePayment = async () => {
         setStatus('loading');
+        if (!priceId) {
+            toast.info('Por favor, selecciona un plan');
+            setStatus('idle');
+            return;
+        }
 
         try {
             const res = await apiClient.post('/stripe/checkout', {
                 mode: 'subscription',
                 priceId,
-                successUrl: `${window.location.href}?success=true&priceId=${priceId}`,
+                successUrl: `${process.env.NEXT_PUBLIC_HOSTNAME}/auth/payment-done?success=true&priceId=${priceId}&session_id={CHECKOUT_SESSION_ID}`,
                 cancelUrl: `${window.location.href}?canceled=true`,
             });
 
