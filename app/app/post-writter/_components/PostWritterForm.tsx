@@ -292,9 +292,11 @@ export const VoiceToneSelector = ({
                         type='button'
                         key={tone.name}
                         variant={
-                            selectedTone === tone.id ? 'default' : 'outline'
+                            selectedTone === tone.id ? 'secondary' : 'outline'
                         }
-                        className={`${!isAvailable && 'opacity-50'} flex gap-2 rounded-full`}
+                        className={`${!isAvailable && 'opacity-50'} flex gap-2 rounded-full
+                        ${selectedTone === tone.id ? 'bg-indigo-100' : ''}
+                        `}
                         onClick={() => {
                             if (!isAvailable) {
                                 toast.info(

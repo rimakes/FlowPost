@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
                     ${iaSettings?.shortBio ? `Eres ${iaSettings?.shortBio} y` : 'Eres un experto en tu campo y'} ${iaSettings?.topics ? `hablas sobre ${iaSettings?.topics}` : 'hablas sobre temas de interés'}.
                     ${iaSettings?.other ? `Además, ${iaSettings?.other}` : ''}
 
-                    Escribe el mejor post de linkedin que puedas siguiendo esta plantilla o ejemplo pero en un tono {tone}:
+                    Escribe el mejor post de linkedin que puedas siguiendo esta plantilla (NO exactamente, inspírate en ella, pero adáptala al tono, y cambia palabras y expresiones para generar variedad) o ejemplo pero en un tono {tone}:
 
                     ___PLANTILLA-O-EJEMPLO___
                     {example}.

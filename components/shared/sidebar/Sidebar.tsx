@@ -2,6 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 import {
     Tooltip,
     TooltipContent,
@@ -9,7 +10,6 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn, capitalizeFirstLetter } from '@/lib/utils';
-import { Progress } from '@radix-ui/react-progress';
 import {
     SidebarOpen,
     SidebarClose,
@@ -50,7 +50,7 @@ transition-[width] duration-300
  ${collapsed ? 'lg:w-16' : 'lg:w-72'}`}
         >
             <Button
-                className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10'
+                className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10 border'
                 size={'icon'}
                 variant={'secondary'}
                 onClick={() => setCollapsed(!collapsed)}
@@ -62,7 +62,7 @@ transition-[width] duration-300
                 )}
             </Button>
             <Button
-                className='rounded-full gap-2 hidden lg:flex'
+                className='rounded-full gap-2 hidden lg:flex bg-indigo-50 border border-indigo-200 text-indigo-700'
                 onClick={() => {
                     router.push('/app/post-writter/new');
                     setCollapsed(true);
@@ -147,7 +147,7 @@ export const MenuItem = ({
 `,
                 className,
                 pathname === href
-                    ? 'lg:border-r-4 border-primary bg-primary/5'
+                    ? 'lg:border-r-4 border-slate-300 bg-primary/5'
                     : '',
                 collapsed ? 'justify-center lg:border-r-0' : '',
                 status === 'próximamente' ? 'cursor-not-allowed' : ''
@@ -206,7 +206,7 @@ type WordsUsedWidgetProps = {
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
     return (
         <div
-            className={`bg-primary/5 rounded-md space-y-2 border border-primary/10 ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'text-xs p-2 font-semibold'}`}
+            className={`bg-white rounded-md space-y-2 border border-primary/10 ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'text-xs p-2 font-semibold'}`}
         >
             <div className='flex justify-between'>
                 {!collapsed && <p>Palabras usadas</p>}
@@ -219,9 +219,10 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                     <Progress
                         value={50}
                         max={100}
-                        className='h-2 border border-primary/10 rounded-full'
+                        className='h-2 border border-slate-100 rounded-full'
+                        color='#FF0000'
                     />
-                    <p className='opacity-75'>Ests usando un free trial</p>
+                    <p className='opacity-75'>Estás usando un free trial</p>
                 </>
             )}
         </div>

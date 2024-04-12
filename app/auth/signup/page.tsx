@@ -8,6 +8,7 @@ import AuthHeader from '../auth-header';
 import AuthImage from '../auth-image';
 import { RegisterForm } from '@/components/auth/register-form';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
+import { LoginForm } from '@/components/auth/LoginForm';
 
 export default function SignUp() {
     return (
@@ -23,7 +24,8 @@ export default function SignUp() {
                                 Crea tu cuenta ✨
                             </h1>
                             {/* Form */}
-                            <RegisterForm />
+                            {/* <RegisterForm /> */}
+                            <LoginForm />
                             {/* Footer */}
                             <SwitchLogin signIn className='mt-5' />
                         </div>

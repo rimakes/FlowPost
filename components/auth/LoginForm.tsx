@@ -36,8 +36,8 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
     const form = useForm({
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
-            email: 'ricardo@grouz.io',
-            password: '88888888k',
+            email: '',
+            // password: '88888888k',
         },
     });
 
@@ -48,11 +48,14 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
     const callbackUrl = query.get('callbackUrl');
     const error = query.get('error');
 
+    const { isSubmitted, isSubmitSuccessful } = form.formState;
+
     const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
         try {
-            const res = await signIn('credentials', {
+            const res = await signIn('email', {
                 ...values,
-                redirect: isRedirected,
+                // redirect: isRedirected,
+                redirect: false,
                 callbackUrl:
                     // Send the user to where he was before or the default route
                     callbackUrl || appConfig.routes.defaultLogingRedirect,
@@ -83,19 +86,19 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                                 <FormLabel>e-mail</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder='Aquí va tu email'
+                                        placeholder={`ricardo@${appConfig.general.appDomain}`}
                                         {...field}
                                         autoComplete='email'
                                     />
                                 </FormControl>
                                 <FormDescription>
-                                    {`Email con el que te diste de alta en ${appConfig.general.appName}`}
+                                    {`Email de tu usuario en ${appConfig.general.appName}`}
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <FormField
+                    {/* <FormField
                         control={form.control}
                         name='password'
                         render={({ field }) => (
@@ -123,17 +126,30 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                             {errors[errorRes as TSigninErrors] ||
                                 errors[error as TSigninErrors]}
                         </Message>
-                    )}
+                    )} */}
 
+                    {isSubmitSuccessful && (
+                        <Message variant={'info'}>
+                            <p>
+                                📩 Te hemos enviado un correo con tu link para
+                                entrar. Revisa tu bandeja de entrada. <br />
+                                <span className='text-xs'>
+                                    {' '}
+                                    Si no has recibido nada, ¿es el mail que
+                                    usaste para registrarte?
+                                </span>
+                            </p>
+                        </Message>
+                    )}
                     <Button
                         type='submit'
                         disabled={form.formState.isSubmitting}
                         className='w-full'
                     >
                         {form.formState.isSubmitting ? (
-                            <div className='flex flex-row gap-2'>Entrando</div>
+                            <div className='flex flex-row gap-2'>Enviando</div>
                         ) : (
-                            `Entrar`
+                            `Enviar link`
                         )}
                     </Button>
                 </form>

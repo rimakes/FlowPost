@@ -162,8 +162,8 @@ export const authOptions: NextAuthOptions = {
 
                 await sendEmail(
                     email,
-                    'Recuperación de contraseña',
-                    'Recupera tu contraseña',
+                    `Entra en ${appConfig.general.appName}`,
+                    `Entra en ${appConfig.general.appName}`,
                     signinEmail({ url, host, theme }),
                     'noreply@test.com'
                 );

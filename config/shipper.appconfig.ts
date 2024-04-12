@@ -22,6 +22,7 @@ export const appConfig = {
 
     general: {
         appName: 'PerBrand',
+        appDomain: 'perbrand.com',
     },
 
     colors: {

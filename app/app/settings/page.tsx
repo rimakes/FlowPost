@@ -41,7 +41,7 @@ export default async function IdeasPage({ params, searchParams }: TPageProps) {
             <div className='mt-6 space-y-4 2xl:flex gap-8'>
                 <Tabs defaultValue={tab || 'general'} className='w-full'>
                     <div className='overflow-x-auto mb-8 '>
-                        <TabsList className='flex gap-2 w-fit'>
+                        <TabsList className='flex justify-between w-full max-w-md'>
                             <TabsTrigger value='general'>General</TabsTrigger>
                             <TabsTrigger value='plan'>Subscripción</TabsTrigger>
                             {/* <TabsTrigger value='team'>Equipo</TabsTrigger> */}

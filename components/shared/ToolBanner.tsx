@@ -16,7 +16,7 @@ export const ToolBanner = async ({ className }: ToolBannerProps) => {
     return (
         <div
             className={cn(
-                `gap-4 bg-muted p-2 flex justify-center items-center text-sm`,
+                `gap-4 bg-indigo-50 p-2 flex justify-center items-center text-sm`,
                 className
             )}
         >

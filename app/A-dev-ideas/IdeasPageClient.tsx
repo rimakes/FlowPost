@@ -98,7 +98,7 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     icon={<Feather />}
                     label='Crear Post'
                     onClick={async () => {
-                        toast.success('Creando.post..');
+                        toast.success('Creando post..');
                         // setStatus('loading');
                         // const newCarousel = await createLinkedinCarousel(post);
                         // setStatus('idle');
@@ -112,7 +112,7 @@ export const PostIdeaCard = ({ ideaDescription }: PostIdeaCardProps) => {
                     icon={<Save />}
                     label='Guardar Idea'
                     onClick={async () => {
-                        toast.success('Creando.post..');
+                        toast.success('Guardando idea..');
                         // setStatus('loading');
                         // const newCarousel = await createLinkedinCarousel(post);
                         // setStatus('idle');

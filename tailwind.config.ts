@@ -1,3 +1,4 @@
+import { SubContent } from '@radix-ui/react-dropdown-menu';
 import { backgroundPatterns, testo } from './background-patterns';
 import {
     GenerateBreakpointsParams,
@@ -63,6 +64,16 @@ module.exports = {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
                 },
+                info: {
+                    DEFAULT: 'hsl(var(--info))',
+                    foreground: 'hsl(var(--info-foreground))',
+                    background: 'hsl(var(--info-background))',
+                },
+                success: {
+                    DEFAULT: 'hsl(var(--success))',
+                    foreground: 'hsl(var(--success-foreground))',
+                    background: 'hsl(var(--success-background))',
+                },
             },
             borderRadius: {
                 lg: 'var(--radius)',
@@ -83,8 +94,8 @@ module.exports = {
                     to: { transform: 'translateX(-100%)' },
                 },
                 'slide-right': {
-                    from: { transform: 'translateX(-100%)' },
-                    to: { transform: 'translateX(0%)' },
+                    from: { transform: 'translateX(-5%)' },
+                    to: { transform: 'translateX(5%)' },
                 },
                 slide: {
                     // translate: 0% calc(calc((var(--index) + var(--outset, 0)) * -100%));
@@ -98,7 +109,7 @@ module.exports = {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
                 'slide-left': 'slide-left 20s linear infinite',
-                'slide-right': 'slide-right 20s linear infinite',
+                'slide-right': 'slide-right 2s ease-in-out alternate infinite',
                 slide: 'slide var(--duration) var(--delay) infinite linear',
             },
         },

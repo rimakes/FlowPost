@@ -84,14 +84,14 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
         <>
             <WeekSlider />
             <Separator />
-            <div className='flex border-0 border-green-500 overflow-x-auto'>
+            <div className='flex overflow-x-auto'>
                 {mergedSlotsAndPosts.map((mergedSlotsAndPosts, i) => {
                     return (
                         <DaySchedule
                             key={i}
                             date={weekDaysArray[i]}
                             slots={mergedSlotsAndPosts}
-                            className='flex-1 min-w-0 max-h-none'
+                            className={`flex-1 min-w-0 max-h-none`}
                         />
                     );
                 })}

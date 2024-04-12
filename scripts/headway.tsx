@@ -4,7 +4,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { PopoverTrigger } from '@radix-ui/react-popover';
 import Script from 'next/script';
 
 export function HeadwayScript() {
@@ -50,8 +49,11 @@ export function HeadwayScript() {
                         }
                         }
                     };
-
-                    Headway.init(config);
+                    try {
+                        Headway.init(config);
+                    } catch(e) {
+                        console.error("Headway couldn't be loaded", e);
+                    }
             `}</Script>
         </>
     );

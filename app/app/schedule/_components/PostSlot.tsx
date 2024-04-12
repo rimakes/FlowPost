@@ -113,7 +113,7 @@ export const PostSlot = ({
         <div
             className={cn(
                 `w-full h-40 bg-primary/5 rounded-md flex flex-col p-2 border border-dashed border-border relative`,
-                !isAvailable && 'bg-primary/10',
+                !isAvailable && 'bg-secondary',
                 className
             )}
         >
@@ -152,7 +152,7 @@ export const PostSlot = ({
                 open={draftDialogIsOpen}
                 onOpenChange={(isOpen) => setdraftDialogIsOpen(isOpen)}
             >
-                <DialogContent>
+                <DialogContent className='bg-white'>
                     <DraftModalContent
                         date={date}
                         time={time}

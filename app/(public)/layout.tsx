@@ -18,7 +18,7 @@ export default function DefaultLayout({
                 {/*  Site header */}
                 <HomeNavbar />
                 {/* [&>*:first-child]:scroll-mt-16 */}
-                <main className='gap flex flex-1 flex-col py-12 bg-pattern'>
+                <main className='gap flex flex-1 flex-col py-12 bg-pattern bg-background'>
                     <Container className={''}>{children}</Container>
                 </main>
                 <Footer />

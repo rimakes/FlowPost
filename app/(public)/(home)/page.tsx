@@ -1,5 +1,4 @@
 import { Faq } from '@/components/marketing/faq';
-import { Pricing } from '@/components/marketing/pricing';
 import CtaWithSocial from '@/components/marketing/cta-with-social';
 import { secondaryFont } from '@/config/fonts';
 import Hero from '@/components/marketing/hero';
@@ -7,11 +6,10 @@ import { TextWithMedia } from '@/components/marketing/TextWithMedia';
 import { CTABanner } from '@/components/marketing/CTABanner';
 import { Testimonials } from '@/components/marketing/Testimonials';
 import { DemoVideo } from '@/components/marketing/DemoVideo';
-import ReactPlayer from 'react-player';
 import { VideoClient } from '@/components/marketing/VideoClient';
-import Highlight from '@/components/utils/Hightlight';
-import { RedirectTweak } from './RedirectTweak';
 import { Pricing2 } from '@/components/marketing/Pricing2';
+import Image from 'next/image';
+import { Message } from '@/components/auth/message';
 
 export default async function Home() {
     // const session = await auth();
@@ -39,11 +37,8 @@ export default async function Home() {
                         description={
                             <>
                                 Elige la forma que más cómoda te resulte:{' '}
-                                <Highlight color='yellow'>
-                                    escríbelo o cuéntalo hablado
-                                </Highlight>{' '}
-                                tal cuál te salga, la IA se encarga de darle
-                                forma 👌
+                                escríbelo o cuéntalo hablado tal cuál te salga,
+                                la IA se encarga de darle forma 👌
                             </>
                         }
                         side='left'
@@ -58,11 +53,9 @@ export default async function Home() {
                         title={'2. Selecciona tono y formato'}
                         description={
                             <>
-                                Elige entre las decenas de{' '}
-                                <Highlight>
-                                    formatos probados que la IA personalizará
-                                </Highlight>{' '}
-                                para ti y un tono que se adapte a tu estilo 🪡
+                                Elige entre las decenas de formatos probados que
+                                la IA personalizará para ti y un tono que se
+                                adapte a tu estilo 🪡
                             </>
                         }
                         side='left'
@@ -77,14 +70,11 @@ export default async function Home() {
                         title={'3. Genera tu Post Optimizado'}
                         description={
                             <>
-                                <Highlight>En segundos</Highlight>, un post de
-                                Linkedin estructurado aplicando las mejores
-                                técnicas de copywriting. <br />
+                                En segundos, un post de Linkedin estructurado
+                                aplicando las mejores técnicas de copywriting.{' '}
                                 <br />
-                                <Highlight>
-                                    ¡EMPIEZA A RECIBIR INTERACCIONES!
-                                </Highlight>
-                                .
+                                <br />
+                                ¡EMPIEZA A RECIBIR INTERACCIONES! .
                             </>
                         }
                         side='left'
@@ -130,20 +120,38 @@ export default async function Home() {
             <Testimonials />
             <Faq />
             <CTABanner
-                title='some title'
+                title='Crea carrusels y post de Linkedin en segundos'
                 description={
                     <>
-                        <p>Some description</p>
+                        <p className='mb-8 opacity-50'>
+                            Escribe y graba tu idea, elige un formato y tono y
+                            crea un carrusel en{' '}
+                            <span className='line-through'> minutos</span>{' '}
+                            segundos. <br />
+                            Carruseles y post únicos, adaptados a tu estilo y
+                            marca
+                        </p>
                         <CtaWithSocial
                             accentText={'30% de descuento'}
                             buttonLabel={'Comprar'}
                             primaryText={'a las primeras 200 compras'}
-                            buttonClasses='bg-primary-foreground text-primary'
+                            buttonProps={{
+                                variant: 'secondary',
+                            }}
                             spanClasses='text-primary-foreground'
                         />
                     </>
                 }
-                media={<div className='h-48 w-96'>Some media</div>}
+                media={
+                    <div className='h-full w-80 relative'>
+                        <Image
+                            fill
+                            alt='banner image'
+                            src={'/images/banner-image.png'}
+                            className='object-contain'
+                        />
+                    </div>
+                }
             />
         </div>
     );

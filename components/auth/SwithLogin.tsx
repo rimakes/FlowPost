@@ -28,7 +28,7 @@ export function SwitchLogin({
                     </Link>
                 </div>
             )}
-            {resetPassword && (
+            {/* {resetPassword && (
                 <div className='text-sm'>
                     ¿Has olvidado tu contraseña?{' '}
                     <Link
@@ -38,7 +38,7 @@ export function SwitchLogin({
                         Recupérala
                     </Link>
                 </div>
-            )}
+            )} */}
 
             {signIn && (
                 <div className='text-sm'>

@@ -6,13 +6,19 @@ import { Button } from '../ui/button';
 import Spinner from '../icons/spinner';
 import { TStatus } from '@/types/types';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 type CheckoutButtonProps = {
     priceId?: string | null;
     children: React.ReactNode;
+    className?: string;
 };
 
-export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
+export const CheckoutButton = ({
+    priceId,
+    children,
+    className,
+}: CheckoutButtonProps) => {
     const [status, setStatus] = useState<TStatus>('idle');
 
     const handlePayment = async () => {
@@ -40,7 +46,10 @@ export const CheckoutButton = ({ priceId, children }: CheckoutButtonProps) => {
     };
 
     return (
-        <Button className='flex gap-2 group' onClick={() => handlePayment()}>
+        <Button
+            className={cn(`flex gap-2 group`, className)}
+            onClick={() => handlePayment()}
+        >
             {status === 'loading' ? (
                 <Spinner />
             ) : (

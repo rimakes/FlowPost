@@ -4,9 +4,9 @@ export const signInFormSchema = z.object({
     email: z.string().min(2, {
         message: 'El nombre debe tener al menos dos letras.',
     }),
-    password: z.string().min(1, {
-        message: 'Se necesita una contraseña',
-    }),
+    // password: z.string().min(1, {
+    //     message: 'Se necesita una contraseña',
+    // }),
 });
 
 export const registerFormSchema = z.object({

@@ -19,8 +19,8 @@ const messageVariants = cva(
                     'bg-yellow-400/10 text-yellow-600 border-yellow-400/20 border-l-4 border-l-yellow-400/50',
                 error: 'bg-destructive/10 text-destructive border-destructive/20 border-l-4 border-l-destructive/50',
                 success:
-                    'bg-emerald-400/10 text-emerald-400 border-emerald-400/20 border-l-4 border-l-emerald-400/50',
-                info: 'bg-blue-400/10 text-blue-400 border-blue-400/20 border-l-4 border-l-blue-400/50',
+                    'bg-success-background text-success-foreground border-success border-l-4 border-l-success',
+                info: 'bg-info-background text-info-foreground border-info border-l-4 border-l-info',
             },
         },
 
@@ -58,7 +58,7 @@ export function Message({ children, className, variant }: FormErrorProps) {
             ref={divRef}
         >
             <X
-                className='absolute top-2 right-2 w-4 h-4 cursor-pointer'
+                className='absolute top-1 right-1 w-3 h-3 cursor-pointer'
                 onClick={async () => {
                     divRef.current?.classList.add(
                         'opacity-0',

@@ -155,10 +155,7 @@ export const SelectedPostTemplateCard = ({
 }: PostTemplateCardProps) => {
     return (
         <div
-            className={cn(
-                `rounded-lg border border-muted space-y-2 p-4 w-full`,
-                className
-            )}
+            className={cn(`rounded-lg border space-y-2 p-4 w-full`, className)}
         >
             <p className='font-semibold'>{template.name}</p>
             <p className='w-full line-clamp-2'>{template.content}</p>

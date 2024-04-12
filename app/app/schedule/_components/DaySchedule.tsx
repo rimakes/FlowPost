@@ -30,12 +30,7 @@ export function DaySchedule({ slots, className, date }: DayScheduleProps) {
     const dayOfWeek = daysOfTheWeekMap[date.getDay()];
 
     return (
-        <div
-            className={cn(
-                `flex flex-col divide-x divide-y border-0 border-red-500`,
-                className
-            )}
-        >
+        <div className={cn(`flex flex-col divide-x divide-y `, className)}>
             <div
                 className={cn(
                     `border-l border-border bg-primary/1 flex items-center justify-center p-2 text-primary/60`,

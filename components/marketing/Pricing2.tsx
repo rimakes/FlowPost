@@ -1,26 +1,15 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';
 // import Highlight from '../utils/highlight';
 import { getStripeInstance } from '@/lib/stripe';
-import FeaturedLogo from '../icons/featured-logo';
-import { CheckoutButton } from './CheckoutButton';
-import Stripe from 'stripe';
 import { secondaryFont } from '@/config/fonts';
 import Highlight from '../utils/Hightlight';
 import { GetAccessButton } from './GetAccessButton';
-import { Check, GiftIcon, Shield, ShieldCheck } from 'lucide-react';
-import CtaWithSocial from './cta-with-social';
+import { Check, GiftIcon, ShieldCheck } from 'lucide-react';
 
 export const Pricing2 = async () => {
-    const stripe = await getStripeInstance();
-    const productList = await stripe.products.list({
-        expand: ['data.default_price'],
-    });
-
-    const plans = productList.data.filter((product) =>
-        appConfig.productIds.includes(product.id)
-    );
-
     return (
         <section className='flex max-w-7xl flex-col gap-20 relative'>
             <div className='anchor -top-32 absolute' id='pricing' />
@@ -32,15 +21,14 @@ export const Pricing2 = async () => {
                 </h2>
                 <div className='text-primary'>
                     <p className='text-2xl'>
-                        Crea carrusels y post de Linkedin{' '}
-                        <Highlight>en segundos</Highlight>
+                        Crea carrusels y post de Linkedin en segundos
                     </p>
                 </div>{' '}
             </div>
             {/*TODO: With grid -> <div className="mx-auto grid max-w-sm grid-cols-[repeat(auto-fit,_minmax(min(250px,_100%),_1fr))] justify-center gap-5 sm:max-w-none"> */}
 
             <div className='flex flex-col items-center justify-center gap-5 md:flex-row'>
-                <div className='flex flex-col items-center gap-12 p-8 shadow-[0_3px_8px_rgba(0,0,0,.24)] bg-background rounded-lg'>
+                <div className='flex flex-col items-center gap-12 p-8 shadow-[0_3px_8px_rgba(0,0,0,.24)] bg-white rounded-lg'>
                     <div className='flex flex-col gap-4 items-center'>
                         <p className='text-6xl font-bold'>
                             87€{' '}
@@ -48,9 +36,19 @@ export const Pricing2 = async () => {
                                 348€
                             </span>
                         </p>
-                        <p>Acceso durante un año</p>
+                        <p>
+                            Acceso durante un año{' '}
+                            <span className='text-muted-foreground text-sm'>
+                                (=7,25€/mes)
+                            </span>{' '}
+                        </p>
                         <div>
-                            <GetAccessButton className='w-[300px] mb-1 mx-auto' />
+                            <GetAccessButton
+                                className='mb-1 mx-auto shadow-none text-primary
+                            bg-gradient-to-tr  from-pink-400 to-indigo-400 text-pink-50 text-lg w-full
+                            
+                            '
+                            />
                             <p className='flex gap-2 text-xs items-center w-full justify-center text-primary/50'>
                                 <ShieldCheck className='h-4 w-4' />
                                 Pago seguro con Stripe
@@ -74,19 +72,25 @@ export const Pricing2 = async () => {
                         </p>
                         <ul className='flex flex-col gap-1'>
                             <li className='flex items-center gap-1'>
-                                <Check size={20} />s asdfasdfa asdf asdf else
+                                <Check size={20} className='text-indigo-400' />
+                                Personaliza tus publicaciones (textos, fotos,
+                                etc...)
                             </li>
                             <li className='flex items-center gap-1'>
-                                <Check size={20} /> Something else
+                                <Check size={20} className='text-indigo-400' />
+                                Accede a más de 30 plantillas de post
                             </li>
                             <li className='flex items-center gap-1'>
-                                <Check size={20} /> asdf Something else
+                                <Check size={20} className='text-indigo-400' />
+                                Crea hasta 50 post y carrusels por mes
                             </li>
                             <li className='flex items-center gap-1'>
-                                <Check size={20} /> asdfasdfa asdf asdf else
+                                <Check size={20} className='text-indigo-400' />
+                                Guarda tus ajustes de marca
                             </li>
                             <li className='flex items-center gap-1'>
-                                <Check size={20} /> asdfasdfa asdf asdf else
+                                <Check size={20} className='text-indigo-400' />
+                                Nuevas funcionalidades cada mes
                             </li>
                         </ul>
                     </div>

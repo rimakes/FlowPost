@@ -15,6 +15,7 @@ import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { Button } from '../ui/button';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
@@ -22,6 +23,7 @@ type CrearCarouselButonProps = {
     children?: React.ReactNode;
     isDemo?: boolean;
     onDemoCarouselCreated?: (carousel: TCarousel) => void;
+    buttonProps?: React.ComponentProps<typeof Button>;
 };
 export function CreateCarouselButton({
     post,
@@ -29,6 +31,7 @@ export function CreateCarouselButton({
     children,
     isDemo,
     onDemoCarouselCreated = () => {},
+    buttonProps,
 }: CrearCarouselButonProps) {
     const { data } = useSession();
     const router = useRouter();
@@ -51,10 +54,11 @@ export function CreateCarouselButton({
     return (
         <ButtonWithTooltip
             ref={context.createCarouselButtonRef}
+            buttonProps={buttonProps}
             icon={<GalleryHorizontal />}
             disabled={status === 'loading'}
             className={cn(
-                `flex-1 rounded-full bg-muted overflow-hidden text-primary/50 hover:bg-primary/10 relative`,
+                `flex-1 rounded-full overflow-hidden  relative`,
                 className
             )}
             label='Crear carrusel'

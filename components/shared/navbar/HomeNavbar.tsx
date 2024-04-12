@@ -22,7 +22,7 @@ export function HomeNavbar({ className }: { className?: string }) {
     return (
         <header
             className={cn(
-                `px-4 sm:px-6 lg:px-8 sticky top-0 bg-background border-b border-border z-30 py-4`,
+                `px-4 sm:px-6 lg:px-8 sticky top-0 bg-white border-b border-border z-30 py-4 shadow-indigo-50/50 shadow-xl`,
                 className
             )}
         >
@@ -46,7 +46,9 @@ export function HomeNavbar({ className }: { className?: string }) {
                 {/* Right side */}
                 <div className='lg:flex hidden items-center space-x-3'>
                     <LoginButton mode='modal'>
-                        <Button variant={'outline'}>Login</Button>
+                        <Button variant={'outline'} className='bg-white'>
+                            Login
+                        </Button>
                     </LoginButton>
                     {/* REVIEW: This wouldn't ve ever worked here since it's out of the provider  */}
                     {/* <DownloadButton /> */}
@@ -56,8 +58,9 @@ export function HomeNavbar({ className }: { className?: string }) {
                         className='separator self-stretch h-auto'
                     />
                     <GetAccessButton
+                        className=' shadow-none'
                         buttonProps={{
-                            variant: 'outline',
+                            variant: 'secondary',
                         }}
                     />
                 </div>

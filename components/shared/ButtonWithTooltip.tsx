@@ -15,6 +15,7 @@ type ButtonWithTooltipCustomProps = {
     icon: string | JSX.Element;
     onClick?: () => void;
     children?: React.ReactNode;
+    buttonProps?: ComponentProps<typeof Button>;
 };
 
 export const ButtonWithTooltipComponent = (
@@ -24,6 +25,7 @@ export const ButtonWithTooltipComponent = (
         label,
         onClick,
         children,
+        buttonProps,
         ...props
     }: ButtonProps & ButtonWithTooltipCustomProps,
     ref: React.ForwardedRef<HTMLButtonElement>
@@ -38,6 +40,7 @@ export const ButtonWithTooltipComponent = (
                             onClick={onClick}
                             className={cn(``, className)}
                             {...props}
+                            {...buttonProps}
                         >
                             {icon}
                         </Button>

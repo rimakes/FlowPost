@@ -40,7 +40,7 @@ export function GetAccessButton({
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className={cn(`flex shadow-xl`, className)}
+                    className={cn(`flex shadow-xl `, className)}
                     {...buttonProps}
                     onClick={() => {}}
                 >
@@ -76,6 +76,7 @@ export const ModalHeader = ({ title, subtitle }: ModalHeaderProps) => {
 type FirstStepProps = {
     onNext: (n: number) => void;
 };
+
 const FirstStep = ({ onNext }: FirstStepProps) => {
     return (
         <div className='flex flex-col justify-start gap-12'>
@@ -95,14 +96,21 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
                     onClick={() => {
                         onNext(2);
                     }}
+                    className='bg-gradient-to-tr from-fuchsia-500 to-indigo-600 w-full'
                 >
-                    Consigue {appConfig.general.appName}+
+                    Consigue {appConfig.general.appName}
+                    <span className='relative -top-1'>+</span>{' '}
                 </Button>
                 <div className='flex flex-col gap-2 text-sm italic items-center text-primary/50 text-center'>
                     <Rating value={5} />
                     <p className=''>
                         &quot;He pasado de dedicar 4 horas a la semana a crear
-                        un post y carrusel, a crear 7 en 10 minutos&quot;
+                        un post y carrusel, a crear{' '}
+                        <span className='bg-indigo-400 text-primary-foreground'>
+                            {' '}
+                            7 posts y carrusels en 10 minutos{' '}
+                        </span>
+                        &quot;
                     </p>
                 </div>
             </div>
@@ -119,7 +127,9 @@ type ModalItemProps = {
 const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
     return (
         <div className='flex gap-4 items-center'>
-            <Icon />
+            {/* TODO: how could I do this? */}
+            {/* @ts-ignore */}
+            <Icon className='text-indigo-600' />
             <div className='flex flex-col'>
                 <h3 className='text-lg font-semibold'>{title}</h3>
                 <p className='text-sm text-primary/60'>{description}</p>
@@ -128,17 +138,33 @@ const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
     );
 };
 
-const SecondStep = () => {
-    const [seletectedPlan, setSeletectedPlan] = useState<string | null>(null);
+export const SecondStep = () => {
+    const [seletectedPlan, setSeletectedPlan] = useState<string | null>(
+        'price_1OSkLCB6M9fLIRyeYQAXIGnv'
+    );
+
+    const [seatsAvailable, setSeatsAvailable] = useState({
+        seats: 200,
+        taken: 17,
+    });
 
     return (
         <div className='flex flex-col justify-between gap-12 min-h-[600px]'>
             <ModalHeader title={`Elige tu plan`} />
             <Separator className='-mt-4 -mb-4' />
-            <div className='flex flex-col justify-start items-center gap-6 p-2 grow'>
+            <div className='flex flex-col justify-start items-center gap-2 p-2 grow'>
                 <div className='text-center'>
                     <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
                     <p className='text-xl font-bold'>Ahorra hasta un 75%</p>
+                </div>
+                <div className='text-sm text-primary/50'>
+                    Plan disponible para{' '}
+                    <span className='font-bold'>{seatsAvailable.seats}</span>{' '}
+                    personas. Quedan{' '}
+                    <span className='font-bold'>
+                        {seatsAvailable.seats - seatsAvailable.taken}
+                    </span>{' '}
+                    plazas
                 </div>
             </div>
             <div className='flex flex-col gap-4'>
@@ -178,8 +204,13 @@ const SecondStep = () => {
             </div>
             <Separator className='-mt-4 -mb-4' />
             <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
-                <CheckoutButton priceId={seletectedPlan}>
-                    Consigue {appConfig.general.appName}+
+                <CheckoutButton
+                    priceId={seletectedPlan}
+                    className='bg-gradient-to-tr from-fuchsia-500 to-indigo-600 w-full'
+                >
+                    {' '}
+                    Consigue {appConfig.general.appName}
+                    <span className='relative -top-1'>+</span>{' '}
                 </CheckoutButton>
                 <p className='flex gap-2 text-xs items-center text-primary/50'>
                     <Shield className='h-4 w-4' />

@@ -52,6 +52,7 @@ import { CharCounter } from '../shared/CharCounter';
 import { RecordButton } from '@/app/app/post-writter/_components/RecordButton';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { GetAccessButton } from './GetAccessButton';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type DemoWidgetProps = { className?: string };
 export function DemoWidget({ className }: DemoWidgetProps) {
@@ -168,15 +169,16 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                         className='anchor lg:-top-32 -top-32 absolute'
                         id='try-it'
                     />
-                    <p>
-                        Para elegir otros estilos y plantillas, prueba Perbrand+
+                    <p className='text-center text-muted-foreground text-sm -mb-4'>
+                        Completa el formulario y descubre como la IA de{' '}
+                        {appConfig.general.appName} hace su magia
                     </p>
 
                     <FormField
                         control={form.control}
                         name='toneId'
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className='w-full'>
                                 <FormLabel className=''></FormLabel>
 
                                 <Dialog
@@ -184,12 +186,12 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                     onOpenChange={setIsVoiceModalOpen}
                                 >
                                     <DialogTrigger asChild>
-                                        <div className='mx-auto'>
+                                        <div className='w-full'>
                                             {field.value ? (
                                                 <Button
                                                     type='button'
                                                     variant={'outline'}
-                                                    className='flex gap-2 rounded-full'
+                                                    className='flex gap-2 rounded-full mx-auto'
                                                 >
                                                     <span className='h-5 w-5'>
                                                         {
@@ -237,7 +239,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                         control={form.control}
                         name='templateId'
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className='w-full'>
                                 <FormLabel className=''></FormLabel>
                                 <FormControl>
                                     {/*  */}
@@ -315,20 +317,20 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                             placeholder='Los mejores hooks para enganchar a tus seguidores en Linkedin'
                                             {...field}
                                         />
-                                        <CharCounter
+                                        {/* <CharCounter
                                             minChars={MIN_LENGTH}
                                             maxChars={MAX_LENGTH}
                                             usedChars={
                                                 form.watch('description').length
                                             }
-                                        />
+                                        /> */}
                                         <RecordButton
                                             onRecord={field.onChange}
                                             text={field.value}
                                         />
                                     </div>
                                 </FormControl>
-                                <FormDescription>
+                                <FormDescription className=''>
                                     Suéltalo tal y como te salga, incluso puedes
                                     hacerlo POR VOZ. Nosotros le daremos forma.
                                 </FormDescription>
@@ -336,7 +338,12 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                             </FormItem>
                         )}
                     />
-                    <Button type='submit'>{buttonContent()}</Button>
+                    <Button
+                        className='bg-gradient-to-tr  from-pink-400 to-indigo-500 text-pink-50 text-lg font-semibold w-full animate-pulse'
+                        type='submit'
+                    >
+                        {buttonContent()}
+                    </Button>
                 </form>
             </Form>
             <Dialog
@@ -345,7 +352,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                 onOpenChange={setisOpenResultDialog}
             >
                 <DialogContent
-                    className='demo-dialog max-w-3xl overflow-x-hidden overflow-y-auto max-h-full'
+                    className='demo-dialog max-w-3xl overflow-x-hidden overflow-y-auto max-h-full  bg-white'
                     onInteractOutside={(e) => {
                         e.preventDefault();
                     }}

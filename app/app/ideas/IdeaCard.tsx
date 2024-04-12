@@ -35,7 +35,7 @@ export const PostIdeaCard = ({
                     hover:bg-primary/10'
                     label='Crear Post'
                     onClick={async () => {
-                        toast.success('Creando.post..');
+                        toast.success('Creando post..');
                         // setStatus('loading');
                         // const newCarousel = await createLinkedinCarousel(post);
                         // setStatus('idle');

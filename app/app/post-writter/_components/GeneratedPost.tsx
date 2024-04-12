@@ -61,7 +61,7 @@ export const PostWritterResult = ({
             {/* <EmojiPickerClient /> */}
             <Label>Post generado</Label>
 
-            <div className='border border-muted p-2 space-y-2'>
+            <div className='border p-2 space-y-2 rounded-t-lg rounded-b-3xl'>
                 <div className='relative pb-6'>
                     <Textarea
                         rows={20}
@@ -87,9 +87,9 @@ export const PostWritterResult = ({
 
                 <div className='flex gap-2 relative'>
                     <ButtonWithTooltip
+                        variant={'secondary'}
                         icon={<Save />}
-                        className='flex-1 rounded-full bg-muted text-primary/50
-                        hover:bg-primary/10'
+                        className='flex-1 rounded-full'
                         label='Guardar post'
                         onClick={async () => {
                             if (isDemo)
@@ -115,6 +115,9 @@ export const PostWritterResult = ({
                         }}
                     />
                     <CreateCarouselButton
+                        buttonProps={{
+                            variant: 'secondary',
+                        }}
                         isDemo={isDemo}
                         post={post}
                         onDemoCarouselCreated={(carousel) => {

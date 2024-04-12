@@ -7,6 +7,7 @@ import { formatDate } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { SecondStep } from '@/components/marketing/GetAccessButton';
 
 type CurrentPlanProps = {
     subscription: Subscription | null | undefined;
@@ -52,8 +53,9 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
                     </div>
                 </div>
             ) : (
-                // <p>{JSON.stringify(subscription)}</p>
-                <p>No active subscription</p>
+                <div className='max-w-md'>
+                    <SecondStep />
+                </div>
             )}
         </div>
     );

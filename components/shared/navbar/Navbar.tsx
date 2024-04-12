@@ -30,9 +30,7 @@ export default function Navbar({ className }: { className?: string }) {
             <div className='flex items-center justify-between h-full -mb-px'>
                 {/* Left side */}
                 <div className='flex gap-2 items-center'>
-                    <Link href='/app'>
-                        <Logo />
-                    </Link>
+                    <Logo linkUrl='/app' />
                     <HeadwayScript />
                 </div>
 

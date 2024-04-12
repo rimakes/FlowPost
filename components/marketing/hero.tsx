@@ -34,29 +34,25 @@ export default function Hero({ className = '' }) {
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex-1'>
                     <div className='mx-auto max-w-2xl text-center'>
                         <span
-                            className={`${handwritten.className} px-6 text-3xl text-base-muted-content text-indigo-700`}
+                            className={`${handwritten.className} px-6 text-3xl text-base-muted-content text-muted-foreground`}
                         >
-                            Crea Posts y Carrusels de Linkedin en segundos
+                            Convierte tus ideas en contenido único y de calidad
                         </span>
-                        <p className='font-pj mt-5 text-4xl font-bold leading-tight text-base-content sm:text-5xl sm:leading-tight lg:text-6xl lg:leading-tight'>
-                            Convierte tus{' '}
-                            <span className='relative text-primary/60'>
-                                pensamientos
-                            </span>{' '}
-                            en
-                            <span className='relative inline-flex sm:inline'>
-                                <span className='absolute inset-0 h-full w-full bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] opacity-30 blur-lg filter'></span>
-                                <span className='relative'>
-                                    {' '}
-                                    <Highlight>
-                                        Carrusels de Linkedin que convierten
-                                    </Highlight>
-                                </span>
+                        <p className='font-pj mt-5 text-4xl font-bold leading-tight sm:text-5xl sm:leading-tight lg:text-6xl lg:leading-tight'>
+                            Crea Posts y{' '}
+                            <span className='text-indigo-700'>
+                                {' '}
+                                Carrusels de LinkedIn en{' '}
+                                <span className='line-through text-primary'>
+                                    minutos
+                                </span>{' '}
+                                segundos
                             </span>
                         </p>
 
                         <div className='mt-9 flex flex-wrap items-center justify-center gap-5 px-8 sm:space-x-5 sm:px-0'>
                             <GetAccessButton
+                                className=''
                                 buttonProps={{
                                     variant: 'outline',
                                 }}
@@ -71,7 +67,7 @@ export default function Hero({ className = '' }) {
                             </Link>
                         </div>
 
-                        <p className='font-inter mt-8 animate-pulse flex lg:flex-row flex-col gap-2 justify-center items-center'>
+                        <p className='font-inter mt-8 flex lg:flex-row flex-col gap-2 justify-center items-center lg:animate-slide-right  animate-bounce text-muted-foreground'>
                             Pruébalo Gratis{' '}
                             <ArrowRight className='hidden lg:inline' />
                             <ArrowDown className='lg:hidden' />

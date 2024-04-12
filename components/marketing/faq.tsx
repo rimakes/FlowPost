@@ -56,7 +56,7 @@ export function Faq() {
                             disable it if you prefer.
                         </AccordionContent>
                     </AccordionItem>
-                    <AccordionItem value='item-6'>
+                    <AccordionItem value='item-4'>
                         <AccordionTrigger>
                             ¿Cómo puedo contactar a soporte?
                         </AccordionTrigger>
@@ -65,7 +65,7 @@ export function Faq() {
                             disable it if you prefer.
                         </AccordionContent>
                     </AccordionItem>
-                    <AccordionItem value='item-4'>
+                    <AccordionItem value='item-5'>
                         <AccordionTrigger>
                             ¿Por qué usar PerBrand en lugar de ChatGPT?
                         </AccordionTrigger>
@@ -74,7 +74,7 @@ export function Faq() {
                             disable it if you prefer.
                         </AccordionContent>
                     </AccordionItem>
-                    <AccordionItem value='item-5'>
+                    <AccordionItem value='item-6'>
                         <AccordionTrigger>
                             ¿Qué más funcionalidades tiene PerBrand?
                         </AccordionTrigger>
@@ -83,7 +83,7 @@ export function Faq() {
                             disable it if you prefer.
                         </AccordionContent>
                     </AccordionItem>
-                    <AccordionItem value='item-5'>
+                    <AccordionItem value='item-7'>
                         <AccordionTrigger>
                             No encuentro mi duda, ¿Cómo os contacto?
                         </AccordionTrigger>
