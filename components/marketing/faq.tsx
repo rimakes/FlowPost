@@ -7,6 +7,7 @@ import {
 import { secondaryFont } from '@/config/fonts';
 import Link from 'next/link';
 import Container from '../shared/container';
+import { appConfig } from '@/config/shipper.appconfig';
 
 export function Faq() {
     return (
@@ -26,9 +27,10 @@ export function Faq() {
                     <p>¿Tienes una pregunta que no está respondida aquí?</p>
                     <p>
                         Escríbenos a{' '}
-                        <Link href='mailto:hello@perbrand.com'>
-                            {' '}
-                            hello@perbrand.com
+                        <Link
+                            href={`mailto:hello@${appConfig.general.appDomain}`}
+                        >
+                            {`hello@${appConfig.general.appDomain}`}
                         </Link>
                     </p>
                 </div>
@@ -75,7 +77,7 @@ export function Faq() {
                         </AccordionItem>
                         <AccordionItem value='item-5'>
                             <AccordionTrigger>
-                                ¿Por qué usar PerBrand en lugar de ChatGPT?
+                                {`¿Por qué usar ${appConfig.general.appName} en lugar de ChatGPT?`}
                             </AccordionTrigger>
                             <AccordionContent>
                                 Yes. It&apos;s animated by default, but you can
@@ -84,7 +86,7 @@ export function Faq() {
                         </AccordionItem>
                         <AccordionItem value='item-6'>
                             <AccordionTrigger>
-                                ¿Qué más funcionalidades tiene PerBrand?
+                                {`¿Qué más funcionalidades tiene ${appConfig.general.appName}?`}
                             </AccordionTrigger>
                             <AccordionContent>
                                 Yes. It&apos;s animated by default, but you can

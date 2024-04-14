@@ -21,8 +21,8 @@ export const appConfig = {
     },
 
     general: {
-        appName: 'PerBrand',
-        appDomain: 'perbrand.com',
+        appName: 'FlowPost',
+        appDomain: 'flowpost.io',
     },
 
     colors: {
@@ -64,11 +64,11 @@ export const appConfig = {
     email: {
         subdomain: '',
 
-        fromNoReply: 'Shipper <noreply@ricardosala.com>',
+        fromNoReply: 'FlowPost <noreply@flowpost.io>',
 
-        fromAdmin: 'Ricardo at Shipper <ricardo@mg.shipper.com>',
+        fromAdmin: 'Ricardo de FlowPost <ricardo@mg.flowpost.io>',
 
-        supportEmail: 'ricardo@mg.shipper.com',
+        supportEmail: 'ricardo@mg.flowpost.io',
 
         forwardRepliesTo: 'ricardo@grouz.io',
         testSubdomain: 'sandboxb2328a93eff54cb99ceee2827f1dcd16.mailgun.org',
@@ -86,12 +86,12 @@ export const appConfig = {
     // ### STRINGS
     strings: {
         metas: {
-            title: 'Shipper App',
-            description: 'Ship faster with Shipper',
+            title: 'FlowPost App',
+            description: 'Carruseles y Post en segundos',
         },
         toasts: {
             welcomeToastDescription: 'Continua navegando',
-            welcomeToastTitle: `Bienvenido a Shipper`,
+            welcomeToastTitle: `Bienvenido a FlowPost`,
             linkSentToastDescription:
                 'Te hemos enviado un link para acceder desde tu correo',
             linkSentToastTitle: `Link Enviado · REVISA TU CORREO 📧`,

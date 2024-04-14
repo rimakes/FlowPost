@@ -29,6 +29,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CannyLink } from '../Canny';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type SidebarProps = {};
 
@@ -100,7 +101,7 @@ transition-[width] duration-300
                         key={'canny'}
                         icon={MessageCircleHeart}
                         label={'Sugerencias'}
-                        href={'https://perbrand.canny.io/peticiones'}
+                        href={`https://${appConfig.general.appName}.canny.io/peticiones`}
                         status={'active'}
                         collapsed={collapsed}
                         as={'div'}

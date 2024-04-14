@@ -1,6 +1,7 @@
 'use server';
 
 import { authOptions } from '@/auth';
+import { appConfig } from '@/config/shipper.appconfig';
 import { db } from '@/lib/prisma';
 import cloudinary from 'cloudinary';
 import { getServerSession } from 'next-auth';
@@ -35,7 +36,7 @@ export const uploadFileToCloudinary = async (
     const promise = new Promise(async (resolve, reject) => {
         // Create a stream to upload the file to Cloudinary
         let cloudinaryStream = cloudinary.v2.uploader.upload_stream(
-            { folder: `perbrand` }, // Optional: specify a folder in Cloudinary
+            { folder: `${appConfig.general.appName}` }, // Optional: specify a folder in Cloudinary
             (error, result) => {
                 if (result) {
                     resolve({

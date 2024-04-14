@@ -1,5 +1,6 @@
 'use client';
 
+import { appConfig } from '@/config/shipper.appconfig';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Script from 'next/script';
@@ -15,7 +16,7 @@ export function CannyLink({
     return (
         <>
             <Link
-                href={'https://perbrand.canny.io/peticiones'}
+                href={`https://${appConfig.general.appName}.canny.io/peticiones`}
                 target='_blank'
                 data-canny-link
                 className={cn(`p-0 block`, className)}

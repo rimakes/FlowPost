@@ -45,6 +45,7 @@ import { useSession } from 'next-auth/react';
 import { fontTypeMap } from '@/config/const';
 import { ContinueButton } from './ContinueButton';
 import { toCanvas, toSvg } from 'html-to-image';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type CarouselSidebarProps = {
     brands: TBrand[];
@@ -60,7 +61,9 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
                 <Button onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}>
                     Opciones
                 </Button>
-                <LoginButton mode='modal'> Consigue PerBrand+ </LoginButton>
+                <LoginButton mode='modal'>
+                    {`Consigue ${appConfig.general.appName}`}{' '}
+                </LoginButton>
             </div>
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
                 <SheetContent side={'left'} className='md:hidden p-0 w-3/4'>

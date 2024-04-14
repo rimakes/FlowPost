@@ -27,6 +27,7 @@ import { useContext, useState } from 'react';
 import { PostWritterContext } from '../../_components/PostWritterProvider';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import Link from 'next/link';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type LinkedinPostProps = { className?: string; carousel: TCarousel };
 
@@ -82,7 +83,7 @@ const Comments = () => {
                             </div>
                         </div>
                         <p className='text-sm text-primary/50'>
-                            Founder & CEO at PerBrand
+                            {`Maker at ${appConfig.general.appName}`}
                         </p>
                         <p className='text-sm mt-2'>Nice one Ricardo!</p>
                     </div>

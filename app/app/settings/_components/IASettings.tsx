@@ -22,6 +22,7 @@ import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
 import { saveIASettings } from '@/app/_actions/settings-actions';
 import { Message } from '@/components/auth/message';
+import { appConfig } from '@/config/shipper.appconfig';
 
 const iaSettingsSchema = z.object({
     autoPostGeneration: z.boolean(),
@@ -97,7 +98,7 @@ export const IASettings = ({
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder='Copywritter en Perbrand'
+                                            placeholder={`Copywritter en ${appConfig.general.appName}`}
                                             {...field}
                                         />
                                     </FormControl>

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import Logo from './logo';
 import Link from 'next/link';
+import { appConfig } from '@/config/shipper.appconfig';
 
 const Footer = () => {
     return (
@@ -143,7 +144,7 @@ const Footer = () => {
                                     </Link>
                                 </div>
                                 <p className='text-base text-body-color dark:text-dark-6'>
-                                    &copy; 2024 Perbrand
+                                    &copy; 2024 {appConfig.general.appName}
                                 </p>
                             </div>
                         </div>
