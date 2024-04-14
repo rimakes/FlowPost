@@ -84,7 +84,7 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
                 title={`Consigue ${appConfig.general.appName}+`}
                 subtitle={`Usa ${appConfig.general.appName} sin limitaciones`}
             />
-            <Separator className='-mt-4 -mb-4' />
+            <Separator className='sm:-mt-4 sm:-mb-4 -mt-8 -mb-8' />
             <div className='flex flex-col gap-6 p-2'>
                 {modalItems.map((item, index) => (
                     <ModalItem key={index} {...item} />
@@ -155,7 +155,7 @@ export const SecondStep = () => {
             <div className='flex flex-col justify-start items-center gap-2 p-2 grow'>
                 <div className='text-center'>
                     <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
-                    <p className='text-xl font-bold'>Ahorra hasta un 75%</p>
+                    <p className='text-xl font-bold '>Ahorra hasta un 75%</p>
                 </div>
                 <div className='text-sm text-primary/50'>
                     Plan disponible para{' '}
@@ -181,7 +181,13 @@ export const SecondStep = () => {
                         }}
                     >
                         {plan.name === 'Anual' && (
-                            <div className='flex gap-2 bg-primary rounded-full p-2 py-1  items-center justify-center absolute -top-2 right-0'>
+                            <div
+                                className={`flex gap-2 bg-gradient-to-tr from-fuchsia-500 to-indigo-600 rounded-full p-2 py-1  items-center justify-center absolute -top-2 right-0 ${
+                                    seletectedPlan === plan.stripePriceId
+                                        ? 'opacity-100'
+                                        : 'opacity-50'
+                                }`}
+                            >
                                 {' '}
                                 <Star className='text-primary-foreground fill-current h-4 w-4' />{' '}
                                 <p className='text-sm text-primary-foreground'>
@@ -244,14 +250,14 @@ export const PriceCard = ({
         <div
             className={`
         border-4 rounded-lg flex gap-4 p-4 items-center relative transision-all duration-300
-        ${isSelected ? 'border-primary' : ''}
+        ${isSelected ? 'border-indigo-600' : ''}
         `}
             onClick={handleClick}
         >
             <div
                 className={`
-            rounded-full h-3 w-3 bg-muted  transision-all
-            ${isSelected ? 'bg-primary' : ''}
+            rounded-full h-4 w-4 bg-muted  transision-all
+            ${isSelected ? 'bg-gradient-to-tr from-fuchsia-500 to-indigo-600' : ''}
             
             `}
             />
