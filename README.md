@@ -31,6 +31,14 @@
 -   [Shadcn] (https://ui.shadcn.com/)
     A collection of React components built with Radix, installed in your own project and highly customizable.
 
+<!-- BOILER: ADD -->
+
+-   [Tailwind CSS] (https://tailwindcss.com/)
+    A utility-first CSS framework for rapidly building custom designs.
+
+-   [Canny](https://canny.io/)
+    A feedback tool that helps you collect and organize user feedback and feature requests.
+
 ## COLORS
 
 I have tried several ways to add colors, and make them semantic, but create all the variants (correctly) is no reasonable manually. Until I found a way to assign semantic names (i.e. "primary", "primary-soft", "primary-softer") tailwind colors programatically, I suggest:

@@ -26,6 +26,7 @@ import { authOptions } from '@/auth';
 
 export async function upsertLinkedinPost(
     post: TLinkedinPost,
+    isDemo: boolean = false,
     authorId?: string,
     carouselId?: string
 ) {
@@ -34,6 +35,8 @@ export async function upsertLinkedinPost(
         content,
         author: { handle, name, pictureUrl },
     } = post;
+
+    console.log('upsertLinkedinPost', post, authorId);
 
     let linkedinPost: TLinkedinPost;
     if (id === 'new') {
@@ -45,7 +48,7 @@ export async function upsertLinkedinPost(
                     name,
                     pictureUrl, // placeholder or the image of the user
                 },
-                userId: authorId,
+                userId: isDemo ? '661be88ed1d034dfd861233d' : authorId!,
                 carousel: carouselId
                     ? { connect: { id: carouselId } }
                     : undefined,
@@ -91,13 +94,16 @@ export async function deleteCarousel(carouselId: string) {
     });
 }
 
-export async function createLinkedinCarousel(post: TLinkedinPost) {
+export async function createLinkedinCarousel(
+    post: TLinkedinPost,
+    isDemo = false
+) {
     // Get the custom AISettings from the user
     const data = await getServerSession(authOptions);
     let userId = data?.user?.id;
 
     // If the user is not logged in, use a "demo" user so she/he can create posts as well
-    if (!userId) userId = '6612d5fa2d7c90dd54bf695a';
+    if (!userId && isDemo) userId = '661be88ed1d034dfd861233d';
 
     const model = new ChatOpenAI({
         temperature: 0.8,
@@ -361,8 +367,6 @@ export const getPexelImages = async (query: string) => {
             },
         }
     );
-    console.log(pictures);
-    console.log(pictures.data.photos);
     const photoUrls = pictures.data.photos.map((photo: any) => {
         return photo.src.medium;
     });

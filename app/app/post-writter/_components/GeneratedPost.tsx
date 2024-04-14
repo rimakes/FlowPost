@@ -37,7 +37,7 @@ export const PostWritterResult = ({
     setEditDetailsModal,
     showEditableSwitch = true,
     carouselId,
-    isDemo,
+    isDemo = false,
     onDemoCarouselCreated: onDemoCarouselCreatedProp = () => {},
 }: GeneratedPostProps) => {
     const { data } = useSession();
@@ -100,6 +100,7 @@ export const PostWritterResult = ({
 
                             const dbpost = await upsertLinkedinPost(
                                 post,
+                                isDemo,
                                 data?.user?.id!,
                                 carouselId
                             );

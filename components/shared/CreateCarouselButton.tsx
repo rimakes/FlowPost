@@ -30,7 +30,7 @@ export function CreateCarouselButton({
     post,
     className,
     children,
-    isDemo,
+    isDemo = false,
     onDemoCarouselCreated = () => {},
     buttonProps,
 }: CrearCarouselButonProps) {
@@ -76,11 +76,15 @@ export function CreateCarouselButton({
                 const upsertPostAndCreateCarousel = async () => {
                     const updatedPost = await upsertLinkedinPost(
                         post,
+                        isDemo,
                         data?.user?.id!
                     );
+                    console.log('updatedPost', updatedPost);
 
-                    const carouselRes =
-                        await createLinkedinCarousel(updatedPost);
+                    const carouselRes = await createLinkedinCarousel(
+                        updatedPost,
+                        isDemo
+                    );
 
                     return carouselRes;
                 };
@@ -88,7 +92,8 @@ export function CreateCarouselButton({
                 let carouselId: string;
 
                 toast.promise(upsertPostAndCreateCarousel, {
-                    loading: `Creando carrusel... Puedes seguir navegando por ${appConfig.general.appName}, te avisaremos cuando esté.`,
+                    loading: `Creando carrusel...`,
+                    //TODO:   Puedes seguir navegando por ${appConfig.general.appName}, te avisaremos cuando esté.`,
                     success: (data) => {
                         carouselId = data.id;
                         if (isDemo) {

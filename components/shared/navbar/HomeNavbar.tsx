@@ -47,7 +47,7 @@ export function HomeNavbar({ className }: { className?: string }) {
                 <div className='lg:flex hidden items-center space-x-3'>
                     <LoginButton mode='modal'>
                         <Button variant={'outline'} className='bg-white'>
-                            Login
+                            {data?.user?.id ? 'Ir a App' : 'Login'}
                         </Button>
                     </LoginButton>
                     {/* REVIEW: This wouldn't ve ever worked here since it's out of the provider  */}

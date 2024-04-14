@@ -160,6 +160,14 @@ export const authOptions: NextAuthOptions = {
                 } = params;
                 const { host } = new URL(url);
 
+                console.log(
+                    'sendVerificationRequest',
+                    email,
+                    url,
+                    token,
+                    provider
+                );
+
                 await sendEmail(
                     email,
                     `Entra en ${appConfig.general.appName}`,
