@@ -15,7 +15,7 @@ export function SocialLogin({}) {
                 className='w-full'
                 onClick={async () => {
                     const res = await signIn('google', {
-                        callbackUrl: '/app/saved',
+                        callbackUrl: '/app',
                         redirect: true,
                     });
                 }}
