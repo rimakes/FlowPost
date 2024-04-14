@@ -140,7 +140,7 @@ const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
 
 export const SecondStep = () => {
     const [seletectedPlan, setSeletectedPlan] = useState<string | null>(
-        'price_1OSkLCB6M9fLIRyeYQAXIGnv'
+        appConfig.plans[0].stripePriceId
     );
 
     const [seatsAvailable, setSeatsAvailable] = useState({
