@@ -3,7 +3,7 @@
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
+import { cn, proToast } from '@/lib/utils';
 import { Save } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { PostWritterContext } from './PostWritterProvider';
@@ -66,7 +66,7 @@ export const PostWritterResult = ({
                     <Textarea
                         rows={20}
                         className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
-                        focus-visible:!ring-transparent focus-visible:outline-none
+                        focus-visible:!ring-transparent focus-visible:outline-none bg-white
                         `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}
@@ -93,17 +93,11 @@ export const PostWritterResult = ({
                         label='Guardar post'
                         onClick={async () => {
                             if (isDemo)
-                                return toast.info(
-                                    'Para guardar y programar tus post, hazte Pro ahora',
-                                    {
-                                        action: {
-                                            label: 'Hazte Pro',
-                                            onClick: () => {
-                                                router.push('/auth/signup');
-                                            },
-                                        },
-                                    }
+                                return proToast(
+                                    router,
+                                    'Para guardar y programar tus post, hazte Pro ahora'
                                 );
+
                             const dbpost = await upsertLinkedinPost(
                                 post,
                                 data?.user?.id!,

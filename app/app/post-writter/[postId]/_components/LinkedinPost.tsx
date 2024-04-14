@@ -247,6 +247,14 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
     const contentOpen = (
         <>
             <p className='text-primary whitespace-pre-wrap'>{post.content}</p>
+            <span
+                className='text-primary/50 absolute bottom-0 right-0 cursor-pointer'
+                onClick={() => {
+                    setOpen(!open);
+                }}
+            >
+                ...see less
+            </span>
         </>
     );
     const ContentClosed = (

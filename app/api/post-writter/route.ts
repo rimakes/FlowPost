@@ -86,14 +86,16 @@ export async function POST(req: NextRequest) {
 
                     
                     __INSTRUCTIONS__
-                    Only return the post text, no intro, not outro, no ###.
+                    Solo devuelve el texto del post, no intro, no outro, no ###.
 
 
-                    Keep the line breaks, emojis, bold, italic, etc. they are important
+                    Conserva los saltos de línea, emojis, cursivas, etc. son importantes
 
-                    The text between curly braces is a placeholder, DO NOT INCLUDE IT. Replace it with the content that makes sense.
+                    El texto entre curly braces es un marcador de posición, NO LO INCLUYAS. Reemplázalo con el contenido que tenga sentido.
 
                     Puedes modificar la plantilla para que tu post sea {tone}. No la sigas al pie de la letra.
+
+                    Escribe en Español de España.
 
                     Las frases entre <> deben ser MUY POCO modificadas. Procura matenerlas tal cual.
                     __END_INSTRUCTIONS__

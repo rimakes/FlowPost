@@ -15,6 +15,8 @@ import * as PrismaClient from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { db } from './prisma';
+import { toast } from 'sonner';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -234,4 +236,21 @@ export async function getUserSubscription(
 
 export const absoluteUrl = (path?: string) => {
     return `${process.env.NEXT_PUBLIC_HOSTNAME}${path}`;
+};
+
+export const proToast = (router: AppRouterInstance, message = '') => {
+    return toast.info('Esta plantilla no está disponible para tu plan', {
+        action: {
+            label: 'Hazte Pro',
+            onClick: () => {
+                router.push('/auth/signup');
+            },
+        },
+        classNames: {
+            actionButton:
+                '!bg-gradient-to-tr  !from-pink-400 !to-indigo-500 !text-pink-50',
+        },
+        icon: '🔒',
+    });
+    return;
 };

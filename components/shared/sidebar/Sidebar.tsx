@@ -23,10 +23,12 @@ import {
     CalendarCheck,
     Settings,
     PanelTopCloseIcon,
+    MessageCircleHeart,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { CannyLink } from '../Canny';
 
 type SidebarProps = {};
 
@@ -93,6 +95,17 @@ transition-[width] duration-300
                 {SECONDARY_MENU_ITEMS.map((item) => (
                     <MenuItem key={item.href} {...item} collapsed={collapsed} />
                 ))}
+                <CannyLink className='flex gap-2'>
+                    <MenuItem
+                        key={'canny'}
+                        icon={MessageCircleHeart}
+                        label={'Sugerencias'}
+                        href={'https://perbrand.canny.io/peticiones'}
+                        status={'active'}
+                        collapsed={collapsed}
+                        as={'div'}
+                    />
+                </CannyLink>
                 <WordsUsedWidget collapsed={collapsed} />
             </div>
             {/* REVIEW: How to "stack to the right" in flex container*/}
@@ -113,6 +126,7 @@ type MenuItem = {
     className?: string;
     collapsed?: boolean;
     collapse?: () => void;
+    as?: React.ElementType;
 };
 
 export const MenuItem = ({
@@ -124,6 +138,7 @@ export const MenuItem = ({
     collapsed,
     collapse = () => {},
     status = 'active',
+    as: Component = Link,
 }: MenuItem) => {
     const pathname = usePathname();
     const classNameNotActive =
@@ -132,7 +147,7 @@ export const MenuItem = ({
             : '';
 
     const MenuLink = ({}) => (
-        <Link
+        <Component
             onClick={collapse}
             href={href}
             className={cn(
@@ -178,7 +193,7 @@ export const MenuItem = ({
                     {capitalizeFirstLetter(status).slice(0, 5) + '.'}
                 </Badge>
             )}
-        </Link>
+        </Component>
     );
 
     if (!collapsed) return <MenuLink />;
@@ -282,6 +297,7 @@ const SECONDARY_MENU_ITEMS: MenuItem[] = [
         shortLabel: 'Ajustes',
         status: 'active',
     },
+
     // {
     //     icon: PanelTopCloseIcon,
     //     label: 'Pide herramientas',

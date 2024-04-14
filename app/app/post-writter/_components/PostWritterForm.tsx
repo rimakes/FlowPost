@@ -12,7 +12,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { cn, getPostTemplateById } from '@/lib/utils';
+import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Sparkles } from 'lucide-react';
 import { useCallback, useContext, useState } from 'react';
@@ -78,7 +78,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
             toneId,
             templateId,
         },
-        mode: 'onChange',
+        mode: 'onBlur',
     });
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -178,7 +178,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className=''>
-                                    Selecciona el tono del post
+                                    ¿En qué tono quires escribirlo?
                                 </FormLabel>
                                 <FormControl>
                                     <VoiceToneSelector
@@ -199,7 +199,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className=''>
-                                        Selecciona una plantilla
+                                        ¿Qué plantilla probada quieres usar?
                                     </FormLabel>
                                     <FormControl>
                                         <div>
@@ -298,23 +298,11 @@ export const VoiceToneSelector = ({
                         ${selectedTone === tone.id ? 'bg-indigo-100' : ''}
                         `}
                         onClick={() => {
-                            if (!isAvailable) {
-                                toast.info(
-                                    `Este tono solo está disponible en el plan ${appConfig.general.appName} Pro`,
-                                    {
-                                        // TODO: It's getting behind the dialog backdrop
-                                        icon: '🔒',
-                                        action: {
-                                            label: 'Hazte Pro',
-                                            onClick: () => {
-                                                // TODO: it would be better to pen the "get access" dialog
-                                                router.push('/auth/signup');
-                                            },
-                                        },
-                                    }
+                            if (!isAvailable)
+                                return proToast(
+                                    router,
+                                    'Este tono no está disponible para tu plan'
                                 );
-                                return;
-                            }
                             onSelectTone(tone.id);
                         }}
                     >

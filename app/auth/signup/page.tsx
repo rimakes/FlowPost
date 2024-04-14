@@ -9,6 +9,7 @@ import AuthImage from '../auth-image';
 import { RegisterForm } from '@/components/auth/register-form';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { LoginForm } from '@/components/auth/LoginForm';
+import { Suspense } from 'react';
 
 export default function SignUp() {
     return (
@@ -25,7 +26,9 @@ export default function SignUp() {
                             </h1>
                             {/* Form */}
                             {/* <RegisterForm /> */}
-                            <LoginForm />
+                            <Suspense>
+                                <LoginForm />
+                            </Suspense>
                             {/* Footer */}
                             <SwitchLogin signIn className='mt-5' />
                         </div>

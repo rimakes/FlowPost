@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { Button } from '../ui/button';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
@@ -87,7 +88,7 @@ export function CreateCarouselButton({
                 let carouselId: string;
 
                 toast.promise(upsertPostAndCreateCarousel, {
-                    loading: 'Creando carrusel...',
+                    loading: `Creando carrusel... Puedes seguir navegando por ${appConfig.general.appName}, te avisaremos cuando esté.`,
                     success: (data) => {
                         carouselId = data.id;
                         if (isDemo) {
@@ -100,6 +101,11 @@ export function CreateCarouselButton({
                                 onClick: () => {
                                     router.push(`/app/carrousel/${carouselId}`);
                                 },
+                            },
+
+                            classNames: {
+                                actionButton:
+                                    '!bg-gradient-to-tr  !from-pink-400 !to-indigo-500 !text-pink-50',
                             },
                         });
                         console.log('Carrusel creado');

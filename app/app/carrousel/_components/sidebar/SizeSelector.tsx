@@ -33,7 +33,7 @@ export const SizeSelector = ({
                 <SelectItem value='PORTRAIT' className=''>
                     <div className='flex'>
                         Linkedin 4:5
-                        <span className='text-[10px] text-green-700 ml-1'>
+                        <span className='text-[10px] text-success-foreground ml-1'>
                             (Recomendado)
                         </span>
                     </div>

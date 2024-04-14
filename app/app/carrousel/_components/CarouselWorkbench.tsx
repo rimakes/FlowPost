@@ -55,7 +55,7 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
     } = useContext(CarouselContext);
 
     return (
-        <div className='not-sidebar basis-0 grow-[999] min-w-[60%] border-0 border-blue-500 p-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] flex flex-col gap-2 relative'>
+        <div className='not-sidebar basis-0 grow-[999] min-w-[60%]  p-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] flex flex-col gap-2 relative focus-visible:!border-transparent '>
             <div className='flex justify-center gap-4 w-full items-center text-sm mt-2'>
                 <ArrowLeft
                     size={20}

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Pen } from 'lucide-react';
+import { Lock, Pen, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { cn, getPostTemplateById } from '@/lib/utils';
+import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { PostCategory, PostTemplate } from '@prisma/client';
 import { Pure } from '@/types/types';
@@ -86,18 +86,9 @@ export const SelectPostTemplate = ({
                                 onClick={() => {
                                     console.log(template.id);
                                     if (!isAvailable) {
-                                        toast.info(
-                                            'Esta plantilla no está disponible para tu plan',
-                                            {
-                                                action: {
-                                                    label: 'Hazte Pro',
-                                                    onClick: () => {
-                                                        router.push(
-                                                            '/auth/signup'
-                                                        );
-                                                    },
-                                                },
-                                            }
+                                        proToast(
+                                            router,
+                                            'Esta plantilla no está disponible para tu plan'
                                         );
                                         return;
                                     }

@@ -42,7 +42,7 @@ export default function Navbar({ className }: { className?: string }) {
                         }}
                     >
                         <PenLine className='mr-2' />
-                        Escribir Post
+                        <span className='hidden sm:inline'>Escribir Post</span>
                     </Button>
                     {/* REVIEW: This wouldn't ve ever worked here since it's out of the provider  */}
                     {/* <DownloadButton /> */}
@@ -51,17 +51,8 @@ export default function Navbar({ className }: { className?: string }) {
                         orientation='vertical'
                         className='separator self-stretch h-auto'
                     />
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <Button variant={'secondary'}>
-                                {data?.user.name || 'Cargando...'}
-                                <ChevronsUpDown className='ml-2 h-4 w-4' />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className='p-0'>
-                            <SelectAccountMenu />
-                        </PopoverContent>
-                    </Popover>
+
+                    <SelectAccountMenu />
                 </div>
             </div>
         </header>

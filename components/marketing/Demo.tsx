@@ -72,21 +72,8 @@ export function DemoWidget({ className }: DemoWidgetProps) {
             toneId: null,
             templateId: '',
         },
-        mode: 'onChange',
+        mode: 'onBlur',
     });
-
-    const showProToast = () => {
-        toast.error('Esta funcionalidad es solo para usuarios PRO', {
-            duration: 500000,
-
-            action: {
-                label: 'Hazte Pro',
-                onClick: () => {
-                    console.log('clicked');
-                },
-            },
-        });
-    };
 
     const onSubmit = async (data: any) => {
         console.log(data);
@@ -352,7 +339,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                 onOpenChange={setisOpenResultDialog}
             >
                 <DialogContent
-                    className='demo-dialog max-w-3xl overflow-x-hidden overflow-y-auto max-h-full  bg-white'
+                    className='demo-dialog max-w-3xl overflow-x-hidden overflow-y-auto max-h-full  bg-white focus-within:!border-transparent'
                     onInteractOutside={(e) => {
                         e.preventDefault();
                     }}

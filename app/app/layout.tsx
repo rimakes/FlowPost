@@ -20,7 +20,7 @@ export default function DefaultLayout({
     return (
         <AppProvider>
             <div className='flex h-[100dvh] overflow-hidden border-0 border-green-500'>
-                <div className='relative flex flex-col flex-1 overflow-x-hidden border-0 border-blue-500'>
+                <div className='relative flex flex-col flex-1 overflow-x-hidden'>
                     <Navbar />
                     <div className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full'>
                         <Sidebar />
