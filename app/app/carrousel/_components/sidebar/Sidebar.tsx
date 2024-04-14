@@ -62,7 +62,7 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
                     Opciones
                 </Button>
                 <LoginButton mode='modal'>
-                    {`Consigue ${appConfig.general.appName}`}{' '}
+                    {`Consigue ${appConfig.general.appName}`}
                 </LoginButton>
             </div>
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>

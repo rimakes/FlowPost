@@ -33,7 +33,6 @@ export default withAuth({
     callbacks: {
         async authorized({ req, token }) {
             const isInMaintenanceMode = await get('isMaintenance');
-            console.log({ isInMaintenanceMode });
             //     // If in maintenance mode, point the url pathname to the maintenance page
             if (isInMaintenanceMode) {
                 return false;
