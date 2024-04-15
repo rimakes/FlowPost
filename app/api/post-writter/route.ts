@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
                 const model = new ChatOpenAI({
                     temperature: 0.8,
-                    modelName: 'gpt-4-0613',
+                    modelName: 'gpt-4-turbo',
                     streaming: true,
                     callbacks: [
                         {

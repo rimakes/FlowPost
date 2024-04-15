@@ -66,8 +66,10 @@ export function HomeNavbar({ className }: { className?: string }) {
                 </div>
 
                 <DropdownMenu>
-                    <DropdownMenuTrigger className='lg:hidden'>
-                        <Menu size={24} />
+                    <DropdownMenuTrigger className='lg:hidden' asChild>
+                        <Button>
+                            <Menu size={24} />
+                        </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='flex flex-col gap-2 p-2'>
                         {menuItems.map((item) => {

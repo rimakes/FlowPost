@@ -101,7 +101,7 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
                     Consigue {appConfig.general.appName}
                     <span className='relative -top-1'>+</span>{' '}
                 </Button>
-                <div className='flex flex-col gap-2 text-sm italic items-center text-primary/50 text-center'>
+                <div className='flex flex-col gap-2 text-sm italic items-center text-muted-foreground text-center'>
                     <Rating value={5} />
                     <p className=''>
                         &quot;He pasado de dedicar 4 horas a la semana a crear
@@ -144,8 +144,8 @@ export const SecondStep = () => {
     );
 
     const [seatsAvailable, setSeatsAvailable] = useState({
-        seats: 200,
-        taken: 17,
+        seats: 20,
+        taken: 3,
     });
 
     return (
@@ -157,7 +157,7 @@ export const SecondStep = () => {
                     <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
                     <p className='text-xl font-bold '>Ahorra hasta un 75%</p>
                 </div>
-                <div className='text-sm text-primary/50'>
+                <div className='text-sm text-muted-foreground'>
                     Plan disponible para{' '}
                     <span className='font-bold'>{seatsAvailable.seats}</span>{' '}
                     personas. Quedan{' '}
@@ -176,6 +176,8 @@ export const SecondStep = () => {
                         price={plan.priceString}
                         comment={plan.comment}
                         isSelected={seletectedPlan === plan.stripePriceId}
+                        frequency={plan.frequency}
+                        credits={plan.credits}
                         handleClick={() => {
                             setSeletectedPlan(plan.stripePriceId);
                         }}
@@ -218,7 +220,7 @@ export const SecondStep = () => {
                     Consigue {appConfig.general.appName}
                     <span className='relative -top-1'>+</span>{' '}
                 </CheckoutButton>
-                <p className='flex gap-2 text-xs items-center text-primary/50'>
+                <p className='flex gap-2 text-xs items-center text-muted-foreground'>
                     <Shield className='h-4 w-4' />
                     Cancela tu subscripción en cualquier momento
                 </p>
@@ -235,6 +237,8 @@ type PriceCardProps = {
     children?: React.ReactNode;
     handleClick: () => void;
     isSelected: boolean;
+    frequency: string;
+    credits: number;
 };
 
 export const PriceCard = ({
@@ -245,6 +249,8 @@ export const PriceCard = ({
     children,
     handleClick = () => {},
     isSelected = false,
+    frequency,
+    credits,
 }: PriceCardProps) => {
     return (
         <div
@@ -266,10 +272,17 @@ export const PriceCard = ({
                     <span className='line-through text-primary/30'>
                         {compareAtPrice}
                     </span>{' '}
-                    <span className='font-bold'>{price}</span>
+                    <span className='font-bold'>
+                        {price}/{frequency}
+                    </span>
                 </h3>
+                {credits && (
+                    <p className='text-sm text-muted-foreground'>
+                        {credits} créditos
+                    </p>
+                )}
                 {comment && (
-                    <p className='text-sm text-primary/50'>{comment}</p>
+                    <p className='text-sm text-muted-foreground'>{comment}</p>
                 )}
             </div>
             {children}

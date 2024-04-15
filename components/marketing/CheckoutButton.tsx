@@ -7,6 +7,7 @@ import Spinner from '../icons/spinner';
 import { TStatus } from '@/types/types';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { appConfig } from '@/config/shipper.appconfig';
 
 type CheckoutButtonProps = {
     priceId?: string | null;
@@ -35,6 +36,9 @@ export const CheckoutButton = ({
                 priceId,
                 successUrl: `${process.env.NEXT_PUBLIC_HOSTNAME}/auth/payment-done?success=true&priceId=${priceId}&session_id={CHECKOUT_SESSION_ID}`,
                 cancelUrl: `${window.location.href}?canceled=true`,
+                couponId: appConfig.plans.find(
+                    (plan) => plan.stripePriceId === priceId
+                )?.couponId,
             });
 
             window.location.href = res.data.url;

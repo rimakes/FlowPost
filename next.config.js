@@ -38,6 +38,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'media.licdn.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+            },
         ],
     },
 };

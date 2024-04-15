@@ -11,6 +11,8 @@ import {
     findPostsByUserId,
     getScheduleByUserId,
 } from '@/app/_actions/schedule-actions';
+import { UrlErrorToaster } from '@/components/shared/UrlErrorToaster';
+import { Suspense } from 'react';
 
 export default async function SchedulePage() {
     const session = await getServerSession(authOptions);
@@ -34,6 +36,10 @@ export default async function SchedulePage() {
                 </div>
             </Container>
             <Separator />
+            {/* REVIEW: there must be a better way to solve this */}
+            <Suspense>
+                <UrlErrorToaster />
+            </Suspense>
             <SchedulerProvider userPosts={userPosts}>
                 <Scheduler userPosts={userPosts} userSchedule={schedule!} />
             </SchedulerProvider>

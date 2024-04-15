@@ -183,7 +183,7 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/signin',
         newUser: '/app', // New users will be directed here on first sign in
-        error: '/app/schedule', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
+        error: '/', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
     },
 
     debug: process.env.NODE_ENV === 'development', // Set to true to display debug messages

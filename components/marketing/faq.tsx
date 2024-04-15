@@ -16,7 +16,7 @@ export function Faq() {
         '
         >
             <Container className='max-w-4xl'>
-                <div className='anchor -top-32 absolute' id='faq' />
+                <div className='anchor lg:-top-32 -top-24 absolute' id='faq' />
 
                 <div>
                     <h2
@@ -41,65 +41,83 @@ export function Faq() {
                         className='w-full flex-1'
                     >
                         <AccordionItem value='item-1'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 ¿Cuántos formatos de publicación tenéis?
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It adheres to the WAI-ARIA design pattern.
+                                Hemos recopilado más de 30 plantillas que han
+                                probado ser virales para cada caso. <br />
+                                <br />
+                                También puedes optar por no utilizar plantillas
+                                y pedirle a {appConfig.general.appName} que te
+                                genere una publicación desde cero, aplicando las
+                                mejores estrategias de copywriting.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value='item-2'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 ¿Necesito conexión a internet?
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It comes with default styles that matches
-                                the other components&apos; aesthetic.
+                                Sí! {appConfig.general.appName} es una
+                                aplicación web, por lo que necesitas conexión a
+                                internet para poder utilizarla. <br />
+                                <br /> Además utilizamos las últimas apis de
+                                inteligencia artificial de OpenAI, por lo que
+                                necesitas una conexión estable para poder
+                                utilizar la aplicación.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value='item-3'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 ¿Qué pasa con mis grabaciones?
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It&apos;s animated by default, but you can
-                                disable it if you prefer.
+                                Se borran en cuanto se han procesado.
+                                <br />
+                                <br />
+                                No guardamos ningún tipo de grabación, solo se
+                                usa para la generación de tu post e
+                                inmediatamente se borra.
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value='item-4'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 ¿Cómo puedo contactar a soporte?
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It&apos;s animated by default, but you can
-                                disable it if you prefer.
+                                Nos puedes escribir a nuestro correo de soporte:
+                                hello@{appConfig.general.appDomain}
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value='item-5'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 {`¿Por qué usar ${appConfig.general.appName} en lugar de ChatGPT?`}
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It&apos;s animated by default, but you can
-                                disable it if you prefer.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value='item-6'>
-                            <AccordionTrigger>
-                                {`¿Qué más funcionalidades tiene ${appConfig.general.appName}?`}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                Yes. It&apos;s animated by default, but you can
-                                disable it if you prefer.
+                                ¡Buena pregunta! {appConfig.general.appName} es
+                                una herramienta construido sobre la base de
+                                ChatGPT, pero con funcionalidades adicionales
+                                que no te ofrece chatGPT: generación de
+                                carrusels en segundos, post optimizados para
+                                linkedin, programación de tus publicaciones, y
+                                mucho más.
+                                <br />
+                                <br />
+                                Además, usamos las últimas versiones de las apis
+                                de OpenAI, por lo que siempre tendrás la mejor
+                                calidad en tus publicaciones (cosa que no ocurre
+                                con ChatGPT - sin pago -, que usa el modelo más
+                                barato!)
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value='item-7'>
-                            <AccordionTrigger>
+                            <AccordionTrigger className='text-left'>
                                 No encuentro mi duda, ¿Cómo os contacto?
                             </AccordionTrigger>
                             <AccordionContent>
-                                Yes. It&apos;s animated by default, but you can
-                                disable it if you prefer.
+                                Nos puedes escribir a nuestro correo de soporte:
+                                hello@{appConfig.general.appDomain}
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

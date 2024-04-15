@@ -7,7 +7,7 @@ Given this text:
 "
 {post}
 "
-Use the copy of that text to create an array of slides that tells a summarize version of that text using the same tone and style.
+Use the copy of that text to create an array of slides that tells a summarized version of that text using the same tone and style.
 
 {format_instructions}
 
@@ -25,7 +25,7 @@ Cover: always add a cover slide at the beginning of the array.
         "design": "Cover"
     }},
 
-BigNumberSlide: use it when the main element of the text is a list and you want to use one slide per item of the list. The title must be maximum 15 characters!
+BigNumberSlide: use it when the main element of the text is (or can be interpreted as) a list and you want to use one slide per item of the list. The title must be maximum 15 characters!
     {{
       "title": "Adáptate", // maximum 15 characters
       "bigCharacter": "1",
@@ -34,7 +34,7 @@ BigNumberSlide: use it when the main element of the text is a list and you want 
     }},
 
     
-ListSlide: use it when the text has a list but the list is not the only part of the text, so you want to use only one slide for the list. IMPORTANT!!!! the total list (the sum of all the items text) has more than 30 characters, split it into several slides.
+ListSlide: use it when the text has a list but the list is not the only part of the text, so you want to use only one slide for the list. IMPORTANT!!!! If the total list length (the sum of all the items text) has more than 30 characters, split it into several slides.
     {{
         "title": "Enfoque tradicional",
         "paragraphs": [
@@ -78,6 +78,10 @@ CallToAction: always add a call to action slide at the end of the array.
 Now build the array.
 
 Try to use a mix of different slide types when possible.
+
+Escribe en Español de España y respeta las instrucciones: es muy importante para mí.
+
+Usa diversidad de tipos de slides cuando sea posible.
 
 const array =
 

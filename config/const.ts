@@ -168,3 +168,18 @@ export const fontTypeMap = {
     secondary: 'Secundaria',
     handWriting: 'Manuscrita',
 };
+
+export const errors = {
+    Signin: 'Error al iniciar sesión',
+    OAuthSignin: 'Error al iniciar sesión',
+    OAuthCallback: 'Error al iniciar sesión',
+    OAuthCreateAccount: 'Error al iniciar sesión',
+    EmailCreateAccount: 'Error al iniciar sesión',
+    CallbackRouteError: 'Error al iniciar sesión',
+    OAuthAccountNotLinked: 'Esta cuenta ya está siendo usada por otro usuario.',
+    EmailSignin: 'Check your email address.',
+    CredentialsSignin: 'Error al iniciar sesión. Revisa tus credenciales.',
+    'Invalid credentials Custom':
+        'Error al iniciar sesión. Revisa tus credenciales.',
+    default: 'Unable to sign in.',
+};

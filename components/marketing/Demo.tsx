@@ -153,7 +153,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                     )}
                 >
                     <div
-                        className='anchor lg:-top-32 -top-32 absolute'
+                        className='anchor lg:-top-32 -top-24 absolute'
                         id='try-it'
                     />
                     <p className='text-center text-muted-foreground text-sm -mb-4'>

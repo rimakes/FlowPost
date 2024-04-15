@@ -34,7 +34,7 @@ export default async function Home() {
                 </h2>
                 <div className='flex flex-col gap-12'>
                     <TextWithMedia
-                        title={'1. Cuéntale qué estás pensando'}
+                        title={'1. Cuéntale sobre qué quieres publicar'}
                         description={
                             <>
                                 Elige la forma que más cómoda te resulte:{' '}

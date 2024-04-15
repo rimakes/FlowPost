@@ -26,6 +26,7 @@ import { useState } from 'react';
 import { Message } from './message';
 import { appConfig } from '@/config/shipper.appconfig';
 import { SocialLogin } from './SocialLogin';
+import { errors } from '@/config/const';
 
 type LoginFormProps = {
     isRedirected?: boolean;
@@ -158,22 +159,6 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
         </div>
     );
 }
-
-export const errors = {
-    Signin: 'Error al iniciar sesión',
-    OAuthSignin: 'Error al iniciar sesión',
-    OAuthCallback: 'Error al iniciar sesión',
-    OAuthCreateAccount: 'Error al iniciar sesión',
-    EmailCreateAccount: 'Error al iniciar sesión',
-    CallbackRouteError: 'Error al iniciar sesión',
-    OAuthAccountNotLinked:
-        'To confirm your identity, sign in with the same account you used originally.',
-    EmailSignin: 'Check your email address.',
-    CredentialsSignin: 'Error al iniciar sesión. Revisa tus credenciales.',
-    'Invalid credentials Custom':
-        'Error al iniciar sesión. Revisa tus credenciales.',
-    default: 'Unable to sign in.',
-};
 
 type TSigninErrors = keyof typeof errors;
 
