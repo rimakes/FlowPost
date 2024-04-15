@@ -121,7 +121,7 @@ export const appConfig = {
             couponId: 'frbXFpk4',
             // description: 'Basic Plan yo!',
             // price: '$10/month',
-            stripePriceId: 'price_1P5YwiB6M9fLIRyeG73VHz06',
+            stripePriceId: 'price_1P5sffB6M9fLIRyexq8aLJZs',
             // features: [
             //     { name: 'this is a test' },
             //     { name: 'this is a test' },
@@ -139,7 +139,7 @@ export const appConfig = {
             couponId: 'BCgP1MzL',
             // description: 'Pro Plan yo!',
             // price: '$49/month',
-            stripePriceId: 'price_1P5YwpB6M9fLIRyeQDmONV22',
+            stripePriceId: 'price_1P5sepB6M9fLIRyesPHImqcU',
             comment: undefined,
 
             // features: [
