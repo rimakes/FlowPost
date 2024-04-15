@@ -114,7 +114,7 @@ export const appConfig = {
             frequency: 'año',
             credits: 600,
             comparedAtPriceString: '197€',
-            priceString: '80€',
+            priceString: '79€',
             comment: '= 0,13€/crédito (1 crédito = 1 post/carrusel)',
             couponDiscount: '60%',
             couponCode: 'FIRST20',
