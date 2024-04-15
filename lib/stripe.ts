@@ -30,6 +30,9 @@ export const createCheckout = async ({
 }: CreateCheckoutParams) => {
     const extraParams = {} as any;
 
+    console.log({ couponId });
+    console.log({ priceId });
+
     if (user?.customerId) {
         extraParams.customer = user.customerId;
     } else {
