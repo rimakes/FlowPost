@@ -13,12 +13,14 @@ type CheckoutButtonProps = {
     priceId?: string | null;
     children: React.ReactNode;
     className?: string;
+    successUrl?: string;
 };
 
 export const CheckoutButton = ({
     priceId,
     children,
     className,
+    successUrl = `${process.env.NEXT_PUBLIC_HOSTNAME}/auth/payment-done?success=true&priceId=${priceId}&session_id={CHECKOUT_SESSION_ID}`,
 }: CheckoutButtonProps) => {
     const [status, setStatus] = useState<TStatus>('idle');
 
@@ -34,7 +36,7 @@ export const CheckoutButton = ({
             const res = await apiClient.post('/stripe/checkout', {
                 mode: 'subscription',
                 priceId,
-                successUrl: `${process.env.NEXT_PUBLIC_HOSTNAME}/auth/payment-done?success=true&priceId=${priceId}&session_id={CHECKOUT_SESSION_ID}`,
+                successUrl,
                 cancelUrl: `${window.location.href}?canceled=true`,
                 couponId: appConfig.plans.find(
                     (plan) => plan.stripePriceId === priceId

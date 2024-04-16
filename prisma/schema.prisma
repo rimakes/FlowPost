@@ -24,6 +24,7 @@ model User {
     createdAt          DateTime      @default(now())
     updatedAt          DateTime      @updatedAt
     role               UserRole      @default(USER)
+    creditBalance      Int           @default(3)
 
     settingsId    String         @unique @db.ObjectId
     settings      Settings       @relation(fields: [settingsId], references: [id])

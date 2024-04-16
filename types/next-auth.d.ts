@@ -14,6 +14,7 @@ declare module 'next-auth' {
             hasAccountLinked: boolean;
             brands: Brand[];
             stripeSubscription: Subscription | null;
+            creditBalance: number;
         } & DefaultSession['user'];
     }
     // Popular interfaces to augment
@@ -45,5 +46,6 @@ declare module '@auth/core/jwt' {
         hasAccountLinked: boolean;
         stripeSubscription: Subscription | null;
         brands: Brand[];
+        creditBalance: number;
     }
 }

@@ -4,6 +4,7 @@ import { createContext, use, useContext, useRef, useState } from 'react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
+import { revalidatePath } from 'next/cache';
 
 const INITIAL_STATE = {
     post: {

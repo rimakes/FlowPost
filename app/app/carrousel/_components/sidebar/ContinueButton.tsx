@@ -8,7 +8,10 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/spinner';
-import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
+import {
+    revalidateAllPaths,
+    uploadFileToCloudinary,
+} from '@/app/_actions/shared-actions';
 import {
     Dialog,
     DialogContent,
@@ -19,7 +22,7 @@ import Image from 'next/image';
 import { DownloadButton } from './downloadButton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { fromPdfUrlToThumnailUrl } from '@/lib/utils';
+import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { toast } from 'sonner';
@@ -124,7 +127,8 @@ export function ContinueButton({}) {
                         loading: 'Creando pdf y guardando tu carrusel...',
                         success: 'Carrusel cargado y guardado',
                         error: 'Error al crear carrusel',
-                        finally: () => {
+                        finally: async () => {
+                            await revalidateAllPaths();
                             setIsOpen(true);
                             setStatus('idle');
                         },
@@ -166,7 +170,7 @@ export function ContinueButton({}) {
                                             alt='carousel slide'
                                             className='object-contain'
                                             placeholder={'blur'}
-                                            blurDataURL={url}
+                                            blurDataURL={dataUrl}
                                         />
                                     </div>
                                 ))}

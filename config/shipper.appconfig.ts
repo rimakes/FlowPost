@@ -148,5 +148,25 @@ export const appConfig = {
             //     { name: 'this is a test' },
             // ],
         },
+        {
+            name: 'Trial',
+            credits: 3,
+            frequency: ' 7 días',
+            comparedAtPriceString: '23€',
+            priceString: 'GRATIS ',
+            couponDiscount: '6€',
+            couponCode: 'LANZAMIENTO20',
+            // couponId: 'WMs9qnPb',
+            // description: 'Pro Plan yo!',
+            // price: '$49/month',
+            stripePriceId: 'mocked',
+            // comment: undefined,
+
+            // features: [
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            //     { name: 'this is a test' },
+            // ],
+        },
     ],
 };

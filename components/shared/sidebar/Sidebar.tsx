@@ -30,6 +30,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CannyLink } from '../Canny';
 import { appConfig } from '@/config/shipper.appconfig';
+import { useSession } from 'next-auth/react';
 
 type SidebarProps = {};
 
@@ -220,21 +221,32 @@ type WordsUsedWidgetProps = {
 };
 
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
+    const { data } = useSession();
+    const isPro = !!data?.user?.stripeSubscription;
+    const creditsUsed = data?.user?.creditBalance || 0;
+
+    const maxCredits = isPro ? 100 : 3;
+
     return (
         <div
             className={`bg-white rounded-md space-y-2 border border-primary/10 ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'text-xs p-2 font-semibold'}`}
         >
             <div className='flex justify-between'>
-                {!collapsed && <p>Palabras usadas</p>}
-                <p className='text-center'>
-                    0 <span>/ 1000</span>
+                {!collapsed && <p>Créditos disponibles</p>}
+                <p
+                    className={`
+                 text-center
+                 ${collapsed ? 'mx-auto' : ''}
+                `}
+                >
+                    {data?.user?.creditBalance}
+                    <span> / {maxCredits}</span>
                 </p>
             </div>
             {!collapsed && (
                 <>
                     <Progress
-                        value={50}
-                        max={100}
+                        value={(1 - creditsUsed / maxCredits) * 100}
                         className='h-2 border border-slate-100 rounded-full'
                         color='#FF0000'
                     />

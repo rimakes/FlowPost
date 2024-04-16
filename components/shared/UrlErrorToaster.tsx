@@ -17,6 +17,7 @@ export function UrlErrorToaster({}: UrlErrorToasterProps) {
     useEffect(() => {
         error &&
             wait(1).then(() => {
+                console.log({ error });
                 toast.error(errors[error as keyof typeof errors] || 'Error');
                 router.replace(pathName);
             });

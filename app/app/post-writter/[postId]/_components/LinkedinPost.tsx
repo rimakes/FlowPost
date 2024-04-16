@@ -98,7 +98,12 @@ const AddCommentBar = () => {
     return (
         <div className='flex gap-2 items-center'>
             <div className='relative rounded-full h-12 w-12 bg-muted'>
-                <Image src='/images/placeholders/user.png' fill alt='profile' />
+                <Image
+                    src='/images/placeholders/user.png'
+                    fill
+                    alt='profile'
+                    className='object-cover'
+                />
             </div>
             <div className='flex gap-2 items-center justify-between w-full border border-inherit text-primary/50 text-sm rounded-full p-3'>
                 <p>Add a comment...</p>

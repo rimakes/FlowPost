@@ -31,7 +31,9 @@ import Spinner from '@/components/icons/spinner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { appConfig } from '@/config/shipper.appconfig';
 import { AppContext } from '@/providers/AppProvider';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { decreaseCredits } from '@/app/_actions/user-actions';
+import { revalidateAllPaths } from '@/app/_actions/shared-actions';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;
@@ -67,6 +69,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         requestPost,
         postRequest: { description, templateId, toneId },
     } = useContext(PostWritterContext);
+    const { data: session, update } = useSession();
 
     const searchParams = useSearchParams();
     const urlDescription = searchParams.get('description');
@@ -97,9 +100,22 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     };
 
     const onSubmit = async (data: PostRequest) => {
+        if (session?.user.creditBalance! <= 0) {
+            toast.error('No tienes créditos suficientes');
+            return;
+        }
         try {
+            console.log('decreasing credits');
+
+            const updatedUser = await decreaseCredits(session?.user?.id!, 1);
+            console.log(updatedUser);
+            const creditBalance = updatedUser.creditBalance;
+            await update({ ...session?.user, creditBalance });
+            console.log('should be updated by now');
             await requestPost(data);
+            await revalidateAllPaths();
         } catch (error) {
+            console.log(error);
             return toast.error('Ha habido un error, revisa los campos');
         }
         toast.success('Post creado');

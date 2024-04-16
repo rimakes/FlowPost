@@ -9,7 +9,6 @@ import { NextAuthOptions } from 'next-auth';
 
 import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
-import { redirect } from 'next/dist/server/api-utils';
 import console from 'console';
 import { sendEmail } from './lib/mailgun';
 import { signinEmail } from './emails/signinEmail';
@@ -21,10 +20,6 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             async profile(profile, tokens) {
-                // console.log('profile:-', profile);
-                // console.log('tokens:-', tokens);
-
-                // create new settings for the user
                 const newSettings = await db.settings.create({
                     data: {
                         iaSettings: {
@@ -117,7 +112,7 @@ export const authOptions: NextAuthOptions = {
                 const user = await getUserByEmail(credentials.email);
 
                 if (!user || !user?.hashedPassword) {
-                    throw new Error('Invalid credentials Custom');
+                    throw new Error('Invalid credentials');
                 }
 
                 const isCorrectPassword = await bcrypt.compare(
@@ -127,11 +122,11 @@ export const authOptions: NextAuthOptions = {
 
                 if (!isCorrectPassword) {
                     // console.log(
-                    //     'Invalid credentials Custom',
+                    //     'Invalid credentials',
                     //     isCorrectPassword
                     // );
                     // console.log('credentials.password', credentials.password);
-                    throw new Error('Invalid credentials Custom');
+                    throw new Error('Invalid credentials');
                 }
 
                 //REVIEW: does this mean we are gonna have the whole user object in the session
@@ -160,13 +155,13 @@ export const authOptions: NextAuthOptions = {
                 } = params;
                 const { host } = new URL(url);
 
-                console.log(
-                    'sendVerificationRequest',
-                    email,
-                    url,
-                    token,
-                    provider
-                );
+                // console.log(
+                //     'sendVerificationRequest',
+                //     email,
+                //     url,
+                //     token,
+                //     provider
+                // );
 
                 await sendEmail(
                     email,
@@ -183,7 +178,7 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/signin',
         newUser: '/app', // New users will be directed here on first sign in
-        error: '/', // TODO: doesn't exist yet! Do we want to redirect users if sign in fails? or just show an error message?
+        error: '/',
     },
 
     debug: process.env.NODE_ENV === 'development', // Set to true to display debug messages
@@ -218,16 +213,13 @@ export const authOptions: NextAuthOptions = {
         //   }
     },
 
-    //REVIEW: When we use the Prisma adapter, who decides which fields are gonna be saved in the session?
-    // how do I add more fields to the session?
-    // https://next-auth.js.org/configuration/callbacks
     callbacks: {
         // to control if a user is allowed to sign in.
         async signIn({ user, account, profile, email, credentials }) {
-            if (account?.provider !== 'email') return true; // We only filter if user is trying to sign in with email (we are implementing the "magic link" feature so they can change their password)
+            if (account?.provider !== 'email') return true;
 
             const userExists = await db.user.findUnique({
-                where: { email: user.email! }, //the user object has an email property, which contains the email the user entered.
+                where: { email: user.email! },
             });
             if (userExists) {
                 return true; //if the email exists in the User collection, email them a magic login link
@@ -237,7 +229,7 @@ export const authOptions: NextAuthOptions = {
         },
 
         // called anytime the user is redirected to a callback URL (e.g. on signin or signout).
-
+        // This is the default.
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs
             // console.log('url-->', url);
@@ -259,11 +251,10 @@ export const authOptions: NextAuthOptions = {
             // console.log({ user });
             // console.log({ account });
             // console.log({ profile });
-            // console.log({ session });
-            // console.log('trigger-->', { trigger });
+            console.log({ session });
+            console.log('trigger-->', { trigger });
 
             if (trigger === 'update' && session.name) {
-                console.log('session.name', session.name);
                 token.name = session.name;
             }
 
@@ -272,10 +263,13 @@ export const authOptions: NextAuthOptions = {
             }
 
             if (trigger === 'update' && session.stripeSubscription) {
-                token.brands = session.stripeSubscription;
+                token.stripeSubscription = session.stripeSubscription;
+            }
+            if (trigger === 'update' && session.creditBalance) {
+                token.creditBalance = session.creditBalance;
             }
 
-            // When the user signes in for the first time, we want to add some extra information to the token
+            // When the user signs in for the first time, we want to add some extra information to the token
             if (user) {
                 const dbUser = await db.user.findUnique({
                     where: { id: user.id },
@@ -301,6 +295,7 @@ export const authOptions: NextAuthOptions = {
                 token.settingsId = dbUser?.settingsId;
                 token.brands = brandsOfUser;
                 token.stripeSubscription = dbUser?.stripeSubscription;
+                token.creditBalance = dbUser?.creditBalance;
             }
 
             return token;
@@ -313,7 +308,7 @@ export const authOptions: NextAuthOptions = {
         // When using database sessions, the User (user) object is passed as an argument.
         // When using JSON Web Tokens for sessions, the JWT payload (token) is provided instead.
         async session({ session, token, user }) {
-            // console.log('session from session callback', token.name);
+            console.log('token from session callback', { token });
             if (session && session.user) {
             }
             return {
@@ -327,6 +322,7 @@ export const authOptions: NextAuthOptions = {
                     hasAccountLinked: token.hasAccountLinked,
                     brands: token.brands,
                     stripeSubscription: token.stripeSubscription,
+                    creditBalance: token.creditBalance,
                 },
             };
         },

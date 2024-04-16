@@ -138,7 +138,11 @@ const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
     );
 };
 
-export const SecondStep = () => {
+export const SecondStep = ({
+    successUrl = `${process.env.NEXT_PUBLIC_HOSTNAME}/auth/payment-done?success=true&priceId=${appConfig.plans[0].stripePriceId}&session_id={CHECKOUT_SESSION_ID}`,
+}: {
+    successUrl?: string;
+}) => {
     const [seletectedPlan, setSeletectedPlan] = useState<string | null>(
         appConfig.plans[0].stripePriceId
     );
@@ -213,6 +217,7 @@ export const SecondStep = () => {
             <Separator className='-mt-4 -mb-4' />
             <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
                 <CheckoutButton
+                    successUrl={successUrl}
                     priceId={seletectedPlan}
                     className='bg-gradient-to-tr from-fuchsia-500 to-indigo-600 w-full'
                 >

@@ -146,8 +146,7 @@ export const LinkedinConnectRequest = () => {
                             <Button
                                 onClick={() => {
                                     const promise = signIn('linkedin', {
-                                        callbackUrl: '/app/schedule',
-                                        onError: '/app/schedule?error=linkedin',
+                                        // callbackUrl: '/app/schedule',
                                     });
                                 }}
                                 className='inline-flex items-center justify-center gap-2 transition-all duration-150 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm font-semibold hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 bg-blue-500 text-white'
