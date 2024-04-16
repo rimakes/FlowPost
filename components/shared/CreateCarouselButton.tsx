@@ -18,6 +18,7 @@ import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritt
 import { Button } from '../ui/button';
 import { appConfig } from '@/config/shipper.appconfig';
 import { revalidateAllPaths } from '@/app/_actions/shared-actions';
+import { decreaseCredits } from '@/app/_actions/user-actions';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
@@ -35,7 +36,7 @@ export function CreateCarouselButton({
     onDemoCarouselCreated = () => {},
     buttonProps,
 }: CrearCarouselButonProps) {
-    const { data } = useSession();
+    const { data: session, update } = useSession();
     const router = useRouter();
     const [status, setStatus] = useState('idle');
     const [progressValue, showProgressBar] = useDeterminedProgressBar({
@@ -78,7 +79,7 @@ export function CreateCarouselButton({
                     const updatedPost = await upsertLinkedinPost(
                         post,
                         isDemo,
-                        data?.user?.id!
+                        session?.user?.id!
                     );
                     console.log('updatedPost', updatedPost);
 
@@ -114,7 +115,13 @@ export function CreateCarouselButton({
                                     '!bg-gradient-to-tr  !from-pink-400 !to-indigo-500 !text-pink-50',
                             },
                         });
-                        console.log('Carrusel creado');
+                        const updatedUser = await decreaseCredits(
+                            session?.user?.id!,
+                            1
+                        );
+                        const creditBalance = updatedUser.creditBalance;
+                        await update({ ...session?.user, creditBalance });
+
                         await revalidateAllPaths();
 
                         return 'Carrusel creado';

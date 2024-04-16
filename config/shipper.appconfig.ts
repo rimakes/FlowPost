@@ -118,10 +118,14 @@ export const appConfig = {
             comment: '= 0,13€/crédito (1 crédito = 1 post/carrusel)',
             couponDiscount: '60%',
             couponCode: 'FIRST20',
-            couponId: 'dALZx20z',
+
+            couponId: process.env.NODE_ENV === 'production' ? 'dALZx20z' : '',
             // description: 'Basic Plan yo!',
             // price: '$10/month',
-            stripePriceId: 'price_1P5uF1B6M9fLIRyeqY5ZRGq5',
+            stripePriceId:
+                process.env.NODE_ENV === 'production'
+                    ? 'price_1P5uF1B6M9fLIRyeqY5ZRGq5'
+                    : 'price_1OSkLCB6M9fLIRyeYQAXIGnv',
             // features: [
             //     { name: 'this is a test' },
             //     { name: 'this is a test' },
@@ -136,10 +140,13 @@ export const appConfig = {
             priceString: '17€',
             couponDiscount: '6€',
             couponCode: 'LANZAMIENTO20',
-            couponId: 'WMs9qnPb',
+            couponId: process.env.NODE_ENV === 'production' ? 'WMs9qnPb' : '',
             // description: 'Pro Plan yo!',
             // price: '$49/month',
-            stripePriceId: 'price_1P5uHRB6M9fLIRye5mhV0nTb',
+            stripePriceId:
+                process.env.NODE_ENV === 'production'
+                    ? 'price_1P5uHRB6M9fLIRye5mhV0nTb'
+                    : 'price_1OSk7dB6M9fLIRye1TUxFWCl',
             comment: undefined,
 
             // features: [

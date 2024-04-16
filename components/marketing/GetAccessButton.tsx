@@ -197,7 +197,7 @@ export const SecondStep = ({
                                 {' '}
                                 <Star className='text-primary-foreground fill-current h-4 w-4' />{' '}
                                 <p className='text-sm text-primary-foreground'>
-                                    Ahorra 75%
+                                    Ahorra 60%
                                 </p>
                             </div>
                         )}

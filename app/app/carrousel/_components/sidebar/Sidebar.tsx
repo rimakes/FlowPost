@@ -174,8 +174,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     </div>
                     <ChevronsUpDown size={20} className='ml-2' />
                 </CollapsibleTrigger>
-                <CollapsibleContent className='mt-4'>
-                    <div className='p-2 border rounded-md border-dashed bg-gray-50'>
+                <CollapsibleContent className='mt-4 '>
+                    <div className='p-2 border rounded-md border-dashed bg-gray-50 flex flex-col gap-4 '>
                         <ColorPaletteSelect
                             colorPalette={carousel.settings.colorPalette}
                             onChange={onSetColorPalette}

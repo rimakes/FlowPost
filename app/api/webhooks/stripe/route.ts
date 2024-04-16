@@ -5,6 +5,8 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { db } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import { signIn } from 'next-auth/react';
+import { getCreditsByPriceId } from '@/lib/utils';
+import { Prisma } from '@prisma/client';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -13,8 +15,16 @@ export async function POST(request: NextRequest) {
 
     const signature = headers().get('Stripe-Signature') as string;
 
-    let data;
-    let eventType;
+    // REVIEW:
+    // Stripe send a post request with the event data in the body and a signature in the header
+    // We need to verify that the signature is legit and has not been tampered with
+    // The header has this format: t=1629780000,v1=8e3....d7
+    // We need to compare that signature with the one we would get using the webhook secret
+    // For that we take the timestamp and the body and we create a signature with the webhook secret and compare it with the one we got in the header. If they match, the event is legit
+    // We could do it manually, but Stripe has a method to do it for us: stripe.webhooks.constructEvent(body, signature, webhookSecret)
+
+    // let data: Stripe.Event.Data;
+    // let eventType: Stripe.Event.Type;
     let event: Stripe.Event;
 
     // verify Stripe event is legit
@@ -28,29 +38,57 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    data = event.data;
-    eventType = event.type;
-
-    // @ts-ignore
-    const session = await findCheckoutSession(data.object.id);
+    // console.log('event type', event.type);
+    // console.log('event id ', event.id);
+    // console.log('event live mode', event.livemode);
 
     try {
-        switch (eventType) {
-            case StripeWebhooks.Completed: {
-                const sessionId = session?.id;
+        switch (event.type) {
+            case 'customer.created': {
+                let {
+                    data: { object: checkoutSession },
+                } = event;
 
-                const customerId = session?.customer;
-                const priceId = session?.line_items?.data[0]?.price!.id;
-                const userId = session?.client_reference_id;
-                const productId = session?.line_items?.data[0]?.price!
-                    .product as string;
+                break;
+            }
+            case 'checkout.session.completed': {
+                let {
+                    data: { object: checkoutSession },
+                } = event;
 
-                const userEmail = session?.customer_details?.email;
-                const userName = session?.customer_details?.name;
+                let priceId = checkoutSession.line_items?.data[0]?.price!.id;
+                let productId = checkoutSession.line_items?.data[0]?.price?.id;
+
+                if (checkoutSession.mode === 'subscription') {
+                    const subscription = await stripe.subscriptions.retrieve(
+                        checkoutSession.subscription!.toString()
+                    );
+
+                    priceId = subscription.items.data[0].price.id.toString();
+                    productId =
+                        subscription.items.data[0].price.product.toString();
+                }
+
+                if (!priceId) {
+                    console.error('No priceId found');
+                    throw new Error('No priceId found');
+                }
+
+                if (!productId) {
+                    console.error('No productId found');
+                    throw new Error('No productId found');
+                }
+
+                const customerId = checkoutSession.customer;
+                const clientReferenceId = checkoutSession.client_reference_id;
+                const userEmail = checkoutSession.customer_details?.email;
+                const userName = checkoutSession.customer_details?.name;
+                // const subscriptionId = subscription.id;
+                const subscriptionId = checkoutSession.subscription?.toString();
                 const subscription = await stripe.subscriptions.retrieve(
-                    session?.subscription as string
+                    subscriptionId!
                 );
-                const subscriptionId = subscription.id;
+
                 const currentPeriodEnd = new Date(
                     subscription.current_period_end * 1000
                 );
@@ -60,34 +98,30 @@ export async function POST(request: NextRequest) {
                     (p) => p.stripePriceId === priceId
                 );
 
-                console.log('session', session);
-                console.log('priceId', priceId);
-                console.log('plan', plan);
-                console.log('customerId', customerId);
+                // console.log('session', checkoutSession);
+                // console.log('priceId', priceId);
+                // console.log('plan', plan);
+                // console.log('customerId', customerId);
 
                 if (!customerId) break;
-
-                const customer = await stripe.customers.retrieve(
-                    customerId.toString()
-                );
-
-                console.log('customer', customer);
 
                 let user;
 
                 // Get or create the user. userId is normally pass in the checkout session (clientReferenceID) to identify the user when we get the webhook event
                 console.log('retrieving or creating user');
-                if (userId) {
+                if (clientReferenceId) {
                     // If we passed a userId from the client, we can use it to find the user in our db
-                    user = await db.user.findUnique({ where: { id: userId } });
+                    user = await db.user.findUnique({
+                        where: { id: clientReferenceId },
+                    });
                     // @ts-ignore
-                } else if (customer.email) {
+                } else if (userEmail) {
                     // @ts-ignore
-                    console.log('searching user by email', customer.email);
+                    console.log('searching user by email', userEmail);
                     // otherwise, we can use the email to find the user
                     user = await db.user.findUnique({
                         // @ts-ignore
-                        where: { email: customer.email },
+                        where: { email: userEmail },
                     });
 
                     // or create a new user if it doesn't exist
@@ -95,14 +129,14 @@ export async function POST(request: NextRequest) {
                         console.log(
                             'creating new user with email: ',
                             // @ts-ignore
-                            customer.email
+                            userEmail
                         );
                         user = await db.user.create({
                             data: {
                                 // @ts-ignore
-                                email: customer.email,
+                                email: userEmail,
                                 // @ts-ignore
-                                name: customer.name,
+                                name: userName,
                                 settings: {
                                     create: {},
                                 },
@@ -114,18 +148,22 @@ export async function POST(request: NextRequest) {
                     throw new Error('No user found');
                 }
 
-                // Update user data + Grant user access to your product.
-                const updatedUser = await db.user.update({
-                    where: { id: user!.id },
-                    data: {
-                        stripeCustomerId: customerId.toString(),
-                        stripeSubscription: {
-                            subscriptionId,
-                            priceId,
-                            currentPeriodEnd,
-                            productId,
-                        },
+                const updateUserInput: Prisma.UserUpdateInput = {
+                    stripeCustomerId: customerId.toString(),
+                    stripeSubscription: {
+                        subscriptionId,
+                        priceId,
+                        currentPeriodEnd,
+                        productId,
                     },
+                    creditBalance: getCreditsByPriceId(priceId),
+                };
+                console.log('updating user checkout', updateUserInput);
+
+                // Update user data + Grant user access to your product.
+                await db.user.update({
+                    where: { id: user!.id },
+                    data: updateUserInput,
                 });
 
                 // Extra: send email with user link, product page, etc...
@@ -138,43 +176,23 @@ export async function POST(request: NextRequest) {
                 break;
             }
 
-            case StripeWebhooks.PaymentSuccess: {
-                const subscription = await stripe.subscriptions.retrieve(
-                    // @ts-ignore
-                    session.subscription as string
-                );
-                const stripeCustomerId = subscription.customer.toString();
-                const priceId = subscription.items.data[0].price.id;
-                const currentPeriodEnd = new Date(
-                    subscription.current_period_end * 1000
-                );
-                await db.user.updateMany({
-                    where: {
-                        stripeCustomerId,
-                    },
-                    data: {
-                        stripeSubscription: {
-                            priceId,
-                            currentPeriodEnd,
-                        },
-                    },
-                });
+            case 'checkout.session.async_payment_succeeded': {
             }
 
-            case StripeWebhooks.SessionExpired: {
+            case 'checkout.session.expired': {
                 // User didn't complete the transaction
                 // You don't need to do anything here, by you can send an email to the user to remind him to complete the transaction, for instance
                 break;
             }
 
-            case StripeWebhooks.SubscriptionUpdated: {
+            case 'customer.subscription.updated': {
                 // The customer might have changed the plan (higher or lower plan, cancel soon etc...)
                 // You don't need to do anything here, because Stripe will let us know when the subscription is canceled for good (at the end of the billing cycle) in the "customer.subscription.deleted" event
                 // You can update the user data to show a "Cancel soon" badge for instance
                 break;
             }
 
-            case StripeWebhooks.SubscriptionDeleted: {
+            case 'customer.subscription.deleted': {
                 // The customer subscription stopped
                 // ❌ Revoke access to the product
                 // The customer might have changed the plan (higher or lower plan, cancel soon etc...)
@@ -195,6 +213,32 @@ export async function POST(request: NextRequest) {
             }
 
             case 'invoice.paid': {
+                let {
+                    data: { object: invoice },
+                } = event;
+                const stripeCustomerId = invoice.customer?.toString();
+                const priceId = invoice.lines.data[0].price?.id.toString()!;
+                const currentPeriodEnd = new Date(
+                    invoice.lines.data[0].period.end * 1000
+                );
+
+                const useUpdateManyInput: Prisma.UserUpdateManyMutationInput = {
+                    stripeSubscription: {
+                        priceId,
+                        currentPeriodEnd,
+                    },
+                    creditBalance: getCreditsByPriceId(priceId),
+                };
+
+                console.log('updating user paid', useUpdateManyInput);
+
+                await db.user.updateMany({
+                    where: {
+                        stripeCustomerId,
+                    },
+                    data: useUpdateManyInput,
+                });
+
                 // Customer just paid an invoice (for instance, a recurring payment for a subscription)
                 // ✅ Grant access to the product
                 // const priceId = data.object.lines.data[0].price.id;
@@ -227,35 +271,9 @@ export async function POST(request: NextRequest) {
     } catch (e: any) {
         const error: Error = e;
         console.error(
-            'stripe error: ' + error.message + ' | EVENT TYPE: ' + eventType
+            'stripe error: ' + error.message + ' | EVENT TYPE: ' + event.type
         );
     }
 
     return NextResponse.json({});
 }
-
-enum StripeWebhooks {
-    PaymentSuccess = 'checkout.session.async_payment_succeeded',
-    AsyncPaymentSuccess = 'checkout.session.async_payment_succeeded',
-    Completed = 'checkout.session.completed',
-    PaymentFailed = 'checkout.session.async_payment_failed',
-    SubscriptionDeleted = 'customer.subscription.deleted',
-    SubscriptionUpdated = 'customer.subscription.updated',
-    SessionExpired = 'checkout.session.expired',
-}
-
-// STRIPE EVENTS
-// https://stripe.com/docs/api/events/types
-// payment_method.attached
-// customer.created
-// customer.updated
-// customer.subscription.created
-// customer.subscription.updated
-// payment_intent.succeeded
-// payment_intent.created
-// invoice.created
-// invoice.finalized
-// invoice.updated
-// invoice.paid
-// invoice.payment_succeeded
-// checkout.session.completed

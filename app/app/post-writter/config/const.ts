@@ -1,12 +1,5 @@
-import { Pure } from '@/types/types';
+import { Pure, VoiceTone } from '@/types/types';
 import * as PrismaClient from '@prisma/client';
-
-export type VoiceTone = {
-    emoji: string;
-    name: string;
-    value: string;
-    id: number;
-};
 
 export const VOICE_TONES: VoiceTone[] = [
     {

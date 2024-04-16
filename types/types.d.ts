@@ -219,3 +219,22 @@ export type TPageProps = {
     params: { slug: string };
     searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type VoiceTone = {
+    emoji: string;
+    name: string;
+    value: string;
+    id: number;
+};
+
+export type TMenuItem = {
+    icon: LucideIcon;
+    label: string;
+    shortLabel?: string;
+    href: string;
+    status: 'active' | 'próximamente' | 'nuevo';
+    className?: string;
+    collapsed?: boolean;
+    collapse?: () => void;
+    as?: React.ElementType;
+};

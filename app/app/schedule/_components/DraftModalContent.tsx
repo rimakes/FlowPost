@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { LucideLinkedin, PenSquare } from 'lucide-react';
+import { Edit2, LucideLinkedin, PenSquare } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useContext } from 'react';
@@ -9,6 +9,7 @@ import { SchedulerContext } from './SchedulerProvider';
 import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';
 import { Badge } from '@/components/ui/badge';
+import { useRouter } from 'next/navigation';
 
 type DraftModalContentProps = {
     onSelect: () => void;
@@ -42,6 +43,7 @@ export type PostSelectProps = {
 export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
     const { userPosts } = useContext(SchedulerContext);
     const { data } = useSession();
+    const router = useRouter();
 
     const postsWithoutSchedule = userPosts.filter(
         (post) => post.scheduledPost.length === 0
@@ -65,20 +67,39 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                             return (
                                 <div
                                     key={key}
-                                    className='mb-[10px] overflow-hidden transition-all duration-150 bg-white border border-gray-200 shadow-xs rounded-xl hover:shadow-md hover:-translate-y-1'
+                                    className='mb-[10px] overflow-hidden transition-all duration-150 bg-white border border-gray-200 shadow-xs rounded-xl hover:shadow-md hover:-translate-y-1 relative group'
                                 >
+                                    <Button
+                                        variant={'secondary'}
+                                        size={'icon'}
+                                        className='absolute top-2 right-2 rounded-full hidden group-hover:flex'
+                                        onClick={() => {
+                                            // edit the post
+                                            router.push(
+                                                `/app/post-writter/${post.id}`
+                                            );
+                                        }}
+                                    >
+                                        <Edit2 size={15} />
+                                    </Button>
                                     <div className='px-4 py-5 space-y-6 sm:p-6'>
                                         <p className='text-base font-normal text-gray-900 line-clamp-[10]'>
                                             {post?.content}
                                         </p>
                                         <Separator />
-                                        {post.carousel.length === 0 && (
+                                        {post?.carousel.length <= 0 && (
                                             <Badge className='ml-1'>
                                                 Sin Carrusel
                                             </Badge>
                                         )}
-                                        {post.carousel.length > 0 && (
-                                            <Badge className='ml-1 bg-green-600'>
+                                        {post?.carousel.length > 0 &&
+                                            !post?.carousel[0].pdfUrl && (
+                                                <Badge className='ml-1 bg-info-background border-info text-info-foreground'>
+                                                    Carrusel sin procesar
+                                                </Badge>
+                                            )}
+                                        {!!post?.carousel[0]?.pdfUrl && (
+                                            <Badge className='ml-1 bg-success-background border-success text-success'>
                                                 Con carrusel
                                             </Badge>
                                         )}

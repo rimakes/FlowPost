@@ -3,7 +3,7 @@ import {
     VOICE_TONES,
 } from '@/app/app/post-writter/config/const';
 import { POST_TEMPLATES } from '@/app/app/post-writter/config/prompts';
-import { DaysOfTheWeek } from '@/config/const';
+import { DaysOfTheWeek, aiModels } from '@/config/const';
 import {
     DayMap,
     DayOfTheWeekNumber,
@@ -17,6 +17,7 @@ import { twMerge } from 'tailwind-merge';
 import { db } from './prisma';
 import { toast } from 'sonner';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { appConfig } from '@/config/shipper.appconfig';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -279,3 +280,17 @@ export const dataUrl = `data:image/svg+xml;base64,${toBase64(
     shimmer(1000, 1000)
 )}`;
 // ==== End
+
+export const getCreditsByPriceId = (priceId: string) => {
+    return (
+        appConfig.plans.find((p) => p.stripePriceId === priceId)?.credits || 0
+    );
+};
+
+export const getAiModel = (use: keyof typeof aiModels) => {
+    if (process.env.NODE_ENV === 'development') {
+        return aiModels[use].dev;
+    } else {
+        return aiModels[use].prod;
+    }
+};

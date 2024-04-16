@@ -3,7 +3,12 @@ import { ApiRequestBody, ApiResponse } from '@/types/types';
 import { register } from '@/lib/register-user';
 import { User } from '@prisma/client';
 import { RegisterFormValues } from '@/schemas/auth-schemas';
-import { getPostTemplateById, getVoiceToneById, wait } from '@/lib/utils';
+import {
+    getAiModel,
+    getPostTemplateById,
+    getVoiceToneById,
+    wait,
+} from '@/lib/utils';
 import {
     WritterFormSchema,
     PostRequest,
@@ -46,7 +51,7 @@ export async function POST(req: NextRequest) {
 
                 const model = new ChatOpenAI({
                     temperature: 0.8,
-                    modelName: 'gpt-4-turbo',
+                    modelName: getAiModel('writter'),
                     streaming: true,
                     callbacks: [
                         {

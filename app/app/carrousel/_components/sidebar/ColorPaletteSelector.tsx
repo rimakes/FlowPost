@@ -30,7 +30,7 @@ export const ColorPaletteSelect = ({
         onChange({ ...colorPalette, primary: color });
     };
     return (
-        <>
+        <div className='flex flex-col gap-4'>
             <div className='w-full h-full grid grid-cols-3 gap-2'>
                 {COLOR_PALETTES.map((palette, index) => (
                     <ColorPalette
@@ -45,8 +45,8 @@ export const ColorPaletteSelect = ({
                     />
                 ))}
             </div>
-            <h3>Personaliza tus colores</h3>
             <div className='flex flex-col gap-2'>
+                <h3>Personaliza tus colores</h3>
                 <Label>Fondo</Label>
                 <SimpleColorPicker
                     value={colorPalette.background}
@@ -68,7 +68,7 @@ export const ColorPaletteSelect = ({
                     onColorChange={changePrimary}
                 />
             </div>
-        </>
+        </div>
     );
 };
 

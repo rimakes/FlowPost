@@ -1,13 +1,12 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import { retryAsyncFunction } from '@/lib/utils';
+import { getAiModel, retryAsyncFunction } from '@/lib/utils';
 import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
 import fs from 'fs';
 import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
 import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { promptGenerateCarousel } from '../app/saved/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import {
     BigNumberSlideSchema,
@@ -23,6 +22,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
+import { promptGenerateCarousel } from '@/config/prompt';
 
 export async function upsertLinkedinPost(
     post: TLinkedinPost,
@@ -107,7 +107,7 @@ export async function createLinkedinCarousel(
 
     const model = new ChatOpenAI({
         temperature: 0.8,
-        modelName: 'gpt-4-0613',
+        modelName: getAiModel('carousel'),
         streaming: true,
         callbacks: [
             {

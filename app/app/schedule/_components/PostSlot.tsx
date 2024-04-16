@@ -58,15 +58,15 @@ export const PostSlot = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setdraftDialogIsOpen(true)}>
-                    Añadir borrador
+                    Programar post
                 </DropdownMenuItem>
-                <DropdownMenuItem
+                {/* <DropdownMenuItem
                     onClick={() => {
                         router.push(`/app/post-writter/new`);
                     }}
                 >
                     Escribir post
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
             </DropdownMenuContent>
         </DropdownMenu>
     );

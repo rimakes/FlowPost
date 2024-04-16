@@ -251,8 +251,8 @@ export const authOptions: NextAuthOptions = {
             // console.log({ user });
             // console.log({ account });
             // console.log({ profile });
-            console.log({ session });
-            console.log('trigger-->', { trigger });
+            // console.log({ session });
+            // console.log('trigger-->', { trigger });
 
             if (trigger === 'update' && session.name) {
                 token.name = session.name;
@@ -308,7 +308,7 @@ export const authOptions: NextAuthOptions = {
         // When using database sessions, the User (user) object is passed as an argument.
         // When using JSON Web Tokens for sessions, the JWT payload (token) is provided instead.
         async session({ session, token, user }) {
-            console.log('token from session callback', { token });
+            // console.log('token from session callback', { token });
             if (session && session.user) {
             }
             return {

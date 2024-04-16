@@ -1,6 +1,6 @@
 'use server';
 
-import { retryAsyncFunction } from '@/lib/utils';
+import { getAiModel, retryAsyncFunction } from '@/lib/utils';
 import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
@@ -15,7 +15,7 @@ import { authOptions } from '@/auth';
 export const generateIdeas = async (topic: string) => {
     const model = new ChatOpenAI({
         temperature: 0.8,
-        modelName: 'gpt-4-0613',
+        modelName: getAiModel('ideas'),
         streaming: true,
         callbacks: [
             {

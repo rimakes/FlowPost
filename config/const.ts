@@ -1,4 +1,13 @@
+import { TMenuItem } from '@/types/types';
 import { Brand } from '@prisma/client';
+import {
+    CalendarCheck,
+    GalleryHorizontal,
+    Lightbulb,
+    Paperclip,
+    Settings,
+    Sparkles,
+} from 'lucide-react';
 
 export enum TimeOfTheDay {
     T0900 = '09:00 AM',
@@ -183,3 +192,81 @@ export const errors = {
         'Error al iniciar sesión. Revisa tus credenciales.',
     default: 'Unable to sign in.',
 };
+
+export const aiModels = {
+    writter: {
+        dev: 'gpt-3.5-turbo',
+        prod: 'gpt-4-0613',
+    },
+    ideas: {
+        dev: 'gpt-3.5-turbo',
+        prod: 'gpt-4-0613',
+    },
+    carousel: {
+        dev: 'gpt-3.5-turbo',
+        prod: 'gpt-4-0613',
+    },
+};
+
+export const MAIN_MENU_ITEMS: TMenuItem[] = [
+    {
+        icon: Sparkles,
+        label: 'Escribe con IA',
+        href: '/app',
+        shortLabel: 'Posts',
+        status: 'active',
+    },
+    {
+        icon: GalleryHorizontal,
+        label: 'Crea un carrusel',
+        href: '/app/carrousel/new',
+        shortLabel: 'Carrusel',
+        status: 'active',
+    },
+    {
+        icon: Paperclip,
+        label: 'Posts guardados',
+        href: '/app/saved',
+        shortLabel: 'Guardados',
+        status: 'active',
+    },
+    {
+        icon: Lightbulb,
+        label: 'Ideas para post',
+        href: '/app/ideas',
+        shortLabel: 'Ideas',
+        status: 'active',
+    },
+    {
+        icon: CalendarCheck,
+        label: 'Programa tus posts',
+        href: '/app/schedule',
+        shortLabel: 'Programar',
+        status: 'active',
+    },
+    // {
+    //     icon: BrainCog,
+    //     label: 'Inspiración',
+    //     href: '/app/inspo',
+    //     shortLabel: 'Inspo',
+    //     status: 'próximamente',
+    // },
+];
+
+export const SECONDARY_MENU_ITEMS: TMenuItem[] = [
+    {
+        icon: Settings,
+        label: 'Ajustes',
+        href: '/app/settings',
+        shortLabel: 'Ajustes',
+        status: 'active',
+    },
+
+    // {
+    //     icon: PanelTopCloseIcon,
+    //     label: 'Pide herramientas',
+    //     href: '/app/feature-request',
+    //     shortLabel: 'Peticiones',
+    //     status: 'active',
+    // },
+];

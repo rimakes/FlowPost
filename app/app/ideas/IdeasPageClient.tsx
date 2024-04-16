@@ -96,7 +96,7 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
                 </p>
                 {status === 'loading' && (
                     <div className='border w-full rounded-md p-4 space-y-4'>
-                        <Skeleton className='w-1/4 h-4' />
+                        <Skeleton className='w-1/4 h-4 bg-muted' />
                         <Skeleton className='w-3/5 h-4' />
                         <Skeleton className='w-1/2 h-4' />
                         <Skeleton className='w-full h-4' />

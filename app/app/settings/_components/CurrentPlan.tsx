@@ -54,7 +54,9 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
                 </div>
             ) : (
                 <div className='max-w-md'>
-                    <SecondStep />
+                    <SecondStep
+                        successUrl={`${process.env.NEXT_PUBLIC_HOSTNAME}/app/settings?success=true&session_id={CHECKOUT_SESSION_ID}`}
+                    />
                 </div>
             )}
         </div>

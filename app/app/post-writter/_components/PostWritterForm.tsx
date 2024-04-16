@@ -18,7 +18,6 @@ import { Plus, Sparkles } from 'lucide-react';
 import { useCallback, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { VOICE_TONES, VoiceTone } from '../config/const';
 import { toast } from 'sonner';
 import {
     SelectPostTemplate,
@@ -29,11 +28,11 @@ import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/spinner';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { appConfig } from '@/config/shipper.appconfig';
-import { AppContext } from '@/providers/AppProvider';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { decreaseCredits } from '@/app/_actions/user-actions';
 import { revalidateAllPaths } from '@/app/_actions/shared-actions';
+import { VoiceTone } from '@/types/types';
+import { VOICE_TONES } from '../config/const';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;
@@ -107,12 +106,12 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         try {
             console.log('decreasing credits');
 
+            console.log('should be updated by now');
+            await requestPost(data);
             const updatedUser = await decreaseCredits(session?.user?.id!, 1);
             console.log(updatedUser);
             const creditBalance = updatedUser.creditBalance;
             await update({ ...session?.user, creditBalance });
-            console.log('should be updated by now');
-            await requestPost(data);
             await revalidateAllPaths();
         } catch (error) {
             console.log(error);

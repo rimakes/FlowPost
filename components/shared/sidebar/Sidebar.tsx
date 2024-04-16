@@ -9,7 +9,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { cn, capitalizeFirstLetter } from '@/lib/utils';
+import { cn, capitalizeFirstLetter, getCreditsByPriceId } from '@/lib/utils';
 import {
     SidebarOpen,
     SidebarClose,
@@ -31,6 +31,8 @@ import { useState } from 'react';
 import { CannyLink } from '../Canny';
 import { appConfig } from '@/config/shipper.appconfig';
 import { useSession } from 'next-auth/react';
+import { TMenuItem } from '@/types/types';
+import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS } from '@/config/const';
 
 type SidebarProps = {};
 
@@ -119,18 +121,6 @@ transition-[width] duration-300
     );
 };
 
-type MenuItem = {
-    icon: LucideIcon;
-    label: string;
-    shortLabel?: string;
-    href: string;
-    status: 'active' | 'próximamente' | 'nuevo';
-    className?: string;
-    collapsed?: boolean;
-    collapse?: () => void;
-    as?: React.ElementType;
-};
-
 export const MenuItem = ({
     href,
     icon: Icon,
@@ -141,7 +131,7 @@ export const MenuItem = ({
     collapse = () => {},
     status = 'active',
     as: Component = Link,
-}: MenuItem) => {
+}: TMenuItem) => {
     const pathname = usePathname();
     const classNameNotActive =
         status === 'próximamente'
@@ -222,10 +212,11 @@ type WordsUsedWidgetProps = {
 
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
     const { data } = useSession();
-    const isPro = !!data?.user?.stripeSubscription;
-    const creditsUsed = data?.user?.creditBalance || 0;
-
-    const maxCredits = isPro ? 100 : 3;
+    const creditBalance = data?.user?.creditBalance || 0;
+    const isPro = !!data?.user?.stripeSubscription?.subscriptionId;
+    const maxCredits = !isPro
+        ? 3
+        : getCreditsByPriceId(data?.user?.stripeSubscription?.priceId!);
 
     return (
         <div
@@ -239,83 +230,22 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                  ${collapsed ? 'mx-auto' : ''}
                 `}
                 >
-                    {data?.user?.creditBalance}
+                    {data?.user?.creditBalance ?? '...'}
                     <span> / {maxCredits}</span>
                 </p>
             </div>
             {!collapsed && (
                 <>
                     <Progress
-                        value={(1 - creditsUsed / maxCredits) * 100}
+                        value={(creditBalance / maxCredits) * 100}
                         className='h-2 border border-slate-100 rounded-full'
                         color='#FF0000'
                     />
-                    <p className='opacity-75'>Estás usando un free trial</p>
+                    {!isPro && (
+                        <p className='opacity-75'>Estás usando un free trial</p>
+                    )}
                 </>
             )}
         </div>
     );
 };
-
-const MAIN_MENU_ITEMS: MenuItem[] = [
-    {
-        icon: Sparkles,
-        label: 'Escribe con IA',
-        href: '/app/post-writter',
-        shortLabel: 'Posts',
-        status: 'active',
-    },
-    {
-        icon: GalleryHorizontal,
-        label: 'Crea un carrusel',
-        href: '/app/carrousel/new',
-        shortLabel: 'Carrusel',
-        status: 'active',
-    },
-    {
-        icon: Paperclip,
-        label: 'Posts guardados',
-        href: '/app/saved',
-        shortLabel: 'Guardados',
-        status: 'active',
-    },
-    {
-        icon: Lightbulb,
-        label: 'Ideas para post',
-        href: '/app/ideas',
-        shortLabel: 'Ideas',
-        status: 'active',
-    },
-    {
-        icon: CalendarCheck,
-        label: 'Programa tus posts',
-        href: '/app/schedule',
-        shortLabel: 'Programar',
-        status: 'active',
-    },
-    // {
-    //     icon: BrainCog,
-    //     label: 'Inspiración',
-    //     href: '/app/inspo',
-    //     shortLabel: 'Inspo',
-    //     status: 'próximamente',
-    // },
-];
-
-const SECONDARY_MENU_ITEMS: MenuItem[] = [
-    {
-        icon: Settings,
-        label: 'Ajustes',
-        href: '/app/settings',
-        shortLabel: 'Ajustes',
-        status: 'active',
-    },
-
-    // {
-    //     icon: PanelTopCloseIcon,
-    //     label: 'Pide herramientas',
-    //     href: '/app/feature-request',
-    //     shortLabel: 'Peticiones',
-    //     status: 'active',
-    // },
-];
