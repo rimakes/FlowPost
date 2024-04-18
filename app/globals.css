@@ -107,5 +107,6 @@
 
     .slideStyles strong {
         color: var(--bold-color);
+        font-weight: 700;
     }
 }

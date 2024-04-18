@@ -1,5 +1,5 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from '@tiptap/react';
-import { BoldIcon, ItalicIcon, Undo } from 'lucide-react';
+import { BoldIcon, ItalicIcon, StrikethroughIcon, Undo } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { EditorState } from '@tiptap/pm/state';
@@ -25,12 +25,12 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
             command: () => props.editor!.chain().focus().toggleItalic().run(),
             icon: ItalicIcon,
         },
-        // {
-        //     name: 'strike',
-        //     isActive: () => props.editor!.isActive('strike'),
-        //     command: () => props.editor!.chain().focus().toggleStrike().run(),
-        //     icon: StrikethroughIcon,
-        // },
+        {
+            name: 'strike',
+            isActive: () => props.editor!.isActive('strike'),
+            command: () => props.editor!.chain().focus().toggleStrike().run(),
+            icon: StrikethroughIcon,
+        },
         // {
         //     name: 'code',
         //     isActive: () => props.editor!.isActive('code'),

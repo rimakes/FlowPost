@@ -153,10 +153,11 @@ export const SlideWithSettings = ({
             )}
         >
             <div
-                className={`${fontsMap[brand.fontPalette.primary as TFontName].className} slideStyles`}
+                className={`slideStyles`}
                 style={{
                     // @ts-ignore
                     '--bold-color': brand.colorPalette.accent,
+                    fontFamily: brand.fontPalette.primary,
                 }}
             >
                 <ContentSlideLayout
