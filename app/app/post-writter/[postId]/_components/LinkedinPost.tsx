@@ -69,6 +69,7 @@ const Comments = () => {
                             src='/images/placeholders/user.png'
                             fill
                             alt='profile'
+                            sizes='(max-width: 640px) 10vw, 100px'
                         />
                     </div>
                     <div className='grow flex flex-col bg-primary/5 p-2 rounded-md rounded-tl-none'>
@@ -102,6 +103,7 @@ const AddCommentBar = () => {
                     src='/images/placeholders/user.png'
                     fill
                     alt='profile'
+                    sizes='(max-width: 640px) 10vw, 100px'
                     className='object-cover'
                 />
             </div>
@@ -334,6 +336,7 @@ const EngagementBar = () => {
                         src='/images/placeholders/user.png'
                         fill
                         alt='profile'
+                        sizes='(max-width: 640px) 10vw, 100px'
                     />
                 </div>
                 <div className='flex items-baseline gap-2'>

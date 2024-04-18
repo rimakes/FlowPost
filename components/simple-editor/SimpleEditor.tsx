@@ -1,28 +1,14 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { defaultEditorContent } from './default-editor-content';
 // TODO: change to mantine
 import { useDebouncedCallback } from 'use-debounce';
-import {
-    Editor as TipTapEditor,
-    EditorContent,
-    useEditor,
-    EditorOptions,
-} from '@tiptap/react';
+import { EditorContent, useEditor, EditorOptions } from '@tiptap/react';
 import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
 import { getPrevText } from '@/lib/get-prev-text';
 import { EditorBubbleMenu } from './bubble-menu/buble-menu';
-import TopMenu from './top-menu/top-menu';
 import useLocalStorage from '@/hooks/use-local-storage';
-import useFullScreen from '@/hooks/use-full-screen';
-import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
-import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
-import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
-import { Menu, Move, MoveIcon, Settings, Settings2 } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Slider } from '../ui/slider';
 
 type TSlideElement = 'title' | 'tagline' | 'paragraph' | 'imageCaption';
 

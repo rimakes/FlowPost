@@ -8,7 +8,7 @@ import {
     SelectItem,
     SelectTrigger,
 } from '@/components/ui/select';
-import { TimeOfTheDay, daysOfTheWeekMapNew } from '@/config/const';
+import { TIME_OF_THE_DAY, daysOfTheWeekMapNew } from '@/config/const';
 import {
     capitalizeFirstLetter,
     deepCopy,
@@ -93,7 +93,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
         optimisticallySetTimeMap(newState);
     };
 
-    const timeOfTheDayNames = Object.keys(TimeOfTheDay);
+    const timeOfTheDayNames = Object.keys(TIME_OF_THE_DAY);
     const timeSlots = Object.keys(optimisticTimeMap);
 
     return (
@@ -166,10 +166,10 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                 onValueChange={(value) => {
                     startTransition(() => {
                         OptimisticallyAddTimeArray(
-                            TimeOfTheDay[value as TNameTimeOfDay]
+                            TIME_OF_THE_DAY[value as TNameTimeOfDay]
                         );
                         addTime(
-                            TimeOfTheDay[value as TNameTimeOfDay],
+                            TIME_OF_THE_DAY[value as TNameTimeOfDay],
                             data?.user.settingsId!
                         );
                     });
@@ -180,7 +180,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                     <>
                         {timeOfTheDayNames.map((time, index) => (
                             <SelectItem key={index} value={time}>
-                                {TimeOfTheDay[time as TNameTimeOfDay]}
+                                {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
                             </SelectItem>
                         ))}
                     </>

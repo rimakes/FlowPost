@@ -1,27 +1,11 @@
-import bcrypt from 'bcryptjs';
 import { ApiRequestBody, ApiResponse } from '@/types/types';
-import { register } from '@/lib/register-user';
-import { User } from '@prisma/client';
-import { RegisterFormValues } from '@/schemas/auth-schemas';
-import {
-    getAiModel,
-    getPostTemplateById,
-    getVoiceToneById,
-    wait,
-} from '@/lib/utils';
-import {
-    WritterFormSchema,
-    PostRequest,
-} from '@/app/app/post-writter/_components/PostWritterForm';
-import { z } from 'zod';
+import { getAiModel, getPostTemplateById, getVoiceToneById } from '@/lib/utils';
+import { PostRequest } from '@/app/app/post-writter/_components/PostWritterForm';
 import { ChatOpenAI } from '@langchain/openai';
 import { StreamingTextResponse } from 'ai';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
-import {
-    generalInstructions,
-    writterPrompt,
-} from '@/app/app/post-writter/config/prompts';
+import { generalInstructions } from '@/app/app/post-writter/config/prompts';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';

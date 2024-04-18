@@ -9,7 +9,7 @@ import {
     Sparkles,
 } from 'lucide-react';
 
-export enum TimeOfTheDay {
+export enum TIME_OF_THE_DAY {
     T0900 = '09:00 AM',
     T0915 = '09:15 AM',
     T0930 = '09:30 AM',
@@ -195,7 +195,7 @@ export const errors = {
 
 export const aiModels = {
     writter: {
-        dev: 'gpt-3.5-turbo',
+        dev: 'gpt-4-0613',
         prod: 'gpt-4-0613',
     },
     ideas: {
@@ -270,3 +270,67 @@ export const SECONDARY_MENU_ITEMS: TMenuItem[] = [
     //     status: 'active',
     // },
 ];
+
+export const WRITTER_TOOLS = [
+    {
+        name: 'Escritura Asistida',
+        title: 'Escribe tu post apoyado por IA',
+        subtitle:
+            'Ideal para cuando tienes claro qué quieres escribir pero quieres algo de ayuda',
+        url: '/app/post-writter/new',
+        headerClassName: 'bg-emerald-50',
+        titleClassName: 'text-emerald-800',
+    },
+    {
+        name: 'Plantillas Virales',
+        title: 'Genera post a partir de plantillas',
+        subtitle:
+            'Podrás personalizar el tono, y la plantilla que más encaje con tu marca y con el contenido que quieres publicar',
+        url: '/app/post-writter',
+        headerClassName: 'bg-indigo-50',
+        titleClassName: 'text-indigo-800',
+    },
+    {
+        name: 'En camino! 🚀',
+        title: 'Herramientas que estamos desarrollando',
+        subtitle:
+            'Cada mes desarrollamos nuevas herramientas basadas en tus votaciones. ¿Qué te gustaría ver aquí?',
+        url: 'https://flowpost.canny.io/peticiones',
+        headerClassName: 'bg-pink-50',
+        titleClassName: 'text-pink-800',
+    },
+];
+
+const language = 'Spanish';
+
+export const COMPLETE_INSTRUCTIONS = {
+    continue: `
+    Continue the following text in ${language}:
+    ##Example##
+    user: En lugar de la mancha
+    assistant: de cuyo nombre no quiero acordarme
+    ##End of example##
+
+    user:
+    `,
+
+    summarize: `
+    Create a TL;DR  in ${language} with the format:
+    TL;DR: [Summary of the text in bullet points]
+    
+    for the following text:`,
+    emojify: `
+    Add relevant emojis to the following text keeping the same language.
+    ##Example##
+    user: I'm feeling happy today because the day is sunny and I'm going to the beach.
+    assistant: I'm feeling happy 😄 because the day is sunny 🌞 and I'm going to the beach 🏖️.
+    ##End of example##
+    user:`,
+    english: `
+    Translate the following text to English, keeping the same language, using the same tone and style, but properly localizing it.
+    ##Example##
+    user: Me siento feliz hoy porque el día está soleado y voy a la playa.
+    assistant: I'm feeling happy today because the day is sunny and I'm going to the beach.
+    ##End of example##
+    user:`,
+};

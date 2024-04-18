@@ -1,10 +1,17 @@
 'use client';
 
-import { createContext, use, useContext, useRef, useState } from 'react';
+import {
+    Dispatch,
+    createContext,
+    use,
+    useContext,
+    useRef,
+    useState,
+} from 'react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
-import { revalidatePath } from 'next/cache';
+import { Editor } from '@tiptap/react';
 
 const INITIAL_STATE = {
     post: {
@@ -24,7 +31,10 @@ const INITIAL_STATE = {
         templateId: '',
     } as PostRequest,
     createCarouselButtonRef: null as React.RefObject<HTMLButtonElement> | null,
-    setPost: (post: TLinkedinPost) => {},
+    setPost: ((post: TLinkedinPost) => {}) as Dispatch<
+        React.SetStateAction<TLinkedinPost>
+    >,
+    updatePost: (editor: Editor | undefined) => {},
 };
 
 // REVIEW: I think exporting this is causing a full reload of the app.
@@ -59,6 +69,14 @@ export function PostWritterContextProvider({
         INITIAL_STATE.postRequest
     );
     const createCarouselButtonRef = useRef<HTMLButtonElement>(null);
+
+    const updatePost = (editor: Editor | undefined) => {
+        if (!editor) return;
+        setPost((prev) => ({
+            ...prev,
+            content: editor.getText({ blockSeparator: '\n' }),
+        }));
+    };
 
     const requestPost = async (data: PostRequest) => {
         const { description, templateId, toneId } = data;
@@ -121,6 +139,7 @@ export function PostWritterContextProvider({
                 requestPost,
                 setPost,
                 createCarouselButtonRef,
+                updatePost,
             }}
         >
             {children}

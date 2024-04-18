@@ -13,6 +13,7 @@ module.exports = {
         './components/**/*.{ts,tsx}',
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
+        './config/**/*.{ts,tsx}',
     ],
     theme: {
         container: {

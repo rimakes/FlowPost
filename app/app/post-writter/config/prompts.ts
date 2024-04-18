@@ -1,5 +1,109 @@
 import * as PrismaModels from '@prisma/client';
 
+export const COPY_FRAMEWORKS: TCopyFramework[] = [
+    {
+        id: '0',
+        name: 'AIDA',
+        longName: 'Attention, Interest, Desire, Action',
+        content:
+            'AIDA, que representa Attention, Interest, Desire, Action, es quizás el marco de redacción publicitaria más conocido. Comienza captando la atención del lector, genera interés al discutir un problema del cliente o un hecho intrigante, crea un deseo por la solución que tú ofreces y finalmente impulsa la acción, ya sea para comprar, suscribirse, etc.',
+        whenToUse:
+            'Útil cuando quieres guiar al cliente a través de un proceso de toma de decisiones de principio a fin.',
+        tags: ['todos'],
+    },
+    {
+        id: '1',
+        name: 'PAS',
+        longName: 'Problem, Agitation, Solution',
+        content:
+            'PAS es un acrónimo de Problem, Agitation, Solution. Este marco comienza identificando un problema que los clientes están experimentando, luego agita esos sentimientos al profundizar en las posibles consecuencias del problema. Por último, ofrece el producto o servicio como una solución definitivo al problema.',
+        whenToUse:
+            'Es útil cuando puedes identificar y dar solución a un problema específico que tus clientes están experimentando.',
+        tags: ['todos'],
+    },
+    {
+        id: '2',
+        name: 'BAB',
+        longName: 'Before-After-Bridge',
+        content:
+            'El marco BAB significa Before-After-Bridge. Comienza mostrando la situación "antes" de usar tu producto o servicio, luego presenta la situación "después" de usarlo, y finalmente construye el "puente" que conecta estas dos realidades, explicando cómo tu producto o servicio puede llevarlos desde el antes hasta el después.',
+        whenToUse:
+            'Es efectivo cuando quieres mostrar a los clientes cómo puede cambiar su situación actual utilizando tu producto o servicio.',
+        tags: ['todos'],
+    },
+    {
+        id: '3',
+        name: 'SOFTEN',
+        longName: 'Simple, Obvious, Fun, Tangible, Expected, New',
+        content:
+            'SOFTEN es un marco que representa Simple, Obvious, Fun, Tangible, Expected, New. Este marco es útil para hacer que los mensajes sean fácilmente comprensibles y atractivos para los clientes, convirtiendo conceptos complejos en ideas más simples y accesibles, haciendo que la oferta sea obvia, divertida e interesante, presentándola de una manera tangible y clara, haciendo que la perspectiva de comprar el producto sea una expectativa, y finalmente, ofreciendo algo nuevo y emocionante.',
+        whenToUse:
+            'Es eficaz cuando quieres captar la atención de una audiencia y mantenerla comprometida.',
+        tags: ['todos'],
+    },
+    {
+        id: '4',
+        name: 'ABCDE',
+        longName: 'Attention, Benefit, Credibility, Desire, Ending with a bang',
+        content:
+            'El marco ABCDE sigue una estructura similar a AIDA, pero agrega un componente de Beneficio y Credibilidad. Significa Attention, Benefit, Credibility, Desire, Ending with a bang. La estructura promueve captar la atención del lector, presentar los beneficios del producto o servicio, agregar credibilidad mediante la presentación de datos, testimonios u otros medios, despertar el deseo de la oferta, y finalizar con un llamado a la acción persuasivo.',
+        whenToUse:
+            'Es beneficioso cuando necesitas ganarte la confianza de tu audiencia, especialmente cuando estás lanzando un nuevo producto o servicio.',
+        tags: ['todos'],
+    },
+    {
+        id: '5',
+        name: 'QUEST',
+        longName: 'Qualify, Understand, Educate, Stimulate, Transition',
+        content:
+            'QUEST implica un marco de Calificar, Entender, Educar, Estimular, Transición. Comienza calificando a tus clientes potenciales para asegurarte de que estás hablando con la audiencia correcta, luego shows understanding for the challenges your audience might be facing. Next, it educates the audience on how your product or service can address these problems, stimulates desire for your solution, and then transitions smoothly into the call-to-action.',
+        whenToUse:
+            'Es útil cuando quieres educar a tus clientes potenciales sobre tu producto o servicio antes de que hagan una compra.',
+        tags: ['todos'],
+    },
+    {
+        id: '6',
+        name: 'SLAP',
+        longName: 'Stop, Look, Act, Purchase',
+        content:
+            'El marco SLAP significa Stop, Look, Act, Purchase. Aquí, el objetivo es primero detener a las personas en sus pistas (usualmente con un titular atractivo), luego hacer que presten atención a lo que ofreces, incitarlos a realizar alguna acción que los acerque a la compra (como registrarse para un webinar o registrarse para obtener una prueba gratuita), y finalmente, incitar a la compra.',
+        whenToUse:
+            'Es ideal para la publicidad directa y promociones de ventas que requieren acción inmediata.',
+        tags: ['todos'],
+    },
+    {
+        id: '7',
+        name: 'UPWORDS',
+        longName:
+            'Useful, Unique Proposition, Written Well, Organized, Responsive, Different, Social Proof',
+        content:
+            'El marco UPWORDS se centra en crear contenido que es Útil, tiene una Propuesta Única, está Bien Escrito, está Organizado, es Reactivo, es Diferente, y proporciona Prueba Social. Su objetivo es mostrar el valor y establecer la diferenciación de tu marca, mientras que garantiza que el contenido esté bien escrito, esté organizado de manera efectiva, se responda en tiempo real, sea diferente y proporcione prueba social.',
+        whenToUse:
+            'Es adecuado para establecer la marca y establecer una fuerte presencia en el mercado.',
+        tags: ['todos'],
+    },
+    {
+        id: '8',
+        name: 'The Four Ps',
+        longName: 'Promise, Picture, Proof, Push',
+        content:
+            'The Four Ps se traduce en Promesa, Imagen, Prueba, Empuje. Este marco requiere comenzar con una promesa al lector de una solución a su problema. Luego, se crea una imagen vívida de lo que se siente tener el problema resuelto. A continuación, proporciona pruebas de que tu solución funciona y, luego da un empujón para que tomen acción.',
+        whenToUse:
+            'Es eficaz para contenido que necesita demostrar el valor de un producto o servicio y persuadir a las personas para que realicen una acción.',
+        tags: ['todos'],
+    },
+    {
+        id: '9',
+        name: 'The Four Us',
+        longName: 'Useful, Urgent, Unique, Ultra-Specific',
+        content:
+            'The Four Us - Útil, Urgente, Único, Ultra-específico - es un marco que se centra en ofrecer un contenido valioso y práctico para el lector, generar un sentido de urgencia, y mostrar algo único y ultra-específico acerca de su producto o servicio para mantener al lector comprometido y listo para tomar una acción.',
+        whenToUse:
+            'Es efectivo para contenido que necesita captar la atención del lector y proporcionar un valor práctico inmediato.',
+        tags: ['todos'],
+    },
+];
+
 export const writterPrompt = `You are a proffesional copywritter.
 You specialized in writting Linkedin post that engage the audience and build the personal brand of the author.
 
@@ -13,6 +117,34 @@ export const POST_TEMPLATES: Omit<
     PrismaModels.PostTemplate,
     'createdAt' | 'updatedAt'
 >[] = [
+    {
+        id: '0',
+        name: 'La Gran Revelación',
+        tags: ['reflexiones', 'lecciones', 'aprendizajes'],
+        content: `
+        {emoji} Este cambio de mentalidad lo cambió todo para mí como {x}.
+        Cuando comencé mi {x}, me centré en:
+        - {primera cosa que no debía ser foco}
+        - {segunda cosa que no debía ser foco}
+        - {tercera cosa que no debía ser foco}
+        - {others if they are common mistakes}
+        Hice esto durante 5-6 meses cuando empecé, y acabé agotado. Era mentalmente agotador.
+        No porque trabajara duro.
+        Era porque estaba haciendo tantas cosas y todas eran muy diferentes.
+        La mejor manera es concentrarse en una cosa cada vez y dar lo mejor de uno mismo.
+        `,
+    },
+    {
+        id: '1',
+        name: 'Lo que Me Impresiona',
+        tags: ['opiniones', 'reflexiones', 'conclusiones'],
+        content: `
+        He conocido y trabajado con muchos {{XXX}} en los últimos {{XXX}} años. Lo ÚNICO que me impresiona cuando conozco a un {{XXX}} es cómo
+}
+
+        }
+        `,
+    },
     {
         id: '0',
         name: 'La Gran Revelación',
@@ -515,103 +647,10 @@ export type TCopyFramework = {
     id: string;
     name: string;
     longName: string;
-    explanation: string;
+    content: string;
     whenToUse: string;
+    tags: string[];
 };
-
-const copyFrameworks: TCopyFramework[] = [
-    {
-        id: '0',
-        name: 'AIDA',
-        longName: 'Attention, Interest, Desire, Action',
-        explanation:
-            'AIDA, que representa Attention, Interest, Desire, Action, es quizás el marco de redacción publicitaria más conocido. Comienza captando la atención del lector, genera interés al discutir un problema del cliente o un hecho intrigante, crea un deseo por la solución que tú ofreces y finalmente impulsa la acción, ya sea para comprar, suscribirse, etc.',
-        whenToUse:
-            'Útil cuando quieres guiar al cliente a través de un proceso de toma de decisiones de principio a fin.',
-    },
-    {
-        id: '1',
-        name: 'PAS',
-        longName: 'Problem, Agitation, Solution',
-        explanation:
-            'PAS es un acrónimo de Problem, Agitation, Solution. Este marco comienza identificando un problema que los clientes están experimentando, luego agita esos sentimientos al profundizar en las posibles consecuencias del problema. Por último, ofrece el producto o servicio como una solución definitivo al problema.',
-        whenToUse:
-            'Es útil cuando puedes identificar y dar solución a un problema específico que tus clientes están experimentando.',
-    },
-    {
-        id: '2',
-        name: 'BAB',
-        longName: 'Before-After-Bridge',
-        explanation:
-            'El marco BAB significa Before-After-Bridge. Comienza mostrando la situación "antes" de usar tu producto o servicio, luego presenta la situación "después" de usarlo, y finalmente construye el "puente" que conecta estas dos realidades, explicando cómo tu producto o servicio puede llevarlos desde el antes hasta el después.',
-        whenToUse:
-            'Es efectivo cuando quieres mostrar a los clientes cómo puede cambiar su situación actual utilizando tu producto o servicio.',
-    },
-    {
-        id: '3',
-        name: 'SOFTEN',
-        longName: 'Simple, Obvious, Fun, Tangible, Expected, New',
-        explanation:
-            'SOFTEN es un marco que representa Simple, Obvious, Fun, Tangible, Expected, New. Este marco es útil para hacer que los mensajes sean fácilmente comprensibles y atractivos para los clientes, convirtiendo conceptos complejos en ideas más simples y accesibles, haciendo que la oferta sea obvia, divertida e interesante, presentándola de una manera tangible y clara, haciendo que la perspectiva de comprar el producto sea una expectativa, y finalmente, ofreciendo algo nuevo y emocionante.',
-        whenToUse:
-            'Es eficaz cuando quieres captar la atención de una audiencia y mantenerla comprometida.',
-    },
-    {
-        id: '4',
-        name: 'ABCDE',
-        longName: 'Attention, Benefit, Credibility, Desire, Ending with a bang',
-        explanation:
-            'El marco ABCDE sigue una estructura similar a AIDA, pero agrega un componente de Beneficio y Credibilidad. Significa Attention, Benefit, Credibility, Desire, Ending with a bang. La estructura promueve captar la atención del lector, presentar los beneficios del producto o servicio, agregar credibilidad mediante la presentación de datos, testimonios u otros medios, despertar el deseo de la oferta, y finalizar con un llamado a la acción persuasivo.',
-        whenToUse:
-            'Es beneficioso cuando necesitas ganarte la confianza de tu audiencia, especialmente cuando estás lanzando un nuevo producto o servicio.',
-    },
-    {
-        id: '5',
-        name: 'QUEST',
-        longName: 'Qualify, Understand, Educate, Stimulate, Transition',
-        explanation:
-            'QUEST implica un marco de Calificar, Entender, Educar, Estimular, Transición. Comienza calificando a tus clientes potenciales para asegurarte de que estás hablando con la audiencia correcta, luego shows understanding for the challenges your audience might be facing. Next, it educates the audience on how your product or service can address these problems, stimulates desire for your solution, and then transitions smoothly into the call-to-action.',
-        whenToUse:
-            'Es útil cuando quieres educar a tus clientes potenciales sobre tu producto o servicio antes de que hagan una compra.',
-    },
-    {
-        id: '6',
-        name: 'SLAP',
-        longName: 'Stop, Look, Act, Purchase',
-        explanation:
-            'El marco SLAP significa Stop, Look, Act, Purchase. Aquí, el objetivo es primero detener a las personas en sus pistas (usualmente con un titular atractivo), luego hacer que presten atención a lo que ofreces, incitarlos a realizar alguna acción que los acerque a la compra (como registrarse para un webinar o registrarse para obtener una prueba gratuita), y finalmente, incitar a la compra.',
-        whenToUse:
-            'Es ideal para la publicidad directa y promociones de ventas que requieren acción inmediata.',
-    },
-    {
-        id: '7',
-        name: 'UPWORDS',
-        longName:
-            'Useful, Unique Proposition, Written Well, Organized, Responsive, Different, Social Proof',
-        explanation:
-            'El marco UPWORDS se centra en crear contenido que es Útil, tiene una Propuesta Única, está Bien Escrito, está Organizado, es Reactivo, es Diferente, y proporciona Prueba Social. Su objetivo es mostrar el valor y establecer la diferenciación de tu marca, mientras que garantiza que el contenido esté bien escrito, esté organizado de manera efectiva, se responda en tiempo real, sea diferente y proporcione prueba social.',
-        whenToUse:
-            'Es adecuado para establecer la marca y establecer una fuerte presencia en el mercado.',
-    },
-    {
-        id: '8',
-        name: 'The Four Ps',
-        longName: 'Promise, Picture, Proof, Push',
-        explanation:
-            'The Four Ps se traduce en Promesa, Imagen, Prueba, Empuje. Este marco requiere comenzar con una promesa al lector de una solución a su problema. Luego, se crea una imagen vívida de lo que se siente tener el problema resuelto. A continuación, proporciona pruebas de que tu solución funciona y, luego da un empujón para que tomen acción.',
-        whenToUse:
-            'Es eficaz para contenido que necesita demostrar el valor de un producto o servicio y persuadir a las personas para que realicen una acción.',
-    },
-    {
-        id: '9',
-        name: 'The Four Us',
-        longName: 'Useful, Urgent, Unique, Ultra-Specific',
-        explanation:
-            'The Four Us - Útil, Urgente, Único, Ultra-específico - es un marco que se centra en ofrecer un contenido valioso y práctico para el lector, generar un sentido de urgencia, y mostrar algo único y ultra-específico acerca de su producto o servicio para mantener al lector comprometido y listo para tomar una acción.',
-        whenToUse:
-            'Es efectivo para contenido que necesita captar la atención del lector y proporcionar un valor práctico inmediato.',
-    },
-];
 
 export const generalInstructions = `
 - Keep the structure (not the content) of the example. If there is a list, a conversation, a question, etc, include those formats in your post.

@@ -8,6 +8,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { WRITTER_TOOLS } from '@/config/const';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -23,20 +24,18 @@ export default async function Home() {
             />
             <Separator />
             <div className='mt-6 gap-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
-                <PostGeneratorCard
-                    title='Dale una idea y deja que la IA genere tus posts'
-                    headline='De idea a post'
-                    subtitle='Podrás personalizar el tono, y la estructura que más encaje con tu marca'
-                    url='/app/post-writter'
-                    headerClassName='bg-pink-100'
-                />
-                <PostGeneratorCard
-                    title='Escribe tu post apoyado por IA'
-                    headline='De cero'
-                    subtitle='Ideal para cuando tienes claro qué quieres escribir pero quieres algo de ayuda'
-                    url='/app/post-writter/new'
-                    headerClassName='bg-indigo-100'
-                />
+                {WRITTER_TOOLS.map((tool) => (
+                    <PostGeneratorCard
+                        key={tool.url}
+                        url={tool.url}
+                        name={tool.name}
+                        title={tool.title}
+                        subtitle={tool.subtitle}
+                        headerClassName={tool.headerClassName}
+                        imageUrl='/images/decoration/patterns/circles-pattern.svg'
+                        titleClassName={tool.titleClassName}
+                    />
+                ))}
             </div>
         </>
     );
@@ -44,19 +43,21 @@ export default async function Home() {
 
 export type PostGeneratorCardProps = {
     url: string;
-    headline: string;
+    name: string;
     title: string;
     subtitle: string;
     headerClassName?: string;
+    titleClassName: string;
     imageUrl?: string;
 };
 
 const PostGeneratorCard = ({
     url,
-    headline,
+    name,
     title,
     subtitle,
     headerClassName,
+    titleClassName,
     imageUrl,
 }: PostGeneratorCardProps) => {
     return (
@@ -64,15 +65,17 @@ const PostGeneratorCard = ({
             <Card className='h-full'>
                 <CardHeader
                     className={cn(
-                        `bg-[url(/images/decoration/patterns/circles-pattern.svg)] bg-no-repeat bg-indigo-100 bg-opacity-70 bg-blend-lighten h-32`,
+                        `bg-[url(/images/decoration/patterns/circles-pattern.svg)] bg-no-repeat bg-opacity-70 bg-blend-lighten h-32`,
                         headerClassName
                     )}
                 >
                     <CardTitle
-                        className='text-indigo-700 flex flex-col justify-center items-center h-full
-                    '
+                        className={cn(
+                            `text-indigo-700 flex flex-col justify-center items-center h-full`,
+                            titleClassName
+                        )}
                     >
-                        {headline}
+                        {name}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className='py-8 px-4'>

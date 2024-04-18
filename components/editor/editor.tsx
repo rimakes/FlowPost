@@ -16,16 +16,17 @@ import TopMenu from './top-menu/top-menu';
 import useLocalStorage from '@/hooks/use-local-storage';
 import useFullScreen from '@/hooks/use-full-screen';
 import { Button } from '../ui/button';
-import { cn } from '@/lib/utils';
+import { cn, getContextText, requestComplete } from '@/lib/utils';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
+import { Separator } from '../ui/separator';
 
 export default function Editor({
     /**
      * Additional classes to add to the editor container.
      * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
      */
-    className = 'relative min-h-full w-full sm:mb-[calc(20vh)] p-8',
+    className = 'relative min-h-full w-full sm:mb-[calc(20vh)]',
     /**
      * The default value to use for the editor.
      * Defaults to defaultEditorContent.
@@ -91,34 +92,49 @@ export default function Editor({
     }, debounceDuration);
 
     const editor = useEditor({
+        parseOptions: {
+            preserveWhitespace: 'full',
+        },
         extensions: [...defaultExtensions, ...extensions],
         editorProps: {
             ...defaultEditorProps,
             ...editorProps,
         },
-        onUpdate: (e) => {
+        onUpdate: async (e) => {
+            if (!editor) return;
             const selection = e.editor.state.selection;
             const lastTwo = getPrevText(e.editor, {
                 chars: 2,
             });
-            // if (lastTwo === "++" && !isLoading) {
-            //   e.editor.commands.deleteRange({
-            //     from: selection.from - 2,
-            //     to: selection.from,
-            //   });
-            //   complete(
-            //     getPrevText(e.editor, {
-            //       chars: 5000,
-            //     }),
-            //   );
-            //   // complete(e.editor.storage.markdown.getMarkdown());
-            //   // va.track("Autocomplete Shortcut Used");
-            // } else {
-            onUpdate();
-            debouncedUpdates(e);
-            // }
+            if (
+                lastTwo === '++'
+                //  && !isLoading
+            ) {
+                e.editor.commands.deleteRange({
+                    from: selection.from - 2,
+                    to: selection.from,
+                });
+                const text = await requestComplete(
+                    {
+                        description: getContextText(editor, {
+                            chars: 5000,
+                            offset: 0,
+                        }),
+                        instructionsId: 'continue',
+                    },
+                    editor
+                );
+
+                console.log({ text });
+
+                // complete(e.editor.storage.markdown.getMarkdown());
+                // va.track("Autocomplete Shortcut Used");
+            } else {
+                onUpdate();
+                debouncedUpdates(e);
+            }
         },
-        autofocus: 'end',
+        autofocus: 'start',
     });
 
     // Default: Hydrate the editor with the content from localStorage.
@@ -138,7 +154,7 @@ export default function Editor({
 
     return (
         <>
-            <Button onClick={openFullScreen}>Full</Button>
+            {/* <Button onClick={openFullScreen}>Full</Button> */}
 
             <div
                 id='custom-editor'
@@ -158,9 +174,11 @@ export default function Editor({
                 {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
                 <div className={cn(``, className)}>
                     <TopMenu editor={editor} handleDownload={() => {}} />
+                    <Separator className='mt-2 mb-4 w-[100%+1rem] -ml-2 -mr-2' />
                     <EditorContent
                         editor={editor}
                         ref={editorRef}
+                        placeholder='Cinco consejos para mejorar tu copy...'
                         className='flex-1'
                     />
                 </div>

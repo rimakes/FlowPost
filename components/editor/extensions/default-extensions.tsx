@@ -1,4 +1,9 @@
+import Paragraph from '@tiptap/extension-paragraph';
+import Document from '@tiptap/extension-document';
+import Text from '@tiptap/extension-text';
+import SlashCommand from './slash-command/slash-command';
 import StarterKit from '@tiptap/starter-kit';
+import HardBreak from '@tiptap/extension-hard-break';
 // import SlashCommand from './slash-command/slash-command';
 // import TiptapImage from "@tiptap/extension-image";
 
@@ -30,11 +35,7 @@ export const defaultExtensions = [
                 class: 'list-disc list-outside leading-3 -mt-2',
             },
         },
-        orderedList: {
-            HTMLAttributes: {
-                class: 'list-decimal list-outside leading-3 -mt-2',
-            },
-        },
+        orderedList: false,
         listItem: {
             HTMLAttributes: {
                 class: 'leading-normal -mb-2',
@@ -62,6 +63,14 @@ export const defaultExtensions = [
             width: 4,
         },
         gapcursor: false,
+        hardBreak: false,
+    }),
+    HardBreak.extend({
+        addKeyboardShortcuts() {
+            return {
+                Enter: () => this.editor.commands.setHardBreak(),
+            };
+        },
     }),
     //   ### End of StarterKit
     //
@@ -124,7 +133,10 @@ export const defaultExtensions = [
     //     },
     //     includeChildren: true,
     //   }),
-    // SlashCommand,
+    // Document,
+    // Paragraph,
+    // Text,
+    SlashCommand,
     //   TiptapUnderline,
     //   TextStyle,
     //   Color,

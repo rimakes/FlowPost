@@ -12,7 +12,7 @@ import type {
 import { designMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
 import {
     DaysOfTheWeek,
-    TimeOfTheDay,
+    TIME_OF_THE_DAY,
     daysOfTheWeekMapNew,
 } from '@/config/const';
 
@@ -173,7 +173,7 @@ export type TDaysOfTheWeek = keyof typeof DaysOfTheWeek;
 
 export type TSlot = TimeSlot;
 
-export type TNameTimeOfDay = keyof typeof TimeOfTheDay;
+export type TNameTimeOfDay = keyof typeof TIME_OF_THE_DAY;
 
 export type TimeMap = {
     [key: string]: DayOfTheWeekNumber[];

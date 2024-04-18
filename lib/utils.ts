@@ -3,21 +3,16 @@ import {
     VOICE_TONES,
 } from '@/app/app/post-writter/config/const';
 import { POST_TEMPLATES } from '@/app/app/post-writter/config/prompts';
-import { DaysOfTheWeek, aiModels } from '@/config/const';
-import {
-    DayMap,
-    DayOfTheWeekNumber,
-    Pure,
-    TSlot,
-    TimeMap,
-} from '@/types/types';
-import * as PrismaClient from '@prisma/client';
+import { aiModels } from '@/config/const';
+import { DayMap, DayOfTheWeekNumber, TSlot, TimeMap } from '@/types/types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { db } from './prisma';
 import { toast } from 'sonner';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { appConfig } from '@/config/shipper.appconfig';
+import { TCompleteRequest, WritterReq } from '@/app/api/complete/route';
+import { Editor } from '@tiptap/react';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -293,4 +288,113 @@ export const getAiModel = (use: keyof typeof aiModels) => {
     } else {
         return aiModels[use].prod;
     }
+};
+
+// TODO: not using this one because it was ripping off the white lines. Using getText instead
+// export const getContextText = (editor: Editor, { chars = 300, offset = 0 }) => {
+//     const instructions = ``;
+
+//     const previousText = editor.state.doc.textBetween(
+//         Math.max(0, editor.state.selection.from - chars),
+//         editor.state.selection.from - offset,
+//         '\\n'
+//     );
+
+//     const nextText = editor.state.doc.textBetween(
+//         editor.state.selection.from,
+//         Math.min(
+//             editor.state.selection.from + chars,
+//             editor.state.doc.content.size - 1
+//         ),
+//         '<br>'
+//     );
+
+//     const placeholderText = '';
+
+//     // console.log('instructions', instructions);
+//     // console.log('previousText', previousText);
+//     // console.log('placeholderText', placeholderText);
+//     // console.log('nextText', nextText);
+//     // console.log(
+//     //     'complete',
+//     //     instructions + previousText + placeholderText + nextText
+//     // );
+
+//     return instructions + previousText + placeholderText + nextText + ``;
+// };
+
+export const getContextText = (
+    editor: Editor,
+    { chars = 300, offset = 0, placeholderText = '' }
+) => {
+    const previousText = editor.getText().slice(
+        Math.max(0, editor.state.selection.from - chars),
+
+        editor.state.selection.from - offset
+    );
+
+    const nextText = editor
+        .getText()
+        .slice(
+            editor.state.selection.from,
+            Math.min(
+                editor.state.selection.from + chars,
+                editor.state.doc.content.size - 1
+            )
+        );
+
+    return previousText + placeholderText + nextText + ``;
+};
+
+export const requestComplete = async (
+    data: TCompleteRequest,
+    editor: Editor
+) => {
+    editor.setEditable(false);
+
+    console.log({ data });
+    const { description, instructionsId } = data;
+    const reqBody: WritterReq<'COMPLETE'> = {
+        action: 'COMPLETE',
+        data: {
+            description,
+            instructionsId,
+        },
+    };
+
+    const res = await fetch('/api/complete', {
+        method: 'POST',
+        body: JSON.stringify(reqBody),
+    });
+
+    if (res.status !== 200) {
+        throw new Error('Error al escribir el post');
+    }
+    // The fetch response body is a readable stream.
+    const readableStream = res.body;
+
+    if (readableStream) {
+        // We need to decode the stream into readable text, so we create a TextDecoderStream
+        const decoderStream = new TextDecoderStream('utf-8');
+        // ...and pipe our stream to it --> the result is a decoded readable stream
+        const transformedStream = readableStream.pipeThrough(decoderStream);
+        // From which we can create a reader
+        const reader = transformedStream.getReader();
+
+        let resData = '';
+
+        // Read the stream
+        while (true) {
+            // the read data has the shape { done: boolean, value: text }
+
+            const { done, value } = await reader.read();
+            if (done) {
+                break;
+            }
+            const parsedValue = value.replace(/\n/g, '<br/>');
+            editor.chain().focus().insertContent(parsedValue).run();
+        }
+        editor.setEditable(true);
+        return resData;
+    } else return '';
 };

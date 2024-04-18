@@ -285,17 +285,15 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     );
 }
 
-type VoiceToneSelectorProps = {
-    selectedTone?: VoiceTone['id'];
-    onSelectTone: (value: VoiceTone['id']) => void;
-    availableTones?: VoiceTone['id'][];
-};
-
 export const VoiceToneSelector = ({
     selectedTone,
     onSelectTone,
     availableTones = VOICE_TONES.map((tone) => tone.id),
-}: VoiceToneSelectorProps) => {
+}: {
+    selectedTone?: VoiceTone['id'];
+    onSelectTone: (value: VoiceTone['id']) => void;
+    availableTones?: VoiceTone['id'][];
+}) => {
     const router = useRouter();
 
     return (

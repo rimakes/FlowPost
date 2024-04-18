@@ -123,6 +123,7 @@ export function CreateCarouselButton({
                         await update({ ...session?.user, creditBalance });
 
                         await revalidateAllPaths();
+                        router.push(`/app/post-writter/${data.linkedinPostId}`);
 
                         return 'Carrusel creado';
                     },

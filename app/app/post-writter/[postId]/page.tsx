@@ -11,6 +11,7 @@ import { getUserBrandKits } from '@/app/_actions/settings-actions';
 import { getServerSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
 import { authOptions } from '@/auth';
+import { AssistedClient } from './AssistedClient';
 
 type PostWritterPageProps = {
     params: {
@@ -41,8 +42,10 @@ export default async function PostWritterPage({
     };
 
     let carousel = {} as TCarousel;
+    let title = 'Crea tu post';
 
     if (!(postId === 'new')) {
+        title = 'Edita tu post';
         const dbPost = await db?.linkedinPost.findUnique({
             where: {
                 id: postId,
@@ -71,20 +74,11 @@ export default async function PostWritterPage({
 
     return (
         <>
-            <Heading className='mt-6' title='Edita tu post' subtitle='' />
+            <Heading className='mt-6' title={title} subtitle='' />
             <Separator />
-            <div className='mt-6 2xl:flex gap-8'>
+            <div className='w-full'>
                 <PostWritterContextProvider initialPost={post}>
-                    <PostWritterResult
-                        className='flex-1'
-                        isEditable={true}
-                        showEditableSwitch={false}
-                        carouselId={carousel.id}
-                    />
-                    <LinkedinPost
-                        className='flex-1 mx-auto'
-                        carousel={carousel}
-                    />
+                    <AssistedClient carousel={carousel} />
                 </PostWritterContextProvider>
             </div>
         </>

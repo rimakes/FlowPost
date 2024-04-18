@@ -13,6 +13,7 @@ export default function Logo({ linkUrl = '/' }) {
                 src={'/images/logo.png'}
                 className='object-contain'
                 fill
+                sizes='(max-width: 640px) 50vw, 640px'
             />
         </Link>
     );
