@@ -21,6 +21,30 @@ import {
     Bitter,
     Jost,
     Dancing_Script,
+    ABeeZee,
+    Abel,
+    Abhaya_Libre,
+    Abril_Fatface,
+    Aclonica,
+    Acme,
+    Actor,
+    Adamina,
+    Advent_Pro,
+    Aguafina_Script,
+    Akaya_Kanadaka,
+    Akaya_Telivigala,
+    Akronim,
+    Aladin,
+    Alata,
+    Alatsi,
+    Aldrich,
+    Alef,
+    Alegreya,
+    Alegreya_SC,
+    Alegreya_Sans,
+    Alegreya_Sans_SC,
+    Aleo,
+    Alex_Brush,
 } from 'next/font/google';
 
 export const primaryFont = Inter({ subsets: ['latin'] });
@@ -159,6 +183,202 @@ export const dancingScript = Dancing_Script({
     preload: false,
 });
 
+// MORE FONTS
+
+export const aBeeZee = ABeeZee({
+    subsets: ['latin'],
+    variable: '--font-abeezee',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const abel = Abel({
+    subsets: ['latin'],
+    variable: '--font-abel',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const abhayaLibre = Abhaya_Libre({
+    subsets: ['latin'],
+    variable: '--font-abhaya-libre',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const abrilFatface = Abril_Fatface({
+    subsets: ['latin'],
+    variable: '--font-abril-fatface',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const aclonica = Aclonica({
+    subsets: ['latin'],
+    variable: '--font-aclonica',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const acme = Acme({
+    subsets: ['latin'],
+    variable: '--font-acme',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const actor = Actor({
+    subsets: ['latin'],
+    variable: '--font-actor',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const adamina = Adamina({
+    subsets: ['latin'],
+    variable: '--font-adamina',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const adventPro = Advent_Pro({
+    subsets: ['latin'],
+    variable: '--font-advent-pro',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const aguafinaScript = Aguafina_Script({
+    subsets: ['latin'],
+    variable: '--font-aguafina-script',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const akayaKanadaka = Akaya_Kanadaka({
+    subsets: ['latin'],
+    variable: '--font-akaya-kanadaka',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const akayaTelivigala = Akaya_Telivigala({
+    subsets: ['latin'],
+    variable: '--font-akaya-telivigala',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const akronim = Akronim({
+    subsets: ['latin'],
+    variable: '--font-akronim',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const aladin = Aladin({
+    subsets: ['latin'],
+    variable: '--font-aladin',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alata = Alata({
+    subsets: ['latin'],
+    variable: '--font-alata',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alatsi = Alatsi({
+    subsets: ['latin'],
+    variable: '--font-alatsi',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const aldrich = Aldrich({
+    subsets: ['latin'],
+    variable: '--font-aldrich',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alef = Alef({
+    subsets: ['latin'],
+    variable: '--font-alef',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+// write the export of the next 10 fonts
+
+export const alegreya = Alegreya({
+    subsets: ['latin'],
+    variable: '--font-alegreya',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alegreyaSC = Alegreya_SC({
+    subsets: ['latin'],
+    variable: '--font-alegreya-sc',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alegreyaSans = Alegreya_Sans({
+    subsets: ['latin'],
+    variable: '--font-alegreya-sans',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alegreyaSansSC = Alegreya_Sans_SC({
+    subsets: ['latin'],
+    variable: '--font-alegreya-sans-sc',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const aleo = Aleo({
+    subsets: ['latin'],
+    variable: '--font-aleo',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
+export const alexBrush = Alex_Brush({
+    subsets: ['latin'],
+    variable: '--font-alex-brush',
+    display: 'auto',
+    weight: ['400'],
+    preload: false,
+});
+
 export const fontsMap = {
     bricolage: secondaryFont,
     inter: primaryFont,
@@ -177,4 +397,28 @@ export const fontsMap = {
     bitter,
     jost,
     dancingScript,
+    aBeeZee,
+    abel,
+    abhayaLibre,
+    abrilFatface,
+    aclonica,
+    acme,
+    actor,
+    adamina,
+    adventPro,
+    aguafinaScript,
+    akayaKanadaka,
+    akayaTelivigala,
+    akronim,
+    aladin,
+    alata,
+    alatsi,
+    aldrich,
+    alef,
+    alegreya,
+    alegreyaSC,
+    alegreyaSans,
+    alegreyaSansSC,
+    aleo,
+    alexBrush,
 } as const;
