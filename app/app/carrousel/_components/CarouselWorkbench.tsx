@@ -5,6 +5,7 @@ import { ReactNode, useContext, useEffect, useRef } from 'react';
 import {
     TBrand,
     TDecorationId,
+    TFont,
     TFontName,
     TMode,
     TSlide,
@@ -196,6 +197,19 @@ export const SlideWithSettings = ({
                 </ContentSlideLayout>
             </div>
             <SlideSettings isActive={isActive} slide={slide} />
+
+            {Object.keys(brand.fontPalette).map((fontType) => (
+                // REVIEW: Apart from the fact that it works...what do we think about this...?
+                <>
+                    <style>
+                        {`#font-test {font-family: ${brand.fontPalette[fontType as TFont]} !important;}`}
+                    </style>
+                    <link
+                        rel='stylesheet'
+                        href={`https://fonts.googleapis.com/css?family=${brand.fontPalette[fontType as TFont].replace(' ', '+')}`}
+                    />
+                </>
+            ))}
         </div>
     );
 };
