@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { LoginForm } from './LoginForm';
 import { cn } from '@/lib/utils';
 import { SwitchLogin } from './SwithLogin';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 type LoginButtonProps = {
@@ -18,6 +18,11 @@ export function LoginButton({ mode, children, className }: LoginButtonProps) {
     const router = useRouter();
     const session = useSession();
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        // Prefetch the dashboard page
+        router.prefetch('/auth/signin');
+    }, [router]);
 
     if (mode === 'redirect')
         return (
