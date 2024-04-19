@@ -200,7 +200,7 @@ export const SlideWithSettings = ({
 
             {Object.keys(brand.fontPalette).map((fontType) => (
                 // REVIEW: Apart from the fact that it works...what do we think about this...?
-                <>
+                <div key={brand.fontPalette[fontType as TFont]}>
                     <style>
                         {`#font-test {font-family: ${brand.fontPalette[fontType as TFont]} !important;}`}
                     </style>
@@ -208,7 +208,7 @@ export const SlideWithSettings = ({
                         rel='stylesheet'
                         href={`https://fonts.googleapis.com/css?family=${brand.fontPalette[fontType as TFont].replace(' ', '+')}`}
                     />
-                </>
+                </div>
             ))}
         </div>
     );

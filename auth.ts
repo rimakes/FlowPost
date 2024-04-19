@@ -21,14 +21,7 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             async profile(profile, tokens) {
                 const newSettings = await db.settings.create({
-                    data: {
-                        iaSettings: {
-                            autoPostGeneration: false,
-                            other: '',
-                            shortBio: '',
-                            topics: '',
-                        },
-                    },
+                    data: {},
                 });
 
                 return {
@@ -76,16 +69,8 @@ export const authOptions: NextAuthOptions = {
             jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
             async profile(profile) {
                 // console.log('profile:-', profile);
-
                 const newSettings = await db.settings.create({
-                    data: {
-                        iaSettings: {
-                            autoPostGeneration: false,
-                            other: '',
-                            shortBio: '',
-                            topics: '',
-                        },
-                    },
+                    data: {},
                 });
 
                 return {
@@ -121,21 +106,18 @@ export const authOptions: NextAuthOptions = {
                 );
 
                 if (!isCorrectPassword) {
-                    // console.log(
-                    //     'Invalid credentials',
-                    //     isCorrectPassword
-                    // );
-                    // console.log('credentials.password', credentials.password);
                     throw new Error('Invalid credentials');
                 }
 
-                //REVIEW: does this mean we are gonna have the whole user object in the session
+                //REVIEW: does this mean we are gonna have the whole user object in the session?
                 //  --> No, we are only gonna have name, email, image and whatever we add in the session callback
+                // This is handle by next-auth to avoid leaking sensitive information
                 return user;
             },
         }),
 
         EmailProvider({
+            // REVIEW: Not sure what are we using here: we are providing smtp details but then we are sending the email using mailguns api
             server: {
                 host: process.env.SMTP_HOST,
                 port: Number(process.env.SMTP_PORT),
@@ -218,6 +200,7 @@ export const authOptions: NextAuthOptions = {
         async signIn({ user, account, profile, email, credentials }) {
             if (account?.provider !== 'email') return true;
 
+            // We limit magic links to users that already exist in the database (no signups)
             const userExists = await db.user.findUnique({
                 where: { email: user.email! },
             });
@@ -241,10 +224,9 @@ export const authOptions: NextAuthOptions = {
         },
 
         // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or
-        // updated (i.e whenever a session is accessed in the client). The returned value will be encrypted,
+        // updated (i.e whenever a session is accessed?? or updated?? in the client). The returned value will be encrypted,
         // and it is stored in a cookie.
-        // The arguments user, account, profile and isNewUser are only passed the first time this callback
-        // is called on a new session, after the user signs in. In subsequent calls, only token will be available.
+        // The arguments user, account, profile and -isNewUser- (deprecated, use trigger instead) are only passed the first time this callback is called on a new session, after the user signs in. In subsequent calls, only token will be available.
         // whatever this callback returns will be the token that is stored in the cookie.
         async jwt({ token, user, account, profile, session, trigger }) {
             // console.log({ token });
@@ -254,19 +236,14 @@ export const authOptions: NextAuthOptions = {
             // console.log({ session });
             // console.log('trigger-->', { trigger });
 
-            if (trigger === 'update' && session.name) {
-                token.name = session.name;
-            }
-
-            if (trigger === 'update' && session.brands) {
-                token.brands = session.brands;
-            }
-
-            if (trigger === 'update' && session.stripeSubscription) {
-                token.stripeSubscription = session.stripeSubscription;
-            }
-            if (trigger === 'update' && session.creditBalance) {
-                token.creditBalance = session.creditBalance;
+            // These are the session values that I want to be able to update from the client (so I need to add them to the token)
+            if (trigger === 'update') {
+                session.name && (token.name = session.name);
+                session.brands && (token.brands = session.brands);
+                session.stripeSubscription &&
+                    (token.stripeSubscription = session.stripeSubscription);
+                session.creditBalance &&
+                    (token.creditBalance = session.creditBalance);
             }
 
             // When the user signs in for the first time, we want to add some extra information to the token
@@ -292,10 +269,10 @@ export const authOptions: NextAuthOptions = {
                 token.id = user.id;
                 token.email = user.email;
                 token.name = user.name;
-                token.settingsId = dbUser?.settingsId;
+                token.settingsId = dbUser?.settingsId!;
                 token.brands = brandsOfUser;
-                token.stripeSubscription = dbUser?.stripeSubscription;
-                token.creditBalance = dbUser?.creditBalance;
+                token.stripeSubscription = dbUser?.stripeSubscription!;
+                token.creditBalance = dbUser?.creditBalance!;
             }
 
             return token;
@@ -363,18 +340,7 @@ export const authOptions: NextAuthOptions = {
     //     }
     //   },
 
-    //REVIEW: When you supply a session prop in _app.js, useSession won't show a loading state,
+    //REVIEW: When you supply a session prop in _app.js, useSession won't show a loading state, but...will the session be updated?
     // as it'll already have the session available. In this way, you can provide a more seamless user experience.
     // https://next-auth.js.org/tutorials/securing-pages-and-api-routes
 } satisfies NextAuthOptions;
-
-// export const {
-//     handlers: { GET, POST },
-//     auth,
-//     signIn,
-//     signOut,
-//     update,
-// } = NextAuth({
-//     ...authMiddlewareOptions,
-//     ...authOptions,
-// });

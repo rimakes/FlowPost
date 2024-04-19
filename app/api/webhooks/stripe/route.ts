@@ -133,9 +133,7 @@ export async function POST(request: NextRequest) {
                         );
                         user = await db.user.create({
                             data: {
-                                // @ts-ignore
                                 email: userEmail,
-                                // @ts-ignore
                                 name: userName,
                                 settings: {
                                     create: {},

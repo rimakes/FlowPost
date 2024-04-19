@@ -1,10 +1,10 @@
 import NextAuth, { DefaultSession } from 'next-auth';
-import { JWT } from '@auth/core/jwt';
+import { JWT } from 'next-auth/jwt';
 import { Brand, Subscription } from '@prisma/client';
 
 declare module 'next-auth' {
     /**
-     * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+     * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context (this last part?)
      */
     export interface Session {
         user: {
@@ -25,7 +25,7 @@ declare module 'next-auth' {
      */
     interface User extends DefaultUser {
         // role: string;
-        id: string;
+        // id: string;
     }
     /**
      * Usually contains information about the provider being used
@@ -36,7 +36,7 @@ declare module 'next-auth' {
     interface Profile {}
 }
 
-declare module '@auth/core/jwt' {
+declare module 'next-auth/jwt' {
     /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
     interface JWT {
         /** OpenID ID Token */
@@ -46,6 +46,9 @@ declare module '@auth/core/jwt' {
         hasAccountLinked: boolean;
         stripeSubscription: Subscription | null;
         brands: Brand[];
+        creditBalance: number;
+        settingsId: string;
+        stripeSubscription: Subscription | null;
         creditBalance: number;
     }
 }

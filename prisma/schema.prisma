@@ -11,18 +11,18 @@ datasource db {
 }
 
 model User {
-    id    String  @id @default(auto()) @map("_id") @db.ObjectId
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
     // name type decorator defaultauto map-to-mongo-_id ??
-    name  String?
-    email String? @unique
-    image String?
+    name      String?
+    email     String?  @unique
+    image     String?
 
-    stripeCustomerId   String? //TODO:  should I add @unique @map(name:"stripe_customer_id")
+    stripeCustomerId   String?
     stripeSubscription Subscription?
     emailVerified      DateTime?
     hashedPassword     String?
-    createdAt          DateTime      @default(now())
-    updatedAt          DateTime      @updatedAt
     role               UserRole      @default(USER)
     creditBalance      Int           @default(3)
 
@@ -99,9 +99,9 @@ model Settings {
 
 type IaSettings {
     autoPostGeneration Boolean @default(false)
-    shortBio           String
-    topics             String // EJ. ["marketing", "technology", "business", "other"]
-    other              String
+    shortBio           String  @default("")
+    topics             String  @default("")
+    other              String  @default("")
 }
 
 type TimeSlot {

@@ -80,6 +80,12 @@ export const VOICE_TONES: VoiceTone[] = [
         name: 'Enfadado',
         value: 'enfadado',
     },
+    {
+        id: 14,
+        emoji: '👩‍🏫',
+        name: 'Didactivo',
+        value: 'didactico',
+    },
 ];
 
 export const POST_CATEGORIES: Pure<PrismaClient.PostCategory>[] = [

@@ -67,35 +67,36 @@ export default function TopMenu({ editor, handleDownload }: TopMenuProps) {
         },
     ];
 
+    // @ts-ignore
     const otherActions = [
-        {
-            description: 'Elegir borrador',
-            command: () => {
-                console.log('Eligiendo borrador');
-            },
-            label: <Paperclip size={15} />,
-        },
-        {
-            description: 'Elegir imagen',
-            command: () => {
-                console.log('Eligiendo imagen');
-            },
-            label: <ImageIcon size={15} />,
-        },
-        {
-            description: 'Elegir vídeo',
-            command: () => {
-                console.log('Eligiendo vídeo');
-            },
-            label: <VideoIcon size={15} />,
-        },
-        {
-            description: 'Elegir carrousel',
-            command: () => {
-                console.log('Eligiendo carrousel');
-            },
-            label: <GalleryHorizontalIcon size={15} />,
-        },
+        // {
+        //     description: 'Elegir borrador',
+        //     command: () => {
+        //         console.log('Eligiendo borrador');
+        //     },
+        //     label: <Paperclip size={15} />,
+        // },
+        // {
+        //     description: 'Elegir imagen',
+        //     command: () => {
+        //         console.log('Eligiendo imagen');
+        //     },
+        //     label: <ImageIcon size={15} />,
+        // },
+        // {
+        //     description: 'Elegir vídeo',
+        //     command: () => {
+        //         console.log('Eligiendo vídeo');
+        //     },
+        //     label: <VideoIcon size={15} />,
+        // },
+        // {
+        //     description: 'Elegir carrousel',
+        //     command: () => {
+        //         console.log('Eligiendo carrousel');
+        //     },
+        //     label: <GalleryHorizontalIcon size={15} />,
+        // },
     ];
 
     return (
@@ -113,6 +114,7 @@ export default function TopMenu({ editor, handleDownload }: TopMenuProps) {
                 ))}
             </div>
             <div className='flex gap-2'>
+                {/* @ts-ignore */}
                 {otherActions.map((button, idx) => (
                     <EditorTopMenuButton
                         key={idx}

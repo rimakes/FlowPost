@@ -9,6 +9,7 @@ import { TFontName } from '@/types/types';
 import { ArrowDownIcon, ChevronDown } from 'lucide-react';
 import { FONTS } from '@/config/fontsBigList';
 import { useDebouncedState } from '@mantine/hooks';
+import { wait } from '@/lib/utils';
 
 type FontSelectorProps = {
     setFontPalette: (font: TFontName) => void;
@@ -24,7 +25,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
         font.toLowerCase().includes(debouncedQuery.toLowerCase())
     ).slice(0, numberOfFonts);
 
-    const onSetFontPalette = (font: TFontName) => {
+    const onSetFontPalette = async (font: TFontName) => {
         setFontPalette(font);
         setFontPopOverisOpen(false);
     };
@@ -60,6 +61,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                                 filteredFonts.map((font, index) => (
                                     <Button
                                         variant={'secondary'}
+                                        style={{ fontFamily: font }}
                                         key={font}
                                         // @ts-ignore
                                         // className={`${fontsMap[font].className} text-lg`}
@@ -84,15 +86,16 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                     </>
                 </PopoverContent>
             </Popover>
-            <style>
-                {`#font-test {
-                    font-family: ${font} !important;
-                }`}
-            </style>
-            <link
-                rel='stylesheet'
-                href={`https://fonts.googleapis.com/css?family=${font.replace(' ', '+')}`}
-            />
+            {filteredFonts.map((font) => (
+                <link
+                    key={font}
+                    rel='stylesheet'
+                    href={`https://fonts.googleapis.com/css?family=${font.replace(
+                        ' ',
+                        '+'
+                    )}:400,700`}
+                />
+            ))}
         </>
     );
 };

@@ -41,6 +41,7 @@ export const AccountSettings = () => {
         },
     });
 
+    // TODO: there must be a better way to do this
     useEffect(() => {
         if (user?.name) {
             form.reset({
