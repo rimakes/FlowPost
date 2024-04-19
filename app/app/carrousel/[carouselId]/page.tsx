@@ -54,8 +54,6 @@ export default async function CarouselPage({ params }: props) {
         } as TCarousel;
     }
 
-    console.log('carousel', carousel);
-
     // If the carousel is not new, we fetch it from the database
     if (!(carouselId === 'new')) {
         const dbCarousel = await db?.carousel.findUnique({

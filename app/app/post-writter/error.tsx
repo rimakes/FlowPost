@@ -1,6 +1,7 @@
 'use client';
 
 import { ErrorWithReset } from '@/components/shared/ErrorWithReset';
+import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 
 export default function Error({

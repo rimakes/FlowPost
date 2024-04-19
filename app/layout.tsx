@@ -20,6 +20,7 @@ export default async function RootLayout({
     // REVIEW: This allow us to use the session object avoiding loading states. The first load of the layout may be a bit slower, but then the "useSession" hook will be faster. (How is that implemented?)
     const session = await getServerSession(authOptions);
 
+    // TODO: Should we add a global error file?
     return (
         <html lang='en' className={`${primaryFont.className}`}>
             <SessionProvider session={session!}>
