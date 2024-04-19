@@ -13,6 +13,7 @@ import {
 } from '@/app/_actions/writter-actions';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type CarouselCardProps = { carousel: TCarousel; className?: string };
 export function CarouselCard({ carousel, className }: CarouselCardProps) {
@@ -86,7 +87,8 @@ const CarouselActions = ({ carousel, className }: CarouselCardProps) => {
                 className='flex-1 rounded-full bg-muted text-primary/50
                 hover:bg-primary/10'
                 label='Editar carrusel'
-                onClick={() => router.push(`/app/carrousel/${carousel.id}`)}
+                href={`/app/carrousel/${carousel.id}`}
+                as={Link}
             />
         </div>
     );

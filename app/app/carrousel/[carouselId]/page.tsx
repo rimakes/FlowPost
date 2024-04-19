@@ -10,6 +10,7 @@ import { authOptions } from '@/auth';
 import { CarouselWorkbench } from '../_components/CarouselWorkbench';
 import { Session, getServerSession } from 'next-auth';
 import { db } from '@/lib/prisma';
+import { Suspense } from 'react';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...

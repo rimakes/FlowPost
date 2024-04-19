@@ -6,6 +6,7 @@ import { SavedPageClient } from './_components/SavedPageClient';
 import { getSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
+import { wait } from '@/lib/utils';
 
 const findPostByUserId = async (userId: string) => {
     return db.linkedinPost.findMany({
@@ -32,7 +33,6 @@ const findIdeasByUserId = async (userId: string) => {
 
 export default async function IdeasPage() {
     const session = await getServerSession(authOptions);
-
     const userPosts = await findPostByUserId(session?.user.id!);
     const userCarrusels = await findCarruselsByUserId(session?.user.id!);
     const userIdeas = await findIdeasByUserId(session?.user.id!);

@@ -5,7 +5,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '../ui/tooltip';
-import { Button, ButtonProps } from '../ui/button';
+import { Button, ButtonProps, buttonVariants } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { ComponentProps, forwardRef } from 'react';
 
@@ -16,6 +16,8 @@ type ButtonWithTooltipCustomProps = {
     onClick?: () => void;
     children?: React.ReactNode;
     buttonProps?: ComponentProps<typeof Button>;
+    as?: React.ElementType;
+    href?: string;
 };
 
 export const ButtonWithTooltipComponent = (
@@ -26,6 +28,8 @@ export const ButtonWithTooltipComponent = (
         onClick,
         children,
         buttonProps,
+        as: Component = Button,
+        href,
         ...props
     }: ButtonProps & ButtonWithTooltipCustomProps,
     ref: React.ForwardedRef<HTMLButtonElement>
@@ -35,15 +39,16 @@ export const ButtonWithTooltipComponent = (
             <TooltipProvider>
                 <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
-                        <Button
+                        <Component
                             ref={ref}
                             onClick={onClick}
-                            className={cn(``, className)}
+                            href={href}
+                            className={cn(`${buttonVariants({})}`, className)}
                             {...props}
                             {...buttonProps}
                         >
                             {icon}
-                        </Button>
+                        </Component>
                     </TooltipTrigger>
                     <TooltipContent>{label}</TooltipContent>
                 </Tooltip>
