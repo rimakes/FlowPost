@@ -165,6 +165,7 @@ model LinkedinPost {
     updatedAt DateTime @updatedAt
 
     content     String
+    //TODO: published should probably be something more like status: draft, published, scheduled to avoid getting the post published two times when we update the cron job to run every minute!
     published   Boolean   @default(false)
     publishedAt DateTime?
 

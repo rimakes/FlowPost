@@ -8,8 +8,7 @@
     "crons": [
         {
             "path": "/api/scheduler-api",
-            "schedule": "*/10 * * * *",
-            "comment": "m h dm m dw | Example: */5 * * * * = every 5 minutes | 0 0 * * * = every day at midnight | 0 0 * * 0 = every Sunday at midnight | 0 0 1 * * = every 1st of the month at midnight | 0 0 1 1 * = every 1st of January at midnight"
+            "schedule": "*/10 * * * *"
         }
     ]
 }
