@@ -14,6 +14,7 @@ module.exports = {
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
         './config/**/*.{ts,tsx}',
+        './emails/**/*.{ts,tsx}',
     ],
     theme: {
         container: {

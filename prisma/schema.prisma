@@ -229,9 +229,9 @@ type ColorPalette {
 }
 
 type FontPalette {
-    primary     String @default("bricolage")
-    secondary   String @default("bricolage")
-    handWriting String @default("bricolage")
+    primary     String @default("Bricolage Grotesque")
+    secondary   String @default("Bricolage Grotesque")
+    handWriting String @default("Bricolage Grotesque")
 }
 
 model Carousel {

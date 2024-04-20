@@ -11,6 +11,7 @@ import { Pricing2 } from '@/components/marketing/Pricing2';
 import Image from 'next/image';
 import { Message } from '@/components/auth/message';
 import { appConfig } from '@/config/shipper.appconfig';
+import { ReactSigninEmail } from '@/emails/ReactSigninEmail';
 
 export default async function Home() {
     // const session = await auth();

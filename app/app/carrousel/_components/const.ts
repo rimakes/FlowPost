@@ -134,9 +134,9 @@ export const fakeCarousel: TCarousel = {
             primary: '#ffffff',
         },
         fontPalette: {
-            primary: 'bricolage',
-            secondary: 'bricolage',
-            handWriting: 'bricolage',
+            primary: 'Bricolage Grotesque',
+            secondary: 'Bricolage Grotesque',
+            handWriting: 'Bricolage Grotesque',
         },
         aspectRatio: 'PORTRAIT',
         backgroundPattern: 'Bubbles',

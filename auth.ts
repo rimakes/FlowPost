@@ -12,6 +12,8 @@ import bcrypt from 'bcryptjs';
 import console from 'console';
 import { sendEmail } from './lib/mailgun';
 import { signinEmail } from './emails/signinEmail';
+import { ReactSigninEmail } from './emails/ReactSigninEmail';
+import { render } from '@react-email/render';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -136,20 +138,15 @@ export const authOptions: NextAuthOptions = {
                     theme,
                 } = params;
                 const { host } = new URL(url);
+                console.log(params);
 
-                // console.log(
-                //     'sendVerificationRequest',
-                //     email,
-                //     url,
-                //     token,
-                //     provider
-                // );
+                const emailHtml = render(ReactSigninEmail({ email, url }));
 
                 await sendEmail(
                     email,
                     `Entra en ${appConfig.general.appName}`,
                     `Entra en ${appConfig.general.appName}`,
-                    signinEmail({ url, host, theme }),
+                    emailHtml,
                     'noreply@test.com'
                 );
             },
