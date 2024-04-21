@@ -5,10 +5,10 @@ type LoadSpinnerProps = {};
 export function LoadSpinner({}: LoadSpinnerProps) {
     return (
         <div className='flex flex-col justify-center items-center grow'>
-            <div className='h-1/4 aspect-square'>
+            <div className='h-1/4 aspect-square text-center'>
                 <svg
                     aria-hidden='true'
-                    className='w-1/2 h-1/2 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-500'
+                    className='w-full h-full text-gray-200 animate-spin dark:text-gray-600 fill-indigo-500'
                     viewBox='0 0 100 101'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'

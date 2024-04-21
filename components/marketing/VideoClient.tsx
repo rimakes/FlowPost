@@ -11,7 +11,7 @@ type VideoClientProps = {
 };
 export function VideoClient({
     videoUrl,
-    playing,
+    playing = true,
     className,
 }: VideoClientProps) {
     const [hasMouted, setHasMouted] = useState(false);
@@ -28,6 +28,8 @@ export function VideoClient({
                 width={'100%'}
                 height={'100%'}
                 playing={playing}
+                loop
+                muted
             />
         </div>
     );

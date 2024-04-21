@@ -47,8 +47,8 @@ export default async function Home() {
                         className=''
                     >
                         <VideoClient
-                            videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-                            className='h-52'
+                            videoUrl='/videos/FirstStep.mp4'
+                            className='h-64'
                         />
                     </TextWithMedia>
                     <TextWithMedia
@@ -65,7 +65,7 @@ export default async function Home() {
                     >
                         <VideoClient
                             videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-                            className='h-52'
+                            className='h-64'
                         />
                     </TextWithMedia>
                     <TextWithMedia
@@ -84,7 +84,7 @@ export default async function Home() {
                     >
                         <VideoClient
                             videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-                            className='h-52'
+                            className='h-64'
                         />
                     </TextWithMedia>
                 </div>
@@ -113,7 +113,7 @@ export default async function Home() {
                     <CtaWithSocial
                         accentText={'30% de descuento'}
                         buttonLabel={'Comprar'}
-                        primaryText={'a las primeras 200 compras'}
+                        primaryText={'a las primeras 20 compras'}
                     />
                 }
                 videoPosterUrl='asdf'
@@ -136,7 +136,7 @@ export default async function Home() {
                         <CtaWithSocial
                             accentText={'30% de descuento'}
                             buttonLabel={'Comprar'}
-                            primaryText={'a las primeras 200 compras'}
+                            primaryText={'a las primeras 20 compras'}
                             buttonProps={{
                                 variant: 'secondary',
                             }}

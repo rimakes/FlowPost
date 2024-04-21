@@ -30,6 +30,7 @@
 
 -   [Shadcn] (https://ui.shadcn.com/)
     A collection of React components built with Radix, installed in your own project and highly customizable.
+    -   Change <Input> text size to md (default is sm) in mobile to avoid zooming in iOS
 
 <!-- BOILER: ADD -->
 

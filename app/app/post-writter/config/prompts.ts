@@ -118,23 +118,6 @@ export const POST_TEMPLATES: Omit<
     'createdAt' | 'updatedAt'
 >[] = [
     {
-        id: '0',
-        name: 'La Gran Revelación',
-        tags: ['reflexiones', 'lecciones', 'aprendizajes'],
-        content: `
-        {emoji} Este cambio de mentalidad lo cambió todo para mí como {x}.
-        Cuando comencé mi {x}, me centré en:
-        - {primera cosa que no debía ser foco}
-        - {segunda cosa que no debía ser foco}
-        - {tercera cosa que no debía ser foco}
-        - {others if they are common mistakes}
-        Hice esto durante 5-6 meses cuando empecé, y acabé agotado. Era mentalmente agotador.
-        No porque trabajara duro.
-        Era porque estaba haciendo tantas cosas y todas eran muy diferentes.
-        La mejor manera es concentrarse en una cosa cada vez y dar lo mejor de uno mismo.
-        `,
-    },
-    {
         id: '1',
         name: 'Lo que Me Impresiona',
         tags: ['opiniones', 'reflexiones', 'conclusiones'],
@@ -147,23 +130,6 @@ export const POST_TEMPLATES: Omit<
     },
     {
         id: '0',
-        name: 'La Gran Revelación',
-        tags: ['reflexiones', 'lecciones', 'aprendizajes'],
-        content: `
-        {emoji} Este cambio de mentalidad lo cambió todo para mí como {x}.
-        Cuando comencé mi {x}, me centré en:
-        - {primera cosa que no debía ser foco}
-        - {segunda cosa que no debía ser foco}
-        - {tercera cosa que no debía ser foco}
-        - {others if they are common mistakes}
-        Hice esto durante 5-6 meses cuando empecé, y acabé agotado. Era mentalmente agotador.
-        No porque trabajara duro.
-        Era porque estaba haciendo tantas cosas y todas eran muy diferentes.
-        La mejor manera es concentrarse en una cosa cada vez y dar lo mejor de uno mismo.
-        `,
-    },
-    {
-        id: '1',
         name: 'Lo que Me Impresiona',
         tags: ['opiniones', 'reflexiones', 'conclusiones'],
         content: `
@@ -639,6 +605,23 @@ export const POST_TEMPLATES: Omit<
        Y sin embargo en el mundo del {tema del autor}, parece que solo importa {algo que el autor considera menos importante y que todo el mundo habla}.
        {CTA}
         {HASHTAGS}
+        `,
+    },
+    {
+        id: '31',
+        name: 'La Gran Revelación',
+        tags: ['reflexiones', 'lecciones', 'aprendizajes'],
+        content: `
+        {emoji} Este cambio de mentalidad lo cambió todo para mí como {x}.
+        Cuando comencé mi {x}, me centré en:
+        - {primera cosa que no debía ser foco}
+        - {segunda cosa que no debía ser foco}
+        - {tercera cosa que no debía ser foco}
+        - {others if they are common mistakes}
+        Hice esto durante 5-6 meses cuando empecé, y acabé agotado. Era mentalmente agotador.
+        No porque trabajara duro.
+        Era porque estaba haciendo tantas cosas y todas eran muy diferentes.
+        La mejor manera es concentrarse en una cosa cada vez y dar lo mejor de uno mismo.
         `,
     },
 ];

@@ -4,6 +4,7 @@ import { db } from '@/lib/prisma';
 import { SavedPageClient } from './_components/SavedPageClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
+import { wait } from '@/lib/utils';
 
 const findPostByUserId = async (userId: string) => {
     return db.linkedinPost.findMany({

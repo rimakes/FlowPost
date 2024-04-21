@@ -335,3 +335,26 @@ export const COMPLETE_INSTRUCTIONS = {
     ##End of example##
     user:`,
 };
+
+export const menuItems = [
+    {
+        label: 'Pruébalo',
+        url: '#try-it',
+    },
+    {
+        label: 'Cómo funciona',
+        url: '#how-it-works',
+    },
+    {
+        label: 'Precios',
+        url: '#pricing',
+    },
+    {
+        label: 'Ver Demo',
+        url: '#demo',
+    },
+    {
+        label: 'Preguntas Frecuentes',
+        url: '#faq',
+    },
+];

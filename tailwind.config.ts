@@ -118,7 +118,7 @@ module.exports = {
     },
     plugins: [
         require('tailwindcss-animate'),
-        ({ addBase, theme }: GenerateBreakpointsParams) =>
-            generateBreakpoints({ addBase, theme }),
+        // ({ addBase, theme }: GenerateBreakpointsParams) =>
+        //     generateBreakpoints({ addBase, theme }),
     ],
 };

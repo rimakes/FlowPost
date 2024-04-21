@@ -1,19 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { HeadwayScript } from '@/scripts/headway';
-import { PenLine, ChevronsUpDown } from 'lucide-react';
+import { PenLine } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logo from '../logo';
 import { SelectAccountMenu } from './SelectAccountMenu';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar({ className }: { className?: string }) {

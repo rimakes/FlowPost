@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { GetAccessButton } from '@/components/marketing/GetAccessButton';
 import { LoginButton } from '@/components/auth/login-button';
+import { menuItems } from '@/config/const';
 
 export function HomeNavbar({ className }: { className?: string }) {
     const { data } = useSession();
@@ -67,7 +68,7 @@ export function HomeNavbar({ className }: { className?: string }) {
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className='lg:hidden' asChild>
-                        <Button>
+                        <Button variant={'ghost'}>
                             <Menu size={24} />
                         </Button>
                     </DropdownMenuTrigger>
@@ -104,26 +105,3 @@ export function HomeNavbar({ className }: { className?: string }) {
         </header>
     );
 }
-
-export const menuItems = [
-    {
-        label: 'Pruébalo',
-        url: '#try-it',
-    },
-    {
-        label: 'Cómo funciona',
-        url: '#how-it-works',
-    },
-    {
-        label: 'Precios',
-        url: '#pricing',
-    },
-    {
-        label: 'Ver Demo',
-        url: '#demo',
-    },
-    {
-        label: 'Preguntas Frecuentes',
-        url: '#faq',
-    },
-];

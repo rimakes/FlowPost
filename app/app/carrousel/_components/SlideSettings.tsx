@@ -82,14 +82,14 @@ export function SlideSettings({
             <Separator />
             <Button
                 variant={'ghost'}
-                className='absolute top-1/2 right-0 translate-x-[100%] opacity-0 group-hover:opacity-100 transition-opacity'
+                className='absolute top-1/2 right-0 translate-x-[100%]'
                 onClick={nextSlide}
             >
                 <ArrowRightIcon />
             </Button>
             <Button
                 variant={'ghost'}
-                className='absolute top-1/2 left-0 -translate-x-[100%] opacity-0 group-hover:opacity-100 transition-opacity'
+                className='absolute top-1/2 left-0 -translate-x-[100%]'
                 onClick={previousSlide}
             >
                 <ArrowLeftIcon />
