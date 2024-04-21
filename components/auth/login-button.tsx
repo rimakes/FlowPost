@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { SwitchLogin } from './SwithLogin';
 import { Suspense, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { SocialLogin } from './SocialLogin';
 
 type LoginButtonProps = {
     mode: 'modal' | 'redirect';
@@ -51,6 +52,7 @@ export function LoginButton({ mode, children, className }: LoginButtonProps) {
                     <>
                         <Suspense>
                             <LoginForm isRedirected={true} />
+                            <SocialLogin />
                         </Suspense>
                         <SwitchLogin signUp resetPassword />
                     </>

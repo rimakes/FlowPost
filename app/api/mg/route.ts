@@ -8,8 +8,6 @@ export async function POST(request: NextRequest) {
     //   const id = session?.user?.id;
     const body = await request.json();
 
-    console.log('received');
-    console.log(body);
     const bodyObjectFormattedString = Object.keys(body)
         .map((key) => `<strong>${key}</strong>: ${body[key]}<br>`)
         .join('');

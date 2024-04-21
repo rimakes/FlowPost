@@ -1,11 +1,10 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Separator } from '../ui/separator';
 import {
-    Calendar,
     CalendarPlus,
     GalleryHorizontal,
     Info,
@@ -15,7 +14,6 @@ import {
     Palette,
     PersonStanding,
     Rocket,
-    Save,
     Shield,
     Sparkle,
     Star,
@@ -25,6 +23,7 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { Rating } from '../shared/rating';
 import { CheckoutButton } from './CheckoutButton';
 import { cn } from '@/lib/utils';
+import { AppContext } from '@/providers/AppProvider';
 
 type GetAccessButtonProps = {
     buttonProps?: React.ComponentProps<typeof Button>;
@@ -35,9 +34,11 @@ export function GetAccessButton({
     className,
 }: GetAccessButtonProps) {
     const [step, setStep] = useState(1);
+    const { getAccessModalOpen, setGetAccessModalOpen } =
+        useContext(AppContext);
 
     return (
-        <Dialog>
+        <Dialog open={getAccessModalOpen} onOpenChange={setGetAccessModalOpen}>
             <DialogTrigger asChild>
                 <Button
                     className={cn(`flex shadow-xl `, className)}

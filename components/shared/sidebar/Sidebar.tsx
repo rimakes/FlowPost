@@ -123,6 +123,7 @@ transition-[width] duration-300
 
 export const MenuItem = ({
     href,
+    regex,
     icon: Icon,
     label,
     shortLabel,
@@ -156,6 +157,10 @@ export const MenuItem = ({
                 pathname === href
                     ? 'lg:border-r-4 border-slate-300 bg-primary/5'
                     : '',
+                regex && regex.test(pathname)
+                    ? 'lg:border-r-4 border-slate-300 bg-primary/5'
+                    : '',
+
                 collapsed ? 'justify-center lg:border-r-0' : '',
                 status === 'próximamente' ? 'cursor-not-allowed' : ''
             )}

@@ -155,7 +155,6 @@ export function LoginForm({ isRedirected = false, onAuth }: LoginFormProps) {
                     </Button>
                 </form>
             </Form>
-            <SocialLogin />
         </div>
     );
 }

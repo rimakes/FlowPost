@@ -19,14 +19,6 @@ export function AssistedClient({ carousel }: AssistedClientProps) {
     const { setPost, post } = useContext(PostWritterContext);
     const { data } = useSession();
 
-    const updatePost = (editor: TipTapEditor | undefined) => {
-        if (!editor) return;
-        setPost((prev) => ({
-            ...prev,
-            content: editor.getText({ blockSeparator: '\n' }),
-        }));
-    };
-
     return (
         <div className='flex flex-col mt-6 2xl:flex-row gap-8'>
             <PostWritterResultTipTap className='flex-1' />

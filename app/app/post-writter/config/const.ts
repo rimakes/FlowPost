@@ -81,9 +81,9 @@ export const VOICE_TONES: VoiceTone[] = [
         value: 'enfadado',
     },
     {
-        id: 14,
+        id: 15,
         emoji: '👩‍🏫',
-        name: 'Didactivo',
+        name: 'Didáctico',
         value: 'didactico',
     },
 ];

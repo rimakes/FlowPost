@@ -1,11 +1,9 @@
 import { ApiRequestBody, ApiResponse } from '@/types/types';
-import { getAiModel, getPostTemplateById, getVoiceToneById } from '@/lib/utils';
-import { PostRequest } from '@/app/app/post-writter/_components/PostWritterForm';
+import { getAiModel } from '@/lib/utils';
 import { ChatOpenAI } from '@langchain/openai';
 import { StreamingTextResponse } from 'ai';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { generalInstructions } from '@/app/app/post-writter/config/prompts';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';

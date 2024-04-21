@@ -8,26 +8,25 @@ import {
     Dispatch,
     SetStateAction,
     useContext,
-    useEffect,
     useState,
 } from 'react';
 
 interface ContextProps {
-    sidebarOpen: boolean;
-    setSidebarOpen: Dispatch<SetStateAction<boolean>>; //REVIEW: Why this is type Dispatch<SetStateAction<boolean>>?
     notifications: AppNotifications;
     setNotifications: Dispatch<SetStateAction<AppNotifications>>;
     brandCreated: () => void;
     brandCreateDismissed: () => void;
+    setGetAccessModalOpen: Dispatch<SetStateAction<boolean>>;
+    getAccessModalOpen: boolean;
 }
 
 export const AppContext = createContext<ContextProps>({
-    sidebarOpen: false,
-    setSidebarOpen: (): boolean => false,
     notifications: {} as AppNotifications,
     setNotifications: () => ({}) as AppNotifications,
     brandCreated: () => {},
     brandCreateDismissed: () => {},
+    setGetAccessModalOpen: () => false,
+    getAccessModalOpen: false,
 });
 
 export default function AppProvider({
@@ -35,7 +34,8 @@ export default function AppProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+    const [getAccessModalOpen, setGetAccessModalOpen] = useState(false);
+
     // REVIEW: Why this hook is problematic?
     // https://github.com/uidotdev/usehooks/issues/218
     const [notifications, setNotifications] = useLocalStorage<AppNotifications>(
@@ -84,10 +84,10 @@ export default function AppProvider({
             value={{
                 brandCreateDismissed,
                 brandCreated,
-                sidebarOpen,
-                setSidebarOpen,
                 notifications,
                 setNotifications,
+                getAccessModalOpen,
+                setGetAccessModalOpen,
             }}
         >
             {children}

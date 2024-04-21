@@ -60,8 +60,6 @@ export const PostWritterResultTipTap = ({
     return (
         <div className={cn(``, className)}>
             {/* <EmojiPickerClient /> */}
-            <Label>Post generado</Label>
-
             <div className='border p-2 space-y-2 rounded-t-lg rounded-b-3xl'>
                 <div className='relative pb-6'>
                     <Editor

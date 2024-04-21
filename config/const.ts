@@ -213,6 +213,7 @@ export const MAIN_MENU_ITEMS: TMenuItem[] = [
         icon: Sparkles,
         label: 'Escribe con IA',
         href: '/app',
+        regex: /^\/app(\/post-writter(\/.*)?)?$/,
         shortLabel: 'Posts',
         status: 'active',
     },

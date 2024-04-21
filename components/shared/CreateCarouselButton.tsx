@@ -18,7 +18,8 @@ import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritt
 import { Button } from '../ui/button';
 import { appConfig } from '@/config/shipper.appconfig';
 import { revalidateAllPaths } from '@/app/_actions/shared-actions';
-import { decreaseCredits } from '@/app/_actions/user-actions';
+import { updateUserCredits } from '@/app/_actions/user-actions';
+import { useUserCredits } from '@/hooks/use-user-credits';
 
 type CrearCarouselButonProps = {
     post: TLinkedinPost;
@@ -37,6 +38,8 @@ export function CreateCarouselButton({
     buttonProps,
 }: CrearCarouselButonProps) {
     const { data: session, update } = useSession();
+    const { creditBalance, update: updateCredits } = useUserCredits();
+
     const router = useRouter();
     const [status, setStatus] = useState('idle');
     const [progressValue, showProgressBar] = useDeterminedProgressBar({
@@ -54,6 +57,23 @@ export function CreateCarouselButton({
     }, []);
     const context = useContext(PostWritterContext);
 
+    const upsertPostAndCreateCarousel = async () => {
+        // TODO: Check the credits in the backend too
+        const credits = session?.user?.creditBalance!;
+        if (credits <= 0) {
+            throw new Error('No credits');
+        }
+
+        const updatedPost = await upsertLinkedinPost(
+            post,
+            isDemo,
+            session?.user?.id!
+        );
+        const carouselRes = await createLinkedinCarousel(updatedPost, isDemo);
+
+        return carouselRes;
+    };
+
     return (
         <ButtonWithTooltip
             ref={context.createCarouselButtonRef}
@@ -66,6 +86,7 @@ export function CreateCarouselButton({
             )}
             label='Crear carrusel'
             onClick={async () => {
+                setStatus('loading');
                 if (post.content.length < 30) {
                     toast.error(
                         'El contenido del post debe tener al menos 30 caracteres'
@@ -73,65 +94,51 @@ export function CreateCarouselButton({
                     return;
                 }
 
-                setStatus('loading');
-
-                const upsertPostAndCreateCarousel = async () => {
-                    const updatedPost = await upsertLinkedinPost(
-                        post,
-                        isDemo,
-                        session?.user?.id!
-                    );
-                    console.log('updatedPost', updatedPost);
-
-                    const carouselRes = await createLinkedinCarousel(
-                        updatedPost,
-                        isDemo
-                    );
-
-                    return carouselRes;
-                };
-
-                let carouselId: string;
-
-                toast.promise(upsertPostAndCreateCarousel, {
-                    loading: `Creando carrusel...`,
-                    //TODO:   Puedes seguir navegando por ${appConfig.general.appName}, te avisaremos cuando esté.`,
-                    success: async (data) => {
-                        carouselId = data.id;
-                        if (isDemo) {
-                            onDemoCarouselCreated(data);
-                        }
-
-                        toast.success('Carrusel creado', {
-                            action: {
-                                label: 'Ver carrusel',
-                                onClick: () => {
-                                    router.push(`/app/carrousel/${carouselId}`);
-                                },
-                            },
-
-                            classNames: {
-                                actionButton:
-                                    '!bg-gradient-to-tr  !from-pink-400 !to-indigo-500 !text-pink-50',
-                            },
-                        });
-                        const updatedUser = await decreaseCredits(
-                            session?.user?.id!,
-                            1
-                        );
-                        const creditBalance = updatedUser.creditBalance;
-                        await update({ ...session?.user, creditBalance });
-
-                        await revalidateAllPaths();
-                        router.push(`/app/post-writter/${data.linkedinPostId}`);
-
-                        return 'Carrusel creado';
-                    },
-                    finally: () => {
-                        setStatus('idle');
-                    },
-                    error: 'Error al crear carrusel',
+                const toastId = toast.loading('Creando carrusel...', {
+                    // TODO: Check how can we keep it active indefinitely (until we change it manually)
+                    duration: 20000,
                 });
+                try {
+                    const newCarousel = await upsertPostAndCreateCarousel();
+                    const carouselId = newCarousel.id;
+                    toast.success('Carrusel creado', {
+                        id: toastId,
+                        action: {
+                            label: 'Ver carrusel',
+                            onClick: () => {
+                                router.push(`/app/carrousel/${carouselId}`);
+                            },
+                        },
+
+                        classNames: {
+                            actionButton:
+                                '!bg-gradient-to-tr  !from-pink-400 !to-indigo-500 !text-pink-50',
+                        },
+                    });
+
+                    await updateCredits(creditBalance - 1);
+                } catch (error: any) {
+                    switch (error.message) {
+                        case 'No credits':
+                            toast.error(
+                                'No tienes créditos suficientes para crear un carrusel.',
+                                {
+                                    id: toastId,
+                                }
+                            );
+                            break;
+                        default:
+                            toast.error(
+                                'Ocurrió un error al crear el carrusel. Por favor, intenta de nuevo.',
+                                {
+                                    id: toastId,
+                                }
+                            );
+                            break;
+                    }
+                } finally {
+                    setStatus('idle');
+                }
             }}
         >
             {status !== 'idle' && (
@@ -153,13 +160,3 @@ export function CreateCarouselButton({
         </ButtonWithTooltip>
     );
 }
-
-// Aprender a programar tienes tres grandes ventajas (pon cada una con una foto):
-
-// 1. Puedes crear tus propias ideas
-// 2. Pudes trabajar desde donde quieras
-// 3. Te entiendes con los desarrolladores de tu empresa
-
-// Podrías incluso trabajar desde esta terraza!!!!
-
-// Y tú, ¿A qué esperas?

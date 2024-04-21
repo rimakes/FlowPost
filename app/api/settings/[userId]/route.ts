@@ -13,7 +13,6 @@ export async function POST(request: NextRequest, context: { params: Params }) {
 
     switch (action) {
         case 'GENERAL': {
-            console.log('data', data);
             const updatedUser = await db.user.update({
                 where: { id: context.params.userId as string },
                 data: {

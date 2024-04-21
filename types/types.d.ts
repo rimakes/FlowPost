@@ -232,6 +232,7 @@ export type TMenuItem = {
     label: string;
     shortLabel?: string;
     href: string;
+    regex?: RegExp;
     status: 'active' | 'próximamente' | 'nuevo';
     className?: string;
     collapsed?: boolean;

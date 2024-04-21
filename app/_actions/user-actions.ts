@@ -2,15 +2,16 @@
 
 import { db } from '@/lib/prisma';
 
-export const decreaseCredits = async (userId: string, amount: number) => {
+export const updateUserCredits = async (
+    userId: string,
+    creditBalance: number
+) => {
     const updatedUser = await db.user.update({
         where: {
             id: userId,
         },
         data: {
-            creditBalance: {
-                decrement: amount,
-            },
+            creditBalance,
         },
     });
 

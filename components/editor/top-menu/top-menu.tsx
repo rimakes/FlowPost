@@ -1,17 +1,8 @@
 'use client';
 
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Button } from '@/components/ui/button';
 import { Editor } from '@tiptap/react';
-import {
-    GalleryHorizontalIcon,
-    ImageIcon,
-    Paperclip,
-    Redo2,
-    Sheet,
-    Undo2,
-    VideoIcon,
-} from 'lucide-react';
+import { Redo2, Undo2 } from 'lucide-react';
 
 type TopMenuProps = {
     editor: Editor | null;
@@ -148,7 +139,7 @@ export const EditorTopMenuButton = ({
             variant='outline'
             size={'icon'}
             onClick={command}
-            className={`${className}
+            className={`${className} p-0
                 ${isActive ? (isActive() ? 'is-active' : '') : ''}
             `}
             label={description}

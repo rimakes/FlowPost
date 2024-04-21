@@ -45,3 +45,5 @@ export function PostCard({ post }: PostCardProps) {
         </div>
     );
 }
+
+// TODO: limitar a los créditos disponibles

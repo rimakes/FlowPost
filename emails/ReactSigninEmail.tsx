@@ -33,7 +33,7 @@ export const ReactSigninEmail = ({
     email,
     url,
 }: VercelInviteUserEmailProps) => {
-    const previewText = `Join  on Vercel`;
+    const previewText = `Entra en ${appConfig.general.appName}`;
 
     return (
         <Html className='text-primary'>

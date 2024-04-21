@@ -10,6 +10,7 @@ import { LoginForm } from '@/components/auth/LoginForm';
 import { Message } from '@/components/auth/message';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { Suspense } from 'react';
+import { SocialLogin } from '@/components/auth/SocialLogin';
 
 export default function SignIn() {
     return (
@@ -21,10 +22,14 @@ export default function SignIn() {
                         <AuthHeader />
 
                         <div className='max-w-sm mx-auto w-full px-4 py-8 space-y-4'>
+                            <h1 className='text-2xl text-slate-800 dark:text-slate-100 font-bold mb-6'>
+                                Bienvenid@ de vuelta ✨
+                            </h1>
                             {/* Form */}
 
                             <Suspense>
                                 <LoginForm />
+                                <SocialLogin />
                             </Suspense>
                             {/* Footer */}
                             <SwitchLogin signUp resetPassword />

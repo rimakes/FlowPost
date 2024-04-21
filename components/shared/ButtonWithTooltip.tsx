@@ -43,7 +43,12 @@ export const ButtonWithTooltipComponent = (
                             ref={ref}
                             onClick={onClick}
                             href={href}
-                            className={cn(`${buttonVariants({})}`, className)}
+                            className={cn(
+                                `${buttonVariants({
+                                    variant: 'ghost',
+                                })}`,
+                                className
+                            )}
                             {...props}
                             {...buttonProps}
                         >

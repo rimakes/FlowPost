@@ -27,7 +27,7 @@ model User {
     creditBalance      Int           @default(3)
 
     settingsId    String         @unique @db.ObjectId
-    settings      Settings       @relation(fields: [settingsId], references: [id])
+    settings      Settings       @relation(fields: [settingsId], references: [id], onDelete: Cascade)
     account       Account[]
     posts         BlogPost[]
     linkedinPosts LinkedinPost[]

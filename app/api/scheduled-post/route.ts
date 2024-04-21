@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
         const userId = session?.user?.id!;
 
         // Need to ensure that the user is the owner of the post
+        // TODO: check if the user is the owner of the post
         const linkedinPost = await db.linkedinPost.findUnique({
             where: {
                 id: body.linkedinPostId!,

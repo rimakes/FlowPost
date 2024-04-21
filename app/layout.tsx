@@ -6,6 +6,7 @@ import Theme from '@/providers/theme-provider';
 import { primaryFont } from '@/config/fonts';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
+import AppProvider from '@/providers/AppProvider';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -25,16 +26,18 @@ export default async function RootLayout({
     return (
         <html lang='en' className={`${primaryFont.className}`}>
             <SessionProvider session={session!}>
-                <body className={''}>
-                    <Theme
-                        attribute='class'
-                        defaultTheme='light'
-                        disableTransitionOnChange
-                    >
-                        {children}
-                    </Theme>
-                    <Toaster />
-                </body>
+                <AppProvider>
+                    <body className={''}>
+                        <Theme
+                            attribute='class'
+                            defaultTheme='light'
+                            disableTransitionOnChange
+                        >
+                            {children}
+                        </Theme>
+                        <Toaster />
+                    </body>
+                </AppProvider>
             </SessionProvider>
         </html>
     );

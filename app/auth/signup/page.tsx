@@ -10,6 +10,7 @@ import { RegisterForm } from '@/components/auth/register-form';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Suspense } from 'react';
+import { SocialLogin } from '@/components/auth/SocialLogin';
 
 export default function SignUp() {
     return (
@@ -27,7 +28,8 @@ export default function SignUp() {
                             {/* Form */}
                             {/* <RegisterForm /> */}
                             <Suspense>
-                                <LoginForm />
+                                {/* <LoginForm /> */}
+                                <SocialLogin />
                             </Suspense>
                             {/* Footer */}
                             <SwitchLogin signIn className='mt-5' />

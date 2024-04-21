@@ -29,10 +29,10 @@ import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/spinner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { decreaseCredits } from '@/app/_actions/user-actions';
 import { revalidateAllPaths } from '@/app/_actions/shared-actions';
 import { VoiceTone } from '@/types/types';
 import { VOICE_TONES } from '../config/const';
+import { useUserCredits } from '@/hooks/use-user-credits';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;
@@ -69,6 +69,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
         postRequest: { description, templateId, toneId },
     } = useContext(PostWritterContext);
     const { data: session, update } = useSession();
+    const { creditBalance, update: updateCredits } = useUserCredits();
 
     const searchParams = useSearchParams();
     const urlDescription = searchParams.get('description');
@@ -104,14 +105,8 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
             return;
         }
         try {
-            console.log('decreasing credits');
-
-            console.log('should be updated by now');
             await requestPost(data);
-            const updatedUser = await decreaseCredits(session?.user?.id!, 1);
-            console.log(updatedUser);
-            const creditBalance = updatedUser.creditBalance;
-            await update({ ...session?.user, creditBalance });
+            updateCredits(creditBalance - 1);
             await revalidateAllPaths();
         } catch (error) {
             console.log(error);

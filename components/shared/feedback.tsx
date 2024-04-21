@@ -110,7 +110,7 @@ export default function Feedback({}) {
 
                     <div className='mt-3 text-right'>
                         <Button disabled={isloading}>
-                            {isloading && <Spinner />}
+                            {isloading && <Spinner className='mr-2' />}
                             Enviar
                         </Button>
                     </div>
@@ -121,7 +121,7 @@ export default function Feedback({}) {
                 className='absolute left-0 top-0 -translate-x-full translate-y-1/4 cursor-pointer rounded-l-lg bg-background p-4 px-1 text-sm text-primary transition [writing-mode:vertical-rl;] hover:bg-background'
                 onClick={() => setIsVisible(!isVisible)}
             >
-                Tu Opinión
+                Feedback
             </div>
 
             <Button
