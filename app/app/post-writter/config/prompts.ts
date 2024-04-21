@@ -316,8 +316,7 @@ export const POST_TEMPLATES: Omit<
         > {highlight 6}
         > {highlight 7}
         Estoy seguro de que me estoy perdiendo algunas cosas, pero estos fueron los aspectos clave.
-        {x} will always be special. 
-        {x} siempre será especial.
+        
         No puedo esperar a ver qué tiene preparado {X}.
         {HASHTAGS}`,
     },
