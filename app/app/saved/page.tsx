@@ -1,12 +1,9 @@
 import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/shared/Heading';
 import { db } from '@/lib/prisma';
-import { PostCard } from './_components/PostCard';
 import { SavedPageClient } from './_components/SavedPageClient';
-import { getSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { wait } from '@/lib/utils';
 
 const findPostByUserId = async (userId: string) => {
     return db.linkedinPost.findMany({
@@ -31,7 +28,7 @@ const findIdeasByUserId = async (userId: string) => {
     });
 };
 
-export default async function IdeasPage() {
+export default async function SavedPage() {
     const session = await getServerSession(authOptions);
     const userPosts = await findPostByUserId(session?.user.id!);
     const userCarrusels = await findCarruselsByUserId(session?.user.id!);
@@ -44,7 +41,7 @@ export default async function IdeasPage() {
                 title='Post y Carrusels guardados'
                 subtitle='Aquí encontrarás tus post y carrusels guardados.'
             />
-            <Separator />
+            <Separator className='mb-6' />
 
             <SavedPageClient
                 posts={userPosts}

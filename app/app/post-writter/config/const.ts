@@ -157,248 +157,275 @@ export const POST_CATEGORIES: Pure<PrismaClient.PostCategory>[] = [
         description: '',
     },
 ] as const;
-
 export const COLOR_PALETTES = [
     {
-        font: '#ffffff',
-        background: '#0d3b66',
-        accent: '#fae596',
-        primary: '#f4a261',
+        font: '#146C94', // Deep teal
+        background: '#F6F1F1', // Soft white
+        accent: '#19A7CE', // Vibrant cyan
+        primary: '#AFD3E2', // Light blue-gray
+        explanation:
+            'A calming and serene palette with cool tones, perfect for wellness or tranquility themes.',
         id: 1,
     },
     {
-        font: '#000000',
-        background: '#ff6b6b',
-        accent: '#ffe66d',
-        primary: '#f4a261',
+        font: '#212121', // Deep charcoal
+        background: '#FAFAFA', // Bright white
+        accent: '#F44336', // Bright red
+        primary: '#FFC107', // Warm amber
+        explanation:
+            'A bold palette with warm tones and high contrast, suitable for energetic and modern designs.',
         id: 2,
     },
     {
-        font: '#f4f4f2',
-        background: '#346751',
-        accent: '#c84b31',
-        primary: '#f4a261',
+        font: '#00274D', // Deep navy blue
+        background: '#E8F1F5', // Light sky blue
+        accent: '#FFB90F', // Golden yellow
+        primary: '#01786F', // Dark teal-green
+        explanation:
+            'A nautical-themed palette with deep blues and contrasting golden yellow, great for maritime or outdoor themes.',
         id: 3,
     },
     {
-        font: '#f4e8c1',
-        background: '#22333b',
-        accent: '#d9594c',
-        primary: '#f4a261',
+        font: '#3D3D3D', // Dark gray
+        background: '#FFF8E1', // Light cream
+        accent: '#FF7043', // Coral orange
+        primary: '#FFB74D', // Soft amber
+        explanation:
+            'A warm and welcoming palette with earthy tones, ideal for projects with a vintage or rustic feel.',
         id: 4,
     },
     {
-        font: '#27213c',
-        background: '#5a352a',
-        accent: '#e3b23c',
-        primary: '#f4a261',
+        font: '#333333', // Deep black
+        background: '#FFFFFF', // Pure white
+        accent: '#E91E63', // Bright pink
+        primary: '#9C27B0', // Rich purple
+        explanation:
+            'A vibrant and lively palette with high energy, suitable for modern, playful themes.',
         id: 5,
     },
     {
-        font: '#2d3142',
-        background: '#b2b2b2',
-        accent: '#ef8354',
-        primary: '#f4a261',
+        font: '#2C3E50', // Dark navy gray
+        background: '#ECF0F1', // Light gray
+        accent: '#3498DB', // Bright blue
+        primary: '#2ECC71', // Bright green
+        explanation:
+            'A fresh palette with a mix of cool tones, suitable for tech or environmental projects.',
         id: 6,
     },
     {
-        font: '#1b2021',
-        background: '#51513d',
-        accent: '#f4d8cd',
-        primary: '#f4a261',
+        font: '#4A235A', // Deep purple
+        background: '#FDEDEC', // Soft blush pink
+        accent: '#EC7063', // Warm red
+        primary: '#F5B7B1', // Light rose pink
+        explanation:
+            'A romantic palette with a gentle and inviting feel, ideal for projects related to love or celebration.',
         id: 7,
     },
     {
-        font: '#011627',
-        background: '#fdfffc',
-        accent: '#2ec4b6',
-        primary: '#f4a261',
+        font: '#34495E', // Dark gray-blue
+        background: '#F2F3F4', // Soft gray-white
+        accent: '#E74C3C', // Bright red
+        primary: '#8E44AD', // Deep purple
+        explanation:
+            'A sophisticated palette with bold contrasts, ideal for projects requiring strong visual impact.',
         id: 8,
     },
     {
-        font: '#f9dc5c',
-        background: '#ec4e20',
-        accent: '#d81159',
-        primary: '#f4a261',
+        font: '#1C2833', // Deep blue-black
+        background: '#F7F9F9', // Light blue-gray
+        accent: '#F4D03F', // Bright yellow
+        primary: '#1ABC9C', // Vibrant teal
+        explanation:
+            'A bright and cheerful palette with playful elements, great for tech or creative designs.',
+        id: 9,
     },
     {
-        font: '#011f4b',
-        background: '#03396c',
-        accent: '#ff7b25',
-        primary: '#f4a261',
+        font: '#6A1B9A', // Deep violet
+        background: '#EDE7F6', // Light lavender
+        accent: '#BA68C8', // Medium purple
+        primary: '#7B1FA2', // Rich purple
+        explanation:
+            'A monochromatic purple palette with various shades, ideal for artistic and creative projects.',
+        id: 10,
     },
     {
-        font: '#ffffff',
-        background: '#003f88',
-        accent: '#e5e5e5',
-        primary: '#f4a261',
+        font: '#004D40', // Dark teal-green
+        background: '#E0F2F1', // Soft mint green
+        accent: '#26A69A', // Vibrant teal
+        primary: '#80CBC4', // Light teal
+        explanation:
+            'An analogous green palette with soothing tones, perfect for eco-friendly or nature-focused designs.',
+        id: 11,
     },
     {
-        font: '#ffffff',
-        background: '#101820',
-        accent: '#f2aa4c',
-        primary: '#f4a261',
+        font: '#BF360C', // Dark reddish-brown
+        background: '#FFEBEE', // Soft pink
+        accent: '#F44336', // Bright red
+        primary: '#E57373', // Light red
+        explanation:
+            'A complementary palette with warm tones, suitable for bold and dramatic designs.',
+        id: 12,
     },
     {
-        font: '#f5f0e1',
-        background: '#002500',
-        accent: '#929982',
-        primary: '#f4a261',
+        font: '#263238', // Dark slate gray
+        background: '#ECEFF1', // Light gray
+        accent: '#FF6F00', // Bright orange
+        primary: '#FFA000', // Rich amber
+        explanation:
+            'A contrasting palette with gray and orange tones, ideal for energetic and modern themes.',
+        id: 13,
     },
     {
-        font: '#0b090a',
-        background: '#f5f3f4',
-        accent: '#a9927d',
-        primary: '#f4a261',
+        font: '#1B5E20', // Deep forest green
+        background: '#E8F5E9', // Light mint green
+        accent: '#43A047', // Medium green
+        primary: '#388E3C', // Dark green
+        explanation:
+            'An analogous palette with various greens, ideal for projects with a focus on sustainability or nature.',
+        id: 14,
     },
     {
-        font: '#ffffff',
-        background: '#5f0f40',
-        accent: '#9a031e',
-        primary: '#f4a261',
+        font: '#01579B', // Deep blue
+        background: '#E1F5FE', // Soft sky blue
+        accent: '#03A9F4', // Bright blue
+        primary: '#0288D1', // Medium blue
+        explanation:
+            'A monochromatic blue palette with different shades, perfect for technology or business projects.',
+        id: 15,
     },
     {
-        font: '#1d1d1d',
-        background: '#fefae0',
-        accent: '#f77f00',
-        primary: '#f4a261',
+        font: '#3E2723', // Dark brown
+        background: '#FFEB3B', // Bright yellow
+        accent: '#FF9800', // Vibrant orange
+        primary: '#F57C00', // Deep orange
+        explanation:
+            'A triadic palette with a mix of brown, yellow, and orange, suitable for projects with a bold and vibrant feel.',
+        id: 16,
     },
     {
-        font: '#f2f3ae',
-        background: '#f7ff56',
-        accent: '#ff9b42',
-        primary: '#f4a261',
+        font: '#212121', // Dark charcoal
+        background: '#FAFAFA', // Soft white
+        accent: '#009688', // Bright teal
+        primary: '#4CAF50', // Medium green
+        explanation:
+            'A harmonious palette with complementary green and teal, ideal for projects requiring balance and calm.',
+        id: 17,
     },
     {
-        font: '#f1faee',
-        background: '#1d3557',
-        accent: '#e63946',
-        primary: '#f4a261',
+        font: '#5D4037', // Dark chocolate brown
+        background: '#FFCDD2', // Soft pink
+        accent: '#FF8A80', // Bright pink-red
+        primary: '#E57373', // Light red
+        explanation:
+            'A warm palette with earthy and pink tones, ideal for projects focusing on love or creativity.',
+        id: 18,
     },
     {
-        font: '#a8dadc',
-        background: '#457b9d',
-        accent: '#1d3557',
-        primary: '#f4a261',
+        font: '#311B92', // Deep purple
+        background: '#EDE7F6', // Soft lavender
+        accent: '#7E57C2', // Medium purple
+        primary: '#512DA8', // Dark purple
+        explanation:
+            'A monochromatic purple palette with various shades, great for artistic or creative themes.',
+        id: 19,
     },
     {
-        font: '#1d3557',
-        background: '#a8dadc',
-        accent: '#f1faee',
-        primary: '#f4a261',
+        font: '#283593', // Deep blue
+        background: '#E8EAF6', // Soft blue-gray
+        accent: '#3F51B5', // Medium blue
+        primary: '#5C6BC0', // Dark blue
+        explanation:
+            'A triadic blue palette with complementary shades, ideal for technology or business themes.',
+        id: 20,
     },
     {
-        font: '#e63946',
-        background: '#f1faee',
-        accent: '#a8dadc',
-        primary: '#f4a261',
+        font: '#F57F17', // Deep yellow-orange
+        background: '#FFFDE7', // Soft cream
+        accent: '#FFCA28', // Bright yellow-orange
+        primary: '#FFB300', // Medium amber
+        explanation:
+            'An analogous palette with warm orange and yellow tones, ideal for energetic and lively themes.',
+        id: 21,
     },
     {
-        font: '#f4f1de',
-        background: '#3d405b',
-        accent: '#81b29a',
-        primary: '#f4a261',
+        font: '#01579B', // Deep blue
+        background: '#E1F5FE', // Light blue
+        accent: '#03A9F4', // Bright blue
+        primary: '#0288D1', // Medium blue
+        explanation:
+            'A monochromatic blue palette with varying intensities, great for technology or corporate projects.',
+        id: 22,
     },
     {
-        font: '#f2cc8f',
-        background: '#e07a5f',
-        accent: '#3d405b',
-        primary: '#f4a261',
+        font: '#424242', // Dark gray
+        background: '#F5F5F5', // Light gray
+        accent: '#FFC107', // Bright yellow
+        primary: '#FF9800', // Deep orange
+        explanation:
+            'A contrasting palette with gray and orange tones, suitable for energetic and vibrant themes.',
+        id: 23,
     },
     {
-        font: '#e07a5f',
-        background: '#f2cc8f',
-        accent: '#81b29a',
-        primary: '#f4a261',
+        font: '#2E7D32', // Deep forest green
+        background: '#E8F5E9', // Light mint green
+        accent: '#388E3C', // Medium green
+        primary: '#1B5E20', // Dark green
+        explanation:
+            'An analogous green palette with a range of shades, perfect for eco-friendly or nature-focused projects.',
+        id: 24,
     },
     {
-        font: '#3d405b',
-        background: '#f4f1de',
-        accent: '#e07a5f',
-        primary: '#f4a261',
+        font: '#1B2631', // Deep blue-black
+        background: '#F8F9F9', // Light gray
+        accent: '#3498DB', // Bright blue
+        primary: '#2ECC71', // Vibrant green
+        explanation:
+            'A high-energy palette with contrasting colors, ideal for tech or modern themes.',
+        id: 25,
     },
     {
-        font: '#f4f1de',
-        background: '#81b29a',
-        accent: '#f2cc8f',
-        primary: '#f4a261',
+        font: '#880E4F', // Deep magenta
+        background: '#FCE4EC', // Soft pink
+        accent: '#D81B60', // Bright magenta
+        primary: '#EC407A', // Vibrant pink
+        explanation:
+            'A monochromatic pink palette with varying shades, ideal for artistic or romantic projects.',
+        id: 26,
     },
     {
-        font: '#81b29a',
-        background: '#f4f1de',
-        accent: '#3d405b',
-        primary: '#f4a261',
+        font: '#01579B', // Deep blue
+        background: '#E1F5FE', // Light blue
+        accent: '#03A9F4', // Vibrant blue
+        primary: '#0288D1', // Medium blue
+        explanation:
+            'A monochromatic blue palette with different intensities, suitable for technology or business projects.',
+        id: 27,
     },
     {
-        font: '#f2cc8f',
-        background: '#81b29a',
-        accent: '#f4f1de',
-        primary: '#f4a261',
+        font: '#283593', // Deep blue
+        background: '#E8EAF6', // Light blue-gray
+        accent: '#3F51B5', // Medium blue
+        primary: '#5C6BC0', // Dark blue
+        explanation:
+            'A triadic blue palette with complementary shades, ideal for technology or business themes.',
+        id: 28,
     },
     {
-        font: '#353535',
-        background: '#3c6e71',
-        accent: '#d9d9d9',
-        primary: '#f4a261',
+        font: '#F57F17', // Deep yellow-orange
+        background: '#FFFDE7', // Light cream
+        accent: '#FFC107', // Bright yellow-orange
+        primary: '#FFB300', // Deep amber
+        explanation:
+            'An analogous palette with a mix of warm orange and yellow tones, ideal for energetic themes.',
+        id: 29,
     },
     {
-        font: '#d9d9d9',
-        background: '#284b63',
-        accent: '#f4d35e',
-        primary: '#f4a261',
-    },
-    {
-        font: '#f4d35e',
-        background: '#ee964b',
-        accent: '#f95738',
-        primary: '#f4a261',
-    },
-    {
-        font: '#272838',
-        background: '#f3d9dc',
-        accent: '#99e1d9',
-        primary: '#f4a261',
-    },
-    {
-        font: '#99e1d9',
-        background: '#272838',
-        accent: '#f3d9dc',
-        primary: '#f4a261',
-    },
-    {
-        font: '#f3d9dc',
-        background: '#99e1d9',
-        accent: '#272838',
-        primary: '#f4a261',
-    },
-    {
-        font: '#272838',
-        background: '#99e1d9',
-        accent: '#f3d9dc',
-        primary: '#f4a261',
-    },
-    {
-        font: '#ffffff',
-        background: '#264653',
-        accent: '#2a9d8f',
-        primary: '#f4a261',
-    },
-    {
-        font: '#264653',
-        background: '#2a9d8f',
-        accent: '#e9c46a',
-        primary: '#f4a261',
-    },
-    {
-        font: '#2a9d8f',
-        background: '#e9c46a',
-        accent: '#f4a261',
-        primary: '#f4a261',
-    },
-    {
-        font: '#e9c46a',
-        background: '#f4a261',
-        accent: '#e76f51',
-        primary: '#f4a261',
+        font: '#263238', // Dark slate gray
+        background: '#ECEFF1', // Light gray
+        accent: '#FF6F00', // Bright orange
+        primary: '#FFA000', // Rich amber
+        explanation:
+            'A contrasting palette with gray and orange tones, suitable for vibrant and energetic themes.',
+        id: 30,
     },
 ];

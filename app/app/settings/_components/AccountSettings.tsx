@@ -23,6 +23,7 @@ import { wait } from '@/lib/utils';
 
 const generalSettingsSchema = z.object({
     name: z.string(),
+    email: z.string().email(),
 });
 
 export type GeneralSettingsForm = z.infer<typeof generalSettingsSchema>;
@@ -37,20 +38,10 @@ export const AccountSettings = () => {
         resolver: zodResolver(generalSettingsSchema),
         defaultValues: {
             name: user?.name || '',
+            email: user?.email || '',
             image: user?.image || '',
         },
     });
-
-    // TODO: there must be a better way to do this
-    useEffect(() => {
-        if (user?.name) {
-            form.reset({
-                name: user.name,
-                // @ts-ignore
-                image: session.user.image,
-            });
-        }
-    }, [session, form, form.reset, user?.name]);
 
     const onSubmit = async (values: GeneralSettingsForm) => {
         setStatus('loading');
@@ -76,7 +67,10 @@ export const AccountSettings = () => {
             />
             <div className='max-w-md mt-4'>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='flex flex-col gap-2'
+                    >
                         <FormField
                             control={form.control}
                             name='name'
@@ -89,9 +83,24 @@ export const AccountSettings = () => {
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormDescription>
-                                        Para saber cómo llamarte ;)
-                                    </FormDescription>
+                                    <FormDescription></FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='email'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder='ricardo@flowpost.io'
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormDescription></FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}

@@ -98,7 +98,8 @@ export const AuthorSettings = () => {
                             }}
                         />
                     </div>
-                    <div className='flex gap-2 items-center'>
+                    {/* TODO: For now we remove this */}
+                    {/* <div className='flex gap-2 items-center'>
                         <Checkbox
                             checked={carousel.settings.showAuthorInFirstOnly}
                             onCheckedChange={toggleShowAuthorInFirstOnly}
@@ -106,7 +107,7 @@ export const AuthorSettings = () => {
                         <Label className='text-xs font-normal italic'>
                             Mostrar solo en primera y última página
                         </Label>
-                    </div>
+                    </div> */}
                 </div>
             </CollapsibleContent>
         </Collapsible>

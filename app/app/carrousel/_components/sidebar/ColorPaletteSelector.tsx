@@ -57,15 +57,15 @@ export const ColorPaletteSelect = ({
                     value={colorPalette.font}
                     onColorChange={changeFont}
                 />
-                <Label>Acentuado</Label>
-                <SimpleColorPicker
-                    value={colorPalette.accent}
-                    onColorChange={changeAccent}
-                />
                 <Label>Primario</Label>
                 <SimpleColorPicker
                     value={colorPalette.primary}
                     onColorChange={changePrimary}
+                />
+                <Label>Acentuado</Label>
+                <SimpleColorPicker
+                    value={colorPalette.accent}
+                    onColorChange={changeAccent}
                 />
             </div>
         </div>

@@ -30,7 +30,7 @@ export const BigNumberSlide = ({
     return (
         <>
             <div
-                className='absolute w-full h-full top-0 left-0'
+                className='absolute w-full h-full top-0 left-0 z-10'
                 style={{
                     fontSize: '40em',
                     color: brand.colorPalette.accent,
