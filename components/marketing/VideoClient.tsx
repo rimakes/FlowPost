@@ -22,7 +22,7 @@ export function VideoClient({
     if (!hasMouted) return null;
 
     return (
-        <div className={cn(`aspect-[1280/720]`, className)}>
+        <div className={cn(`aspect-[1158/720]`, className)}>
             <ReactPlayer
                 url={videoUrl}
                 width={'100%'}

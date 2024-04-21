@@ -118,17 +118,6 @@ export const POST_TEMPLATES: Omit<
     'createdAt' | 'updatedAt'
 >[] = [
     {
-        id: '1',
-        name: 'Lo que Me Impresiona',
-        tags: ['opiniones', 'reflexiones', 'conclusiones'],
-        content: `
-        He conocido y trabajado con muchos {{XXX}} en los últimos {{XXX}} años. Lo ÚNICO que me impresiona cuando conozco a un {{XXX}} es cómo
-}
-
-        }
-        `,
-    },
-    {
         id: '0',
         name: 'Lo que Me Impresiona',
         tags: ['opiniones', 'reflexiones', 'conclusiones'],
