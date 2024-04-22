@@ -6,7 +6,6 @@ import {
     TBrand,
     TDecorationId,
     TFont,
-    TFontName,
     TMode,
     TSlide,
     TSlideDesignNames,
@@ -16,12 +15,7 @@ import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
 import { cn, isEven } from '@/lib/utils';
 import { SlideSettings } from './SlideSettings';
-import { fontsMap } from '@/config/fonts';
-import { get } from 'http';
-import { ImageAndTextVertical } from './slideContents/ImageAndTextVertical';
-import { ImageAndTextHorizontal } from './slideContents/ImageAndTextHorizontal';
 import { designMap } from './slideContents/contentMaps';
-import { usePathname } from 'next/navigation';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -46,14 +40,8 @@ const translateClasses = {
 type CarouselWorkbenchProps = {};
 
 export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
-    const {
-        currentSlide,
-        nextSlide,
-        previousSlide,
-        carousel,
-        getCompleteBrand,
-        setCurrentSlideTo,
-    } = useContext(CarouselContext);
+    const { currentSlide, nextSlide, previousSlide, carousel } =
+        useContext(CarouselContext);
 
     return (
         <div className='not-sidebar basis-0 grow-[999] min-w-[60%]  p-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] flex flex-col gap-2 relative focus-visible:!border-transparent '>

@@ -9,7 +9,7 @@ import { VideoClient } from './VideoClient';
 type VideoStepsProps = {};
 export function VideoSteps({}: VideoStepsProps) {
     return (
-        <section className='flex flex-col gap-8 relative'>
+        <section className='flex flex-col gap-8 relative max-w-full '>
             <div className='anchor -top-32 absolute' id='how-it-works' />
             <h2
                 className={`text-6xl font-extrabold  relative ${secondaryFont.className} text-center`}
@@ -31,7 +31,7 @@ export function VideoSteps({}: VideoStepsProps) {
                 >
                     <VideoClient
                         videoUrl='/videos/viral-templates.mp4'
-                        className='h-64'
+                        className='max-h-64'
                     />
                 </TextWithMedia>
                 <TextWithMedia
@@ -48,7 +48,7 @@ export function VideoSteps({}: VideoStepsProps) {
                 >
                     <VideoClient
                         videoUrl='/videos/create-viral.mp4'
-                        className='h-64'
+                        className='max-h-64'
                     />
                 </TextWithMedia>
                 <TextWithMedia
@@ -67,7 +67,7 @@ export function VideoSteps({}: VideoStepsProps) {
                 >
                     <VideoClient
                         videoUrl='/videos/create-carousel.mp4'
-                        className='h-64'
+                        className='max-h-64'
                     />
                 </TextWithMedia>
             </div>

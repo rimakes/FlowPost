@@ -16,6 +16,7 @@ type DropzoneProps = {
     maxFiles?: number;
     dragActiveElement?: ReactNode;
     dragInactiveElement?: ReactNode;
+    value?: string;
 };
 export function Dropzone({
     onDrop = () => {},
@@ -24,6 +25,7 @@ export function Dropzone({
     maxFiles = 1,
     dragActiveElement: propDragActiveElement,
     dragInactiveElement: propDragInactiveElement,
+    value,
 }: DropzoneProps) {
     const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
         useDropzone({
@@ -33,12 +35,9 @@ export function Dropzone({
             },
             onDrop: () => {},
             onDropAccepted: (files) => {
-                console.log('Accepted files:', files);
                 onDrop(files);
             },
-            onDropRejected: (files) => {
-                console.log('Rejected files:', files);
-            },
+            onDropRejected: (files) => {},
         });
 
     const dragActiveElement = propDragActiveElement || (
@@ -54,7 +53,7 @@ export function Dropzone({
         </p>
     );
 
-    const hasFilesElement = '';
+    const hasFilesElement = dragInactiveElement;
     // acceptedFiles.length > 0 && <ThumbsUp size={30} />;
 
     return (
@@ -68,7 +67,7 @@ export function Dropzone({
             )}
         >
             <Input type='file' {...getInputProps()} />
-            {acceptedFiles.length > 0
+            {acceptedFiles.length > 0 || value
                 ? hasFilesElement
                 : isDragActive
                   ? dragActiveElement

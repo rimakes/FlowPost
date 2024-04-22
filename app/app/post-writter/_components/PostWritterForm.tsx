@@ -100,7 +100,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
     };
 
     const onSubmit = async (data: PostRequest) => {
-        if (session?.user.creditBalance! <= 0) {
+        if (creditBalance <= 0) {
             toast.error('No tienes créditos suficientes');
             return;
         }

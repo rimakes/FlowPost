@@ -1,6 +1,5 @@
 'use client';
 
-import { FontSelector } from '@/components/shared/FontSelector';
 import {
     Form,
     FormControl,
@@ -11,12 +10,10 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { fontsMap } from '@/config/fonts';
 import { brandKitsSettingsSchema } from '@/types/schemas';
-import { Pure, TFont, TFontName, TFontPalette, TStatus } from '@/types/types';
+import { Pure, TFont, TFontName, TStatus } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Brand } from '@prisma/client';
-import { ChevronsUpDown, ThumbsUp } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { ColorPaletteSelect } from '../../carrousel/_components/sidebar/ColorPaletteSelector';
@@ -33,11 +30,7 @@ import {
 } from '@/components/shared/dropzone/Thumbnails';
 import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { FontPaletteSelector } from '../../carrousel/_components/sidebar/Sidebar';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 // import { uploadFileToCloudinary } from '@/lib/utils';
 
 type BrandKitEditFormProps = {
@@ -121,7 +114,10 @@ export function BrandKitEditForm({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit, onError)}
+                className='flex flex-col gap-2'
+            >
                 <FormField
                     control={form.control}
                     name='name'
@@ -164,43 +160,47 @@ export function BrandKitEditForm({
                                     />
                                     <Dropzone
                                         onDrop={onDrop}
+                                        value={form.getValues('imageUrl')}
                                         className='dropzone h-28 py-2 flex gap-4 items-center justify-center flex-grow'
                                     >
-                                        {session && session!.user.image && (
-                                            <div className=' flex-1 flex flex-col items-center'>
-                                                <p className='text-primary/70'>
-                                                    También puedes
-                                                </p>
-                                                <Button
-                                                    className='mt-2 whitespace-normal'
-                                                    variant={'outline'}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation();
-                                                        form.setValue(
-                                                            'imageUrl',
-                                                            session?.user.image!
-                                                        );
-                                                        console.log(
-                                                            'session',
-                                                            session?.user
-                                                        );
-                                                        setPictures([
-                                                            // @ts-ignore
-                                                            {
-                                                                preview:
-                                                                    session
-                                                                        ?.user
-                                                                        .image!,
-                                                            },
-                                                        ]);
-                                                    }}
-                                                    type='button'
-                                                >
-                                                    Usar tu foto de Linkedin
-                                                </Button>
-                                            </div>
-                                        )}
+                                        {session &&
+                                            session!.user.image &&
+                                            !form.getValues('imageUrl') && (
+                                                <div className=' flex-1 flex flex-col items-center p-2'>
+                                                    <p className='text-primary/70'>
+                                                        También puedes
+                                                    </p>
+                                                    <Button
+                                                        className='mt-2 whitespace-normal bg-emerald-50'
+                                                        variant={'outline'}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            form.setValue(
+                                                                'imageUrl',
+                                                                session?.user
+                                                                    .image!
+                                                            );
+                                                            console.log(
+                                                                'session',
+                                                                session?.user
+                                                            );
+                                                            setPictures([
+                                                                // @ts-ignore
+                                                                {
+                                                                    preview:
+                                                                        session
+                                                                            ?.user
+                                                                            .image!,
+                                                                },
+                                                            ]);
+                                                        }}
+                                                        type='button'
+                                                    >
+                                                        Usar tu foto de Linkedin
+                                                    </Button>
+                                                </div>
+                                            )}
                                     </Dropzone>
                                 </div>
                             </FormControl>
@@ -213,14 +213,14 @@ export function BrandKitEditForm({
                     control={form.control}
                     name='colorPalette'
                     render={({ field }) => (
-                        <FormItem className='flex gap-2 justify-start items-center'>
+                        <FormItem className='flex gap-2 justify-start items-center py-2'>
                             <FormLabel>Colores</FormLabel>
                             <FormControl>
-                                <Popover
+                                <Dialog
                                     open={colorsPopOverisOpen}
                                     onOpenChange={setColorsPopOverisOpen}
                                 >
-                                    <PopoverTrigger
+                                    <DialogTrigger
                                         className='w-full flex items-center justify-between !mt-0'
                                         asChild
                                     >
@@ -234,8 +234,8 @@ export function BrandKitEditForm({
                                                 className='ml-2 flex justify-center'
                                             />
                                         </div>
-                                    </PopoverTrigger>
-                                    <PopoverContent>
+                                    </DialogTrigger>
+                                    <DialogContent>
                                         <>
                                             <ColorPaletteSelect
                                                 colorPalette={form.getValues(
@@ -252,8 +252,8 @@ export function BrandKitEditForm({
                                                 }}
                                             />
                                         </>
-                                    </PopoverContent>
-                                </Popover>
+                                    </DialogContent>
+                                </Dialog>
                             </FormControl>
                             <FormDescription></FormDescription>
                             <FormMessage />

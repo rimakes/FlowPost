@@ -39,7 +39,7 @@ export const BrandKitsSettings = ({
                     <DialogTrigger>
                         <Button>+ Añadir Marca</Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className='overflow-y-auto max-h-full'>
                         <div className='max-w-md mt-4'>
                             <BrandKitEditForm
                                 onSave={() => {

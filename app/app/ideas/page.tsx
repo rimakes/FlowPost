@@ -12,7 +12,7 @@ export default function IdeasPage() {
                 title='Ideas para post'
                 subtitle='Genera ideas para tus post'
             />
-            <Separator />
+            <Separator className='mb-6' />
             <IdeasPageClient />
         </div>
     );

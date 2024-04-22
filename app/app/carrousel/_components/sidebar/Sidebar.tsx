@@ -19,15 +19,9 @@ import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { toast } from 'sonner';
 import { DecorationSelector } from './DecorationSelector';
 import { useRouter } from 'next/navigation';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { LoginButton } from '@/components/auth/login-button';
 import { cn } from '@/lib/utils';
-import { TemplateSelector } from './TemplateSelector';
 import { DownloadButton } from './downloadButton';
 import { ColorPaletteSelect } from './ColorPaletteSelector';
 import { SizeSelector } from './SizeSelector';
@@ -44,7 +38,7 @@ import {
 import { useSession } from 'next-auth/react';
 import { fontTypeMap } from '@/config/const';
 import { ContinueButton } from './ContinueButton';
-import { toCanvas, toSvg } from 'html-to-image';
+import { toCanvas } from 'html-to-image';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type CarouselSidebarProps = {
@@ -66,7 +60,10 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
                 </LoginButton>
             </div>
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
-                <SheetContent side={'left'} className='md:hidden p-0 w-3/4'>
+                <SheetContent
+                    side={'left'}
+                    className='md:hidden p-0 w-3/4 max-h-full overflow-y-auto'
+                >
                     <SideBarContent brands={brands} />
                 </SheetContent>
             </Sheet>
