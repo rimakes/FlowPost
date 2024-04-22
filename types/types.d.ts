@@ -15,6 +15,7 @@ import {
     TIME_OF_THE_DAY,
     daysOfTheWeekMapNew,
 } from '@/config/const';
+import { FONTS } from '@/config/fontsBigList';
 
 export type HttpStatusCode = 200 | 201 | 400 | 401 | 404 | 500; // Extend as needed
 
@@ -130,7 +131,7 @@ type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
 export type TAspectRatioEnum = keyof TAspectRatioMap;
 export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
 
-export type TFontName = keyof typeof fontsMap;
+export type TFontName = (typeof FONTS)[number];
 
 export type TFontPallete = Prisma.FontPaletteGetPayload<{}>;
 

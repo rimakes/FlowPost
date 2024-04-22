@@ -1,7 +1,6 @@
 'use client';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { Brand } from '@prisma/client';
-import { fontsMap } from '@/config/fonts';
 import { TFont, TFontName } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';

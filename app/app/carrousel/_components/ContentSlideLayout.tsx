@@ -8,18 +8,13 @@ import {
 } from '@/types/types';
 import { ArrowRight } from 'lucide-react';
 import { ReactNode, Ref, forwardRef } from 'react';
-import { ASPECT_RATIOS_MAP } from './const';
+import { ASPECT_RATIOS_MAP, aspectRatioClasses } from './const';
 import { SlideProgressBar } from './slideParts/SlideProgressBar';
 import { SlideFotter } from './slideParts/SlideFotter';
 import { SlideHeader } from './slideParts/SlideHeader';
 import { SlideDecoration } from './slideParts/SlideDecoration';
 import { SlideBackground } from './slideParts/SlideBackground';
 import { AspectRatio } from '@prisma/client';
-
-export const aspectRatioClasses = {
-    '4:5': 'aspect-[1080/1350]',
-    '1:1': 'aspect-[1/1]',
-};
 
 export type AspectRatioKeys = keyof typeof aspectRatioClasses;
 

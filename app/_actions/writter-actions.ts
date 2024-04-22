@@ -36,7 +36,7 @@ export async function upsertLinkedinPost(
         author: { handle, name, pictureUrl },
     } = post;
 
-    console.log('upsertLinkedinPost', post, authorId);
+    const userId = isDemo ? '661be88ed1d034dfd861233d' : authorId!;
 
     let linkedinPost: TLinkedinPost;
     if (id === 'new') {
@@ -48,7 +48,11 @@ export async function upsertLinkedinPost(
                     name,
                     pictureUrl, // placeholder or the image of the user
                 },
-                userId: isDemo ? '661be88ed1d034dfd861233d' : authorId!,
+                user: {
+                    connect: {
+                        id: userId,
+                    },
+                },
                 carousel: carouselId
                     ? { connect: { id: carouselId } }
                     : undefined,
@@ -258,7 +262,7 @@ export async function createLinkedinCarousel(
                     id: post.id,
                 },
             },
-            User: {
+            user: {
                 connect: {
                     id: userId,
                 },
@@ -286,7 +290,7 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
                 slides,
                 settings,
                 author,
-                User: {
+                user: {
                     connect: {
                         id: userId,
                     },
@@ -308,7 +312,7 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
         data: {
             slides,
             settings,
-            User: {
+            user: {
                 connect: {
                     id: userId,
                 },

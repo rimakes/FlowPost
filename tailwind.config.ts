@@ -1,5 +1,5 @@
 import { SubContent } from '@radix-ui/react-dropdown-menu';
-import { backgroundPatterns, testo } from './background-patterns';
+import { backgroundPatterns, testo } from './config/background-patterns';
 import {
     GenerateBreakpointsParams,
     generateBreakpoints,

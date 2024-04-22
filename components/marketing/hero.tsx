@@ -5,12 +5,7 @@ import { ArrowDown, ArrowRight, Video } from 'lucide-react';
 import Image from 'next/image';
 import { Button, buttonVariants } from '../ui/button';
 import { signIn, useSession } from 'next-auth/react';
-import {
-    fontsMap,
-    handwritten,
-    primaryFont,
-    secondaryFont,
-} from '@/config/fonts';
+import { handwritten, primaryFont, secondaryFont } from '@/config/fonts';
 import { DemoWidget } from './Demo';
 import Link from 'next/link';
 import { GetAccessButton } from './GetAccessButton';

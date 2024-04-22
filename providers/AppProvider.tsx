@@ -11,30 +11,26 @@ import {
     useState,
 } from 'react';
 
-interface ContextProps {
+type ContextProps = {
     notifications: AppNotifications;
     setNotifications: Dispatch<SetStateAction<AppNotifications>>;
     brandCreated: () => void;
     brandCreateDismissed: () => void;
-    setGetAccessModalOpen: Dispatch<SetStateAction<boolean>>;
-    getAccessModalOpen: boolean;
-}
+    setAccessModalIsOpen: Dispatch<SetStateAction<boolean>>;
+    accessModalIsOpen: boolean;
+};
 
 export const AppContext = createContext<ContextProps>({
     notifications: {} as AppNotifications,
     setNotifications: () => ({}) as AppNotifications,
     brandCreated: () => {},
     brandCreateDismissed: () => {},
-    setGetAccessModalOpen: () => false,
-    getAccessModalOpen: false,
+    setAccessModalIsOpen: () => false,
+    accessModalIsOpen: false,
 });
 
-export default function AppProvider({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    const [getAccessModalOpen, setGetAccessModalOpen] = useState(false);
+export function AppProvider({ children }: { children: React.ReactNode }) {
+    const [accessModalIsOpen, setAccessModalIsOpen] = useState<boolean>(false);
 
     // REVIEW: Why this hook is problematic?
     // https://github.com/uidotdev/usehooks/issues/218
@@ -86,13 +82,11 @@ export default function AppProvider({
                 brandCreated,
                 notifications,
                 setNotifications,
-                getAccessModalOpen,
-                setGetAccessModalOpen,
+                accessModalIsOpen,
+                setAccessModalIsOpen,
             }}
         >
             {children}
         </AppContext.Provider>
     );
 }
-
-export const useAppProvider = () => useContext(AppContext);

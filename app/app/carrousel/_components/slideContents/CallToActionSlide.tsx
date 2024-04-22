@@ -4,7 +4,7 @@ import { ASPECT_RATIOS_MAP } from '../const';
 import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
-import { aspectRatioClasses, AspectRatioKeys } from '../ContentSlideLayout';
+import { AspectRatioKeys } from '../ContentSlideLayout';
 import { useRef, useContext, useEffect, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import { CarouselContext } from '../ContextProvider';

@@ -27,16 +27,16 @@ export function AppModals({}: AppModalsProps) {
         : undefined;
     const hasBrands = data?.user?.brands?.length! > 0;
 
-    const profileSetupNotification =
+    const brandSetupNotification =
         !hasBrands &&
         !profileSetup?.done &&
         (profileSetup?.dimissals! === 0 || daysSinceLastInteraction! > 0);
 
     useEffect(() => {
-        if (profileSetupNotification) {
+        if (brandSetupNotification) {
             setIsOpen(true);
         }
-    }, [notifications, profileSetupNotification]);
+    }, [notifications, brandSetupNotification]);
 
     return (
         <Dialog

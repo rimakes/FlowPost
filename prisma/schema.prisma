@@ -172,7 +172,7 @@ model LinkedinPost {
     // RELATIONS
     author        Author
     scheduledPost ScheduledPost[] // One-to-many relation: One LinkedIn post can be part of multiple scheduled posts
-    User          User            @relation(fields: [userId], references: [id])
+    user          User            @relation(fields: [userId], references: [id])
     userId        String          @db.ObjectId
 
     carousel Carousel[] //REVIEW: Prisma does not support nullable unique (as should be the linkedinPostId in the Carousel model to make a 1-to-1 relationship), so we are using 1-to-m for now
@@ -248,7 +248,7 @@ model Carousel {
     author           Author
     swipeLabel       String           @default("Desliza")
     settings         CarouselSettings
-    User             User?            @relation(fields: [userId], references: [id])
+    user             User?            @relation(fields: [userId], references: [id])
     userId           String?          @db.ObjectId
     linkedinPost     LinkedinPost?    @relation(fields: [linkedinPostId], references: [id])
     linkedinPostId   String?          @db.ObjectId

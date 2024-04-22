@@ -7,15 +7,10 @@ import { Separator } from '../ui/separator';
 import {
     CalendarPlus,
     GalleryHorizontal,
-    Info,
     LayoutDashboard,
-    MoreHorizontal,
-    Newspaper,
     Palette,
-    PersonStanding,
     Rocket,
     Shield,
-    Sparkle,
     Star,
     UserSquare,
 } from 'lucide-react';
@@ -34,11 +29,14 @@ export function GetAccessButton({
     className,
 }: GetAccessButtonProps) {
     const [step, setStep] = useState(1);
-    const { getAccessModalOpen, setGetAccessModalOpen } =
-        useContext(AppContext);
+    const { accessModalIsOpen, setAccessModalIsOpen } = useContext(AppContext);
+
+    // getting them from the context wihout using them works
 
     return (
-        <Dialog open={getAccessModalOpen} onOpenChange={setGetAccessModalOpen}>
+        <Dialog
+        // open={accessModalIsOpen} onOpenChange={setAccessModalIsOpen}
+        >
             <DialogTrigger asChild>
                 <Button
                     className={cn(`flex shadow-xl `, className)}
@@ -49,12 +47,7 @@ export function GetAccessButton({
                 </Button>
             </DialogTrigger>
             <DialogContent className='max-h-full overflow-y-auto min-h-[2/3]'>
-                {
-                    {
-                        1: <FirstStep onNext={setStep} />,
-                        2: <SecondStep />,
-                    }[step]
-                }
+                {step === 1 ? <FirstStep onNext={setStep} /> : <SecondStep />}
             </DialogContent>
         </Dialog>
     );

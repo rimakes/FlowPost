@@ -2569,7 +2569,7 @@ export const FONTS = [
     'Zhi Mang Xing',
     'Zilla Slab',
     'Zilla Slab Highlight',
-];
+] as const;
 
 // export const aBeeZee = ABeeZee({
 //     subsets: ['latin'],

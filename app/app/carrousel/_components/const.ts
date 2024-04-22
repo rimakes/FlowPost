@@ -159,4 +159,9 @@ export const ASPECT_RATIOS_MAP = {
 // as const made the strings literal types instead of just string
 // satisfies makes sure the keys are the same as the enum from the prisma schema
 
+export const aspectRatioClasses = {
+    '4:5': 'aspect-[1080/1350]',
+    '1:1': 'aspect-[1/1]',
+};
+
 // export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];

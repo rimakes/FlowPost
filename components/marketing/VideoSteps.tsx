@@ -5,6 +5,9 @@ import { Calendar, Languages, Rocket, Sparkles } from 'lucide-react';
 import { GetAccessButton, ModalItem } from './GetAccessButton';
 import { TextWithMedia } from './TextWithMedia';
 import { VideoClient } from './VideoClient';
+import { useContext } from 'react';
+import { AppContext } from '@/providers/AppProvider';
+import { Button } from '../ui/button';
 
 type VideoStepsProps = {};
 export function VideoSteps({}: VideoStepsProps) {

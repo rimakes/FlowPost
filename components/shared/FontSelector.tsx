@@ -1,6 +1,5 @@
 'use client';
 
-import { fontsMap } from '@/config/fonts';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { useState } from 'react';
