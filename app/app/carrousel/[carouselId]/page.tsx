@@ -35,24 +35,28 @@ export default async function CarouselPage({ params }: props) {
 
     console.log('userBrand1', userBrands[0]);
 
-    // If the carousel is new and the user has brands, we set the carousel settings to the first brand
-    if (userBrands.length > 0 && carouselId === 'new') {
+    if (carouselId === 'new') {
         carousel = {
-            ...fakeCarousel,
+            ...carousel,
             id: 'new',
-            settings: {
-                colorPalette: userBrands[0].colorPalette,
-                fontPalette: userBrands[0].fontPalette,
-                aspectRatio: 'PORTRAIT',
-                backgroundPattern: 'Bubbles',
-                showDecoration: true,
-            },
-            author: {
-                handle: userBrands[0].handle,
-                name: userBrands[0].name,
-                pictureUrl: userBrands[0].imageUrl,
-            },
-        } as TCarousel;
+        };
+        if (userBrands.length > 0) {
+            carousel = {
+                ...carousel,
+                settings: {
+                    colorPalette: userBrands[0].colorPalette,
+                    fontPalette: userBrands[0].fontPalette,
+                    aspectRatio: 'PORTRAIT',
+                    backgroundPattern: 'Bubbles',
+                    showDecoration: true,
+                },
+                author: {
+                    handle: userBrands[0].handle,
+                    name: userBrands[0].name,
+                    pictureUrl: userBrands[0].imageUrl,
+                },
+            } as TCarousel;
+        }
     }
 
     // If the carousel is not new, we fetch it from the database

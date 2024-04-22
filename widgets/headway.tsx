@@ -10,6 +10,7 @@ export function HeadwayScript() {
     return (
         <>
             <TooltipProvider>
+                k
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <div className='headway cursor-pointer' id='headway' />

@@ -22,11 +22,8 @@ export const AuthorSettings = () => {
         },
         editName,
         editHandle,
-        toggleShowAuthor,
         toggleShowName,
-        toggleShowProfilePic,
         toggleShowHandle,
-        toggleShowAuthorInFirstOnly,
     } = useContext(CarouselContext);
 
     return (

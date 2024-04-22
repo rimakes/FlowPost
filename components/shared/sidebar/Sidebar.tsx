@@ -14,15 +14,6 @@ import {
     SidebarOpen,
     SidebarClose,
     Feather,
-    LucideIcon,
-    Sparkles,
-    GalleryHorizontal,
-    Paperclip,
-    Lightbulb,
-    BrainCog,
-    CalendarCheck,
-    Settings,
-    PanelTopCloseIcon,
     MessageCircleHeart,
 } from 'lucide-react';
 import Link from 'next/link';

@@ -14,6 +14,7 @@ export default function Logo({ linkUrl = '/' }) {
                 className='object-contain'
                 fill
                 sizes='(max-width: 640px) 50vw, 640px'
+                quality={100}
             />
         </Link>
     );

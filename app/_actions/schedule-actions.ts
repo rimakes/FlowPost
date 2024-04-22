@@ -195,7 +195,7 @@ export const postOnLinkedIn = async (
             isReshareDisabledByAuthor: false,
         };
 
-        console.log({ body });
+        console.log('LOG - postOnLinkedin - body before config', { body });
 
         const config = {
             method: 'post',
@@ -210,6 +210,8 @@ export const postOnLinkedIn = async (
             data: JSON.stringify(body),
         };
         const response = await axios(config);
+
+        console.log('LOG - postOnLinkedin - response', { response });
 
         return response;
     } catch (error) {

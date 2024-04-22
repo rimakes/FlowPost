@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { HeadwayScript } from '@/scripts/headway';
+import { HeadwayScript } from '@/widgets/headway';
 import { PenLine } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Logo from '../logo';

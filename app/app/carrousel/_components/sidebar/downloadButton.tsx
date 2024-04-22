@@ -31,8 +31,6 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
     const onDownload = async (format: ImageFormat) => {
         setStatus('loading');
-        let dataUrl;
-        let link = document.createElement('a');
 
         switch (format) {
             case 'pdf':
@@ -78,7 +76,7 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
     const downloadButton =
         status === 'loading' ? (
-            <Button disabled={true} className={cn(``, className)}>
+            <Button disabled={true} className={cn(`w-full`, className)}>
                 Descargando...
                 <Spinner className='ml-2' />
             </Button>

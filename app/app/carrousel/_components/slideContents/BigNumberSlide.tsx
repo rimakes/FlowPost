@@ -50,6 +50,7 @@ export const BigNumberSlide = ({
             </div>
             <div>
                 <SimpleEditor
+                    className='z-10'
                     onDebouncedUpdate={editTitle}
                     slideElement='title'
                     defaultValue={title}
@@ -57,6 +58,7 @@ export const BigNumberSlide = ({
                 />
 
                 <SimpleEditor
+                    className='z-10'
                     onDebouncedUpdate={editTagline}
                     slideElement='tagline'
                     defaultValue={tagline}

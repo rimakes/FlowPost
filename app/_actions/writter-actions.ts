@@ -284,6 +284,8 @@ export async function upsertCarousel(carousel: TCarousel, userId: string) {
         title,
     } = carousel;
 
+    console.log('upsertCarousel', carousel);
+
     if (carousel.id === 'new' || carousel.id === undefined) {
         const newCarousel = await db.carousel.create({
             data: {

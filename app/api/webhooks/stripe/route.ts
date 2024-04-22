@@ -1,10 +1,9 @@
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { findCheckoutSession, stripe } from '@/lib/stripe';
+import { stripe } from '@/lib/stripe';
 import { appConfig } from '@/config/shipper.appconfig';
 import { db } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { signIn } from 'next-auth/react';
 import { getCreditsByPriceId } from '@/lib/utils';
 import { Prisma } from '@prisma/client';
 

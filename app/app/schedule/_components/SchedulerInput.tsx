@@ -96,6 +96,8 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
     const timeOfTheDayNames = Object.keys(TIME_OF_THE_DAY);
     const timeSlots = Object.keys(optimisticTimeMap);
 
+    const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     return (
         <>
             <table className='w-full'>
@@ -178,11 +180,34 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                 <SelectTrigger>Añadir hora</SelectTrigger>
                 <SelectContent>
                     <>
-                        {timeOfTheDayNames.map((time, index) => (
-                            <SelectItem key={index} value={time}>
-                                {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
-                            </SelectItem>
-                        ))}
+                        {timeOfTheDayNames.map((time, index) => {
+                            let now = new Date();
+                            let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
+                            let timeString =
+                                TIME_OF_THE_DAY[time as TNameTimeOfDay];
+                            let dateString = day + timeString;
+                            console.log({ datestring: dateString });
+                            let timeInUTC = parse(
+                                dateString,
+                                'yyyy-M-d hh:mm aa',
+                                new Date()
+                            );
+                            console.log({ timeInUTC });
+                            let timeInUserTimezone = new Intl.DateTimeFormat(
+                                'en-US',
+                                {
+                                    timeZone: currentTimezone,
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                }
+                            ).format(timeInUTC);
+                            console.log({ timeInUserTimezone });
+                            return (
+                                <SelectItem key={index} value={time}>
+                                    {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
+                                </SelectItem>
+                            );
+                        })}
                     </>
                 </SelectContent>
             </Select>

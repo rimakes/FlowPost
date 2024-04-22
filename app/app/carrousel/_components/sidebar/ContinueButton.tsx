@@ -28,10 +28,6 @@ import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
-type ImageFormat = 'pdf';
-
-type ContinueButtonProps = {};
-
 export function ContinueButton({}) {
     const router = useRouter();
     const [status, setStatus] = useState<TStatus>('idle');
