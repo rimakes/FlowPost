@@ -30,6 +30,8 @@ type userPostsProps = {
 export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
     const { startDate } = useContext(SchedulerContext);
 
+    const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     const weekDaysArray = range(0, 7).map((i) => {
         return addDays(startDate, i);
     });
@@ -44,9 +46,15 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
             });
 
             const formattedDayPosts: PostOrSlot[] = dayPosts.map((post) => {
+                let timeInUserTimezone = new Intl.DateTimeFormat('en-US', {
+                    timeZone: currentTimezone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                }).format(post.scheduledPost[0].date);
+
                 return {
                     hasPost: true,
-                    time: format(post.scheduledPost[0].date, 'hh:mm aa'),
+                    time: timeInUserTimezone,
                     postContent: post.content,
                     postId: post.scheduledPost[0].linkedinPostId!,
                     isPublished: post.published,
@@ -78,7 +86,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
         });
 
         return merged;
-    }, [userPosts, userSchedule, weekDaysArray]);
+    }, [currentTimezone, userPosts, userSchedule, weekDaysArray]);
 
     return (
         <>

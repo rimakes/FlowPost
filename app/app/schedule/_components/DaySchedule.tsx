@@ -1,17 +1,8 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { daysOfTheWeekMap } from '@/config/const';
-import { cn, range } from '@/lib/utils';
-import { PostOrSlot, TLinkedinPost, TSlot } from '@/types/types';
-import { MoreHorizontal } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { PostOrSlot } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { PostSlot } from './PostSlot';
 
@@ -20,6 +11,7 @@ type DayScheduleProps = {
     slots: PostOrSlot[];
     className?: string;
 };
+
 export function DaySchedule({ slots, className, date }: DayScheduleProps) {
     const currentDay = new Date();
     const { data } = useSession();
