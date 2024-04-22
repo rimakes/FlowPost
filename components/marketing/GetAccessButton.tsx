@@ -125,7 +125,11 @@ type ModalItemProps = {
     description: string;
 };
 
-const ModalItem = ({ icon: Icon, title, description }: ModalItemProps) => {
+export const ModalItem = ({
+    icon: Icon,
+    title,
+    description,
+}: ModalItemProps) => {
     return (
         <div className='flex gap-4 items-center'>
             {/* TODO: how could I do this? */}
@@ -205,7 +209,8 @@ export const SecondStep = ({
                     </PriceCard>
                 ))}
             </div>
-            <div className='flex flex-col items-center'>
+            {/* TODO: Get some juicy links in the future */}
+            {/* <div className='flex flex-col items-center'>
                 <p className='mb-4 text-sm'>Nos has visto en</p>
                 <div className='flex justify-between w-full'>
                     <Sparkle className='h-8 w-8' />
@@ -214,7 +219,7 @@ export const SecondStep = ({
                     <Info className='h-8 w-8' />
                     <MoreHorizontal className='h-8 w-8' />
                 </div>
-            </div>
+            </div> */}
             <Separator className='-mt-4 -mb-4' />
             <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
                 <CheckoutButton

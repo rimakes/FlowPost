@@ -20,7 +20,7 @@ export function Faq() {
 
                 <div>
                     <h2
-                        className={`${secondaryFont.className} border-0 text-3xl`}
+                        className={`${secondaryFont.className} border-0 text-3xl mb-2`}
                     >
                         Preguntas frecuentes
                     </h2>

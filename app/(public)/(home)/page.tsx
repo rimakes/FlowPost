@@ -12,6 +12,9 @@ import Image from 'next/image';
 import { Message } from '@/components/auth/message';
 import { appConfig } from '@/config/shipper.appconfig';
 import { ReactSigninEmail } from '@/emails/ReactSigninEmail';
+import { ModalItem } from '@/components/marketing/GetAccessButton';
+import { Languages } from 'lucide-react';
+import { VideoSteps } from '@/components/marketing/VideoSteps';
 
 export default async function Home() {
     // const session = await auth();
@@ -25,70 +28,7 @@ export default async function Home() {
             {/* <RedirectTweak /> */}
             <Hero />
 
-            <section className='flex flex-col gap-8 relative'>
-                <div className='anchor -top-32 absolute' id='how-it-works' />
-
-                <h2
-                    className={`text-6xl font-extrabold font-grotesqu relative ${secondaryFont.className} text-center`}
-                >
-                    ¿Cómo funciona?
-                </h2>
-                <div className='flex flex-col gap-12'>
-                    <TextWithMedia
-                        title={'1. Cuéntale sobre qué quieres publicar'}
-                        description={
-                            <>
-                                Elige la forma que más cómoda te resulte:{' '}
-                                escríbelo o cuéntalo hablado tal cuál te salga,
-                                la IA se encarga de darle forma 👌
-                            </>
-                        }
-                        side='left'
-                        className=''
-                    >
-                        <VideoClient
-                            videoUrl='/videos/FirstStep.mp4'
-                            className='h-64'
-                        />
-                    </TextWithMedia>
-                    <TextWithMedia
-                        title={'2. Selecciona tono y formato'}
-                        description={
-                            <>
-                                Elige entre las decenas de formatos probados que
-                                la IA personalizará para ti y un tono que se
-                                adapte a tu estilo 🪡
-                            </>
-                        }
-                        side='left'
-                        className=''
-                    >
-                        <VideoClient
-                            videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-                            className='h-64'
-                        />
-                    </TextWithMedia>
-                    <TextWithMedia
-                        title={'3. Genera tu Post Optimizado'}
-                        description={
-                            <>
-                                En segundos, un post de Linkedin estructurado
-                                aplicando las mejores técnicas de copywriting.{' '}
-                                <br />
-                                <br />
-                                ¡EMPIEZA A RECIBIR INTERACCIONES! .
-                            </>
-                        }
-                        side='left'
-                        className=''
-                    >
-                        <VideoClient
-                            videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-                            className='h-64'
-                        />
-                    </TextWithMedia>
-                </div>
-            </section>
+            <VideoSteps />
 
             <Pricing2 />
             <DemoVideo

@@ -217,7 +217,7 @@ export const POST_TEMPLATES: Omit<
         tags: ['ideas', 'consejos'],
         content: `
             10 ideas para {tema} que te harán {algo positivo}:
-            1. {idea 1} {emoji} 
+            1. {idea 1} {emoji}
             2. {idea 2} {emoji}
             3. {idea 3} {emoji}
             4. {idea 4} {emoji}
@@ -243,8 +243,10 @@ export const POST_TEMPLATES: Omit<
         {Explica la idea 1} {Explica como puede ser aplicada}
         2. {idea 2 - Something different to the previous} {emoji}
         {Explica la idea 2} {Explica como puede ser aplicada}
-        2. {idea 3 - Something different to the previous} {emoji}
+        3. {idea 3 - Something different to the previous} {emoji}
         {Explica la idea 3} {Explica como puede ser aplicada}
+
+        {Escribe tantas ideas como indique el título}
         No sé a ti, pero a mi me han sorprendido mucho estos datos. Sabía que {una idea} pero no me imaginaba que {otra idea}.
         {CTA}
         {HASHTAGS}
@@ -316,7 +318,7 @@ export const POST_TEMPLATES: Omit<
         > {highlight 6}
         > {highlight 7}
         Estoy seguro de que me estoy perdiendo algunas cosas, pero estos fueron los aspectos clave.
-        
+
         No puedo esperar a ver qué tiene preparado {X}.
         {HASHTAGS}`,
     },
