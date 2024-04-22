@@ -23,6 +23,7 @@ import {
 import { compareAsc, format, parse } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
+import { date } from 'zod';
 
 type SchedulerInputProps = {
     schedule: TSlot[];
@@ -170,10 +171,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                         OptimisticallyAddTimeArray(
                             TIME_OF_THE_DAY[value as TNameTimeOfDay]
                         );
-                        addTime(
-                            TIME_OF_THE_DAY[value as TNameTimeOfDay],
-                            data?.user.settingsId!
-                        );
+                        addTime(value, data?.user.settingsId!);
                     });
                 }}
             >
@@ -191,26 +189,14 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                                 'yyyy-M-d hh:mm aa',
                                 new Date()
                             );
-                            let timeInUserTimezone = new Intl.DateTimeFormat(
-                                'en-US',
-                                {
-                                    timeZone: currentTimezone,
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                }
-                            ).format(timeInUTC);
+                            let utcTimeZone = new Intl.DateTimeFormat('en-US', {
+                                timeZone: 'UTC',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            }).format(timeInUTC);
                             return (
-                                <SelectItem
-                                    key={index}
-                                    value={time}
-                                    onMouseDown={() => {
-                                        console.log({ time });
-                                        console.log({ timeInUTC });
-                                        console.log({ timeInUserTimezone });
-                                        console.log({ currentTimezone });
-                                    }}
-                                >
-                                    {timeInUserTimezone}
+                                <SelectItem key={index} value={utcTimeZone}>
+                                    {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
                                 </SelectItem>
                             );
                         })}
