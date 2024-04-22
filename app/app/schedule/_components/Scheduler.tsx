@@ -52,6 +52,12 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
                     minute: '2-digit',
                 }).format(post.scheduledPost[0].date);
 
+                console.log(
+                    'post.scheduledPost[0].date',
+                    post.scheduledPost[0].date
+                );
+                console.log('timeInUserTimezone', timeInUserTimezone);
+
                 return {
                     hasPost: true,
                     time: timeInUserTimezone,
