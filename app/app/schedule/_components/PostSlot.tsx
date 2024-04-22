@@ -1,6 +1,8 @@
 'use client';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { format, fromZonedTime, toZonedTime } from 'date-fns-tz';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
@@ -45,6 +47,17 @@ export const PostSlot = ({
     const [viewMoreDialogIsOpen, setViewMoreDialogIsOpen] = useState(false);
     const { userPosts } = useContext(SchedulerContext);
     const router = useRouter();
+
+    // time is in UTC, we need it in the user's timezone
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let now = new Date();
+    let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
+    let dateString = day + time;
+    let dateObject = parse(dateString, 'yyyy-M-d hh:mm aa', new Date());
+    const hours = dateObject.getHours();
+    const minutes = dateObject.getMinutes();
+    dateObject.setUTCHours(hours, minutes);
+    const formattedTime = format(dateObject, 'KK:mm aa');
 
     const MenuWhenAvailable = () => (
         <DropdownMenu>
@@ -124,7 +137,7 @@ export const PostSlot = ({
                         <CheckCircle size={20} className='' />
                     </div>
                 )}
-                <p className='text-[12px]'>{time}</p>
+                <p className='text-[12px]'>{formattedTime}</p>
                 <div className='flex gap-1 justify-center items-center'>
                     <Avatar className='h-4 w-4'>
                         <AvatarImage src={userProfileImageUrl} alt='avatar' />

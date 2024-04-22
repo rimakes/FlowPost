@@ -20,7 +20,9 @@ import {
     TSlot,
     TimeMap,
 } from '@/types/types';
+import { time } from 'console';
 import { compareAsc, format, parse } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
 import { date } from 'zod';
@@ -124,53 +126,73 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                             const timeb = parse(b, 'hh:mm aa', new Date());
                             return compareAsc(timeA, timeb);
                         })
-                        .map((time, index) => (
-                            <tr key={index}>
-                                <td>{time}</td>
-                                {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
-                                    <td key={index} className='text-center'>
-                                        <Checkbox
-                                            // type='checkbox'
-                                            className=''
-                                            checked={optimisticTimeMap[
-                                                time
-                                            ].includes(
-                                                day as DayOfTheWeekNumber
-                                            )}
-                                            onCheckedChange={() =>
-                                                startTransition(() => {
-                                                    {
-                                                        optimisticallyToggleTimeSlot(
-                                                            // optimistic change
-                                                            {
-                                                                dayOfTheWeek:
-                                                                    day,
+                        .map((time, index) => {
+                            // TODO: I am pretty sure this is not the best way to do this...
+                            const userTimezone =
+                                Intl.DateTimeFormat().resolvedOptions()
+                                    .timeZone;
+                            let now = new Date();
+                            let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
+                            let dateString = day + time;
+                            let dateObject = parse(
+                                dateString,
+                                'yyyy-M-d hh:mm aa',
+                                new Date()
+                            );
+                            const hours = dateObject.getHours();
+                            const minutes = dateObject.getMinutes();
+                            dateObject.setUTCHours(hours, minutes);
+                            const formattedTime = format(
+                                dateObject,
+                                'KK:mm aa'
+                            );
+
+                            return (
+                                <tr key={index}>
+                                    <td>{formattedTime}</td>
+                                    {[1, 2, 3, 4, 5, 6, 0].map((day, index) => (
+                                        <td key={index} className='text-center'>
+                                            <Checkbox
+                                                // type='checkbox'
+                                                className=''
+                                                checked={optimisticTimeMap[
+                                                    time
+                                                ].includes(
+                                                    day as DayOfTheWeekNumber
+                                                )}
+                                                onCheckedChange={() =>
+                                                    startTransition(() => {
+                                                        {
+                                                            optimisticallyToggleTimeSlot(
+                                                                // optimistic change
+                                                                {
+                                                                    dayOfTheWeek:
+                                                                        day,
+                                                                    time,
+                                                                }
+                                                            );
+                                                            toggleSlot(
+                                                                //db change
                                                                 time,
-                                                            }
-                                                        );
-                                                        toggleSlot(
-                                                            //db change
-                                                            time,
-                                                            day as DayOfTheWeekNumber,
-                                                            data?.user
-                                                                .settingsId!
-                                                        );
-                                                    }
-                                                })
-                                            }
-                                        />
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
+                                                                day as DayOfTheWeekNumber,
+                                                                data?.user
+                                                                    .settingsId!
+                                                            );
+                                                        }
+                                                    })
+                                                }
+                                            />
+                                        </td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
                 </tbody>
             </table>
             <Select
                 onValueChange={(value) => {
                     startTransition(() => {
-                        OptimisticallyAddTimeArray(
-                            TIME_OF_THE_DAY[value as TNameTimeOfDay]
-                        );
+                        OptimisticallyAddTimeArray(value);
                         addTime(value, data?.user.settingsId!);
                     });
                 }}
@@ -181,10 +203,9 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                         {timeOfTheDayNames.map((time, index) => {
                             let now = new Date();
                             let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
-                            let timeString =
-                                TIME_OF_THE_DAY[time as TNameTimeOfDay];
-                            let dateString = day + timeString;
-                            let timeInUTC = parse(
+                            let dateString =
+                                day + TIME_OF_THE_DAY[time as TNameTimeOfDay];
+                            let date = parse(
                                 dateString,
                                 'yyyy-M-d hh:mm aa',
                                 new Date()
@@ -193,7 +214,7 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                                 timeZone: 'UTC',
                                 hour: '2-digit',
                                 minute: '2-digit',
-                            }).format(timeInUTC);
+                            }).format(date);
                             return (
                                 <SelectItem key={index} value={utcTimeZone}>
                                     {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
