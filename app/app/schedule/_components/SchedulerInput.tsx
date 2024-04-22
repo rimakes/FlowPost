@@ -186,13 +186,11 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                             let timeString =
                                 TIME_OF_THE_DAY[time as TNameTimeOfDay];
                             let dateString = day + timeString;
-                            console.log({ datestring: dateString });
                             let timeInUTC = parse(
                                 dateString,
                                 'yyyy-M-d hh:mm aa',
                                 new Date()
                             );
-                            console.log({ timeInUTC });
                             let timeInUserTimezone = new Intl.DateTimeFormat(
                                 'en-US',
                                 {
@@ -201,10 +199,18 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                                     minute: '2-digit',
                                 }
                             ).format(timeInUTC);
-                            console.log({ timeInUserTimezone });
                             return (
-                                <SelectItem key={index} value={time}>
-                                    {TIME_OF_THE_DAY[time as TNameTimeOfDay]}
+                                <SelectItem
+                                    key={index}
+                                    value={time}
+                                    onMouseDown={() => {
+                                        console.log({ time });
+                                        console.log({ timeInUTC });
+                                        console.log({ timeInUserTimezone });
+                                        console.log({ currentTimezone });
+                                    }}
+                                >
+                                    {timeInUserTimezone}
                                 </SelectItem>
                             );
                         })}

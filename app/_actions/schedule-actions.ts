@@ -1,13 +1,9 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import {
-    DayOfTheWeekNumber,
-    TDaysOfTheWeek,
-    TLinkedinPost,
-} from '@/types/types';
+import { DayOfTheWeekNumber } from '@/types/types';
 import axios from 'axios';
-import { parse, setHours } from 'date-fns';
+import { parse } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 
 // REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
