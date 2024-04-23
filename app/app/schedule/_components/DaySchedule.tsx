@@ -35,6 +35,7 @@ export function DaySchedule({ slots, className, date }: DayScheduleProps) {
             <div className='grow p-2 flex flex-col gap-2 '>
                 {slots &&
                     slots.sort()!.map((slot, i) => {
+                        // console.log('slot time', slot.time);
                         return (
                             <PostSlot
                                 key={i}

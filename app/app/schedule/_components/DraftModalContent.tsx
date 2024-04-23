@@ -10,7 +10,8 @@ import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
-import { addMinutes, parse } from 'date-fns';
+import { addMinutes, differenceInMinutes, parse } from 'date-fns';
+import { difference } from 'next/dist/build/utils';
 
 type DraftModalContentProps = {
     onSelect: () => void;
@@ -105,16 +106,23 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                         <Button
                                             className='w-full'
                                             onClick={() => {
-                                                // time is in the format of KK:mm aa
+                                                // We are trying to create a post at 01:45 AM, but the client is in UTC+2.
 
+                                                console.log({ time }); // {time: '11:45 PM'} // of previous day!! We are using UTC here - so it's 23:45 UTC, but in the client it's 01:45 AM of the next day!!
+
+                                                console.log({ date }); // 2024-04-25T00:00:00.000Z --> This is the date the user, not the UTC date
+
+                                                // So when we do this...
                                                 const scheduledDate = parse(
-                                                    // This is going to be in the user's timezone, so...
                                                     time,
-                                                    'hh:mm a',
+                                                    'hh:mm aa',
                                                     date
                                                 );
+                                                // ...we are actually create a date in the date that the user selected, and with a time that is expected to be in the user's timezone, but it's actually in UTC. We need to correct both things the date and the time.
 
-                                                const correctTime = addMinutes(
+                                                // we corre the time by adding the offset to the time
+
+                                                let correctTime = addMinutes(
                                                     // ... we need to add the offset to get the correct time in UTC
                                                     scheduledDate,
                                                     scheduledDate.getTimezoneOffset() *
@@ -122,9 +130,38 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                                 );
 
                                                 console.log(
-                                                    scheduledDate.getTimezoneOffset()
+                                                    scheduledDate.toISOString()
+                                                ); // 2024-04-25T21:45:00.000Z
+
+                                                // and we correct the date check if the time is in the previous UTC day
+                                                const startOfUTCTomorrow =
+                                                    new Date(
+                                                        scheduledDate.getFullYear(),
+                                                        scheduledDate.getMonth(),
+                                                        scheduledDate.getDate() +
+                                                            1
+                                                    );
+                                                const minutesDiff =
+                                                    differenceInMinutes(
+                                                        scheduledDate,
+                                                        startOfUTCTomorrow
+                                                    );
+
+                                                // If the start of utc tomorrow is less than the offset... // to be continued, my head hurts
+                                                const isNextDay =
+                                                    minutesDiff >
+                                                    scheduledDate.getTimezoneOffset();
+
+                                                const nextDayOffset = isNextDay
+                                                    ? 1 * 1440
+                                                    : 0;
+
+                                                correctTime = addMinutes(
+                                                    // ... we need to add the offset to get the correct time in UTC
+                                                    correctTime,
+                                                    -nextDayOffset
                                                 );
-                                                console.log({ correctTime });
+
                                                 schedulePost(
                                                     post.id,
                                                     data?.user.id!,

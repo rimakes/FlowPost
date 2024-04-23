@@ -50,8 +50,8 @@ export const PostSlot = ({
 
     // time is in UTC, we need it in the user's timezone
 
-    console.log('date from postslot', date);
-    console.log('time from postslot', time);
+    // console.log('date from postslot', date);
+    // console.log('time from postslot', time);
     const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     let now = new Date();
     let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22

@@ -46,15 +46,22 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
             });
 
             const formattedDayPosts: PostOrSlot[] = dayPosts.map((post) => {
-                let timeInUserTimezone = new Intl.DateTimeFormat('en-US', {
+                let time = new Intl.DateTimeFormat('en-US', {
                     timeZone: 'utc',
                     hour: '2-digit',
                     minute: '2-digit',
                 }).format(post.scheduledPost[0].date);
 
+                // console.log(
+                //     'post.scheduledPost[0].date',
+                //     post.scheduledPost[0].date
+                // );
+
+                // console.log('formatted slot time', time);
+
                 return {
                     hasPost: true,
-                    time: timeInUserTimezone,
+                    time,
                     postContent: post.content,
                     postId: post.scheduledPost[0].linkedinPostId!,
                     isPublished: post.published,
@@ -94,7 +101,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
             <Separator />
             <div className='flex overflow-x-auto'>
                 {mergedSlotsAndPosts.map((mergedSlotsAndPosts, i) => {
-                    console.log('mergedSlotsAndPosts', mergedSlotsAndPosts);
+                    // console.log('mergedSlotsAndPosts', mergedSlotsAndPosts);
                     return (
                         <DaySchedule
                             key={i}
