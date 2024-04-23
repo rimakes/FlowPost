@@ -204,7 +204,6 @@ export const postOnLinkedIn = async (
                 'LinkedIn-Version': '202403',
             },
             data: JSON.stringify(body),
-            timeout: 3000,
         };
 
         console.log('LOG - postOnLinkedin - body RIGHT before the call', {
