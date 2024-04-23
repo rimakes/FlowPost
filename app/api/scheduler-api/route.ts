@@ -41,21 +41,6 @@ export async function GET(req: NextRequest) {
             },
         })) as NewTScheduledPost[];
 
-        pendingToPublishPosts.forEach((post) => {
-            console.log('Post Date', post.date);
-            console.log('Now', now);
-            console.log('pub = false', post.linkedinPost.published === false);
-            console.log('published', post.linkedinPost.published);
-            const isBeforeNow = post.date < now;
-            console.log('Is Before Now', isBeforeNow);
-            const isAfterStartOfDay = post.date > startOfDay;
-            console.log('Is After Start of Day', isAfterStartOfDay);
-
-            // fns to see the difference between two dates
-            const diff = differenceInMinutes(post.date, now);
-            console.log('Difference in minutes', diff);
-        });
-
         console.log('Posts to be published', pendingToPublishPosts);
         // return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
 
@@ -73,12 +58,14 @@ export async function GET(req: NextRequest) {
             let userAccount;
 
             try {
+                console.log('Fetching User Account');
                 userAccount = await db.account.findFirst({
                     where: {
                         userId: post?.userId,
                         provider: 'linkedin',
                     },
                 });
+                console.log('User Account', userAccount);
 
                 if (!userAccount) {
                     console.log('No linkedin account found');
