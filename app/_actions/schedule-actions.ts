@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/prisma';
 import { DayOfTheWeekNumber } from '@/types/types';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { parse } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 
@@ -125,7 +125,6 @@ export const uploadImageToLinkedin = async (
     try {
         const response = await axios.get(imageUrl, {
             responseType: 'arraybuffer', // This ensures the data is returned as Buffer
-            timeout: 3000, // Testing if timeout help us fix the bug
         });
 
         imageData = response.data;
@@ -192,9 +191,9 @@ export const postOnLinkedIn = async (
             isReshareDisabledByAuthor: false,
         };
 
-        console.log('LOG - postOnLinkedin - body before config', { body });
+        console.log('*LOG - postOnLinkedin - body before config', { body });
 
-        const config = {
+        const config: AxiosRequestConfig<any> = {
             method: 'post',
             url: 'https://api.linkedin.com/rest/posts', // REVIEW: why is not the url on the .env file?
             headers: {
@@ -205,6 +204,7 @@ export const postOnLinkedIn = async (
                 'LinkedIn-Version': '202403',
             },
             data: JSON.stringify(body),
+            timeout: 3000,
         };
 
         console.log('LOG - postOnLinkedin - body RIGHT before the call', {
