@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
-import { addMinutes } from 'date-fns';
+import { addMinutes, parse } from 'date-fns';
 
 type DraftModalContentProps = {
     onSelect: () => void;
@@ -49,8 +49,6 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
     const postsWithoutSchedule = userPosts.filter(
         (post) => post.scheduledPost.length === 0
     );
-
-    const [hours, minutes] = time.split(':').map((t) => parseInt(t));
 
     return (
         <div className='relative w-full mx-auto overflow-hidden bg-white rounded-xl'>
@@ -107,27 +105,24 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                         <Button
                                             className='w-full'
                                             onClick={() => {
-                                                const scheduleDate = new Date(
+                                                // time is in the format of KK:mm aa
+
+                                                const scheduledDate = parse(
+                                                    // This is going to be in the user's timezone, so...
+                                                    time,
+                                                    'hh:mm a',
                                                     date
-                                                );
-                                                console.log(
-                                                    { hours },
-                                                    { minutes }
-                                                );
-                                                console.log({ scheduleDate });
-                                                scheduleDate.setHours(
-                                                    hours,
-                                                    minutes
                                                 );
 
                                                 const correctTime = addMinutes(
-                                                    scheduleDate,
-                                                    scheduleDate.getTimezoneOffset() *
+                                                    // ... we need to add the offset to get the correct time in UTC
+                                                    scheduledDate,
+                                                    scheduledDate.getTimezoneOffset() *
                                                         -1
                                                 );
 
                                                 console.log(
-                                                    scheduleDate.getTimezoneOffset()
+                                                    scheduledDate.getTimezoneOffset()
                                                 );
                                                 console.log({ correctTime });
                                                 schedulePost(

@@ -47,16 +47,10 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
 
             const formattedDayPosts: PostOrSlot[] = dayPosts.map((post) => {
                 let timeInUserTimezone = new Intl.DateTimeFormat('en-US', {
-                    timeZone: currentTimezone,
+                    timeZone: 'utc',
                     hour: '2-digit',
                     minute: '2-digit',
                 }).format(post.scheduledPost[0].date);
-
-                console.log(
-                    'post.scheduledPost[0].date',
-                    post.scheduledPost[0].date
-                );
-                console.log('timeInUserTimezone', timeInUserTimezone);
 
                 return {
                     hasPost: true,
@@ -92,7 +86,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
         });
 
         return merged;
-    }, [currentTimezone, userPosts, userSchedule, weekDaysArray]);
+    }, [userPosts, userSchedule, weekDaysArray]);
 
     return (
         <>
@@ -100,6 +94,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
             <Separator />
             <div className='flex overflow-x-auto'>
                 {mergedSlotsAndPosts.map((mergedSlotsAndPosts, i) => {
+                    console.log('mergedSlotsAndPosts', mergedSlotsAndPosts);
                     return (
                         <DaySchedule
                             key={i}
