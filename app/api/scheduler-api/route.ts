@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
+        for (const post of pendingToPublishPosts) {
             // const currentDate = new Date();
             console.log('LOOP: Post to be published', post);
             let userAccount;
@@ -135,7 +135,7 @@ export async function GET(req: NextRequest) {
                     },
                 });
             }
-        });
+        }
 
         return NextResponse.json({ message: 'Scheduled' }, { status: 201 });
     } catch (error) {
