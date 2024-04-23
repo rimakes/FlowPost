@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
+import { addMinutes } from 'date-fns';
 
 type DraftModalContentProps = {
     onSelect: () => void;
@@ -109,14 +110,30 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                                 const scheduleDate = new Date(
                                                     date
                                                 );
+                                                console.log(
+                                                    { hours },
+                                                    { minutes }
+                                                );
+                                                console.log({ scheduleDate });
                                                 scheduleDate.setHours(
                                                     hours,
                                                     minutes
                                                 );
+
+                                                const correctTime = addMinutes(
+                                                    scheduleDate,
+                                                    scheduleDate.getTimezoneOffset() *
+                                                        -1
+                                                );
+
+                                                console.log(
+                                                    scheduleDate.getTimezoneOffset()
+                                                );
+                                                console.log({ correctTime });
                                                 schedulePost(
                                                     post.id,
                                                     data?.user.id!,
-                                                    scheduleDate,
+                                                    correctTime,
                                                     time
                                                 );
                                                 onSelect();

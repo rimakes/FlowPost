@@ -312,14 +312,6 @@ export const schedulePost = async (
 ) => {
     let [timeString, period] = time.split(' ');
 
-    // Parse the time from format 'hh:mmPM' to 24h format and set it to the date
-    let parsedTime = parse(time, 'hh:mm aa', new Date());
-
-    const hours = parsedTime.getHours();
-    const minutes = parsedTime.getMinutes();
-
-    date.setHours(hours, minutes);
-
     const newSchedule = db.scheduledPost.create({
         data: {
             linkedinPostId: postId,
