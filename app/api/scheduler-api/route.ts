@@ -70,17 +70,22 @@ export async function GET(req: NextRequest) {
         pendingToPublishPosts?.forEach(async (post: NewTScheduledPost) => {
             // const currentDate = new Date();
             console.log('LOOP: Post to be published', post);
+            let userAccount;
 
-            const userAccount = await db.account.findFirst({
-                where: {
-                    userId: post?.userId,
-                    provider: 'linkedin',
-                },
-            });
+            try {
+                userAccount = await db.account.findFirst({
+                    where: {
+                        userId: post?.userId,
+                        provider: 'linkedin',
+                    },
+                });
 
-            if (!userAccount) {
-                console.log('No linkedin account found');
-                return;
+                if (!userAccount) {
+                    console.log('No linkedin account found');
+                    return;
+                }
+            } catch (error) {
+                console.error('Error fetching User Account:', error);
             }
 
             console.log('search if there is a carousel for this post');
