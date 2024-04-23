@@ -15,7 +15,7 @@ import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
 import { cn, isEven } from '@/lib/utils';
 import { SlideSettings } from './SlideSettings';
-import { designMap } from './slideContents/contentMaps';
+import { designNamesMap } from './slideContents/contentMaps';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -35,6 +35,7 @@ const translateClasses = {
     1300: '-translate-x-[1300%]',
     1400: '-translate-x-[1400%]',
     1500: '-translate-x-[1500%]',
+    1600: '-translate-x-[1600%]',
 } as const;
 
 type CarouselWorkbenchProps = {};
@@ -111,7 +112,7 @@ export const SlideWithSettings = ({
     const slideRef = useRef<HTMLDivElement>(null);
     const isActive = currentSlide === slideNumber;
     const DesignElement = slide.design
-        ? designMap[slide.design as TSlideDesignNames]
+        ? designNamesMap[slide.design as TSlideDesignNames].component
         : TextOnlySlide;
     // console.log('slide here', slide);
 

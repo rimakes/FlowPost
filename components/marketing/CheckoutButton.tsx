@@ -3,7 +3,7 @@
 import { apiClient } from '@/lib/apiClient';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import Spinner from '../icons/spinner';
+import Spinner from '../icons/Spinner';
 import { TStatus } from '@/types/types';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';

@@ -23,10 +23,10 @@ import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { type } from 'os';
 import { useState } from 'react';
-import { Message } from './message';
 import { appConfig } from '@/config/shipper.appconfig';
 import { SocialLogin } from './SocialLogin';
 import { errors } from '@/config/const';
+import { Message } from './Message';
 
 type LoginFormProps = {
     isRedirected?: boolean;

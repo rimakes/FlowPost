@@ -4,9 +4,9 @@ export const metadata = {
 };
 
 import Link from 'next/link';
-import AuthHeader from '../auth-header';
-import AuthImage from '../auth-image';
-import { ResetPasswordForm } from '@/components/auth/reset-password-form';
+import AuthHeader from '../AuthHeader';
+import AuthImage from '../AuthImage';
+import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 
 export default function ResetPassword() {
     return (

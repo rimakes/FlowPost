@@ -26,7 +26,7 @@ import {
 import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
 import { RecordButton } from './RecordButton';
-import Spinner from '@/components/icons/spinner';
+import Spinner from '@/components/icons/Spinner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { revalidateAllPaths } from '@/app/_actions/shared-actions';

@@ -9,7 +9,7 @@ import type {
     PrismaClient,
     TimeSlot,
 } from '@prisma/client';
-import { designMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
+import { designNamesMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
 import {
     DaysOfTheWeek,
     TIME_OF_THE_DAY,
@@ -155,7 +155,7 @@ export type TImage = {
     position: string;
 };
 
-export type TSlideDesignNames = keyof typeof designMap;
+export type TSlideDesignNames = keyof typeof designNamesMap;
 
 export type TPosition = Position;
 

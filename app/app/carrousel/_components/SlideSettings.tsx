@@ -2,28 +2,21 @@
 
 import { Label } from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { CarouselContext } from './ContextProvider';
 import {
     ArrowLeft,
     ArrowLeftIcon,
     ArrowRightIcon,
-    Bold,
     ChevronsUpDown,
-    Italic,
     Plus,
     Trash2,
-    Underline,
 } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { TSlide, TSlideDesignNames, TStatus } from '@/types/types';
-import { Input } from '@/components/ui/input';
+import { TSlide, TSlideDesignNames } from '@/types/types';
 import { Slider } from '@/components/ui/slider';
-import { getPexelImages } from '@/app/_actions/writter-actions';
-import Image from 'next/image';
-import { toast } from 'sonner';
-import { designMap, designNamesMap } from './slideContents/contentMaps';
+import { designNamesMap } from './slideContents/contentMaps';
 import {
     Select,
     SelectContent,
@@ -31,7 +24,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ImageSelect } from '@/components/shared/ImageSelect/ImageSelect';
 import {
@@ -39,8 +31,6 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Toggle } from '@/components/ui/toggle';
 
 type SlideSettingsProps = {
     isActive?: boolean;
@@ -109,11 +99,14 @@ export function SlideSettings({
                         <SelectValue placeholder='Selecciona' />
                     </SelectTrigger>
                     <SelectContent>
-                        {Object.keys(designMap).map((design, index) => {
+                        {Object.keys(designNamesMap).map((design, index) => {
                             return (
                                 <SelectItem key={index} value={design}>
-                                    {/* @ts-ignore */}
-                                    {designNamesMap[design]}
+                                    {
+                                        designNamesMap[
+                                            design as TSlideDesignNames
+                                        ].name
+                                    }
                                 </SelectItem>
                             );
                         })}

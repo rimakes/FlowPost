@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Spinner from '../icons/spinner';
+import Spinner from '../icons/Spinner';
 import { ImageIcon } from 'lucide-react';
 import { TStatus } from '@/types/types';
 

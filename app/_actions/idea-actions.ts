@@ -55,7 +55,7 @@ export const generateIdeas = async (topic: string) => {
                 topic,
                 format_instructions: parser.getFormatInstructions(),
             },
-            { tags: ['test'] }
+            { tags: ['ideas'] }
         );
 
     const ideas = await retryAsyncFunction(fn, 3, 1000);

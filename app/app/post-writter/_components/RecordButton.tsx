@@ -1,7 +1,7 @@
 'use client';
 
 import { Mic, MicOff } from 'lucide-react';
-import useMicrophone from '../../ideas/_components/useMicrophone';
+import useMicrophone from '../../../../hooks/useMicrophone';
 import { Button } from '@/components/ui/button';
 import { useCallback, useState } from 'react';
 import { cn } from '@/lib/utils';

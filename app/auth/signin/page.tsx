@@ -4,10 +4,10 @@ export const metadata = {
 };
 
 import Link from 'next/link';
-import AuthHeader from '../auth-header';
-import AuthImage from '../auth-image';
+import AuthHeader from '../AuthHeader';
+import AuthImage from '../AuthImage';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { Message } from '@/components/auth/message';
+import { Message } from '@/components/auth/Message';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { Suspense } from 'react';
 import { SocialLogin } from '@/components/auth/SocialLogin';

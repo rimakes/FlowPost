@@ -31,7 +31,7 @@ import { Textarea } from '../ui/textarea';
 import { VOICE_TONES } from '@/app/app/post-writter/config/const';
 import { cn, getPostTemplateById, wait } from '@/lib/utils';
 import { Label } from '../ui/label';
-import Spinner from '../icons/spinner';
+import Spinner from '../icons/Spinner';
 import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { CarouselContext } from '@/app/app/carrousel/_components/ContextProvider';
 import { toast } from 'sonner';

@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useContext, useEffect, useState } from 'react';
-import { BrandKitEditForm } from '../app/settings/_components/BrandKitEditForm';
+import { BrandKitEditForm } from '../../app/app/settings/_components/BrandKitEditForm';
 import { defaultValues } from '@/config/const';
 import { useSession } from 'next-auth/react';
 import { AppContext } from '@/providers/AppProvider';

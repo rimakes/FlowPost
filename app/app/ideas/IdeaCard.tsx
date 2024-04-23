@@ -1,6 +1,6 @@
 'use client';
 
-import { createIdea, deleteIdea } from '@/app/_actions/ideas-actions';
+import { createIdea, deleteIdea } from '@/app/_actions/idea-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { ThumbsFeedback } from '@/components/shared/ThumbsFeedback';
 import { Feather, Save, Trash2 } from 'lucide-react';

@@ -5,7 +5,7 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Button } from '../ui/button';
-import Spinner from '../icons/spinner';
+import Spinner from '../icons/Spinner';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { toast } from 'sonner';
 import { TFeedback } from '@/types/types';

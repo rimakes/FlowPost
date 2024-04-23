@@ -1,11 +1,8 @@
-import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import { Switch } from '@/components/ui/switch';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Toggle } from '@/components/ui/toggle';
 import {
     Collapsible,
     CollapsibleContent,
@@ -27,12 +24,6 @@ export const AuthorSettings = () => {
     } = useContext(CarouselContext);
 
     return (
-        // <ToggleableCollapsible
-        //     label='Info del autor'
-        //     enabled={showAuthor}
-        //     setEnabled={toggleShowAuthor}
-        // >
-
         <Collapsible>
             <CollapsibleTrigger className='flex justify-between w-full items-center'>
                 <div className='cursor-pointer flex items-center'>Autor</div>
@@ -59,24 +50,6 @@ export const AuthorSettings = () => {
                             }}
                         />
                     </div>
-                    {/* <div className=''>
-                        <div className='flex justify-between items-center  py-1'>
-                            <Label htmlFor='pic'>Foto de perfil</Label>
-                            <Switch
-                                id='pic'
-                                checked={carousel.settings.showProfilePic}
-                                onCheckedChange={toggleShowProfilePic}
-                            />
-                        </div>
-                        <Input
-                            placeholder='Nombre'
-                            id='profilePic'
-                            value={pictureUrl!}
-                            onChange={(event) => {
-                                editImage(event.target.value);
-                            }}
-                        />
-                    </div> */}
                     <div className=''>
                         <div className='flex justify-between items-center  py-1'>
                             <Label htmlFor='handle'>Handle</Label>

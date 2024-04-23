@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import { DecorationSelector } from './DecorationSelector';
 import { useRouter } from 'next/navigation';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { LoginButton } from '@/components/auth/login-button';
+import { LoginButton } from '@/components/auth/LoginButton';
 import { cn } from '@/lib/utils';
 import { DownloadButton } from './downloadButton';
 import { ColorPaletteSelect } from './ColorPaletteSelector';

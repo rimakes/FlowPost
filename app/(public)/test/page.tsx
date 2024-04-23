@@ -1,6 +1,6 @@
 'use client';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { RegisterForm } from '@/components/auth/register-form';
+import { RegisterForm } from '@/components/auth/RegisterForm';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/shared/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -13,7 +13,7 @@ import { Features } from '@/components/marketing/features';
 import Laurels from '@/components/marketing/laurels';
 import { Newsletter } from '@/components/marketing/newsletter';
 import CtaWithSocial from '@/components/marketing/cta-with-social';
-import { LoginButton } from '@/components/auth/login-button';
+import { LoginButton } from '@/components/auth/LoginButton';
 import { SlidingElements } from '@/components/marketing/sliding-elements';
 import { Explanation } from '@/components/shared/explanation';
 import { handwritten, secondaryFont } from '@/config/fonts';

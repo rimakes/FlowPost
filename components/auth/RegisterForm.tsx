@@ -20,7 +20,7 @@ import { RegisterReq } from '@/app/api/register/route';
 import { toast } from 'sonner';
 import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
-import { Message } from './message';
+import { Message } from './Message';
 import { useEffect, useState } from 'react';
 import { SocialLogin } from './SocialLogin';
 

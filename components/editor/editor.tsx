@@ -12,7 +12,7 @@ import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
 import { getPrevText } from '@/lib/get-prev-text';
 import { EditorBubbleMenu } from './bubble-menu/buble-menu';
-import TopMenu from './top-menu/top-menu';
+import TopMenu from './top-menu/TopMenu';
 import useLocalStorage from '@/hooks/use-local-storage';
 import useFullScreen from '@/hooks/use-full-screen';
 import { Button } from '../ui/button';

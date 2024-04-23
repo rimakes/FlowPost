@@ -7,7 +7,7 @@ import { CarouselContext } from '../ContextProvider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
-import Spinner from '@/components/icons/spinner';
+import Spinner from '@/components/icons/Spinner';
 import {
     revalidateAllPaths,
     uploadFileToCloudinary,

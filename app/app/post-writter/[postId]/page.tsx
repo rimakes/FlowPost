@@ -4,7 +4,7 @@ import { PostWritterResult } from '../_components/GeneratedPost';
 import { PostWritterContextProvider } from '../_components/PostWritterProvider';
 import { TCarousel, TLinkedinPost } from '@/types/types';
 import { LinkedinPost } from './_components/LinkedinPost';
-import Editor from '@/components/editor/editor';
+import Editor from '@/components/editor/Editor';
 import { db } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { getUserBrandKits } from '@/app/_actions/settings-actions';

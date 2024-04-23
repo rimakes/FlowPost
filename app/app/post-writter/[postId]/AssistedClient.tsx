@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { PostWritterContext } from '../_components/PostWritterProvider';
 import { TCarousel, TLinkedinPost } from '@/types/types';
-import Editor from '@/components/editor/editor';
+import Editor from '@/components/editor/Editor';
 import { LinkedinPost } from './_components/LinkedinPost';
 import { Editor as TipTapEditor } from '@tiptap/react';
 import { Textarea } from '@/components/ui/textarea';

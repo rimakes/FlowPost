@@ -3,8 +3,6 @@ import { TColorPalette } from '@/types/types';
 import { ColorPalette } from './ColorPalette';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import { set } from 'zod';
 
 type ColorPaletteSelectProps = {
     colorPalette: TColorPalette;

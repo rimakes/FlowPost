@@ -1,11 +1,8 @@
 'use server';
 
-import { TExtendedFile } from '@/components/shared/dropzone/Thumbnails';
 import { db } from '@/lib/prisma';
-import { wait } from '@/lib/utils';
 import { Pure } from '@/types/types';
 import { Brand, Prisma } from '@prisma/client';
-import cloudinary from 'cloudinary';
 
 export const saveBrandKit = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,

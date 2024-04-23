@@ -22,7 +22,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { promptGenerateCarousel } from '@/config/prompt';
+import { promptGenerateCarousel } from '@/config/prompts';
 
 export async function upsertLinkedinPost(
     post: TLinkedinPost,
@@ -194,7 +194,7 @@ export async function createLinkedinCarousel(
                   slide.paragraphs.map((paragraph: any) => {
                       return { content: paragraph, isShown: true };
                   })
-                : [],
+                : [{ content: '...', isShown: true }],
 
             tagline: {
                 // @ts-ignore

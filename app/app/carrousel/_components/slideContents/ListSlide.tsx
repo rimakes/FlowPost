@@ -38,7 +38,7 @@ export const ListSlide = ({
                   };
               });
 
-    const isTitleShown = slides[slideNumber!].title?.isShown;
+    // const isTitleShown = slides[slideNumber!].title?.isShown;
 
     return (
         <div className='flex flex-col gap-4 h-full p-4 z-10'>
@@ -46,7 +46,7 @@ export const ListSlide = ({
                 defaultValue={title}
                 onDebouncedUpdate={editTitle}
                 slideElement='title'
-                isShown={isTitleShown}
+                isShown={true}
             />
 
             <ul

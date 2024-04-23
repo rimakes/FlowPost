@@ -1,6 +1,6 @@
 'use client';
 
-import { Message } from '@/components/auth/message';
+import { Message } from '@/components/auth/Message';
 import { Button } from '@/components/ui/button';
 import { appConfig } from '@/config/shipper.appconfig';
 import { wait } from '@/lib/utils';

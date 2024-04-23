@@ -14,7 +14,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { GetAccessButton } from '@/components/marketing/GetAccessButton';
-import { LoginButton } from '@/components/auth/login-button';
+import { LoginButton } from '@/components/auth/LoginButton';
 import { menuItems } from '@/config/const';
 
 export function HomeNavbar({ className }: { className?: string }) {

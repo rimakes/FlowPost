@@ -1,5 +1,5 @@
 import { generateNImages } from '@/app/_actions/image-actions';
-import Spinner from '@/components/icons/spinner';
+import Spinner from '@/components/icons/Spinner';
 import { Input } from '@/components/ui/input';
 import { ImageWithDataUrl, TStatus } from '@/types/types';
 import { range } from '@mantine/hooks';

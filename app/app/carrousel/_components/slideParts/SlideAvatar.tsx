@@ -2,15 +2,10 @@ import { TColorPalette, TMode } from '@/types/types';
 import Image from 'next/image';
 
 type SlideAvatarProps = {
-    mode: TMode;
     imageUrl: string;
     colorPalette: TColorPalette;
 };
-export function SlideAvatar({
-    mode,
-    imageUrl,
-    colorPalette,
-}: SlideAvatarProps) {
+export function SlideAvatar({ imageUrl, colorPalette }: SlideAvatarProps) {
     return (
         <>
             <div

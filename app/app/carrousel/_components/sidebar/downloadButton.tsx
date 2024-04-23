@@ -6,7 +6,7 @@ import { CarouselContext } from '../ContextProvider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
-import Spinner from '@/components/icons/spinner';
+import Spinner from '@/components/icons/Spinner';
 import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { cn } from '@/lib/utils';
 import {
@@ -141,23 +141,3 @@ const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
         compression: 'FAST', // or 'SLOW' for better compression
     });
 };
-
-async function loadImage(element: any) {
-    return new Promise((resolve, reject) => {
-        if (element.complete) {
-            resolve(element);
-        } else {
-            element.onload = () => resolve(element);
-            element.onerror = reject;
-        }
-    });
-}
-
-function prefetchImage(url: string) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = resolve;
-        img.onerror = reject;
-    });
-}

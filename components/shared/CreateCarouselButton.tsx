@@ -16,9 +16,6 @@ import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { Button } from '../ui/button';
-import { appConfig } from '@/config/shipper.appconfig';
-import { revalidateAllPaths } from '@/app/_actions/shared-actions';
-import { updateUserCredits } from '@/app/_actions/user-actions';
 import { useUserCredits } from '@/hooks/use-user-credits';
 
 type CrearCarouselButonProps = {

@@ -24,14 +24,11 @@ export const uploadFileToCloudinary = async (
     url: string;
     publicId: string;
 }> => {
-    console.log('uploading file to cloudinary');
-
     cloudinary.v2.config({
         cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET,
     });
-    console.log('configured cloudinary');
 
     const promise = new Promise(async (resolve, reject) => {
         // Create a stream to upload the file to Cloudinary
@@ -48,42 +45,31 @@ export const uploadFileToCloudinary = async (
             }
         );
         // Get the file from the form data and convert it to an arrayBuffer (arrayBuffer= frontend, buffer= backend)
-        console.log('getting file from form data');
         const file = formData.get('file') as File;
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         // streamify the buffer and pipe it to the cloudinary stream. The fs module only allows to streamify files, but we can use the streamifier package to streamify buffers so we don't have to save the file to the disk
         const fileStream = streamifier.createReadStream(buffer);
-        console.log('piping file to cloudinary');
         fileStream.pipe(cloudinaryStream);
-        console.log('file piped to cloudinary');
     });
 
     let result;
     try {
-        console.log('promise', promise);
         result = await promise;
-        console.log('result', result);
     } catch (error) {
-        console.log('error', error);
         // @ts-ignore
-        console.log('errorMessage', error.errorMessage);
     }
-
-    console.log('result', result);
 
     return result as Promise<{ url: string; publicId: string }>;
 };
 
 export const getPageNFromCloudinary = async (imageId: string, n: number) => {
-    console.log('imageId before', imageId);
     cloudinary.v2.config({
         cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET,
     });
 
-    console.log('imageId', imageId);
     const image = cloudinary.v2.api.resource(
         imageId,
         {
@@ -96,10 +82,7 @@ export const getPageNFromCloudinary = async (imageId: string, n: number) => {
                 { format: 'jpg' },
             ],
         },
-        (error, result) => {
-            console.log('error', error);
-            console.log('result', result);
-        }
+        (error, result) => {}
     );
 
     return image;

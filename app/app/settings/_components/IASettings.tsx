@@ -21,7 +21,7 @@ import { TStatus } from '@/types/types';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
 import { saveIASettings } from '@/app/_actions/settings-actions';
-import { Message } from '@/components/auth/message';
+import { Message } from '@/components/auth/Message';
 import { appConfig } from '@/config/shipper.appconfig';
 
 const iaSettingsSchema = z.object({

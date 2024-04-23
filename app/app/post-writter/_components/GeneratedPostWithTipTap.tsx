@@ -16,7 +16,7 @@ import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
 import { CarouselContext } from '../../carrousel/_components/ContextProvider';
-import Editor from '@/components/editor/editor';
+import Editor from '@/components/editor/Editor';
 
 type GeneratedPostProps = {
     className?: string;

@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 import { EditorState } from '@tiptap/pm/state';
 
 export type BubbleMenuItem = {
-    name: string; // name of the menu item
-    isActive: () => boolean; // function to check if the menu item is active
-    command: () => void; // function to execute the command
-    icon: typeof BoldIcon; // icon to display
+    name: string;
+    isActive: () => boolean;
+    command: () => void;
+    icon: typeof BoldIcon;
 };
 
 export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
@@ -25,22 +25,10 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
             command: () => props.editor!.chain().focus().toggleItalic().run(),
             icon: ItalicIcon,
         },
-        // {
-        //     name: 'strike',
-        //     isActive: () => props.editor!.isActive('strike'),
-        //     command: () => props.editor!.chain().focus().toggleStrike().run(),
-        //     icon: StrikethroughIcon,
-        // },
-        // {
-        //     name: 'code',
-        //     isActive: () => props.editor!.isActive('code'),
-        //     command: () => props.editor!.chain().focus().toggleCode().run(),
-        //     icon: CodeIcon,
-        // },
     ];
 
     const bubbleMenuProps = {
-        ...props, // pass all the received props to the BubbleMenu component, and add / override the following props:
+        ...props,
 
         shouldShow: ({
             state,
@@ -49,13 +37,9 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
             state: EditorState;
             editor: any;
         }) => {
-            const { selection } = state; // get the current selection
-            const { empty } = selection; // check if the selection is empty
+            const { selection } = state;
+            const { empty } = selection;
 
-            // don't show bubble menu if:
-            // - the selected node is an image
-            // - the selection is empty
-            // - the selection is a node selection (for drag handles)
             if (
                 editor.isActive('image') ||
                 empty ||
@@ -66,44 +50,18 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
             return true;
         },
 
-        // Options for the tippy.js tooltip library
         tippyOptions: {
             moveTransition: 'transform 0.15s ease-out',
-            onHidden: () => {
-                // setIsNodeSelectorOpen(false);
-                // setIsColorSelectorOpen(false);
-                // setIsLinkSelectorOpen(false);
-            },
+            onHidden: () => {},
         },
     };
-
-    //   const [isNodeSelectorOpen, setIsNodeSelectorOpen] = useState(false);
-    //   const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false);
-    //   const [isLinkSelectorOpen, setIsLinkSelectorOpen] = useState(false);
 
     return (
         <BubbleMenu
             {...bubbleMenuProps}
             className='flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl'
         >
-            {/* <NodeSelector
-        editor={props.editor}
-        isOpen={isNodeSelectorOpen}
-        setIsOpen={() => {
-          setIsNodeSelectorOpen(!isNodeSelectorOpen);
-          setIsColorSelectorOpen(false);
-          setIsLinkSelectorOpen(false);
-        }}
-      />
-      <LinkSelector
-        editor={props.editor}
-        isOpen={isLinkSelectorOpen}
-        setIsOpen={() => {
-          setIsLinkSelectorOpen(!isLinkSelectorOpen);
-          setIsColorSelectorOpen(false);
-          setIsNodeSelectorOpen(false);
-        }}
-      /> */}
+            {}
             <div className='flex'>
                 {items.map((item, index) => (
                     <button
@@ -120,15 +78,7 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
                     </button>
                 ))}
             </div>
-            {/* <ColorSelector
-        editor={props.editor}
-        isOpen={isColorSelectorOpen}
-        setIsOpen={() => {
-          setIsColorSelectorOpen(!isColorSelectorOpen);
-          setIsNodeSelectorOpen(false);
-          setIsLinkSelectorOpen(false);
-        }}
-      /> */}
+            {}
         </BubbleMenu>
     );
 };

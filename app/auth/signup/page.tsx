@@ -4,9 +4,9 @@ export const metadata = {
 };
 
 import Link from 'next/link';
-import AuthHeader from '../auth-header';
-import AuthImage from '../auth-image';
-import { RegisterForm } from '@/components/auth/register-form';
+import AuthHeader from '../AuthHeader';
+import AuthImage from '../AuthImage';
+import { RegisterForm } from '@/components/auth/RegisterForm';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Suspense } from 'react';

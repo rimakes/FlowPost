@@ -30,7 +30,7 @@ import { TFeedback, TStatus } from '@/types/types';
 import { z } from 'zod';
 import { IdeaRequestFormSchema } from '@/types/schemas';
 import { toast } from 'sonner';
-import Spinner from '../icons/spinner';
+import Spinner from '../icons/Spinner';
 import { apiClient } from '@/lib/apiClient';
 import { InputFaces } from './InputFaces';
 import { DevTool } from '@hookform/devtools';

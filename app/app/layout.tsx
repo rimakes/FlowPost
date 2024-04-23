@@ -1,7 +1,7 @@
 import Feedback from '@/components/shared/feedback';
 import Navbar from '@/components/shared/navbar/Navbar';
 import { Sidebar } from '@/components/shared/sidebar/Sidebar';
-import { AppModals } from '../_components/AppModals';
+import { AppModals } from '../../components/shared/AppModals';
 import { ToolBanner } from '@/components/shared/ToolBanner';
 
 export const maxDuration = 60; // This function can run for a maximum of 60 seconds

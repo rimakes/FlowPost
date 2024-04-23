@@ -44,11 +44,7 @@ export function SlideProfileCard({
             }
         >
             {/* {children} */}
-            <SlideAvatar
-                colorPalette={colorPalette}
-                mode={mode}
-                imageUrl={imageUrl}
-            />
+            <SlideAvatar colorPalette={colorPalette} imageUrl={imageUrl} />
             <NameAndHandle
                 colorPalette={colorPalette}
                 name={name}

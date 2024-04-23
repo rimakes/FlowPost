@@ -1,6 +1,6 @@
 'use client';
-import { generateIdeas } from '@/app/_actions/ideas-actions';
-import Spinner from '@/components/icons/spinner';
+import { generateIdeas } from '@/app/_actions/idea-actions';
+import Spinner from '@/components/icons/Spinner';
 import { Button } from '@/components/ui/button';
 import {
     Form,

@@ -3,15 +3,7 @@
 import { db } from '@/lib/prisma';
 import { DayOfTheWeekNumber } from '@/types/types';
 import axios, { AxiosRequestConfig } from 'axios';
-import { parse } from 'date-fns';
 import { revalidatePath } from 'next/cache';
-
-// REVIEW: We need to modify this function to be able to post with image and videos as in the reference app
-
-/*
-share on linkedin from api :- https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin
-linkedin end points : - https://www.linkedin.com/developers/apps/218468101/products/share-on-linkedin/endpoints
- */
 
 type IData = {
     id: string;
@@ -29,8 +21,9 @@ type TUploadRegisterResponse = {
         };
     };
 };
+
 /**
- * This function gets the url to upload an image to LinkedIn
+ * This function gets the url to upload an doc to LinkedIn
  */
 export const registerUploadImageToLinkedin = async (
     providerAccountId: String | undefined,
@@ -64,15 +57,23 @@ export const registerUploadImageToLinkedin = async (
         data: JSON.stringify(registerUploadBody),
     };
 
-    const res: TUploadRegisterResponse = await axios(config);
+    let res: TUploadRegisterResponse;
+
+    try {
+        res = await axios(config);
+    } catch (error) {
+        console.error('Error registering document to LinkedIn:');
+        throw error;
+    }
 
     return {
         uploadUrl: res.data.value.uploadUrl,
         asset: res.data.value.document,
     };
 };
+
 /**
- * This function gets the url to upload an image to LinkedIn
+ * This function gets the url to upload a doc to LinkedIn
  */
 export const registerUploadDocumentToLinkedin = async (
     providerAccountId: String | undefined,
@@ -115,20 +116,22 @@ export const registerUploadDocumentToLinkedin = async (
     };
 };
 
-export const uploadImageToLinkedin = async (
+/**
+ * This fn actually uploads the document to LinkedIn
+ */
+export const uploadAssetToLinkedin = async (
     uploadUrl: string,
-    imageUrl: string,
+    assetUrl: string,
     accessToken: String | null | undefined
 ) => {
     let imageData;
 
     try {
-        const response = await axios.get(imageUrl, {
+        const response = await axios.get(assetUrl, {
             responseType: 'arraybuffer', // This ensures the data is returned as Buffer
         });
 
         imageData = response.data;
-        console.log('Image data retrieved from the provided URL:', imageData);
     } catch (error) {
         console.error(
             'Unable to retrieve image data from the provided URL ##1'
@@ -159,11 +162,14 @@ export const uploadImageToLinkedin = async (
     }
 };
 
+/*
+ * Publish a post (with or without asset - image, doc) on LinkedIn
+ */
 export const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,
     accessToken: String | null | undefined,
-    title: string = '',
+    title: string,
     asset?: string
 ): Promise<ResData> => {
     try {
@@ -182,7 +188,7 @@ export const postOnLinkedIn = async (
             content: asset
                 ? {
                       media: {
-                          title: title,
+                          title: title || 'Documento sin título',
                           id: asset,
                       },
                   }
@@ -216,10 +222,10 @@ export const postOnLinkedIn = async (
 
         const response = await axios(config);
 
-        console.log('LOG - postOnLinkedin - response', { response });
+        // console.log('LOG - postOnLinkedin - response', { response.data });
 
         return response;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error posting on LinkedIn ***:');
         console.error(error);
         throw error;
