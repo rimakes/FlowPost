@@ -125,6 +125,7 @@ export const uploadImageToLinkedin = async (
     try {
         const response = await axios.get(imageUrl, {
             responseType: 'arraybuffer', // This ensures the data is returned as Buffer
+            timeout: 3000, // Testing if timeout help us fix the bug
         });
 
         imageData = response.data;
@@ -205,6 +206,11 @@ export const postOnLinkedIn = async (
             },
             data: JSON.stringify(body),
         };
+
+        console.log('LOG - postOnLinkedin - body RIGHT before the call', {
+            body,
+        });
+
         const response = await axios(config);
 
         console.log('LOG - postOnLinkedin - response', { response });

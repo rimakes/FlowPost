@@ -56,10 +56,13 @@ export const PostSlot = ({
     let now = new Date();
     let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
     let dateString = day + time;
+    console.log({ dateString });
     let dateObject = parse(dateString, 'yyyy-M-d hh:mm aa', new Date());
+    console.log({ dateObject });
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
     dateObject.setUTCHours(hours, minutes);
+    console.log('after', { dateObject });
     const formattedTime = format(dateObject, 'KK:mm aa');
 
     const MenuWhenAvailable = () => (

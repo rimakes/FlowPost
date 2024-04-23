@@ -128,9 +128,6 @@ export function SchedulerInput({ schedule }: SchedulerInputProps) {
                         })
                         .map((time, index) => {
                             // TODO: I am pretty sure this is not the best way to do this...
-                            const userTimezone =
-                                Intl.DateTimeFormat().resolvedOptions()
-                                    .timeZone;
                             let now = new Date();
                             let day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} `; // e.g., 2024-4-22
                             let dateString = day + time;
