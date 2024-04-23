@@ -128,6 +128,7 @@ export const uploadImageToLinkedin = async (
         });
 
         imageData = response.data;
+        console.log('Image data retrieved from the provided URL:', imageData);
     } catch (error) {
         console.error(
             'Unable to retrieve image data from the provided URL ##1'
@@ -150,7 +151,7 @@ export const uploadImageToLinkedin = async (
 
     try {
         const res = await axios(config);
-        console.log('Image uploaded to LinkedIn!:', res);
+        console.log('Image uploaded to LinkedIn!:', res.status);
         return res.status;
     } catch (error) {
         console.error('Unable to upload image to LinkedIn. ##2');
@@ -162,7 +163,7 @@ export const postOnLinkedIn = async (
     providerAccountId: String | undefined,
     content: String | null | undefined,
     accessToken: String | null | undefined,
-    title: string,
+    title: string = '',
     asset?: string
 ): Promise<ResData> => {
     try {
@@ -191,7 +192,10 @@ export const postOnLinkedIn = async (
             isReshareDisabledByAuthor: false,
         };
 
-        console.log('*LOG - postOnLinkedin - body before config', { body });
+        console.log(
+            '*LOG - postOnLinkedin - body before config',
+            body.content?.media
+        );
 
         const config: AxiosRequestConfig<any> = {
             method: 'post',
