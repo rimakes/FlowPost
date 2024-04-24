@@ -13,6 +13,7 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { appConfig } from '@/config/shipper.appconfig';
 import { TCompleteRequest, WritterReq } from '@/app/api/complete/route';
 import { Editor } from '@tiptap/react';
+import axios from 'axios';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -105,8 +106,6 @@ export const capitalizeFirstLetter = (string: string) => {
     const newString = string.toLowerCase();
     return newString.charAt(0).toUpperCase() + newString.slice(1);
 };
-
-export const uploadFileToCloudinary = async (file: File) => {};
 
 /**
  * Retry an async function a number of times with a delay between each attempt.
@@ -397,4 +396,12 @@ export const requestComplete = async (
         editor.setEditable(true);
         return resData;
     } else return '';
+};
+
+// Parameters: https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?hl=es-419
+export const getSearchResults = async (query: string) => {
+    const res = await axios.get(
+        `https://www.googleapis.com/customsearch/v1?key=${process.env.NEXT_PUBLIC_SEARCH_API_KEY}&cx=${process.env.NEXT_PUBLIC_SEARCH_ENGINE_ID}&dateRestrict=m3&q=${query}`
+    );
+    return res.data.items;
 };
