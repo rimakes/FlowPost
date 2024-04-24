@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import React from 'react';
 import Logo from './logo';
 import Link from 'next/link';
 import { appConfig } from '@/config/shipper.appconfig';
+import { Route } from 'next';
 
 const Footer = () => {
     return (
@@ -57,31 +57,22 @@ const Footer = () => {
                         </div>
 
                         <LinkGroup header='Links'>
-                            <NavLink link='/legal' label='Aviso Legal' />
-                            <NavLink
-                                link='/conditions'
-                                label='Condiciones de Venta'
-                            />
-                            <NavLink
-                                link='/cookies'
-                                label='Política de Cookies'
-                            />
-                            <NavLink
-                                link='/careers'
-                                label='Estamos Contratando'
-                            />
+                            <NavLink link='/' label='Aviso Legal' />
+                            <NavLink link='/' label='Condiciones de Venta' />
+                            <NavLink link='/' label='Política de Cookies' />
+                            <NavLink link='/' label='Estamos Contratando' />
                         </LinkGroup>
                         <LinkGroup header='Recursos Gratis'>
-                            <NavLink link='/logo' label='Creador de logos' />
-                            <NavLink link='/blog' label='Consejos' />
+                            <NavLink link='/' label='Creador de logos' />
+                            <NavLink link='/' label='Consejos' />
 
                             {/* <NavLink link='/#' label='Contact & Support' />
                             <NavLink link='/#' label='Success History' />
                             <NavLink link='/#' label='Setting & Privacy' /> */}
                         </LinkGroup>
                         <LinkGroup header='Contacto'>
-                            <NavLink link='/support' label='Soporte' />
-                            <NavLink link='/affiliates' label='Afiliados' />
+                            <NavLink link='/' label='Soporte' />
+                            <NavLink link='/' label='Afiliados' />
                         </LinkGroup>
 
                         <div className='w-full px-4 sm:w-1/2 lg:w-3/12'>
@@ -91,7 +82,7 @@ const Footer = () => {
                                 </h4>
                                 <div className='mb-6 flex items-center'>
                                     <Link
-                                        href=''
+                                        href='/'
                                         className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
@@ -104,7 +95,7 @@ const Footer = () => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        href=''
+                                        href='/'
                                         className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
@@ -117,7 +108,7 @@ const Footer = () => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        href=''
+                                        href='/'
                                         className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
@@ -130,7 +121,7 @@ const Footer = () => {
                                         </svg>
                                     </Link>
                                     <Link
-                                        href=''
+                                        href='/'
                                         className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
@@ -247,12 +238,12 @@ const LinkGroup = ({ children, header }: LinkGroupProps) => {
     );
 };
 
-type NavLinkProps = {
-    link: string;
+type NavLinkProps<T extends string> = {
+    link: Route<T>;
     label: string;
 };
 
-const NavLink = ({ link, label }: NavLinkProps) => {
+const NavLink = <T extends string>({ link, label }: NavLinkProps<T>) => {
     return (
         <li>
             <Link

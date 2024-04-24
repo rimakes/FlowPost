@@ -10,6 +10,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { WRITTER_TOOLS } from '@/config/const';
 import { cn } from '@/lib/utils';
+import { Route } from 'next';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -27,7 +28,7 @@ export default async function Home() {
                 {WRITTER_TOOLS.map((tool) => (
                     <PostGeneratorCard
                         key={tool.url}
-                        url={tool.url}
+                        url={tool.url as Route}
                         name={tool.name}
                         title={tool.title}
                         subtitle={tool.subtitle}
@@ -41,8 +42,8 @@ export default async function Home() {
     );
 }
 
-export type PostGeneratorCardProps = {
-    url: string;
+type PostGeneratorCardProps<T extends string> = {
+    url: Route<T>;
     name: string;
     title: string;
     subtitle: string;
@@ -51,7 +52,7 @@ export type PostGeneratorCardProps = {
     imageUrl?: string;
 };
 
-const PostGeneratorCard = ({
+const PostGeneratorCard = <T extends string>({
     url,
     name,
     title,
@@ -59,7 +60,7 @@ const PostGeneratorCard = ({
     headerClassName,
     titleClassName,
     imageUrl,
-}: PostGeneratorCardProps) => {
+}: PostGeneratorCardProps<T>) => {
     return (
         <Link href={url} className='h-full w-full'>
             <Card className='h-full'>

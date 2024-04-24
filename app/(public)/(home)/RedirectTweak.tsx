@@ -1,8 +1,8 @@
 'use client';
 
+import { Route } from 'next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { toast } from 'sonner';
 
 type RedirectTweakProps = {};
 export function RedirectTweak(props: RedirectTweakProps) {
@@ -12,7 +12,7 @@ export function RedirectTweak(props: RedirectTweakProps) {
     useEffect(() => {
         const callbackUrl = searchParams.get('callbackUrl');
         if (callbackUrl) {
-            router.push(callbackUrl);
+            router.push(callbackUrl as Route);
         }
     }, [router, searchParams]);
 

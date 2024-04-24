@@ -45,7 +45,7 @@ export const Newsletter = () => {
                 <p className='mt-3 mx-auto text-center max-w-lg text-[15px] text-gray-400'>
                     No spam ever, we are care about the protection of your data.
                     Read our{' '}
-                    <Link className='text-primary underline' href=''>
+                    <Link className='text-primary underline' href='/'>
                         {' '}
                         Privacy Policy{' '}
                     </Link>

@@ -336,7 +336,7 @@ export const COMPLETE_INSTRUCTIONS = {
     user:`,
 };
 
-export const menuItems = [
+export const MENU_ITEMS = [
     {
         label: 'Pruébalo',
         url: '#try-it',

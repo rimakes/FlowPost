@@ -1,8 +1,13 @@
 import { appConfig } from '@/config/shipper.appconfig';
+import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Logo({ linkUrl = '/' }) {
+export default function Logo<T extends string>({
+    linkUrl = '/',
+}: {
+    linkUrl?: Route<T>;
+}) {
     return (
         <Link
             className='relative h-8 w-40 shrink-0 inline-block'

@@ -10,6 +10,8 @@ import Image from 'next/image';
 import { appConfig } from '@/config/shipper.appconfig';
 import { VideoSteps } from '@/components/marketing/VideoSteps';
 
+// BOILER: add the route typing (as done in next.config) https://nextjs.org/docs/app/building-your-application/configuring/typescript
+
 export default async function Home() {
     // const session = await auth();
 

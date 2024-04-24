@@ -15,7 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { GetAccessButton } from '@/components/marketing/GetAccessButton';
 import { LoginButton } from '@/components/auth/LoginButton';
-import { menuItems } from '@/config/const';
+import { MENU_ITEMS } from '@/config/const';
+import { Route } from 'next';
 
 export function HomeNavbar({ className }: { className?: string }) {
     const { data } = useSession();
@@ -31,11 +32,11 @@ export function HomeNavbar({ className }: { className?: string }) {
                 {/* Left side */}
                 <Logo />
                 <div className='lg:flex gap-2 items-center hidden '>
-                    {menuItems.map((item) => {
+                    {MENU_ITEMS.map((item) => {
                         return (
                             <Link
                                 key={item.url}
-                                href={item.url}
+                                href={item.url as Route}
                                 className={buttonVariants({ variant: 'link' })}
                             >
                                 {item.label}
@@ -73,11 +74,11 @@ export function HomeNavbar({ className }: { className?: string }) {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='flex flex-col gap-2 p-2'>
-                        {menuItems.map((item) => {
+                        {MENU_ITEMS.map((item) => {
                             return (
                                 <DropdownMenuItem key={item.url} asChild>
                                     <Link
-                                        href={item.url}
+                                        href={item.url as Route}
                                         className={buttonVariants({
                                             variant: 'link',
                                         })}
