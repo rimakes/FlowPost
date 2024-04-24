@@ -2,13 +2,12 @@
 
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { TFontName } from '@/types/types';
 import { ArrowDownIcon, ChevronDown } from 'lucide-react';
 import { FONTS } from '@/config/fontsBigList';
 import { useDebouncedState } from '@mantine/hooks';
-import { wait } from '@/lib/utils';
 
 type FontSelectorProps = {
     setFontPalette: (font: TFontName) => void;
@@ -19,6 +18,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
     const [query, setQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useDebouncedState(query, 700);
     const [numberOfFonts, setNumberOfFonts] = useState(10);
+    const id = useId();
 
     const filteredFonts = FONTS.filter((font) =>
         font.toLowerCase().includes(debouncedQuery.toLowerCase())

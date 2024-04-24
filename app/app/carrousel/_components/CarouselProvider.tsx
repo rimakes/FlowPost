@@ -4,7 +4,6 @@ import { RefObject, createContext, useCallback, useState } from 'react';
 import { deepCopy } from '@/lib/utils';
 import {
     TArrayOfRefs,
-    TBrand,
     TCarousel,
     TPosition,
     TSlideDesignNames,
@@ -18,9 +17,9 @@ import { DEFAULT_BACKGROUND_IMAGE } from '@/config/const';
 const INITIAL_STATE = {
     arrayOfRefs: [] as TArrayOfRefs,
     addRef: (ref: RefObject<HTMLDivElement>, index: number) => {},
-    currentSlide: 0 as number,
     nextSlide: () => {},
     previousSlide: () => {},
+    currentSlide: 0 as number,
     carousel: {} as TCarousel,
     editDescription: (newDescription: string) => {},
     editProfilePicture: (newImage: string) => {},
@@ -38,16 +37,13 @@ const INITIAL_STATE = {
             position?: TPosition;
         }
     ) => {},
-    toggleCarouselContent: (setting: TToggleableCarouselSettings) => {},
-    toggleSlideContent: (setting: TToggleableSlideSettings) => {},
+    toggleCarouselSetting: (setting: TToggleableCarouselSettings) => {},
+    toggleSlideSetting: (setting: TToggleableSlideSettings) => {},
     moveSlide: (to: number) => {},
     setSlideContent: (
         property: TToggleableSlideSettings,
         content: string
     ) => {},
-    getCompleteBrand: () => {
-        return {} as Omit<TBrand, 'authorId' | 'id'>;
-    },
     setDesign: (design: TSlideDesignNames) => {},
     setCarouselSetting: (
         setting: keyof TCarousel['settings'],
@@ -59,21 +55,17 @@ const INITIAL_STATE = {
     setPdfUrl: (url: string) => {},
     setCarousel: (carousel: TCarousel | ((prev: TCarousel) => TCarousel)) => {},
 };
-
-// REVIEW: I think exporting this is causing a full reload of the app.
-// Something I didn't noticed before is that it only force full reload when you save the problematic file.
 export const CarouselContext = createContext({
     ...INITIAL_STATE,
 });
 
-type CarouselContextProviderProps = {
-    children: React.ReactNode;
-    initialCarousel: TCarousel;
-};
-export function CarouselContextProvider({
+export function CarouselProvider({
     children,
     initialCarousel,
-}: CarouselContextProviderProps) {
+}: {
+    children: React.ReactNode;
+    initialCarousel: TCarousel;
+}) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [carousel, setCarousel] = useState(initialCarousel);
     const [arrayOfRefs, setArrayOfRefs] = useState([] as TArrayOfRefs);
@@ -89,6 +81,64 @@ export function CarouselContextProvider({
     }, [currentSlide]);
 
     useCarouselShortcuts({ ArrowRight: nextSlide, ArrowLeft: previousSlide });
+
+    const setCurrentSlideTo = (newSlide: number) => {
+        setCurrentSlide(newSlide);
+    };
+
+    const toggleCarouselSetting = (setting: TToggleableCarouselSettings) => {
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                draftCarousel.settings[setting] =
+                    !draftCarousel.settings[setting];
+            })
+        );
+    };
+
+    const setCarouselSetting = (
+        setting: keyof TCarousel['settings'],
+        newSetting: any
+    ) => {
+        // REVIEW: check what the difference is between using prev and not using it when we are using immer
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                // @ts-ignore
+                draftCarousel.settings[setting] = newSetting;
+            })
+        );
+    };
+
+    const editProfilePicture = (newImage: string) => {
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.author.pictureUrl = newImage;
+            })
+        );
+    };
+
+    const editName = (newName: string) => {
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.author.name = newName;
+            })
+        );
+    };
+
+    const editHandle = (newHandle: string) => {
+        setCarousel((prev) => {
+            const newCarousel = deepCopy(prev);
+            newCarousel.author.handle = newHandle;
+            return newCarousel;
+        });
+    };
+
+    const setPdfUrl = (url: string) => {
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.pdfUrl = url;
+            })
+        );
+    };
 
     const setSlideContent = async (
         property: TToggleableSlideSettings,
@@ -134,51 +184,21 @@ export function CarouselContextProvider({
     };
 
     const editParagraphN = (index: number, newParagraph: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].paragraphs[index].content =
-            newParagraph;
-        setCarousel(newCarousel);
-    };
-
-    const editProfilePicture = (newImage: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.author.pictureUrl = newImage;
-            return newCarousel;
-        });
-    };
-
-    const editName = (newName: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.author.name = newName;
-            return newCarousel;
-        });
-    };
-
-    const editHandle = (newHandle: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.author.handle = newHandle;
-            return newCarousel;
-        });
-    };
-
-    const setCurrentSlideTo = (newSlide: number) => {
-        setCurrentSlide(newSlide);
-    };
-
-    const toggleCarouselSetting = (setting: TToggleableCarouselSettings) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings[setting] = !newCarousel.settings[setting];
-        setCarousel(newCarousel);
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.slides[currentSlide].paragraphs[index].content =
+                    newParagraph;
+            })
+        );
     };
 
     const toggleSlideSetting = (setting: TToggleableSlideSettings) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide][setting]!.isShown =
-            !newCarousel.slides[currentSlide][setting]!.isShown;
-        setCarousel(newCarousel);
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                draftCarousel.slides[currentSlide][setting]!.isShown =
+                    !draftCarousel.slides[currentSlide][setting]!.isShown;
+            })
+        );
     };
 
     const toggleSlideHasParagraph = () => {
@@ -190,44 +210,37 @@ export function CarouselContextProvider({
     };
 
     const moveSlide = (to: number) => {
-        console.log({ to });
         if (currentSlide === carousel.slides.length - 1 && to >= 1) return;
         if (currentSlide === 0 && to <= -1) return;
-
-        const newCarousel = deepCopy(carousel);
-        const slideToMove = newCarousel.slides[currentSlide];
-        const newSlide = newCarousel.slides[currentSlide + to];
-        newCarousel.slides[currentSlide] = newSlide;
-        newCarousel.slides[currentSlide + to] = slideToMove;
-        setCarousel(newCarousel);
-        setCurrentSlide(currentSlide + to);
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                const slideToMove = draftCarousel.slides[currentSlide];
+                draftCarousel.slides.splice(currentSlide, 1);
+                draftCarousel.slides.splice(currentSlide + to, 0, slideToMove);
+                setCurrentSlide(currentSlide + to);
+            })
+        );
     };
 
     const addSlideToRight = () => {
-        const newCarousel = deepCopy(carousel);
-        const newSlide = deepCopy(newCarousel.slides[currentSlide]);
-        newCarousel.slides.splice(currentSlide + 1, 0, newSlide);
-        setCarousel(newCarousel);
-        setCurrentSlide(currentSlide + 1);
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                const newSlide = deepCopy(draftCarousel.slides[currentSlide]);
+                draftCarousel.slides.splice(currentSlide + 1, 0, newSlide);
+                setCurrentSlide(currentSlide + 1);
+            })
+        );
     };
 
     const deleteCurrentSlide = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides.splice(currentSlide, 1);
-        setCarousel(newCarousel);
-        if (currentSlide === newCarousel.slides.length) {
-            setCurrentSlide(currentSlide - 1);
-        }
-    };
-
-    const setCarouselSetting = (
-        setting: keyof TCarousel['settings'],
-        newSetting: any
-    ) => {
-        const newCarousel = deepCopy(carousel);
-        // @ts-ignore
-        newCarousel.settings[setting] = newSetting;
-        setCarousel(newCarousel);
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                draftCarousel.slides.splice(currentSlide, 1);
+                if (currentSlide === draftCarousel.slides.length) {
+                    setCurrentSlide(currentSlide - 1);
+                }
+            })
+        );
     };
 
     const setBackgroundImage = (
@@ -258,27 +271,10 @@ export function CarouselContextProvider({
         []
     );
 
-    const getCompleteBrand = () => {
-        return {
-            ...carousel.author,
-            colorPalette: carousel.settings.colorPalette,
-            fontPalette: carousel.settings.fontPalette,
-            imageUrl: carousel.author.pictureUrl,
-        };
-    };
-
     const setDesign = (design: TSlideDesignNames) => {
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].design = design;
         setCarousel(newCarousel);
-    };
-
-    const setPdfUrl = (url: string) => {
-        setCarousel(
-            produce(carousel, (draftCarousel) => {
-                draftCarousel.pdfUrl = url;
-            })
-        );
     };
 
     return (
@@ -287,14 +283,13 @@ export function CarouselContextProvider({
                 setCarouselSetting,
                 setSlideContent,
                 moveSlide,
-                toggleSlideContent: toggleSlideSetting,
-                toggleCarouselContent: toggleCarouselSetting,
+                toggleSlideSetting,
+                toggleCarouselSetting,
                 setCarousel,
                 setPdfUrl,
                 editImage,
                 editParagraphs,
                 setDesign,
-                getCompleteBrand,
                 arrayOfRefs,
                 addRef,
                 currentSlide,

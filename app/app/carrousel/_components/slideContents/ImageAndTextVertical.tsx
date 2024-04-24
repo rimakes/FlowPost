@@ -1,7 +1,7 @@
 import { TBrand } from '@/types/types';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ImageAndTextVertical = {

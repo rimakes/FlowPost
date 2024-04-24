@@ -10,12 +10,13 @@ import {
     TSlide,
     TSlideDesignNames,
 } from '@/types/types';
-import { CarouselContext } from './ContextProvider';
+import { CarouselContext } from './CarouselProvider';
 import { ContentSlideLayout } from './ContentSlideLayout';
 import { TextOnlySlide } from './slideContents/TextOnlySlide';
 import { cn, isEven } from '@/lib/utils';
 import { SlideSettings } from './SlideSettings';
 import { designNamesMap } from './slideContents/contentMaps';
+import { useBrand } from '@/hooks/use-brand';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;
 const translateClasses = {
@@ -102,13 +103,8 @@ export const SlideWithSettings = ({
     decorationId,
     mode,
 }: SlideWithSettingsProps) => {
-    const {
-        setCurrentSlideTo,
-        currentSlide,
-        addRef,
-        carousel,
-        getCompleteBrand,
-    } = useContext(CarouselContext);
+    const { setCurrentSlideTo, currentSlide, addRef, carousel } =
+        useContext(CarouselContext);
     const slideRef = useRef<HTMLDivElement>(null);
     const isActive = currentSlide === slideNumber;
     const DesignElement = slide.design
@@ -120,7 +116,7 @@ export const SlideWithSettings = ({
         addRef(slideRef, slideNumber);
     }, [addRef, slideNumber]);
 
-    const brand = getCompleteBrand() as TBrand;
+    const brand = useBrand() as TBrand;
     const adjustedBrand: TBrand =
         mode === 'dark'
             ? {
@@ -187,9 +183,10 @@ export const SlideWithSettings = ({
             </div>
             <SlideSettings isActive={isActive} slide={slide} />
 
-            {Object.keys(brand.fontPalette).map((fontType) => (
+            {Object.keys(brand.fontPalette).map((fontType, index) => (
                 // REVIEW: Apart from the fact that it works...what do we think about this...?
-                <div key={brand.fontPalette[fontType as TFont]}>
+                // + index is a hack to avoid the key warning
+                <div key={brand.fontPalette[fontType as TFont] + index}>
                     <style>
                         {`#font-test {font-family: ${brand.fontPalette[fontType as TFont]} !important;}`}
                     </style>

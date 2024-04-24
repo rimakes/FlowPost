@@ -4,16 +4,18 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { range } from '@mantine/hooks';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { ContentSlideLayout } from '@/app/app/carrousel/_components/ContentSlideLayout';
 import { TBrand } from '@/types/types';
 import { TextOnlySlide } from '@/app/app/carrousel/_components/slideContents/TextOnlySlide';
+import { useBrand } from '@/hooks/use-brand';
 
 type TemplateSelectorProps = {};
 
 export const TemplateSelector = ({}: TemplateSelectorProps) => {
-    const { currentSlide, carousel, setCurrentSlideTo, getCompleteBrand } =
+    const { currentSlide, carousel, setCurrentSlideTo } =
         useContext(CarouselContext);
+    const brand = useBrand() as TBrand;
     return (
         <Dialog>
             <DialogTrigger className='w-full' asChild>
@@ -31,7 +33,7 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                                     <ContentSlideLayout
                                         className=''
                                         key={index}
-                                        brand={getCompleteBrand() as TBrand}
+                                        brand={brand}
                                         currentSlide={currentSlide}
                                         numberOfSlides={carousel.slides.length}
                                         isActive={currentSlide === index}

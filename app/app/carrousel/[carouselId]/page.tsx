@@ -1,4 +1,4 @@
-import { CarouselContextProvider } from '../_components/ContextProvider';
+import { CarouselProvider } from '../_components/CarouselProvider';
 import Container from '@/components/shared/container';
 import { CarouselSidebar } from '../_components/sidebar/Sidebar';
 import { Heading } from '@/components/shared/Heading';
@@ -80,14 +80,14 @@ export default async function CarouselPage({ params }: props) {
                 />
             </Container>
 
-            <CarouselContextProvider initialCarousel={carousel}>
+            <CarouselProvider initialCarousel={carousel}>
                 <div
                     className={`flex md:flex-row flex-col border-t flex-wrap w-full border-0 border-re-500 grow`}
                 >
                     <CarouselSidebar brands={userBrands} />
                     <CarouselWorkbench />
                 </div>
-            </CarouselContextProvider>
+            </CarouselProvider>
         </>
     );
 }

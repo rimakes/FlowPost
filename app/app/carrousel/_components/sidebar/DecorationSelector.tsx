@@ -10,7 +10,7 @@ import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible
 import { ChevronDown } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useContext, useState } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { ColorPalette } from '@prisma/client';
 
 type DecorationSelectorProps = {
@@ -25,7 +25,7 @@ export function DecorationSelector({
 }: DecorationSelectorProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const {
-        toggleCarouselContent: toggleCarouselSetting,
+        toggleCarouselSetting: toggleCarouselSetting,
         carousel: {
             settings: { showDecoration },
         },

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ImageAndTextVertical = {

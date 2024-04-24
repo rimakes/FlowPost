@@ -4,7 +4,7 @@ import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CallToActionSlideProps = {

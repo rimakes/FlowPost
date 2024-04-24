@@ -3,7 +3,7 @@
 import { Label } from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
 import { useContext } from 'react';
-import { CarouselContext } from './ContextProvider';
+import { CarouselContext } from './CarouselProvider';
 import {
     ArrowLeft,
     ArrowLeftIcon,
@@ -46,7 +46,7 @@ export function SlideSettings({
     const {
         nextSlide,
         previousSlide,
-        toggleSlideContent: toggleSlideSetting,
+        toggleSlideSetting: toggleSlideSetting,
         toggleSlideHasParagraph,
         setBackgroundImage,
         setDesign,

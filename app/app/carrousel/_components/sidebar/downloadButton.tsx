@@ -2,7 +2,7 @@
 
 import { Download } from 'lucide-react';
 import { useContext, useState } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { Button } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';

@@ -2,16 +2,13 @@
 
 import { cn } from '@/lib/utils';
 import { ArrowDown, ArrowRight, Video } from 'lucide-react';
-import Image from 'next/image';
-import { Button, buttonVariants } from '../ui/button';
-import { signIn, useSession } from 'next-auth/react';
-import { handwritten, primaryFont, secondaryFont } from '@/config/fonts';
+import { buttonVariants } from '../ui/button';
+import { handwritten } from '@/config/fonts';
 import { DemoWidget } from './Demo';
 import Link from 'next/link';
 import { GetAccessButton } from './GetAccessButton';
-import Highlight from '../utils/Hightlight';
 import { PostWritterContextProvider } from '@/app/app/post-writter/_components/PostWritterProvider';
-import { CarouselContextProvider } from '@/app/app/carrousel/_components/ContextProvider';
+import { CarouselProvider } from '@/app/app/carrousel/_components/CarouselProvider';
 import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 
 export default function Hero({ className = '' }) {
@@ -71,11 +68,11 @@ export default function Hero({ className = '' }) {
                 </div>
 
                 <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-center flex-1'>
-                    <CarouselContextProvider initialCarousel={fakeCarousel}>
+                    <CarouselProvider initialCarousel={fakeCarousel}>
                         <PostWritterContextProvider>
                             <DemoWidget />
                         </PostWritterContextProvider>
-                    </CarouselContextProvider>
+                    </CarouselProvider>
                 </div>
             </section>
         </>

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
 import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CoverSlideProps = {

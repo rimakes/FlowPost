@@ -1,8 +1,6 @@
 'use client';
 
-import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Textarea } from '@/components/ui/textarea';
 import { cn, proToast } from '@/lib/utils';
 import { Save } from 'lucide-react';
 import { useContext, useState } from 'react';
@@ -11,11 +9,10 @@ import { useSession } from 'next-auth/react';
 import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { toast } from 'sonner';
-import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
-import { CarouselContext } from '../../carrousel/_components/ContextProvider';
+import { CarouselContext } from '../../carrousel/_components/CarouselProvider';
 import Editor from '@/components/editor/Editor';
 
 type GeneratedPostProps = {

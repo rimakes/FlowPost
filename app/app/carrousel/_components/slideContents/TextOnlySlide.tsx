@@ -1,4 +1,4 @@
-import { CarouselContext } from '@/app/app/carrousel/_components/ContextProvider';
+import { CarouselContext } from '@/app/app/carrousel/_components/CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 import { useContext } from 'react';
 

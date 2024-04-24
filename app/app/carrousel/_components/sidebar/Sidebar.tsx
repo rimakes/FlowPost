@@ -2,7 +2,7 @@
 
 import { Label } from '@/components/ui/label';
 import { useContext, useState } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
@@ -81,26 +81,21 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
     const {
         carousel,
         carousel: {
-            author: { name, handle, pictureUrl },
             settings: {
                 alternateColors,
-                showAuthor,
                 aspectRatio,
                 backgroundPattern,
-                showSwipeLabel,
                 colorPalette,
             },
         },
-        toggleCarouselContent: toggleCarouselSetting,
+        toggleCarouselSetting: toggleCarouselSetting,
         setCarouselSetting,
         editProfilePicture,
         editName,
         editHandle,
-        arrayOfRefs,
     } = useContext(CarouselContext);
 
     const router = useRouter();
-    const [colorsPopOverisOpen, setColorsPopOverisOpen] = useState(false);
     const { data } = useSession();
 
     const onSetColorPalette = (colorPalette: TColorPalette) => {
@@ -110,7 +105,6 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
 
     const onBrandChange = (brandId: string) => {
         const brand = brands.find((brand) => brand.id === brandId);
-        console.log(brand);
         if (brand) {
             setCarouselSetting('colorPalette', brand.colorPalette);
             setCarouselSetting('fontPalette', brand.fontPalette);
@@ -126,11 +120,6 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             [fontType]: font,
         });
     };
-
-    console.log(
-        'carousel.settings.colorPalette',
-        carousel.settings.colorPalette
-    );
 
     return (
         <div
@@ -254,6 +243,7 @@ export const FontPaletteSelector = ({
             {Object.keys(fontPalette).map((fontType) => (
                 <div
                     key={fontType}
+                    id={fontType}
                     className='cursor-pointer flex flex-col items-start'
                 >
                     {/*@ts-ignore  */}
@@ -275,7 +265,7 @@ export const LabelRoundnessSelector = () => {
         carousel: {
             settings: { labelRoundness, showSwipeLabel },
         },
-        toggleCarouselContent: toggleCarouselSetting,
+        toggleCarouselSetting: toggleCarouselSetting,
         setCarouselSetting,
     } = useContext(CarouselContext);
 

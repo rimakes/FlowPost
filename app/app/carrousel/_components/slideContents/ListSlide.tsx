@@ -1,6 +1,6 @@
 import { TBrand } from '@/types/types';
 import { useContext, useRef } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { Check } from 'lucide-react';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 

@@ -15,7 +15,7 @@ import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { useRouter } from 'next/navigation';
 import { TStatus } from '@/types/types';
-import { CarouselContext } from '../../carrousel/_components/ContextProvider';
+import { CarouselContext } from '../../carrousel/_components/CarouselProvider';
 
 type GeneratedPostProps = {
     className?: string;

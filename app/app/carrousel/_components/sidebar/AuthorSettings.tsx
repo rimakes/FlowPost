@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import { Switch } from '@/components/ui/switch';
 import {
     Collapsible,
@@ -19,7 +19,7 @@ export const AuthorSettings = () => {
         },
         editName,
         editHandle,
-        toggleCarouselContent: toggleCarouselSetting,
+        toggleCarouselSetting: toggleCarouselSetting,
     } = useContext(CarouselContext);
 
     return (

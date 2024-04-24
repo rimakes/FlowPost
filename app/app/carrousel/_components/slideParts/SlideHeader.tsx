@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { useContext } from 'react';
-import { CarouselContext } from '../ContextProvider';
+import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type SlideHeaderProps = {
