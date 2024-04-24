@@ -1,9 +1,8 @@
 import { TBrand } from '@/types/types';
-import { useContext, useId, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import { Check } from 'lucide-react';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
-import { randomUUID } from 'crypto';
 
 type ListSlideProps = {
     brand: TBrand;
@@ -21,9 +20,9 @@ export const ListSlide = ({
     slideNumber,
 }: ListSlideProps) => {
     const {
-        editTitle,
         carousel: { slides },
         editParagraphN,
+        setSlideContent,
     } = useContext(CarouselContext);
     const titleRef = useRef('');
 
@@ -44,7 +43,9 @@ export const ListSlide = ({
         <div className='flex flex-col gap-4 h-full p-4 z-10'>
             <SimpleEditor
                 defaultValue={title}
-                onDebouncedUpdate={editTitle}
+                onDebouncedUpdate={(string) => {
+                    setSlideContent('title', string);
+                }}
                 slideElement='title'
                 isShown={true}
             />

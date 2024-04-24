@@ -1,7 +1,6 @@
 import { ApiRequestBody, ApiResponse } from '@/types/types';
-import { getAiModel, getPostTemplateById, getVoiceToneById } from '@/lib/utils';
+import { getPostTemplateById, getVoiceToneById } from '@/lib/utils';
 import { PostRequest } from '@/app/app/post-writter/_components/PostWritterForm';
-import { ChatOpenAI } from '@langchain/openai';
 import { StreamingTextResponse } from 'ai';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
@@ -10,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import { aiChat } from '@/lib/aiClients';
 
 export async function POST(req: NextRequest) {
     try {
@@ -33,18 +33,7 @@ export async function POST(req: NextRequest) {
                     );
                 }
 
-                const model = new ChatOpenAI({
-                    temperature: 0.8,
-                    modelName: getAiModel('writter'),
-                    streaming: true,
-                    callbacks: [
-                        {
-                            handleLLMNewToken(token) {
-                                // console.log(token);
-                            },
-                        },
-                    ],
-                });
+                const model = aiChat('writter');
 
                 // Get the custom AISettings from the user
                 const data = await getServerSession(authOptions);

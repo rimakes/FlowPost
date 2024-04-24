@@ -1,14 +1,7 @@
 import { decorationMap } from '@/app/app/carrousel/_components/slideParts/SlideDecoration';
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
-import { ASPECT_RATIOS } from '@/app/app/post-writter/config/const';
 import { fontsMap } from '@/config/fonts';
-import type {
-    AspectRatio,
-    Position,
-    Prisma,
-    PrismaClient,
-    TimeSlot,
-} from '@prisma/client';
+import type { Position, Prisma, PrismaClient, TimeSlot } from '@prisma/client';
 import { designNamesMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
 import {
     DaysOfTheWeek,
@@ -46,6 +39,25 @@ export type Post = {
     tags: string[];
     date: string;
 };
+
+export type TToggleableCarouselSettings =
+    | 'showSwipeLabel'
+    | 'showCounter'
+    | 'showAuthor'
+    | 'showDecoration'
+    | 'showProfilePic'
+    | 'showName'
+    | 'showHandle'
+    | 'showAuthorInFirstOnly'
+    | 'alternateColors';
+
+export type TToggleableSlideSettings =
+    | 'title'
+    | 'tagline'
+    | 'slideHeading'
+    | 'bigCharacter';
+
+export type TArrayOfRefs = RefObject<HTMLDivElement>[];
 
 export type ApiResponse<T = undefined, E = ApiError> =
     | {

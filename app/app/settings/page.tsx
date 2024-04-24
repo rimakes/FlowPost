@@ -5,7 +5,7 @@ import { AccountSettings } from './_components/AccountSettings';
 import { IASettings } from './_components/IASettings';
 import { BrandKitsSettings } from './_components/BrandKitsSettings';
 import {
-    getUserBrandKits,
+    getUserBrands,
     getUserSettings,
 } from '@/app/_actions/settings-actions';
 import { signIn } from 'next-auth/react';
@@ -13,8 +13,7 @@ import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { PlanSettings } from './_components/PlanSettings';
 import { TPageProps } from '@/types/types';
-import { db } from '@/lib/prisma';
-import { getSubscription } from '@/app/_actions/shared-actions';
+import { getSubscription } from '@/app/_actions/other-actions';
 
 export default async function IdeasPage({ params, searchParams }: TPageProps) {
     const tab = searchParams['tab'] as string;
@@ -25,9 +24,8 @@ export default async function IdeasPage({ params, searchParams }: TPageProps) {
         signIn();
     }
 
-    const userBrandKits = await getUserBrandKits(session!.user.id);
+    const userBrandKits = await getUserBrands(session!.user.id);
     const userSettings = await getUserSettings(session!.user.id);
-
     const subscription = await getSubscription();
 
     return (

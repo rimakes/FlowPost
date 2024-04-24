@@ -26,9 +26,9 @@ export const ImageAndTextHorizontal = ({
     const ArrowElement = imageLocation === 'right' ? ArrowRight : ArrowLeftIcon;
 
     const {
-        editTitle,
         carousel: { slides },
         editParagraphN,
+        setSlideContent,
     } = useContext(CarouselContext);
 
     const isTitleShown = slides[0].title?.isShown;
@@ -40,7 +40,9 @@ export const ImageAndTextHorizontal = ({
             <div>
                 <SimpleEditor
                     defaultValue={title}
-                    onDebouncedUpdate={editTitle}
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('title', string);
+                    }}
                     slideElement='title'
                     isShown={isTitleShown}
                 />

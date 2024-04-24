@@ -1,6 +1,6 @@
-import { getPexelImages } from '@/app/_actions/writter-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getPexelImages } from '@/lib/pexels';
 import { TStatus } from '@/types/types';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -19,9 +19,14 @@ export const ImageSearchOnline = ({
 
     const onSearch = async () => {
         if (query === '') return toast('Debes ingresar un término de búsqueda');
-        const pictures = await getPexelImages(query);
-        console.log('pictures', pictures);
-        setImageUrls(pictures);
+        try {
+            const pictures = await getPexelImages(query);
+            setImageUrls(pictures);
+        } catch (error) {
+            console.error('Error fetching images from Pexels', error);
+            toast('Error fetching images from Pexels');
+            setStatus('error');
+        }
     };
 
     return (

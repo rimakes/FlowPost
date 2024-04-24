@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Dropzone } from '../dropzone/Dropzone';
-import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { TStatus } from '@/types/types';
 import { Upload } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { TExtendedFile, Thumbnails } from '../dropzone/Thumbnails';
+import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 type ImageUploadProps = {
     onImageSelect: (url: string) => void;

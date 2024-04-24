@@ -14,9 +14,9 @@ export const TextOnlySlide = ({
     slideNumber,
 }: TextOnlySlideProps) => {
     const {
-        editTitle,
         editDescription,
         carousel: { slides },
+        setSlideContent,
     } = useContext(CarouselContext);
     // We need this to force a re-render when the slide is hydrated so the refs are updated
 
@@ -27,7 +27,9 @@ export const TextOnlySlide = ({
         <div className='flex flex-col gap-2 h-full w-full z-10 justify-center -mt-6'>
             <SimpleEditor
                 defaultValue={title}
-                onDebouncedUpdate={editTitle}
+                onDebouncedUpdate={(string) => {
+                    setSlideContent('title', string);
+                }}
                 className=''
                 slideElement='title'
                 isShown={isTittleShown}

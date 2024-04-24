@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { format, fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -18,9 +18,9 @@ import { DraftModalContent } from './DraftModalContent';
 import { SchedulerContext } from './SchedulerProvider';
 import { useRouter } from 'next/navigation';
 import { unschedulePost } from '@/app/_actions/schedule-actions';
-import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
 import { ViewMoreModalContent } from './ViewMoreModalContent';
 import { parse } from 'date-fns';
+import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
 
 type PostSlotProps = {
     isAvailable: boolean;

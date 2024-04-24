@@ -358,3 +358,11 @@ export const menuItems = [
         url: '#faq',
     },
 ];
+
+export const DEFAULT_BACKGROUND_IMAGE = {
+    url: '',
+    alt: '',
+    opacity: 0.1,
+    position: 'CENTER',
+    caption: '',
+};

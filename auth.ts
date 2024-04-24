@@ -5,7 +5,10 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import EmailProvider from 'next-auth/providers/email';
 import LinkedInProvider from 'next-auth/providers/linkedin';
-import { NextAuthOptions } from 'next-auth';
+import {
+    NextAuthOptions,
+    getServerSession as getAuthServerSession,
+} from 'next-auth';
 
 import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
@@ -341,3 +344,9 @@ export const authOptions: NextAuthOptions = {
     // as it'll already have the session available. In this way, you can provide a more seamless user experience.
     // https://next-auth.js.org/tutorials/securing-pages-and-api-routes
 } satisfies NextAuthOptions;
+
+// Get the custom AISettings from the user
+export const getServerSession = async () => {
+    const session = await getAuthServerSession(authOptions);
+    return session;
+};

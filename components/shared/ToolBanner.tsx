@@ -1,4 +1,4 @@
-import { getSubscription } from '@/app/_actions/shared-actions';
+import { getSubscription } from '@/app/_actions/other-actions';
 import { cn } from '@/lib/utils';
 import { Clock, Zap } from 'lucide-react';
 import Link from 'next/link';

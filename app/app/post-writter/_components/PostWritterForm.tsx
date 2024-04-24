@@ -29,7 +29,7 @@ import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/Spinner';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { revalidateAllPaths } from '@/app/_actions/shared-actions';
+import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
 import { VOICE_TONES } from '../config/const';
 import { useUserCredits } from '@/hooks/use-user-credits';

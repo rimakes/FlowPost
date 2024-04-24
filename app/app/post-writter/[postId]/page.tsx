@@ -1,17 +1,13 @@
 import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
-import { PostWritterResult } from '../_components/GeneratedPost';
 import { PostWritterContextProvider } from '../_components/PostWritterProvider';
 import { TCarousel, TLinkedinPost } from '@/types/types';
-import { LinkedinPost } from './_components/LinkedinPost';
-import Editor from '@/components/editor/Editor';
 import { db } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { getUserBrandKits } from '@/app/_actions/settings-actions';
 import { getServerSession } from 'next-auth';
-import { signIn } from 'next-auth/react';
 import { authOptions } from '@/auth';
 import { AssistedClient } from './AssistedClient';
+import { getUserBrands } from '@/app/_actions/settings-actions';
 
 type PostWritterPageProps = {
     params: {
@@ -26,7 +22,7 @@ export default async function PostWritterPage({
     const postId = params.postId;
 
     const session = await getServerSession(authOptions);
-    const brands = await getUserBrandKits(session?.user.id!);
+    const brands = await getUserBrands(session?.user.id!);
 
     let post: TLinkedinPost = {
         userId: '',

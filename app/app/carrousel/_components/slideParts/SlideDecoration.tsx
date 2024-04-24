@@ -332,7 +332,7 @@ const Starts = ({
                     width='100%'
                     height='100%'
                     fill='url(#b)'
-                    fill-opacity='0.1'
+                    fillOpacity='0.1'
                 />
             </svg>
         </div>
@@ -609,7 +609,7 @@ const Prism = ({
                         y='0'
                         viewBox='0 0 1080 900'
                     >
-                        <g fill-opacity='0.1'>
+                        <g fillOpacity='0.1'>
                             <polygon
                                 fill='#444'
                                 points='90 150 0 300 180 300'

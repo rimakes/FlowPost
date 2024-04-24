@@ -4,13 +4,11 @@ import { CarouselSidebar } from '../_components/sidebar/Sidebar';
 import { Heading } from '@/components/shared/Heading';
 import { fakeCarousel } from '../_components/const';
 import { TCarousel } from '@/types/types';
-import { getSession } from 'next-auth/react';
-import { getBrandsByUserId } from '@/app/_actions/shared-actions';
 import { authOptions } from '@/auth';
 import { CarouselWorkbench } from '../_components/CarouselWorkbench';
 import { Session, getServerSession } from 'next-auth';
 import { db } from '@/lib/prisma';
-import { Suspense } from 'react';
+import { getUserBrands } from '@/app/_actions/settings-actions';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -28,7 +26,7 @@ type props = {
 export default async function CarouselPage({ params }: props) {
     const session: Session | null = await getServerSession(authOptions);
 
-    const userBrands = await getBrandsByUserId(session?.user.id!);
+    const userBrands = await getUserBrands(session?.user.id!);
 
     const { carouselId } = params;
     let carousel = fakeCarousel as TCarousel;

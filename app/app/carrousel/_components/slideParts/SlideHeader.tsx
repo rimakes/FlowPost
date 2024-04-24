@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utils';
 import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
-import { Editable } from '@/components/shared/Editable';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type SlideHeaderProps = {
@@ -11,7 +10,7 @@ type SlideHeaderProps = {
     className?: string;
 };
 export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
-    const { carousel, editHeader } = useContext(CarouselContext);
+    const { carousel, setSlideContent } = useContext(CarouselContext);
     const heading = carousel.slides[slideNumber].slideHeading;
 
     return (
@@ -23,7 +22,9 @@ export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
         >
             <SimpleEditor
                 defaultValue={heading?.content}
-                onDebouncedUpdate={editHeader}
+                onDebouncedUpdate={(string) => {
+                    setSlideContent('slideHeading', string);
+                }}
                 isShown={heading?.isShown}
                 style={{
                     fontSize: '0.7rem',

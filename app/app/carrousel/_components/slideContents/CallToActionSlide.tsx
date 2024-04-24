@@ -1,12 +1,9 @@
 import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
-import { ASPECT_RATIOS_MAP } from '../const';
 import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
-import { AspectRatioKeys } from '../ContentSlideLayout';
-import { useRef, useContext, useEffect, useState } from 'react';
-import ContentEditable from 'react-contenteditable';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
@@ -31,9 +28,8 @@ export const CallToActionSlide = ({
 }: CallToActionSlideProps) => {
     const {
         carousel: { slides },
-        editTitle,
+        setSlideContent,
         editDescription,
-        editTagline,
     } = useContext(CarouselContext);
 
     const isTitleShown = slides[slideNumber!].title?.isShown;
@@ -73,14 +69,18 @@ export const CallToActionSlide = ({
 
                 <SimpleEditor
                     defaultValue={title}
-                    onDebouncedUpdate={editTitle}
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('title', string);
+                    }}
                     slideElement='title'
                     isShown={isTitleShown}
                 />
 
                 <SimpleEditor
                     defaultValue={tagline}
-                    onDebouncedUpdate={editTagline}
+                    onDebouncedUpdate={(string) =>
+                        setSlideContent('tagline', string)
+                    }
                     slideElement='tagline'
                     isShown={isTaglineShown}
                 />

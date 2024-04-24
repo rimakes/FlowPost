@@ -4,10 +4,9 @@ import { PostWritterForm } from './_components/PostWritterForm';
 import { PostWritterResult } from './_components/GeneratedPost';
 import { PostWritterContextProvider } from './_components/PostWritterProvider';
 import { getServerSession } from 'next-auth';
-import { getBrandsByUserId } from '@/app/_actions/shared-actions';
 import { TPageProps } from '@/types/types';
 import { Suspense } from 'react';
-import { wait } from '@/lib/utils';
+import { getUserBrands } from '@/app/_actions/settings-actions';
 
 export default async function PostWritterPage({
     params,
@@ -20,7 +19,7 @@ export default async function PostWritterPage({
     const carouselId = searchParams['carouselId'];
 
     const session = await getServerSession();
-    const brands = await getBrandsByUserId(session!.user.id);
+    const brands = await getUserBrands(session!.user.id);
 
     return (
         <>

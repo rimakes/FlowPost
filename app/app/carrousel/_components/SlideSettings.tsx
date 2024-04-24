@@ -44,18 +44,11 @@ export function SlideSettings({
     ...slideProps
 }: SlideSettingsProps) {
     const {
-        editTitle,
-        editTagline,
-        editDescription,
         nextSlide,
         previousSlide,
-        toggleSlideHasTitle,
+        toggleSlideContent: toggleSlideSetting,
         toggleSlideHasParagraph,
-        toggleSlideHasTagline,
-        carousel,
-        toggleShowSwipeLabel,
         setBackgroundImage,
-        getCompleteBrand,
         setDesign,
         editImage,
     } = useContext(CarouselContext);
@@ -125,13 +118,17 @@ export function SlideSettings({
                             <CheckLabel
                                 id='Título'
                                 checked={slide.title?.isShown!}
-                                onCheckedChange={toggleSlideHasTitle}
+                                onCheckedChange={() => {
+                                    toggleSlideSetting('title');
+                                }}
                             />
 
                             <CheckLabel
                                 id='Tagline'
                                 checked={slide.tagline?.isShown!}
-                                onCheckedChange={toggleSlideHasTagline}
+                                onCheckedChange={() => {
+                                    toggleSlideSetting('tagline');
+                                }}
                             />
 
                             <CheckLabel
@@ -197,8 +194,7 @@ export function SlideSettings({
 export const SlideActions = () => {
     const {
         addSlideToRight,
-        moveCurrentSlideToLeft,
-        moveCurrentSlideToRight,
+        moveSlide,
         deleteCurrentSlide,
         currentSlide,
         carousel,
@@ -214,7 +210,7 @@ export const SlideActions = () => {
                 variant={'secondary'}
                 size={'sm'}
                 className='mr-auto'
-                onClick={moveCurrentSlideToLeft}
+                onClick={() => moveSlide(-1)}
             >
                 <ArrowLeft className='h-4 w-4' />
                 Mover
@@ -240,7 +236,7 @@ export const SlideActions = () => {
                 variant={'secondary'}
                 size={'sm'}
                 className=''
-                onClick={moveCurrentSlideToRight}
+                onClick={() => moveSlide(1)}
             >
                 Mover
                 <ArrowRightIcon className='h-4 w-4' />

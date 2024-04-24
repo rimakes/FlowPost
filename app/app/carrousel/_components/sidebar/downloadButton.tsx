@@ -1,13 +1,12 @@
 'use client';
 
 import { Download } from 'lucide-react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import { CarouselContext } from '../ContextProvider';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/Spinner';
-import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -16,6 +15,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { toPng } from 'html-to-image';
+import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 type ImageFormat = 'pdf' | 'svg';
 

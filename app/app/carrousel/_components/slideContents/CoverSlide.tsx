@@ -23,9 +23,7 @@ export const CoverSlide = ({
     slideNumber,
 }: CoverSlideProps) => {
     const {
-        editTitle,
-        editDescription,
-        editTagline,
+        setSlideContent,
         carousel: { slides },
     } = useContext(CarouselContext);
 
@@ -54,7 +52,9 @@ export const CoverSlide = ({
                 <SimpleEditor
                     className=''
                     defaultValue={title}
-                    onDebouncedUpdate={editTitle}
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('title', string);
+                    }}
                     slideElement='title'
                     isShown={slides[slideNumber!].title?.isShown}
                 />
@@ -62,7 +62,9 @@ export const CoverSlide = ({
                 <SimpleEditor
                     className=''
                     defaultValue={tagline}
-                    onDebouncedUpdate={editTagline}
+                    onDebouncedUpdate={(string) =>
+                        setSlideContent('tagline', string)
+                    }
                     slideElement='tagline'
                     isShown={slides[slideNumber!].tagline?.isShown}
                     style={{}}

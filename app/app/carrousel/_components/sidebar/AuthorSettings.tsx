@@ -19,8 +19,7 @@ export const AuthorSettings = () => {
         },
         editName,
         editHandle,
-        toggleShowName,
-        toggleShowHandle,
+        toggleCarouselContent: toggleCarouselSetting,
     } = useContext(CarouselContext);
 
     return (
@@ -38,7 +37,9 @@ export const AuthorSettings = () => {
                                 className=''
                                 id='name'
                                 checked={carousel.settings.showName}
-                                onCheckedChange={toggleShowName}
+                                onCheckedChange={() => {
+                                    toggleCarouselSetting('showName');
+                                }}
                             />
                         </div>
 
@@ -56,7 +57,9 @@ export const AuthorSettings = () => {
                             <Switch
                                 id='handle'
                                 checked={carousel.settings.showHandle}
-                                onCheckedChange={toggleShowHandle}
+                                onCheckedChange={() => {
+                                    toggleCarouselSetting('showHandle');
+                                }}
                             />
                         </div>{' '}
                         <Input

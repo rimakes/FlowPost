@@ -19,7 +19,7 @@ import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { ColorPaletteSelect } from '../../carrousel/_components/sidebar/ColorPaletteSelector';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { saveBrandKit } from '@/app/_actions/settings-actions';
+import { upsertBrandkit } from '@/app/_actions/settings-actions';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -28,9 +28,9 @@ import {
     TExtendedFile,
     Thumbnails,
 } from '@/components/shared/dropzone/Thumbnails';
-import { uploadFileToCloudinary } from '@/app/_actions/shared-actions';
 import { FontPaletteSelector } from '../../carrousel/_components/sidebar/Sidebar';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { uploadFileToCloudinary } from '@/lib/cloudinary';
 // import { uploadFileToCloudinary } from '@/lib/utils';
 
 type BrandKitEditFormProps = {
@@ -90,7 +90,7 @@ export function BrandKitEditForm({
             data.imageUrl = cloudinaryResponse.url as string;
         }
         try {
-            await saveBrandKit(
+            await upsertBrandkit(
                 { ...data, id: form.getValues('id') },
                 session!.user.id
             );

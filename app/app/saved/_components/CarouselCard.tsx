@@ -7,10 +7,7 @@ import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
-import {
-    deleteCarousel,
-    deleteLinkedinPost,
-} from '@/app/_actions/writter-actions';
+import { deleteCarousel } from '@/app/_actions/writter-actions';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';

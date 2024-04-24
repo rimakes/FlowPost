@@ -1,27 +1,19 @@
 'use client';
 
-import {
-    RefObject,
-    createContext,
-    useCallback,
-    useEffect,
-    useState,
-} from 'react';
+import { RefObject, createContext, useCallback, useState } from 'react';
 import { deepCopy } from '@/lib/utils';
-import { AspectRatio } from '@prisma/client';
 import {
-    TAspectRatioEnum,
+    TArrayOfRefs,
     TBrand,
     TCarousel,
-    TColorPalette,
-    TDecorationId,
-    TFontPalette,
     TPosition,
     TSlideDesignNames,
+    TToggleableCarouselSettings,
+    TToggleableSlideSettings,
 } from '@/types/types';
-import { usePathname } from 'next/navigation';
-
-export type TArrayOfRefs = RefObject<HTMLDivElement>[];
+import { produce } from 'immer';
+import { useCarouselShortcuts } from '@/hooks/use-slide-shortcuts';
+import { DEFAULT_BACKGROUND_IMAGE } from '@/config/const';
 
 const INITIAL_STATE = {
     arrayOfRefs: [] as TArrayOfRefs,
@@ -30,29 +22,14 @@ const INITIAL_STATE = {
     nextSlide: () => {},
     previousSlide: () => {},
     carousel: {} as TCarousel,
-    editTitle: (newTitle: string) => {},
-    editTagline: (newTagline: string) => {},
     editDescription: (newDescription: string) => {},
     editProfilePicture: (newImage: string) => {},
     editName: (newName: string) => {},
     editHandle: (newHandle: string) => {},
     setCurrentSlideTo: (newSlide: number) => {},
-    toggleAlternateColors: () => {},
-    toggleShowCounter: () => {},
-    toggleShowSwipeLabel: () => {},
-    toggleShowAuthor: () => {},
-    toggleShowDecoration: () => {},
-    toggleSlideHasTitle: () => {},
-    toggleSlideHasTagline: () => {},
     toggleSlideHasParagraph: () => {},
-    moveCurrentSlideToRight: () => {},
-    moveCurrentSlideToLeft: () => {},
     addSlideToRight: () => {},
     deleteCurrentSlide: () => {},
-    setColorPalette: (colors: TColorPalette) => {},
-    setFontPalette: (fonts: TFontPalette) => {},
-    setCarouselAspectRatio: (aspectRatio: TAspectRatioEnum) => {},
-    setDecorationId: (decorationId: TDecorationId) => {},
     setBackgroundImage: (
         imageUrl?: string,
         options?: {
@@ -61,18 +38,22 @@ const INITIAL_STATE = {
             position?: TPosition;
         }
     ) => {},
-    setLabelRoundness: (value: number) => {},
-    toggleShowName: () => {},
-    toggleShowProfilePic: () => {},
-    toggleShowHandle: () => {},
-    toggleShowAuthorInFirstOnly: () => {},
+    toggleCarouselContent: (setting: TToggleableCarouselSettings) => {},
+    toggleSlideContent: (setting: TToggleableSlideSettings) => {},
+    moveSlide: (to: number) => {},
+    setSlideContent: (
+        property: TToggleableSlideSettings,
+        content: string
+    ) => {},
     getCompleteBrand: () => {
         return {} as Omit<TBrand, 'authorId' | 'id'>;
     },
     setDesign: (design: TSlideDesignNames) => {},
+    setCarouselSetting: (
+        setting: keyof TCarousel['settings'],
+        newSetting: any
+    ) => {},
     editParagraphs: (newParagraphs: string[]) => {},
-    editHeader: (newHeader: string) => {},
-    editBigCharacter: (newCharacter: string) => {},
     editImage: (newImage: string) => {},
     editParagraphN: (index: number, newParagraph: string) => {},
     setPdfUrl: (url: string) => {},
@@ -96,6 +77,7 @@ export function CarouselContextProvider({
     const [currentSlide, setCurrentSlide] = useState(0);
     const [carousel, setCarousel] = useState(initialCarousel);
     const [arrayOfRefs, setArrayOfRefs] = useState([] as TArrayOfRefs);
+
     const nextSlide = useCallback(() => {
         if (currentSlide === carousel.slides.length - 1) return;
         setCurrentSlide((currentSlide) => currentSlide + 1);
@@ -105,42 +87,31 @@ export function CarouselContextProvider({
         if (currentSlide === 0) return;
         setCurrentSlide((currentSlide) => currentSlide - 1);
     }, [currentSlide]);
-    // When this provider is loaded, we will activate the "Carousel shortcuts": Right and left arrows to navigate between slides.
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            // If focus in the child of the slide, we don't want to trigger the shortcuts. The slide has a class name of "slide". Use that to prevent the event from triggering.
-            // TODO: Not sure this is the best way to do this. Maybe we should use a ref to the slide and check if the event target is the slide.
-            if (
-                event.target instanceof HTMLElement &&
-                event.target.closest('.slide')
-            )
-                return;
 
-            if (event.key === 'ArrowRight') nextSlide();
-            if (event.key === 'ArrowLeft') previousSlide();
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [nextSlide, previousSlide]);
+    useCarouselShortcuts({ ArrowRight: nextSlide, ArrowLeft: previousSlide });
 
-    const editTitle = (newTitle: string) => {
-        console.log('editTitle', newTitle);
-        const newCarousel = deepCopy(carousel);
+    const setSlideContent = async (
+        property: TToggleableSlideSettings,
+        content: string
+    ) => {
+        // TODO: check in previous commits where this is comming from
+        // const canvas = await toCanvas(arrayOfRefs[0].current!);
+        // const dataUrl = canvas.toDataURL();
 
-        newCarousel.slides[currentSlide].title!.content = newTitle;
-        setCarousel(newCarousel);
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.slides[currentSlide][property]!.content = content;
+                // carousel.thumbnailDataUrl = dataUrl;
+            })
+        );
     };
 
     const editImage = (newImage: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].image!.url = newImage;
-        setCarousel(newCarousel);
-    };
-
-    const editTagline = (newTagline: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].tagline!.content = newTagline;
-        setCarousel(newCarousel);
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.slides[currentSlide].image!.url = newImage;
+            })
+        );
     };
 
     const editDescription = (newDescription: string) => {
@@ -150,7 +121,6 @@ export function CarouselContextProvider({
     };
 
     const editParagraphs = (newParagraphs: string[]) => {
-        console.log('NEW PARAGRAPHS', newParagraphs);
         const newCarousel = deepCopy(carousel);
         newCarousel.slides[currentSlide].paragraphs = newParagraphs.map(
             (paragraph) => {
@@ -178,23 +148,6 @@ export function CarouselContextProvider({
         });
     };
 
-    const editHeader = (newHeader: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.slides[currentSlide].slideHeading!.content = newHeader;
-            return newCarousel;
-        });
-    };
-
-    const editBigCharacter = (newCharacter: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.slides[currentSlide].bigCharacter!.content =
-                newCharacter;
-            return newCarousel;
-        });
-    };
-
     const editName = (newName: string) => {
         setCarousel((prev) => {
             const newCarousel = deepCopy(prev);
@@ -215,43 +168,16 @@ export function CarouselContextProvider({
         setCurrentSlide(newSlide);
     };
 
-    const toggleAlternateColors = () => {
+    const toggleCarouselSetting = (setting: TToggleableCarouselSettings) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.settings.alternateColors =
-            !newCarousel.settings.alternateColors;
+        newCarousel.settings[setting] = !newCarousel.settings[setting];
         setCarousel(newCarousel);
     };
 
-    const toggleShowCounter = () => {
+    const toggleSlideSetting = (setting: TToggleableSlideSettings) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showCounter = !newCarousel.settings.showCounter;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowSwipeLabel = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showSwipeLabel =
-            !newCarousel.settings.showSwipeLabel;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowAuthor = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showAuthor = !newCarousel.settings.showAuthor;
-        setCarousel(newCarousel);
-    };
-
-    const toggleSlideHasTitle = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].title!.isShown =
-            !newCarousel.slides[currentSlide].title!.isShown;
-        setCarousel(newCarousel);
-    };
-
-    const toggleSlideHasTagline = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].tagline!.isShown =
-            !newCarousel.slides[currentSlide].tagline!.isShown;
+        newCarousel.slides[currentSlide][setting]!.isShown =
+            !newCarousel.slides[currentSlide][setting]!.isShown;
         setCarousel(newCarousel);
     };
 
@@ -263,26 +189,18 @@ export function CarouselContextProvider({
         setCarousel(newCarousel);
     };
 
-    const moveCurrentSlideToRight = () => {
-        if (currentSlide === carousel.slides.length - 1) return;
-        const newCarousel = deepCopy(carousel);
-        const slideToMove = newCarousel.slides[currentSlide];
-        const nextSlide = newCarousel.slides[currentSlide + 1];
-        newCarousel.slides[currentSlide] = nextSlide;
-        newCarousel.slides[currentSlide + 1] = slideToMove;
-        setCarousel(newCarousel);
-        setCurrentSlide(currentSlide + 1);
-    };
+    const moveSlide = (to: number) => {
+        console.log({ to });
+        if (currentSlide === carousel.slides.length - 1 && to >= 1) return;
+        if (currentSlide === 0 && to <= -1) return;
 
-    const moveCurrentSlideToLeft = () => {
-        if (currentSlide === 0) return;
         const newCarousel = deepCopy(carousel);
         const slideToMove = newCarousel.slides[currentSlide];
-        const previousSlide = newCarousel.slides[currentSlide - 1];
-        newCarousel.slides[currentSlide] = previousSlide;
-        newCarousel.slides[currentSlide - 1] = slideToMove;
+        const newSlide = newCarousel.slides[currentSlide + to];
+        newCarousel.slides[currentSlide] = newSlide;
+        newCarousel.slides[currentSlide + to] = slideToMove;
         setCarousel(newCarousel);
-        setCurrentSlide(currentSlide - 1);
+        setCurrentSlide(currentSlide + to);
     };
 
     const addSlideToRight = () => {
@@ -302,41 +220,13 @@ export function CarouselContextProvider({
         }
     };
 
-    // TODO: Probably should do like this all of them. for now I am not changing it in case we want to use immer or a reducer in the future.
-    const setColorPalette = (colors: TColorPalette) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.settings.colorPalette = colors;
-            return newCarousel;
-        });
-    };
-
-    const setFontPalette = (fonts: TFontPalette) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.settings.fontPalette.primary = fonts.primary;
-            newCarousel.settings.fontPalette.secondary = fonts.secondary;
-            newCarousel.settings.fontPalette.handWriting = fonts.handWriting;
-            return newCarousel;
-        });
-    };
-
-    const setCarouselAspectRatio = (aspectRatio: TAspectRatioEnum) => {
+    const setCarouselSetting = (
+        setting: keyof TCarousel['settings'],
+        newSetting: any
+    ) => {
         const newCarousel = deepCopy(carousel);
-        newCarousel.settings.aspectRatio = aspectRatio as AspectRatio;
-        setCarousel(newCarousel);
-    };
-
-    const setDecorationId = (decorationId: TDecorationId) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.backgroundPattern = decorationId;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowDecoration = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showDecoration =
-            !newCarousel.settings.showDecoration;
+        // @ts-ignore
+        newCarousel.settings[setting] = newSetting;
         setCarousel(newCarousel);
     };
 
@@ -344,29 +234,16 @@ export function CarouselContextProvider({
         imageUrl?: string,
         options?: { alt?: string; opacity?: number; position?: TPosition }
     ) => {
-        const newCarousel = deepCopy(carousel);
-
-        let backgroundImage = newCarousel.slides[currentSlide].backgroundImage;
-        // TODO: This could be cleaner
-        if (!backgroundImage)
-            backgroundImage = {
-                url: '',
-                alt: '',
-                opacity: 0.1,
-                position: 'CENTER',
-                caption: '',
-            };
-        if (imageUrl) backgroundImage.url = imageUrl;
-        if (options?.alt) backgroundImage.alt = options.alt;
-        if (options?.opacity) backgroundImage.opacity = options.opacity;
-        if (options?.position) backgroundImage.position = options.position;
-
-        // newCarousel.slides[currentSlide].backgroundImage = {
-        //     url: imageUrl,
-        //     alt: options?.alt ? options.alt : '',
-        //     opacity: options?.opacity ? options.opacity : 0.1,
-        //     position: 'center',
-        // };
+        const newCarousel = produce(carousel, (draftCarousel) => {
+            let backgroundImage =
+                draftCarousel.slides[currentSlide].backgroundImage;
+            // @ts-ignore
+            backgroundImage || (backgroundImage = DEFAULT_BACKGROUND_IMAGE);
+            imageUrl && (backgroundImage!.url = imageUrl);
+            options?.alt && (backgroundImage!.alt = options.alt);
+            options?.opacity && (backgroundImage!.opacity = options.opacity);
+            options?.position && (backgroundImage!.position = options.position);
+        });
         setCarousel(newCarousel);
     };
 
@@ -380,38 +257,6 @@ export function CarouselContextProvider({
         },
         []
     );
-
-    const setLabelRoundness = (value: number) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.labelRoundness = value;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowName = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showName = !newCarousel.settings.showName;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowAuthorInFirstOnly = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showAuthorInFirstOnly =
-            !newCarousel.settings.showAuthorInFirstOnly;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowHandle = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showHandle = !newCarousel.settings.showHandle;
-        setCarousel(newCarousel);
-    };
-
-    const toggleShowProfilePic = () => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.settings.showProfilePic =
-            !newCarousel.settings.showProfilePic;
-        setCarousel(newCarousel);
-    };
 
     const getCompleteBrand = () => {
         return {
@@ -429,56 +274,41 @@ export function CarouselContextProvider({
     };
 
     const setPdfUrl = (url: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.pdfUrl = url;
-        setCarousel(newCarousel);
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.pdfUrl = url;
+            })
+        );
     };
 
     return (
         <CarouselContext.Provider
             value={{
+                setCarouselSetting,
+                setSlideContent,
+                moveSlide,
+                toggleSlideContent: toggleSlideSetting,
+                toggleCarouselContent: toggleCarouselSetting,
                 setCarousel,
                 setPdfUrl,
                 editImage,
-                editBigCharacter,
-                editHeader,
                 editParagraphs,
                 setDesign,
                 getCompleteBrand,
-                toggleShowAuthorInFirstOnly,
-                toggleShowHandle,
-                toggleShowProfilePic,
-                setLabelRoundness,
-                toggleShowName,
                 arrayOfRefs,
                 addRef,
                 currentSlide,
                 nextSlide,
                 previousSlide,
                 carousel,
-                editTitle,
-                editTagline,
                 editDescription,
                 editProfilePicture,
                 editName,
                 editHandle,
                 setCurrentSlideTo,
-                toggleAlternateColors,
-                toggleShowCounter,
-                toggleShowDecoration,
-                toggleShowSwipeLabel,
-                toggleShowAuthor,
-                toggleSlideHasTitle,
-                toggleSlideHasTagline,
                 toggleSlideHasParagraph,
-                moveCurrentSlideToRight,
-                moveCurrentSlideToLeft,
                 addSlideToRight,
                 deleteCurrentSlide,
-                setColorPalette,
-                setFontPalette,
-                setCarouselAspectRatio,
-                setDecorationId,
                 setBackgroundImage,
                 editParagraphN,
             }}

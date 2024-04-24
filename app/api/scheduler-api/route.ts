@@ -1,12 +1,11 @@
 import { db } from '@/lib/prisma';
-import {
-    postOnLinkedIn,
-    registerUploadDocumentToLinkedin,
-    uploadAssetToLinkedin,
-} from '../../_actions/schedule-actions';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import { NextRequest, NextResponse } from 'next/server';
-import { differenceInMinutes } from 'date-fns';
+import {
+    registerUploadDocumentToLinkedin,
+    uploadAssetToLinkedin,
+    postOnLinkedIn,
+} from '@/lib/linkedin';
 
 type NewTScheduledPost = TScheduledPost & {
     linkedinPost: TLinkedinPost;

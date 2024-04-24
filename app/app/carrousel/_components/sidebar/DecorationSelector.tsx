@@ -25,7 +25,7 @@ export function DecorationSelector({
 }: DecorationSelectorProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const {
-        toggleShowDecoration,
+        toggleCarouselContent: toggleCarouselSetting,
         carousel: {
             settings: { showDecoration },
         },
@@ -51,7 +51,7 @@ export function DecorationSelector({
             <ToggleableCollapsible
                 label='Decoración Fondo'
                 enabled={showDecoration}
-                setEnabled={toggleShowDecoration}
+                setEnabled={() => toggleCarouselSetting('showDecoration')}
             >
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>

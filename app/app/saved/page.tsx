@@ -1,39 +1,17 @@
 import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/shared/Heading';
-import { db } from '@/lib/prisma';
 import { SavedPageClient } from './_components/SavedPageClient';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { wait } from '@/lib/utils';
-
-const findPostByUserId = async (userId: string) => {
-    return db.linkedinPost.findMany({
-        where: {
-            userId: userId,
-        },
-    });
-};
-const findCarruselsByUserId = async (userId: string) => {
-    return db.carousel.findMany({
-        where: {
-            userId: userId,
-        },
-    });
-};
-
-const findIdeasByUserId = async (userId: string) => {
-    return db.idea.findMany({
-        where: {
-            authorId: userId,
-        },
-    });
-};
+import { getLinkedinPosts } from '@/app/_data/linkedinpost.data';
+import { ideasbyUserId } from '@/app/_actions/idea-actions';
+import { carouselsByUserId } from '@/app/_actions/other-actions';
 
 export default async function SavedPage() {
     const session = await getServerSession(authOptions);
-    const userPosts = await findPostByUserId(session?.user.id!);
-    const userCarrusels = await findCarruselsByUserId(session?.user.id!);
-    const userIdeas = await findIdeasByUserId(session?.user.id!);
+    const userPosts = await getLinkedinPosts(session?.user.id!);
+    const userCarrusels = await carouselsByUserId(session?.user.id!);
+    const userIdeas = await ideasbyUserId(session?.user.id!);
 
     return (
         <div>

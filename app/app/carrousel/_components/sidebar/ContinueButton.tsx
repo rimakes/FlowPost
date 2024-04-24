@@ -8,10 +8,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/Spinner';
-import {
-    revalidateAllPaths,
-    uploadFileToCloudinary,
-} from '@/app/_actions/shared-actions';
+import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import {
     Dialog,
     DialogContent,
@@ -27,6 +24,7 @@ import { useSession } from 'next-auth/react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 export function ContinueButton({}) {
     const router = useRouter();

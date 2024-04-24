@@ -38,7 +38,6 @@ import {
 import { useSession } from 'next-auth/react';
 import { fontTypeMap } from '@/config/const';
 import { ContinueButton } from './ContinueButton';
-import { toCanvas } from 'html-to-image';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type CarouselSidebarProps = {
@@ -92,11 +91,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 colorPalette,
             },
         },
-        setCarouselAspectRatio,
-        toggleAlternateColors,
-        setFontPalette,
-        setDecorationId,
-        setColorPalette,
+        toggleCarouselContent: toggleCarouselSetting,
+        setCarouselSetting,
         editProfilePicture,
         editName,
         editHandle,
@@ -108,7 +104,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
     const { data } = useSession();
 
     const onSetColorPalette = (colorPalette: TColorPalette) => {
-        setColorPalette(colorPalette);
+        setCarouselSetting('colorPalette', colorPalette);
         // setColorsPopOverisOpen(false);
     };
 
@@ -116,8 +112,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         const brand = brands.find((brand) => brand.id === brandId);
         console.log(brand);
         if (brand) {
-            setColorPalette(brand.colorPalette);
-            setFontPalette(brand.fontPalette);
+            setCarouselSetting('colorPalette', brand.colorPalette);
+            setCarouselSetting('fontPalette', brand.fontPalette);
             editProfilePicture(brand.imageUrl);
             editName(brand.name);
             editHandle(brand.handle);
@@ -125,7 +121,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
     };
 
     const setFontByType = (fontType: TFont, font: TFontName) => {
-        setFontPalette({
+        setCarouselSetting('fontPalette', {
             ...carousel.settings.fontPalette,
             [fontType]: font,
         });
@@ -144,7 +140,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 <h3>Plantilla</h3>
                 <SizeSelector
                     aspectRatio={aspectRatio}
-                    setCarouselAspectRatio={setCarouselAspectRatio}
+                    setCarouselAspectRatio={() => {
+                        setCarouselSetting('aspectRatio', aspectRatio);
+                    }}
                 />
                 {/* TODO: Recover this */}
                 {/* <TemplateSelector /> */}
@@ -181,7 +179,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                             <Label htmlFor='name'>Alternar colores</Label>
                             <Switch
                                 checked={alternateColors}
-                                onCheckedChange={toggleAlternateColors}
+                                onCheckedChange={() => {
+                                    toggleCarouselSetting('alternateColors');
+                                }}
                             />
                         </div>
                     </div>
@@ -208,8 +208,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <Separator className='mt-2 mb-2' />
             <DecorationSelector
                 onSelect={(decoration) => {
-                    console.log('decoration', decoration);
-                    setDecorationId(decoration);
+                    setCarouselSetting('backgroundPattern', decoration);
                 }}
                 // @ts-ignore
                 selectedDecoration={backgroundPattern}
@@ -222,10 +221,6 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <div className='flex flex-col justify-between gap-2 mt-8'>
                 <Button
                     onClick={async () => {
-                        const canvas = await toCanvas(arrayOfRefs[0].current!);
-                        const dataUrl = canvas.toDataURL();
-                        carousel.thumbnailDataUrl = dataUrl;
-
                         const savedCarousel = await upsertCarousel(
                             carousel,
                             data?.user.id!
@@ -280,14 +275,14 @@ export const LabelRoundnessSelector = () => {
         carousel: {
             settings: { labelRoundness, showSwipeLabel },
         },
-        toggleShowSwipeLabel,
-        setLabelRoundness,
+        toggleCarouselContent: toggleCarouselSetting,
+        setCarouselSetting,
     } = useContext(CarouselContext);
 
     return (
         <ToggleableCollapsible
             enabled={showSwipeLabel}
-            setEnabled={toggleShowSwipeLabel}
+            setEnabled={() => toggleCarouselSetting('showSwipeLabel')}
             label='Etiqueta desliza'
         >
             <div className='flex gap-2'>
@@ -298,7 +293,7 @@ export const LabelRoundnessSelector = () => {
                     step={0.1}
                     value={[labelRoundness]}
                     onValueChange={(value) => {
-                        setLabelRoundness(value[0]);
+                        setCarouselSetting('labelRoundness', value[0]);
                     }}
                 />
             </div>

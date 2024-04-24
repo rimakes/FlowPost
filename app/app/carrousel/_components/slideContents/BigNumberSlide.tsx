@@ -20,8 +20,7 @@ export const BigNumberSlide = ({
 }: BigNumberSlideProps) => {
     const {
         carousel: { slides },
-        editTitle,
-        editTagline,
+        setSlideContent,
     } = useContext(CarouselContext);
 
     const isTittleShown = slides[slideNumber!].title?.isShown;
@@ -51,7 +50,9 @@ export const BigNumberSlide = ({
             <div>
                 <SimpleEditor
                     className='z-10'
-                    onDebouncedUpdate={editTitle}
+                    onDebouncedUpdate={(string) =>
+                        setSlideContent('title', string)
+                    }
                     slideElement='title'
                     defaultValue={title}
                     isShown={isTittleShown}
@@ -59,7 +60,9 @@ export const BigNumberSlide = ({
 
                 <SimpleEditor
                     className='z-10'
-                    onDebouncedUpdate={editTagline}
+                    onDebouncedUpdate={(string) =>
+                        setSlideContent('tagline', string)
+                    }
                     slideElement='tagline'
                     defaultValue={tagline}
                     isShown={isTaglineShown}

@@ -1,7 +1,6 @@
-import { Editable } from '@/components/shared/Editable';
-import { TBrand, TOrientation } from '@/types/types';
+import { TBrand } from '@/types/types';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { CarouselContext } from '../ContextProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
@@ -23,9 +22,9 @@ export const ImageAndTextVertical = ({
     slideNumber,
 }: ImageAndTextVertical) => {
     const {
-        editTitle,
         editDescription,
         carousel: { slides },
+        setSlideContent,
     } = useContext(CarouselContext);
 
     const isTitleShown = slides[slideNumber].title?.isShown;
@@ -50,7 +49,9 @@ export const ImageAndTextVertical = ({
             <div>
                 {/* TODO: Check if we can do this on the other designs too */}
                 <SimpleEditor
-                    onDebouncedUpdate={editTitle}
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('title', string);
+                    }}
                     defaultValue={title}
                     slideElement='title'
                     isShown={isTitleShown}
