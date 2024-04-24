@@ -8,7 +8,7 @@
 // });
 
 import { db } from '@/lib/prisma';
-import { TCarousel, TLinkedinPost } from '@/types/types';
+import { TBrand, TCarousel, TLinkedinPost } from '@/types/types';
 
 export const createScheduledPost = async (
     linkedinPostId: string,
@@ -212,4 +212,51 @@ export const dbUpsertCarousel = async (carousel: TCarousel, userId: string) => {
         console.error('Error upserting carousel', error);
         throw new Error('Error upserting carousel'); // Replace this with your custom error or error handling logic
     }
+};
+
+export const dbCreateCarouselWithBrand = async (
+    post: TLinkedinPost,
+    formattedSlides: any,
+    userId: string,
+    firstBrand: TBrand
+) => {
+    const carousel = await db.carousel.create({
+        data: {
+            slides: formattedSlides,
+            author: {
+                handle: firstBrand?.handle ?? 'Ricardo Sala',
+                name: firstBrand?.name ?? 'Ricardo Sala',
+                pictureUrl:
+                    firstBrand?.imageUrl ?? '/images/placeholders/user.png',
+            },
+            // REVIEW: Why cannot do set: null?
+            settings: {
+                colorPalette: {
+                    accent: firstBrand?.colorPalette.accent ?? '#FF0000',
+                    font: firstBrand?.colorPalette.font ?? '#FFFFFF',
+                    background:
+                        firstBrand?.colorPalette.background ?? '#000000',
+                    primary: firstBrand?.colorPalette.primary ?? '#000000',
+                },
+                fontPalette: {
+                    handWriting: firstBrand?.fontPalette.handWriting ?? 'inter',
+                    primary: firstBrand?.fontPalette.primary ?? 'inter',
+                    secondary: firstBrand?.fontPalette.primary ?? 'inter',
+                },
+                aspectRatio: 'PORTRAIT',
+                backgroundPattern: 'Bubbles',
+            },
+            linkedinPost: {
+                connect: {
+                    id: post.id,
+                },
+            },
+            user: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+    return carousel;
 };

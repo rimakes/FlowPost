@@ -45,7 +45,7 @@ export const upsertBrand = async (
     }
 };
 
-export const dbgetUserBrands = async (userId: string) => {
+export const dbGetUserBrands = async (userId: string) => {
     try {
         const brandKits = await db.brand.findMany({
             where: {
@@ -57,5 +57,20 @@ export const dbgetUserBrands = async (userId: string) => {
     } catch (error) {
         console.error('Error getting brand kits', error);
         throw new Error('Error getting brand kits'); // Replace this with your custom error or error handling logic
+    }
+};
+
+export const getFirstBrand = async (userId: string) => {
+    try {
+        const brand = await db.brand.findFirst({
+            where: {
+                authorId: userId,
+            },
+        });
+
+        return brand;
+    } catch (error) {
+        console.error('Error getting first brand', error);
+        throw new Error('Error getting first brand'); // Replace this with your custom error or error handling logic
     }
 };

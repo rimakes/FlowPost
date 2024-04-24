@@ -332,6 +332,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                         <PostWritterResult
                             isDemo
                             onDemoCarouselCreated={() => {
+                                console.log('onDemoCarouselCreated');
                                 setDialogContent('carousel');
                             }}
                         />

@@ -1,8 +1,5 @@
 'use server';
 
-import { authOptions } from '@/auth';
-import { db } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { getCarouselsByUserId } from './writter-actions';
 import fs from 'fs';
@@ -10,16 +7,6 @@ import { aiTranscribe } from '@/lib/aiClients';
 
 export const revalidateAllPaths = async () => {
     revalidatePath('/app', 'layout');
-};
-
-export const getSubscription = async () => {
-    const session = await getServerSession(authOptions);
-
-    const user = await db.user.findUnique({
-        where: { id: session!.user.id },
-    });
-
-    return user?.stripeSubscription;
 };
 
 export const carouselsByUserId = async (userId: string) => {

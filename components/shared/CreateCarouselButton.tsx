@@ -4,7 +4,7 @@ import { GalleryHorizontal } from 'lucide-react';
 import { ButtonWithTooltip } from './ButtonWithTooltip';
 import { toast } from 'sonner';
 import {
-    createLinkedinCarousel,
+    createCarousel,
     upsertLinkedinPost,
 } from '@/app/_actions/writter-actions';
 import { usePathname, useRouter } from 'next/navigation';
@@ -18,7 +18,7 @@ import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritt
 import { Button } from '../ui/button';
 import { useUserCredits } from '@/hooks/use-user-credits';
 
-type CrearCarouselButonProps = {
+type CreateCarouselButonProps = {
     post: TLinkedinPost;
     className?: string;
     children?: React.ReactNode;
@@ -33,7 +33,7 @@ export function CreateCarouselButton({
     isDemo = false,
     onDemoCarouselCreated = () => {},
     buttonProps,
-}: CrearCarouselButonProps) {
+}: CreateCarouselButonProps) {
     const { data: session, update } = useSession();
     const { creditBalance, update: updateCredits } = useUserCredits();
 
@@ -66,7 +66,7 @@ export function CreateCarouselButton({
             isDemo,
             session?.user?.id!
         );
-        const carouselRes = await createLinkedinCarousel(updatedPost, isDemo);
+        const carouselRes = await createCarousel(updatedPost, isDemo);
 
         return carouselRes;
     };
@@ -113,7 +113,10 @@ export function CreateCarouselButton({
                         },
                     });
 
-                    await updateCredits(creditBalance - 1);
+                    if (isDemo) {
+                        onDemoCarouselCreated(newCarousel);
+                    }
+                    if (!isDemo) await updateCredits(creditBalance - 1);
                 } catch (error: any) {
                     switch (error.message) {
                         case 'No credits':

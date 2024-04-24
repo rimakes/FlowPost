@@ -20,3 +20,16 @@ export const updateCreditBalance = async (
         throw new Error('Error updating credit balance'); // Replace this with your custom error or error handling logic
     }
 };
+
+export const dbGetSubscription = async (userId: string) => {
+    try {
+        const user = await db.user.findUnique({
+            where: { id: userId },
+        });
+
+        return user?.stripeSubscription;
+    } catch (error) {
+        console.error('Error getting subscription', error);
+        throw new Error('Error getting subscription'); // Replace this with your custom error or error handling logic
+    }
+};

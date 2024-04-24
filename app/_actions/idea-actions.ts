@@ -12,14 +12,14 @@ import {
     getIdeasByUserId,
 } from '@/app/_data/idea.data';
 import { getFirstSettingsByUserId } from '../_data/other.data';
-import { ensureAuthenticated } from './auth.actions';
+import { authGuard } from './auth.actions';
 import { aiChat } from '@/lib/aiClients';
 
 export const generateIdeas = async (topic: string) => {
     const model = aiChat('ideas');
 
-    const data = await ensureAuthenticated();
-    const settings = await getFirstSettingsByUserId(data.user.id);
+    const data = await authGuard();
+    const settings = await getFirstSettingsByUserId(data!.user.id);
 
     const iaSettings = settings?.iaSettings;
 

@@ -7,7 +7,7 @@ import {
     getFirstSettingsByUserId,
     updateIASettingsByUserId,
 } from '../_data/other.data';
-import { dbgetUserBrands, upsertBrand } from '../_data/brand.data';
+import { dbGetUserBrands, upsertBrand } from '../_data/brand.data';
 
 export const upsertBrandkit = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,
@@ -18,7 +18,7 @@ export const upsertBrandkit = async (
 };
 
 export const getUserBrands = async (userId: string) => {
-    const brandKits = await dbgetUserBrands(userId);
+    const brandKits = await dbGetUserBrands(userId);
     return brandKits;
 };
 

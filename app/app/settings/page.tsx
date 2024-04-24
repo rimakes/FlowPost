@@ -13,7 +13,7 @@ import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { PlanSettings } from './_components/PlanSettings';
 import { TPageProps } from '@/types/types';
-import { getSubscription } from '@/app/_actions/other-actions';
+import { getSubscription } from '@/app/_actions/user-actions';
 
 export default async function IdeasPage({ params, searchParams }: TPageProps) {
     const tab = searchParams['tab'] as string;
@@ -26,7 +26,7 @@ export default async function IdeasPage({ params, searchParams }: TPageProps) {
 
     const userBrandKits = await getUserBrands(session!.user.id);
     const userSettings = await getUserSettings(session!.user.id);
-    const subscription = await getSubscription();
+    const subscription = await getSubscription(session!.user.id);
 
     return (
         <>

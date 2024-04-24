@@ -51,6 +51,7 @@ export const OnlyTextSlideSchema = z.object({
         'ListSlide',
         'CallToAction',
         'Cover',
+        'ImageAndTextHorizontal',
     ]),
 });
 
@@ -64,6 +65,7 @@ export const BigNumberSlideSchema = z.object({
         'ListSlide',
         'CallToAction',
         'Cover',
+        'ImageAndTextHorizontal',
     ]),
 });
 
@@ -80,6 +82,7 @@ export const ListSlideSchema = z.object({
         'ListSlide',
         'CallToAction',
         'Cover',
+        'ImageAndTextHorizontal',
     ]),
 });
 
@@ -104,6 +107,7 @@ export const CallToActionSlideSchema = z.object({
         'ListSlide',
         'CallToAction',
         'Cover',
+        'ImageAndTextHorizontal',
     ]),
 });
 export const CoverSlideSchema = z.object({
@@ -115,6 +119,7 @@ export const CoverSlideSchema = z.object({
         'ListSlide',
         'CallToAction',
         'Cover',
+        'ImageAndTextHorizontal',
     ]),
 });
 
