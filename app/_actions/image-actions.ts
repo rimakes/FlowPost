@@ -1,15 +1,9 @@
 'use server';
 
+import { aiDraw } from '@/lib/aiClients';
 import { ImageWithDataUrl } from '@/types/types';
-import { DallEAPIWrapper } from '@langchain/openai';
-import { getPlaiceholder } from 'plaiceholder';
 
-const imageGeneration = new DallEAPIWrapper({
-    n: 1, // Default
-    modelName: 'dall-e-3', // Default
-    openAIApiKey: process.env.OPENAI_API_KEY, // Default
-    quality: 'standard', // Default
-});
+const imageGeneration = aiDraw();
 
 export const generateImage = async (text: string) => {
     try {

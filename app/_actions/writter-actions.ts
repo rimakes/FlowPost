@@ -1,11 +1,8 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import { getAiModel, retryAsyncFunction } from '@/lib/utils';
+import { retryAsyncFunction } from '@/lib/utils';
 import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
-import fs from 'fs';
-import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
-import { ChatOpenAI } from '@langchain/openai';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import {
@@ -17,12 +14,17 @@ import {
     OnlyTextSlideSchema,
 } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
-import axios from 'axios';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/auth';
+import { getServerSession } from '@/auth';
 import { promptGenerateCarousel } from '@/config/prompts';
+import { getPexelImages } from '@/lib/pexels';
+import {
+    dbDeleteCarousel,
+    dbUpsertCarousel,
+    dbUpsertLinkedinPost,
+} from '../_data/linkedinpost.data';
+import { aiChat } from '@/lib/aiClients';
 
 export async function upsertLinkedinPost(
     post: TLinkedinPost,
@@ -30,72 +32,19 @@ export async function upsertLinkedinPost(
     authorId?: string,
     carouselId?: string
 ) {
-    const {
-        id,
-        content,
-        author: { handle, name, pictureUrl },
-    } = post;
-
     const userId = isDemo ? '661be88ed1d034dfd861233d' : authorId!;
-
     let linkedinPost: TLinkedinPost;
-    if (id === 'new') {
-        linkedinPost = await db.linkedinPost.create({
-            data: {
-                content,
-                author: {
-                    handle,
-                    name,
-                    pictureUrl, // placeholder or the image of the user
-                },
-                user: {
-                    connect: {
-                        id: userId,
-                    },
-                },
-                carousel: carouselId
-                    ? { connect: { id: carouselId } }
-                    : undefined,
-            },
-        });
-    } else {
-        linkedinPost = await db.linkedinPost.update({
-            where: {
-                id: id,
-            },
-            data: {
-                content,
-                author: {
-                    handle,
-                    name,
-                    pictureUrl, // placeholder or the image of the user
-                },
-                userId: authorId,
-                carousel: carouselId
-                    ? { connect: { id: carouselId } }
-                    : undefined,
-            },
-        });
-    }
-
+    linkedinPost = await dbUpsertLinkedinPost(post, userId, carouselId);
     return linkedinPost;
 }
 
 export async function deleteLinkedinPost(postId: string) {
-    await db.linkedinPost.delete({
-        where: {
-            id: postId,
-        },
-    });
+    await deleteLinkedinPost(postId);
 
     revalidatePath('/app/schedule');
 }
 export async function deleteCarousel(carouselId: string) {
-    await db.carousel.delete({
-        where: {
-            id: carouselId,
-        },
-    });
+    await dbDeleteCarousel(carouselId);
 }
 
 export async function createLinkedinCarousel(
@@ -103,22 +52,13 @@ export async function createLinkedinCarousel(
     isDemo = false
 ) {
     // Get the custom AISettings from the user
-    const data = await getServerSession(authOptions);
+    const data = await getServerSession();
     let userId = data?.user?.id;
 
     // If the user is not logged in, use a "demo" user so she/he can create posts as well
     if (!userId && isDemo) userId = '661be88ed1d034dfd861233d';
 
-    const model = new ChatOpenAI({
-        temperature: 0.8,
-        modelName: getAiModel('carousel'),
-        streaming: true,
-        callbacks: [
-            {
-                handleLLMNewToken(token) {},
-            },
-        ],
-    });
+    const model = aiChat('carousel');
 
     const promptTemplate = PromptTemplate.fromTemplate(promptGenerateCarousel);
 
@@ -274,107 +214,21 @@ export async function createLinkedinCarousel(
 }
 
 export async function upsertCarousel(carousel: TCarousel, userId: string) {
-    const {
-        author,
-        settings,
-        slides,
-        thumbnailDataUrl,
-        pdfUrl,
-        publicId,
-        title,
-    } = carousel;
-
-    console.log('upsertCarousel', carousel);
-
-    if (carousel.id === 'new' || carousel.id === undefined) {
-        const newCarousel = await db.carousel.create({
-            data: {
-                slides,
-                settings,
-                author,
-                user: {
-                    connect: {
-                        id: userId,
-                    },
-                },
-                thumbnailDataUrl,
-                pdfUrl,
-                publicId,
-                title,
-            },
-        });
-
-        return newCarousel;
-    }
-
-    const updatedCarousel = await db.carousel.update({
-        where: {
-            id: carousel.id,
-        },
-        data: {
-            slides,
-            settings,
-            user: {
-                connect: {
-                    id: userId,
-                },
-            },
-            author,
-            thumbnailDataUrl,
-            pdfUrl,
-            title,
-            publicId,
-        },
-    });
-
+    const updatedCarousel = await dbUpsertCarousel(carousel, userId);
     return updatedCarousel;
 }
 
-export const createWebmFile = async (formData: FormData) => {
+export const getCarouselsByUserId = async (userId: string) => {
     try {
-        console.log(formData);
-
-        // save the formdata to a file
-        const fileRaw = formData.get('audio') as File; // get the file from the formdata
-        const buffer = await fileRaw.arrayBuffer(); // convert the file to an array buffer
-
-        const file = Buffer.from(buffer);
-        const fileName = `audio.webm`;
-        const filePath = `audio/${fileName}`;
-        fs.writeFileSync(filePath, file);
-
-        try {
-            const loader = new OpenAIWhisperAudio(filePath, {
-                clientOptions: {
-                    // TODO: How can we add parameters to the client?
-                    // response_format: 'vtt',
-                },
-            });
-            const docs = await loader.load();
-            console.log(docs);
-
-            return docs[0].pageContent;
-        } finally {
-            // Delete the file at the end
-            fs.unlinkSync(filePath);
-        }
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-};
-
-export const getPexelImages = async (query: string) => {
-    const pictures = await axios.get(
-        `https://api.pexels.com/v1/search?query=${query}&page=1&per_page=20&locale=es-ES`,
-        {
-            headers: {
-                Authorization: process.env.PEXELS_API_KEY,
+        const carousels = await db.carousel.findMany({
+            where: {
+                userId,
             },
-        }
-    );
-    const photoUrls = pictures.data.photos.map((photo: any) => {
-        return photo.src.medium;
-    });
-    return photoUrls;
+        });
+
+        return carousels;
+    } catch (error) {
+        console.error('Error getting carousels', error);
+        throw new Error('Error getting carousels'); // Replace this with your custom error or error handling logic
+    }
 };
