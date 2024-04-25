@@ -50,7 +50,7 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
     return (
         <>
             {/* MOBILE SIDEBAR */}
-            <div className='flex gap-8 w-full justify-between sm:justify-evenly p-4 md:hidden'>
+            <div className='flex w-full justify-between gap-8 p-4 sm:justify-evenly md:hidden'>
                 <Button onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}>
                     Opciones
                 </Button>
@@ -61,7 +61,7 @@ export const CarouselSidebar = ({ brands }: CarouselSidebarProps) => {
             <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
                 <SheetContent
                     side={'left'}
-                    className='md:hidden p-0 w-3/4 max-h-full overflow-y-auto'
+                    className='max-h-full w-3/4 overflow-y-auto p-0 md:hidden'
                 >
                     <SideBarContent brands={brands} />
                 </SheetContent>
@@ -123,7 +123,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
 
     return (
         <div
-            className={cn(`sidebar basis-60 grow p-4 flex flex-col`, className)}
+            className={cn(`sidebar flex grow basis-60 flex-col p-4`, className)}
         >
             <div className='flex flex-col gap-2'>
                 <h3>Plantilla</h3>
@@ -136,7 +136,7 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 {/* TODO: Recover this */}
                 {/* <TemplateSelector /> */}
             </div>
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
             <div className='flex flex-col gap-2'>
                 <h3>Ajustes de marca</h3>
                 <BrandKitSelector
@@ -144,11 +144,11 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     onBrandChange={onBrandChange}
                 />
             </div>
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
 
             <Collapsible>
-                <CollapsibleTrigger className='flex justify-between w-full items-center'>
-                    <div className='cursor-pointer flex items-center'>
+                <CollapsibleTrigger className='flex w-full items-center justify-between'>
+                    <div className='flex cursor-pointer items-center'>
                         Colores
                         <ColorPalette
                             colors={carousel.settings.colorPalette}
@@ -159,12 +159,12 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     <ChevronsUpDown size={20} className='ml-2' />
                 </CollapsibleTrigger>
                 <CollapsibleContent className='mt-4 '>
-                    <div className='p-2 border rounded-md border-dashed bg-gray-50 flex flex-col gap-4 '>
+                    <div className='flex flex-col gap-4 rounded-md border border-dashed bg-gray-50 p-2 '>
                         <ColorPaletteSelect
                             colorPalette={carousel.settings.colorPalette}
                             onChange={onSetColorPalette}
                         />
-                        <div className='flex gap-2 items-center mt-2'>
+                        <div className='mt-2 flex items-center gap-2'>
                             <Label htmlFor='name'>Alternar colores</Label>
                             <Switch
                                 checked={alternateColors}
@@ -176,10 +176,10 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                     </div>
                 </CollapsibleContent>
             </Collapsible>
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
             <Collapsible>
-                <CollapsibleTrigger className='flex justify-between w-full items-center'>
-                    <div className='cursor-pointer flex items-center'>
+                <CollapsibleTrigger className='flex w-full items-center justify-between'>
+                    <div className='flex cursor-pointer items-center'>
                         Fuentes
                     </div>
                     <ChevronsUpDown size={20} className='ml-2' />
@@ -192,9 +192,9 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 </CollapsibleContent>
             </Collapsible>
 
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
             <AuthorSettings />
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
             <DecorationSelector
                 onSelect={(decoration) => {
                     setCarouselSetting('backgroundPattern', decoration);
@@ -203,11 +203,11 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 selectedDecoration={backgroundPattern}
                 colorPalette={colorPalette}
             />
-            <Separator className='mt-2 mb-2' />
+            <Separator className='mb-2 mt-2' />
             {/* <LabelRoundnessSelector /> */}
             {/* <Separator className='mt-2 mb-2' /> */}
 
-            <div className='flex flex-col justify-between gap-2 mt-8'>
+            <div className='mt-8 flex flex-col justify-between gap-2'>
                 <Button
                     onClick={async () => {
                         const savedCarousel = await upsertCarousel(
@@ -244,7 +244,7 @@ export const FontPaletteSelector = ({
                 <div
                     key={fontType}
                     id={fontType}
-                    className='cursor-pointer flex flex-col items-start'
+                    className='flex cursor-pointer flex-col items-start'
                 >
                     {/*@ts-ignore  */}
                     {fontTypeMap[fontType]}

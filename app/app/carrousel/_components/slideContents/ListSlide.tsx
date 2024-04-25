@@ -40,7 +40,7 @@ export const ListSlide = ({
     // const isTitleShown = slides[slideNumber!].title?.isShown;
 
     return (
-        <div className='flex flex-col gap-4 h-full p-4 z-10'>
+        <div className='z-10 flex h-full flex-col gap-4 p-4'>
             <SimpleEditor
                 defaultValue={title}
                 onDebouncedUpdate={(string) => {
@@ -51,7 +51,7 @@ export const ListSlide = ({
             />
 
             <ul
-                className='px-2 flex flex-col gap-2'
+                className='flex flex-col gap-2 px-2'
                 style={{
                     fontWeight: 300,
                     display: slides[slideNumber!].paragraphs[0].isShown
@@ -64,7 +64,7 @@ export const ListSlide = ({
                     return (
                         <li key={paragraph.id}>
                             <div
-                                className='flex gap-2 items-start'
+                                className='flex items-start gap-2'
                                 style={{
                                     fontSize: '1.2rem',
                                 }}

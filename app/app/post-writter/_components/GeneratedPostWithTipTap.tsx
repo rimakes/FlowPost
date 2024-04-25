@@ -49,7 +49,7 @@ export const PostWritterResultTipTap = ({
 
     if (status === 'loading')
         return (
-            <div className='flex-1 h-full w-full'>
+            <div className='h-full w-full flex-1'>
                 <Skeleton className='h-full w-full' />
             </div>
         );
@@ -57,7 +57,7 @@ export const PostWritterResultTipTap = ({
     return (
         <div className={cn(``, className)}>
             {/* <EmojiPickerClient /> */}
-            <div className='border p-2 space-y-2 rounded-t-lg rounded-b-3xl'>
+            <div className='space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
                 <div className='relative pb-6'>
                     <Editor
                         onDebouncedUpdate={updatePost}
@@ -65,7 +65,7 @@ export const PostWritterResultTipTap = ({
                     />
                 </div>
 
-                <div className='flex gap-2 relative'>
+                <div className='relative flex gap-2'>
                     <ButtonWithTooltip
                         variant={'secondary'}
                         icon={<Save />}

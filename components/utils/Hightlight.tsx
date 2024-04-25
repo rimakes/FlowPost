@@ -24,7 +24,7 @@ export default function Highlight({
     return (
         <mark
             className={cn(
-                `px-[0.4em] py-[0.1em] -mx-[0.4em] rounded-[0.8em_0.3em] bg-transparent  box-decoration-clone
+                `-mx-[0.4em] rounded-[0.8em_0.3em] bg-transparent box-decoration-clone px-[0.4em]  py-[0.1em]
             [-webkit-box-decoration-break:clone]`,
                 hightlightColorMap[color],
                 className

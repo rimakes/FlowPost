@@ -23,10 +23,10 @@ export default function Hero({ className = '' }) {
                     className
                 )}
             >
-                <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex-1'>
+                <div className='mx-auto max-w-7xl flex-1 px-4 sm:px-6 lg:px-8'>
                     <div className='mx-auto max-w-2xl text-center'>
                         <span
-                            className={`${handwritten.className} px-6 text-3xl text-base-muted-content text-muted-foreground`}
+                            className={`${handwritten.className} text-base-muted-content px-6 text-3xl text-muted-foreground`}
                         >
                             Convierte tus ideas en contenido único y de calidad
                         </span>
@@ -35,7 +35,7 @@ export default function Hero({ className = '' }) {
                             <span className='text-indigo-700'>
                                 {' '}
                                 Carrusels de LinkedIn en{' '}
-                                <span className='line-through text-primary'>
+                                <span className='text-primary line-through'>
                                     minutos
                                 </span>{' '}
                                 segundos
@@ -59,7 +59,7 @@ export default function Hero({ className = '' }) {
                             </Link>
                         </div>
 
-                        <p className='font-inter mt-8 flex lg:flex-row flex-col gap-2 justify-center items-center lg:animate-slide-right  animate-bounce text-muted-foreground'>
+                        <p className='font-inter mt-8 flex animate-bounce flex-col items-center justify-center gap-2 text-muted-foreground  lg:animate-slide-right lg:flex-row'>
                             Pruébalo Gratis{' '}
                             <ArrowRight className='hidden lg:inline' />
                             <ArrowDown className='lg:hidden' />
@@ -67,7 +67,7 @@ export default function Hero({ className = '' }) {
                     </div>
                 </div>
 
-                <div className='flex flex-row mx-auto lg:mx-auto lg:max-w-6xl min-w-[400px] self-center flex-1'>
+                <div className='mx-auto flex min-w-[400px] flex-1 flex-row self-center lg:mx-auto lg:max-w-6xl'>
                     <CarouselProvider initialCarousel={fakeCarousel}>
                         <PostWritterContextProvider>
                             <DemoWidget />

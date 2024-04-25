@@ -16,7 +16,7 @@ export const SlideGradientBlob = ({
     return (
         <div
             className={cn(
-                `absolute rounded-full -bottom-[10%] -right-[20%] w-[15rem] h-[15rem] blur-2xl`,
+                `absolute -bottom-[10%] -right-[20%] h-[15rem] w-[15rem] rounded-full blur-2xl`,
                 className
             )}
             style={{

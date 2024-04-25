@@ -67,11 +67,11 @@ export const ContentSlideLayout = forwardRef<
             <div
                 ref={ref}
                 className={cn(
-                    `slide border-0 border-border p-6 text-[0.75em] relative w-[32.5em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} m-auto overflow-hidden flex flex-col justify-center isolate relative`,
+                    `slide relative w-[32.5em] border-0 border-border p-6 text-[0.75em] ${aspectRatioClasses[ASPECT_RATIOS_MAP[aspectRatio as AspectRatio] as AspectRatioKeys]} relative isolate m-auto flex flex-col justify-center overflow-hidden`,
                     className,
                     isActive
                         ? ''
-                        : 'hover:cursor-pointer hover:filter hover:brightness-75 transition-[filter]'
+                        : 'transition-[filter] hover:cursor-pointer hover:brightness-75 hover:filter'
                 )}
                 style={{
                     backgroundColor: colorPalette.background,

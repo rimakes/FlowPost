@@ -25,10 +25,10 @@ export const EmailSendMessage = ({ email }: { email: string }) => {
     return (
         <>
             <div className='mb-6 text-center'>
-                <h1 className='text-3xl text-slate-800 dark:text-slate-100 font-bold mb-2'>
+                <h1 className='mb-2 text-3xl font-bold text-slate-800 dark:text-slate-100'>
                     📩 Te hemos mandado un correo a {email}
                 </h1>
-                <p className='text-primary/50 text-lg'>
+                <p className='text-lg text-primary/50'>
                     (Revisa la bandeja de spam si no lo localizas)
                 </p>
             </div>

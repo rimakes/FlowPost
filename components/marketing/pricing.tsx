@@ -18,8 +18,8 @@ export const Pricing = async () => {
     );
 
     return (
-        <section className='flex max-w-7xl flex-col gap-20 relative'>
-            <div className='anchor -top-32 absolute' id='pricing' />
+        <section className='relative flex max-w-7xl flex-col gap-20'>
+            <div className='anchor absolute -top-32' id='pricing' />
             <div className='gap2 flex flex-col text-center'>
                 <h2
                     className={`${secondaryFont.className} border-b-0 text-6xl font-extrabold`}
@@ -115,8 +115,8 @@ export const PriceCard = ({
             <div className='flex flex-col gap-0 text-center'>
                 <CheckoutButton priceId={priceId}>Get sales now</CheckoutButton>
                 <p
-                    className='relative text-xs italic
-                      text-base-muted-content
+                    className='text-base-muted-content relative text-xs
+                      italic
                       
         '
                     // before:absolute

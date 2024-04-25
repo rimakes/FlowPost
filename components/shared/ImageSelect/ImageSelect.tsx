@@ -31,14 +31,14 @@ export function ImageSelect({
                 value={selectedTab}
                 onValueChange={setSelectedTab}
             >
-                <TabsList className='flex gap-2 w-full justify-between'>
-                    <TabsTrigger value='search' className='flex-1 flex gap-1'>
+                <TabsList className='flex w-full justify-between gap-2'>
+                    <TabsTrigger value='search' className='flex flex-1 gap-1'>
                         <Search size={12} />
                         <h1>Buscar</h1>
                     </TabsTrigger>
                     <TabsTrigger
                         value='create'
-                        className='flex-1 flex gap-1'
+                        className='flex flex-1 gap-1'
                         onMouseDown={(ev) => {
                             // ev.preventDefault();
                         }}
@@ -46,7 +46,7 @@ export function ImageSelect({
                         <Sparkles size={12} />
                         <h1>Crear (IA)</h1>
                     </TabsTrigger>
-                    <TabsTrigger value='upload' className='flex-1 flex gap-1'>
+                    <TabsTrigger value='upload' className='flex flex-1 gap-1'>
                         <Upload size={12} />
                         <h1>Subir</h1>
                     </TabsTrigger>

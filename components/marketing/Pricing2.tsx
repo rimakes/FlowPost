@@ -11,8 +11,8 @@ import { Check, GiftIcon, ShieldCheck } from 'lucide-react';
 
 export const Pricing2 = () => {
     return (
-        <section className='flex max-w-7xl flex-col gap-20 relative'>
-            <div className='anchor -top-32 absolute' id='pricing' />
+        <section className='relative flex max-w-7xl flex-col gap-20'>
+            <div className='anchor absolute -top-32' id='pricing' />
             <div className='gap2 flex flex-col text-center'>
                 <h2
                     className={`${secondaryFont.className} border-b-0 text-6xl font-extrabold`}
@@ -37,14 +37,14 @@ export const Pricing2 = () => {
                         </span>
                     </span>
                 </p>
-                <div className='flex flex-col items-center gap-12 p-8 shadow-[0_3px_8px_rgba(0,0,0,.24)] bg-white rounded-lg'>
-                    <div className='flex flex-col gap-4 items-center'>
-                        <p className='text-6xl font-bold relative'>
+                <div className='flex flex-col items-center gap-12 rounded-lg bg-white p-8 shadow-[0_3px_8px_rgba(0,0,0,.24)]'>
+                    <div className='flex flex-col items-center gap-4'>
+                        <p className='relative text-6xl font-bold'>
                             {appConfig.plans[0].priceString}
                             {/* <span className='text-2xl text-muted-foreground font-semibold line-through absolute -top-2'>
                                 {appConfig.plans[0].comparedAtPriceString}
                             </span> */}
-                            <span className='text-base text-muted-foreground font-semibold absolute bottom-0'>
+                            <span className='absolute bottom-0 text-base font-semibold text-muted-foreground'>
                                 6,7€/mes
                             </span>
                         </p>
@@ -55,12 +55,12 @@ export const Pricing2 = () => {
                         </div>
                         <div>
                             <GetAccessButton
-                                className='mb-1 mx-auto shadow-none text-primary
-                            bg-gradient-to-tr  from-pink-400 to-indigo-400 text-pink-50 text-lg w-full
+                                className='mx-auto mb-1 w-full bg-gradient-to-tr
+                            from-pink-400  to-indigo-400 text-lg text-pink-50 text-primary shadow-none
                             
                             '
                             />
-                            <p className='flex gap-2 text-xs items-center w-full justify-center text-muted-foreground mb-2'>
+                            <p className='mb-2 flex w-full items-center justify-center gap-2 text-xs text-muted-foreground'>
                                 <ShieldCheck className='h-4 w-4' />
                                 Pago seguro con Stripe
                             </p>
@@ -68,7 +68,7 @@ export const Pricing2 = () => {
                     </div>
 
                     <div>
-                        <p className='mb-2 font-semibold text-center'>
+                        <p className='mb-2 text-center font-semibold'>
                             {appConfig.general.appName}
                             <span className='relative -top-1'>+</span> incluye:
                         </p>

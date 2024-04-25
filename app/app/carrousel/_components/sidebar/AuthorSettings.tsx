@@ -25,14 +25,14 @@ export const AuthorSettings = () => {
 
     return (
         <Collapsible>
-            <CollapsibleTrigger className='flex justify-between w-full items-center'>
-                <div className='cursor-pointer flex items-center'>Autor</div>
+            <CollapsibleTrigger className='flex w-full items-center justify-between'>
+                <div className='flex cursor-pointer items-center'>Autor</div>
                 <ChevronsUpDown size={20} className='ml-2' />
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <div className='space-y-4 mt-2'>
+                <div className='mt-2 space-y-4'>
                     <div className=''>
-                        <div className='flex justify-between items-center py-1'>
+                        <div className='flex items-center justify-between py-1'>
                             <Label htmlFor='name'>Nombre</Label>
                             <Switch
                                 className=''
@@ -53,7 +53,7 @@ export const AuthorSettings = () => {
                         />
                     </div>
                     <div className=''>
-                        <div className='flex justify-between items-center  py-1'>
+                        <div className='flex items-center justify-between  py-1'>
                             <Label htmlFor='handle'>Handle</Label>
                             <Switch
                                 id='handle'
@@ -72,7 +72,7 @@ export const AuthorSettings = () => {
                             }}
                         />
                     </div>
-                    <div className='flex gap-2 items-center'>
+                    <div className='flex items-center gap-2'>
                         <Checkbox
                             checked={carousel.settings.showAuthorInFirstOnly}
                             onCheckedChange={() =>

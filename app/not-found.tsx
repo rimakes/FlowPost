@@ -10,13 +10,13 @@ export default function NotFound() {
             {/* <Sidebar /> */}
 
             {/* Content area */}
-            <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
+            <div className='relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden'>
                 <main className='grow [&>*:first-child]:scroll-mt-16'>
-                    <div className='relative bg-white dark:bg-slate-900 h-full'>
-                        <div className='px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto'>
-                            <div className='max-w-2xl m-auto mt-16'>
-                                <div className='text-center px-4'>
-                                    <div className='inline-flex mb-8'>
+                    <div className='relative h-full bg-white dark:bg-slate-900'>
+                        <div className='mx-auto w-full max-w-[96rem] px-4 py-8 sm:px-6 lg:px-8'>
+                            <div className='m-auto mt-16 max-w-2xl'>
+                                <div className='px-4 text-center'>
+                                    <div className='mb-8 inline-flex'>
                                         <Image
                                             className='dark:hidden'
                                             src={NotFoundImage}
@@ -38,7 +38,7 @@ export default function NotFound() {
                                     </div>
                                     <Link
                                         href='/'
-                                        className='btn bg-indigo-500 hover:bg-indigo-600 text-white'
+                                        className='btn bg-indigo-500 text-white hover:bg-indigo-600'
                                     >
                                         Back To Dashboard
                                     </Link>

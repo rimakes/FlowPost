@@ -18,7 +18,7 @@ export function SavedPageClient({
 }: SavedPageClientProps) {
     return (
         <Tabs defaultValue='ideas'>
-            <TabsList className='flex gap-2 w-fit'>
+            <TabsList className='flex w-fit gap-2'>
                 <TabsTrigger value='ideas'>
                     <h1>Ideas</h1>
                 </TabsTrigger>
@@ -30,7 +30,7 @@ export function SavedPageClient({
                 </TabsTrigger>
             </TabsList>
             <TabsContent value='ideas'>
-                <div className='mt-6 gap-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
+                <div className='mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
                     {ideas.map((idea) => {
                         return (
                             <PostIdeaCard
@@ -44,14 +44,14 @@ export function SavedPageClient({
                 </div>
             </TabsContent>
             <TabsContent value='posts'>
-                <div className='mt-6 gap-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
+                <div className='mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
                     {posts.map((post) => {
                         return <PostCard key={post.id} post={post} />;
                     })}
                 </div>
             </TabsContent>
             <TabsContent value='carousels'>
-                <div className='mt-6 gap-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
+                <div className='mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 '>
                     {carrusels.map((carousel) => {
                         return (
                             <CarouselCard

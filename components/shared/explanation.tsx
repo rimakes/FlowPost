@@ -16,7 +16,7 @@ export function Explanation({ message, className }: ExplanationProps) {
         <span>
             <TooltipProvider>
                 <Tooltip delayDuration={200}>
-                    <TooltipTrigger className='text-xs text-pink-600 font-bold cursor-help translate-x-1/4 -translate-y-1'>
+                    <TooltipTrigger className='-translate-y-1 translate-x-1/4 cursor-help text-xs font-bold text-pink-600'>
                         ?
                     </TooltipTrigger>
                     <TooltipContent>{message}</TooltipContent>

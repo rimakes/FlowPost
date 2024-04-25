@@ -40,7 +40,7 @@ export function LinkedinPost({ className, carousel }: LinkedinPostProps) {
     return (
         <div
             className={cn(
-                `border border-border rounded-md p-2 flex flex-col gap-2 max-w-[555px]
+                `flex max-w-[555px] flex-col gap-2 rounded-md border border-border p-2
                 `,
                 className
             )}
@@ -64,7 +64,7 @@ const Comments = () => {
         <>
             <div className='flex flex-col gap-2'>
                 <div className='flex gap-1'>
-                    <div className='relative rounded-full h-10 w-10'>
+                    <div className='relative h-10 w-10 rounded-full'>
                         <Image
                             src='/images/placeholders/user.png'
                             fill
@@ -72,7 +72,7 @@ const Comments = () => {
                             sizes='(max-width: 640px) 10vw, 100px'
                         />
                     </div>
-                    <div className='grow flex flex-col bg-primary/5 p-2 rounded-md rounded-tl-none'>
+                    <div className='flex grow flex-col rounded-md rounded-tl-none bg-primary/5 p-2'>
                         <div className='flex justify-between'>
                             <div className='flex gap-2'>
                                 <p className='font-semibold'>Ricardo Sala</p>
@@ -86,19 +86,19 @@ const Comments = () => {
                         <p className='text-sm text-primary/50'>
                             {`Maker at ${appConfig.general.appName}`}
                         </p>
-                        <p className='text-sm mt-2'>Nice one Ricardo!</p>
+                        <p className='mt-2 text-sm'>Nice one Ricardo!</p>
                     </div>
                 </div>
             </div>
-            <p className='text-primary/50 font-semibold'>Load more comments</p>
+            <p className='font-semibold text-primary/50'>Load more comments</p>
         </>
     );
 };
 
 const AddCommentBar = () => {
     return (
-        <div className='flex gap-2 items-center'>
-            <div className='relative rounded-full h-12 w-12 bg-muted'>
+        <div className='flex items-center gap-2'>
+            <div className='relative h-12 w-12 rounded-full bg-muted'>
                 <Image
                     src='/images/placeholders/user.png'
                     fill
@@ -107,7 +107,7 @@ const AddCommentBar = () => {
                     className='object-cover'
                 />
             </div>
-            <div className='flex gap-2 items-center justify-between w-full border border-inherit text-primary/50 text-sm rounded-full p-3'>
+            <div className='flex w-full items-center justify-between gap-2 rounded-full border border-inherit p-3 text-sm text-primary/50'>
                 <p>Add a comment...</p>
                 <div className='flex gap-6'>
                     <Smile />
@@ -120,8 +120,8 @@ const AddCommentBar = () => {
 
 const PostActionsBar = () => {
     return (
-        <div className='flex justify-between items-center p-2'>
-            <div className='h-10 w-10 bg-muted rounded-full' />
+        <div className='flex items-center justify-between p-2'>
+            <div className='h-10 w-10 rounded-full bg-muted' />
             <Button
                 variant='ghost'
                 className='flex gap-1 text-primary/60'
@@ -163,9 +163,9 @@ const StatsBar = () => {
         <div className='flex justify-between'>
             <div className='flex items-center gap-1'>
                 <div
-                    className={`flex [&_>_*_+_*]:-ml-6 [&_>_*]:border-transparent [&_>_*]:border-8`}
+                    className={`flex [&_>_*]:border-8 [&_>_*]:border-transparent [&_>_*_+_*]:-ml-6`}
                 >
-                    <div className='relative border h-10 w-10 border-black'>
+                    <div className='relative h-10 w-10 border border-black'>
                         <Image
                             src={'/icons/1.svg'}
                             alt=''
@@ -173,7 +173,7 @@ const StatsBar = () => {
                             height={100}
                         />
                     </div>
-                    <div className='relative border h-10 w-10 border-black'>
+                    <div className='relative h-10 w-10 border border-black'>
                         <Image
                             src={'/icons/2.svg'}
                             alt=''
@@ -181,7 +181,7 @@ const StatsBar = () => {
                             height={100}
                         />
                     </div>
-                    <div className='relative border h-10 w-10 border-black'>
+                    <div className='relative h-10 w-10 border border-black'>
                         <Image
                             src={'/icons/3.svg'}
                             alt=''
@@ -192,7 +192,7 @@ const StatsBar = () => {
                 </div>
                 <p className='text-xs text-primary/50'>357</p>
             </div>
-            <div className='flex gap-2 text-xs text-primary/50 items-center'>
+            <div className='flex items-center gap-2 text-xs text-primary/50'>
                 <p>209 comments · 23 reposts</p>
             </div>
         </div>
@@ -215,7 +215,7 @@ const PostImage = ({
 
     return (
         <div
-            className={`!aspect-[1080/1350]  w-[calc(100%+1rem)] -ml-2 bg-muted relative shrink-0`}
+            className={`relative  -ml-2 !aspect-[1080/1350] w-[calc(100%+1rem)] shrink-0 bg-muted`}
         >
             {isCarouselProcessed && (
                 <Image
@@ -227,7 +227,7 @@ const PostImage = ({
             )}
 
             {!isCarouselCreated && (
-                <div className='flex flex-col justify-center items-center h-full'>
+                <div className='flex h-full flex-col items-center justify-center'>
                     <p>Crea un carrusel</p>
                     <p>👇</p>
                     <CreateCarouselButton post={post} className='flex-none' />
@@ -235,7 +235,7 @@ const PostImage = ({
             )}
 
             {isCarouselCreated && !isCarouselProcessed && (
-                <div className='flex flex-col justify-center items-center h-full'>
+                <div className='flex h-full flex-col items-center justify-center'>
                     <p>Procesa el carrusel para poder publicarlo</p>
                     <p>👇</p>
                     <Link
@@ -254,9 +254,9 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
     const [open, setOpen] = useState(false);
     const contentOpen = (
         <>
-            <p className='text-primary whitespace-pre-wrap'>{post.content}</p>
+            <p className='whitespace-pre-wrap text-primary'>{post.content}</p>
             <span
-                className='text-primary/50 absolute bottom-0 right-0 cursor-pointer'
+                className='absolute bottom-0 right-0 cursor-pointer text-primary/50'
                 onClick={() => {
                     setOpen(!open);
                 }}
@@ -267,11 +267,11 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
     );
     const ContentClosed = (
         <>
-            <p className='text-primary line-clamp-3 whitespace-pre-wrap mb-6'>
+            <p className='mb-6 line-clamp-3 whitespace-pre-wrap text-primary'>
                 {post.content}
             </p>
             <span
-                className='text-primary/50 absolute bottom-0 right-0 cursor-pointer'
+                className='absolute bottom-0 right-0 cursor-pointer text-primary/50'
                 onClick={() => {
                     setOpen(!open);
                 }}
@@ -284,11 +284,11 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
         <div className='flex flex-col gap-2'>
             <div className='relative'>{open ? contentOpen : ContentClosed}</div>
             <div className='flex gap-2'>
-                <div className='flex gap-1 items-center'>
+                <div className='flex items-center gap-1'>
                     <WholeWord size={20} />
                     <p className='text-primary/50'>Write a comment...</p>
                 </div>
-                <div className='flex gap-2 items-center'>
+                <div className='flex items-center gap-2'>
                     <Globe size={20} />
                     <p className='text-primary/50'>Anyone</p>
                     <Cross size={20} />
@@ -300,26 +300,26 @@ const PostContent = ({ post }: { post: TLinkedinPost }) => {
 
 const PostHeader = ({ post }: { post: TLinkedinPost }) => {
     return (
-        <div className='flex gap-2 items-center justify-between'>
+        <div className='flex items-center justify-between gap-2'>
             <div className='flex gap-2'>
-                <div className=' relative h-20 w-20 bg-muted rounded-full overflow-hidden'>
+                <div className=' relative h-20 w-20 overflow-hidden rounded-full bg-muted'>
                     <Image src={post.author.pictureUrl} fill alt='profile' />
                 </div>
                 <div className='flex flex-col gap-1'>
-                    <div className='flex gap-1 items-center'>
+                    <div className='flex items-center gap-1'>
                         <p>{post.author.name}</p>
                         <LinkedinIcon size={15} />
                         <span className='text-primary/50'>· 2nd</span>
                     </div>
-                    <p className='text-primary/50 text-sm'>
+                    <p className='text-sm text-primary/50'>
                         Vendiendo un producto que...
                     </p>
-                    <p className='text-primary/50 text-xs'>
+                    <p className='text-xs text-primary/50'>
                         13h · <Globe2 className='inline' size={13} />
                     </p>
                 </div>
             </div>
-            <div className='flex gap-1 text-blue-600 font-semibold items-center'>
+            <div className='flex items-center gap-1 font-semibold text-blue-600'>
                 <Plus size={20} />
                 <p>Follow</p>
             </div>
@@ -329,9 +329,9 @@ const PostHeader = ({ post }: { post: TLinkedinPost }) => {
 
 const EngagementBar = () => {
     return (
-        <div className='flex gap-2 justify-between items-center'>
+        <div className='flex items-center justify-between gap-2'>
             <div className='flex items-center gap-2'>
-                <div className='relative rounded-full h-7 w-7 bg-muted'>
+                <div className='relative h-7 w-7 rounded-full bg-muted'>
                     <Image
                         src='/images/placeholders/user.png'
                         fill
@@ -341,7 +341,7 @@ const EngagementBar = () => {
                 </div>
                 <div className='flex items-baseline gap-2'>
                     <div className='text font-semibold'>Ricardo Sala</div>
-                    <div className='text-primary/50 text-xs'>
+                    <div className='text-xs text-primary/50'>
                         commented on this
                     </div>
                 </div>

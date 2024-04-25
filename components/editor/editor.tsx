@@ -174,7 +174,7 @@ export default function Editor({
                 {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
                 <div className={cn(``, className)}>
                     <TopMenu editor={editor} handleDownload={() => {}} />
-                    <Separator className='mt-2 mb-4 w-[100%+1rem] -ml-2 -mr-2' />
+                    <Separator className='-ml-2 -mr-2 mb-4 mt-2 w-[100%+1rem]' />
                     <EditorContent
                         editor={editor}
                         ref={editorRef}

@@ -1,0 +1,5 @@
+
+> next-boilerplate@0.1.0 prettier
+> prettier --check .
+
+Checking formatting...

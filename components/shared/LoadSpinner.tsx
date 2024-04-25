@@ -4,11 +4,11 @@ import Spinner from '../icons/Spinner';
 type LoadSpinnerProps = {};
 export function LoadSpinner({}: LoadSpinnerProps) {
     return (
-        <div className='flex flex-col justify-center items-center grow'>
-            <div className='h-1/4 aspect-square text-center'>
+        <div className='flex grow flex-col items-center justify-center'>
+            <div className='aspect-square h-1/4 text-center'>
                 <svg
                     aria-hidden='true'
-                    className='w-full h-full text-gray-200 animate-spin dark:text-gray-600 fill-indigo-500'
+                    className='h-full w-full animate-spin fill-indigo-500 text-gray-200 dark:text-gray-600'
                     viewBox='0 0 100 101'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'

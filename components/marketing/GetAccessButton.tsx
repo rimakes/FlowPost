@@ -46,7 +46,7 @@ export function GetAccessButton({
                     Consigue {appConfig.general.appName}+
                 </Button>
             </DialogTrigger>
-            <DialogContent className='max-h-full overflow-y-auto min-h-[2/3]'>
+            <DialogContent className='max-h-full min-h-[2/3] overflow-y-auto'>
                 {step === 1 ? <FirstStep onNext={setStep} /> : <SecondStep />}
             </DialogContent>
         </Dialog>
@@ -60,8 +60,8 @@ type ModalHeaderProps = {
 
 export const ModalHeader = ({ title, subtitle }: ModalHeaderProps) => {
     return (
-        <div className='flex flex-col gap-2 p-2 items-center'>
-            <h1 className='text-2xl font-bold text-center'>{title}</h1>
+        <div className='flex flex-col items-center gap-2 p-2'>
+            <h1 className='text-center text-2xl font-bold'>{title}</h1>
             {subtitle && <p className='text-sm text-primary/70'>{subtitle}</p>}
         </div>
     );
@@ -78,24 +78,24 @@ const FirstStep = ({ onNext }: FirstStepProps) => {
                 title={`Consigue ${appConfig.general.appName}+`}
                 subtitle={`Usa ${appConfig.general.appName} sin limitaciones`}
             />
-            <Separator className='sm:-mt-4 sm:-mb-4 -mt-8 -mb-8' />
+            <Separator className='-mb-8 -mt-8 sm:-mb-4 sm:-mt-4' />
             <div className='flex flex-col gap-6 p-2'>
                 {modalItems.map((item, index) => (
                     <ModalItem key={index} {...item} />
                 ))}
             </div>
-            <Separator className='-mt-4 -mb-4' />
-            <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
+            <Separator className='-mb-4 -mt-4' />
+            <div className='sticky bottom-0 flex flex-col items-center justify-center gap-4 bg-background '>
                 <Button
                     onClick={() => {
                         onNext(2);
                     }}
-                    className='bg-gradient-to-tr from-fuchsia-500 to-indigo-600 w-full'
+                    className='w-full bg-gradient-to-tr from-fuchsia-500 to-indigo-600'
                 >
                     Consigue {appConfig.general.appName}
                     <span className='relative -top-1'>+</span>{' '}
                 </Button>
-                <div className='flex flex-col gap-2 text-sm italic items-center text-muted-foreground text-center'>
+                <div className='flex flex-col items-center gap-2 text-center text-sm italic text-muted-foreground'>
                     <Rating value={5} />
                     <p className=''>
                         &quot;He pasado de dedicar 4 horas a la semana a crear
@@ -124,7 +124,7 @@ export const ModalItem = ({
     description,
 }: ModalItemProps) => {
     return (
-        <div className='flex gap-4 items-center'>
+        <div className='flex items-center gap-4'>
             {/* TODO: how could I do this? */}
             {/* @ts-ignore */}
             <Icon className='text-indigo-600' />
@@ -151,10 +151,10 @@ export const SecondStep = ({
     });
 
     return (
-        <div className='flex flex-col justify-between gap-12 min-h-[600px]'>
+        <div className='flex min-h-[600px] flex-col justify-between gap-12'>
             <ModalHeader title={`Elige tu plan`} />
-            <Separator className='-mt-4 -mb-4' />
-            <div className='flex flex-col justify-start items-center gap-2 p-2 grow'>
+            <Separator className='-mb-4 -mt-4' />
+            <div className='flex grow flex-col items-center justify-start gap-2 p-2'>
                 <div className='text-center'>
                     <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
                     <p className='text-xl font-bold '>Ahorra hasta un 75%</p>
@@ -186,14 +186,14 @@ export const SecondStep = ({
                     >
                         {plan.name === 'Anual' && (
                             <div
-                                className={`flex gap-2 bg-gradient-to-tr from-fuchsia-500 to-indigo-600 rounded-full p-2 py-1  items-center justify-center absolute -top-2 right-0 ${
+                                className={`absolute -top-2 right-0 flex items-center justify-center gap-2 rounded-full  bg-gradient-to-tr from-fuchsia-500 to-indigo-600 p-2 py-1 ${
                                     seletectedPlan === plan.stripePriceId
                                         ? 'opacity-100'
                                         : 'opacity-50'
                                 }`}
                             >
                                 {' '}
-                                <Star className='text-primary-foreground fill-current h-4 w-4' />{' '}
+                                <Star className='h-4 w-4 fill-current text-primary-foreground' />{' '}
                                 <p className='text-sm text-primary-foreground'>
                                     Ahorra 60%
                                 </p>
@@ -213,18 +213,18 @@ export const SecondStep = ({
                     <MoreHorizontal className='h-8 w-8' />
                 </div>
             </div> */}
-            <Separator className='-mt-4 -mb-4' />
-            <div className='flex justify-center flex-col items-center gap-4 sticky bottom-0 bg-background '>
+            <Separator className='-mb-4 -mt-4' />
+            <div className='sticky bottom-0 flex flex-col items-center justify-center gap-4 bg-background '>
                 <CheckoutButton
                     successUrl={successUrl}
                     priceId={seletectedPlan}
-                    className='bg-gradient-to-tr from-fuchsia-500 to-indigo-600 w-full'
+                    className='w-full bg-gradient-to-tr from-fuchsia-500 to-indigo-600'
                 >
                     {' '}
                     Consigue {appConfig.general.appName}
                     <span className='relative -top-1'>+</span>{' '}
                 </CheckoutButton>
-                <p className='flex gap-2 text-xs items-center text-muted-foreground'>
+                <p className='flex items-center gap-2 text-xs text-muted-foreground'>
                     <Shield className='h-4 w-4' />
                     Cancela tu subscripción en cualquier momento
                 </p>
@@ -259,21 +259,21 @@ export const PriceCard = ({
     return (
         <div
             className={`
-        border-4 rounded-lg flex gap-4 p-4 items-center relative transision-all duration-300
+        transision-all relative flex items-center gap-4 rounded-lg border-4 p-4 duration-300
         ${isSelected ? 'border-indigo-600' : ''}
         `}
             onClick={handleClick}
         >
             <div
                 className={`
-            rounded-full h-4 w-4 bg-muted  transision-all
+            transision-all h-4 w-4 rounded-full  bg-muted
             ${isSelected ? 'bg-gradient-to-tr from-fuchsia-500 to-indigo-600' : ''}
             
             `}
             />
             <div>
                 <h3 className='text-xl'>
-                    <span className='line-through text-primary/30'>
+                    <span className='text-primary/30 line-through'>
                         {compareAtPrice}
                     </span>{' '}
                     <span className='font-bold'>

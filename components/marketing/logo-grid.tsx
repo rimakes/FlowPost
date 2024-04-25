@@ -1,23 +1,23 @@
 export const LogoGrid = () => {
     return (
         <div className='py-14'>
-            <div className='max-w-screen-xl mx-auto px-4 md:px-8'>
-                <div className='max-w-xl mx-auto text-center'>
-                    <h3 className='text-gray-800 text-3xl font-semibold sm:text-4xl'>
+            <div className='mx-auto max-w-screen-xl px-4 md:px-8'>
+                <div className='mx-auto max-w-xl text-center'>
+                    <h3 className='text-3xl font-semibold text-gray-800 sm:text-4xl'>
                         Whos using Float UI?
                     </h3>
-                    <p className='text-gray-600 mt-3'>
+                    <p className='mt-3 text-gray-600'>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Donec dignissim nibh nisl, vel egestas magna rhoncus at.
                         Nunc elementum efficitur tortor in laoreet.
                     </p>
                 </div>
                 <div className='mt-12 flex justify-center'>
-                    <ul className='inline-grid grid-cols-2 gap-x-10 gap-y-6 md:gap-x-16 md:grid-cols-3 lg:grid-cols-4'>
+                    <ul className='inline-grid grid-cols-2 gap-x-10 gap-y-6 md:grid-cols-3 md:gap-x-16 lg:grid-cols-4'>
                         {/* LOGO 1 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 163 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -36,7 +36,7 @@ export const LogoGrid = () => {
                         {/* LOGO 2 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 129 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -57,7 +57,7 @@ export const LogoGrid = () => {
                         {/* LOGO 3 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 135 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -78,7 +78,7 @@ export const LogoGrid = () => {
                         {/* LOGO 4 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 164 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -109,7 +109,7 @@ export const LogoGrid = () => {
                         {/* LOGO 5 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 148 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -140,7 +140,7 @@ export const LogoGrid = () => {
                         {/* LOGO 6 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 100 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -157,7 +157,7 @@ export const LogoGrid = () => {
                         {/* LOGO 7 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 98 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
@@ -174,7 +174,7 @@ export const LogoGrid = () => {
                         {/* LOGO 8 */}
                         <li>
                             <svg
-                                className='w-28 my-auto'
+                                className='my-auto w-28'
                                 viewBox='0 0 121 48'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'

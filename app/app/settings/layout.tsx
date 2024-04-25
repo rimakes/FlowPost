@@ -7,7 +7,7 @@ export default function DashboardLayout({ children }: LayoutProps) {
     return (
         <Container
             className={
-                'flex flex-col border-0 border-red-400 border-dashed grow'
+                'flex grow flex-col border-0 border-dashed border-red-400'
             }
         >
             {children}

@@ -20,11 +20,11 @@ const EditPostModal = ({ className, initialPost }: EditPostProps) => {
             <div className={cn(``, className)}>
                 <EmojiPickerClient />
                 <Label>Post generado</Label>
-                <div className='border border-muted p-2 space-y-2'>
+                <div className='space-y-2 border border-muted p-2'>
                     <div className='relative'>
                         <Textarea
                             rows={20}
-                            className='border-none resize-none'
+                            className='resize-none border-none'
                             value={initialPost.content}
                             readOnly={true}
                             onChange={(e) => {
@@ -32,7 +32,7 @@ const EditPostModal = ({ className, initialPost }: EditPostProps) => {
                                 // setPost({ ...post, content: e.target.value })
                             }}
                         />
-                        <div className='absolute right-2 bottom-2 flex items-center gap-2 text-xs text-primary/70'>
+                        <div className='absolute bottom-2 right-2 flex items-center gap-2 text-xs text-primary/70'>
                             <Label>Permitir edición</Label>
                             <Switch
                                 checked={isEditableOverride}

@@ -23,10 +23,10 @@ export default async function SchedulePage() {
         <>
             <Container
                 className={
-                    'flex flex-col border-0 border-red-400 border-dashed'
+                    'flex flex-col border-0 border-dashed border-red-400'
                 }
             >
-                <div className='flex justify-between items-baseline'>
+                <div className='flex items-baseline justify-between'>
                     <Heading
                         className='mt-6'
                         title='Programa'

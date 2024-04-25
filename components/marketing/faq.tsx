@@ -16,11 +16,11 @@ export function Faq() {
         '
         >
             <Container className='max-w-4xl'>
-                <div className='anchor lg:-top-32 -top-24 absolute' id='faq' />
+                <div className='anchor absolute -top-24 lg:-top-32' id='faq' />
 
                 <div>
                     <h2
-                        className={`${secondaryFont.className} border-0 text-3xl mb-2`}
+                        className={`${secondaryFont.className} mb-2 border-0 text-3xl`}
                     >
                         Preguntas frecuentes
                     </h2>
@@ -34,7 +34,7 @@ export function Faq() {
                         </Link>
                     </p>
                 </div>
-                <div className='flex flex-col items-baseline gap-5 w-full'>
+                <div className='flex w-full flex-col items-baseline gap-5'>
                     <Accordion
                         type='single'
                         collapsible

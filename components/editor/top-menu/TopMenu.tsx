@@ -91,7 +91,7 @@ export default function TopMenu({ editor, handleDownload }: TopMenuProps) {
     ];
 
     return (
-        <div className='flex justify-between items-center h-10'>
+        <div className='flex h-10 items-center justify-between'>
             <div className='flex gap-2'>
                 {editorTopMenuItems.map((button, idx) => (
                     <EditorTopMenuButton

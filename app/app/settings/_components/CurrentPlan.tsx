@@ -29,7 +29,7 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
                 className='mb-8'
             />
             {subscription ? (
-                <div className='border border-border rounded-lg p-3 max-w-md'>
+                <div className='max-w-md rounded-lg border border-border p-3'>
                     <div>
                         <p className='mb-6'>
                             Tu plan actual es{' '}
@@ -37,7 +37,7 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
                                 {appConfig.general.appName} {plan?.name}
                             </span>
                         </p>
-                        <div className='flex justify-between items-center'>
+                        <div className='flex items-center justify-between'>
                             <p className='text-sm text-primary/70'>
                                 Se renovará el{' '}
                                 {new Date(renewalDate).toLocaleDateString(

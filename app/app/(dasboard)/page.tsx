@@ -24,7 +24,7 @@ export default async function Home() {
                 subtitle='¿Qué quieres hacer hoy?'
             />
             <Separator />
-            <div className='mt-6 gap-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
+            <div className='mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
                 {WRITTER_TOOLS.map((tool) => (
                     <PostGeneratorCard
                         key={tool.url}
@@ -66,20 +66,20 @@ const PostGeneratorCard = <T extends string>({
             <Card className='h-full'>
                 <CardHeader
                     className={cn(
-                        `bg-[url(/images/decoration/patterns/circles-pattern.svg)] bg-no-repeat bg-opacity-70 bg-blend-lighten h-32`,
+                        `h-32 bg-opacity-70 bg-[url(/images/decoration/patterns/circles-pattern.svg)] bg-no-repeat bg-blend-lighten`,
                         headerClassName
                     )}
                 >
                     <CardTitle
                         className={cn(
-                            `text-indigo-700 flex flex-col justify-center items-center h-full`,
+                            `flex h-full flex-col items-center justify-center text-indigo-700`,
                             titleClassName
                         )}
                     >
                         {name}
                     </CardTitle>
                 </CardHeader>
-                <CardContent className='py-8 px-4'>
+                <CardContent className='px-4 py-8'>
                     <p className='font-semibold'>{title}</p>
                     <CardDescription>{subtitle}</CardDescription>
                 </CardContent>

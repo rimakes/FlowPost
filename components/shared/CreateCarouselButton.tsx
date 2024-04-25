@@ -78,7 +78,7 @@ export function CreateCarouselButton({
             icon={<GalleryHorizontal />}
             disabled={status === 'loading'}
             className={cn(
-                `flex-1 rounded-full overflow-hidden  relative`,
+                `relative flex-1 overflow-hidden  rounded-full`,
                 className
             )}
             label='Crear carrusel'
@@ -142,8 +142,8 @@ export function CreateCarouselButton({
             }}
         >
             {status !== 'idle' && (
-                <div className='absolute h-full w-full top-0 left-0 bg-background/50 z-10'>
-                    <div className='absolute w-full h-full flex flex-col justify-center items-center px-4'>
+                <div className='absolute left-0 top-0 z-10 h-full w-full bg-background/50'>
+                    <div className='absolute flex h-full w-full flex-col items-center justify-center px-4'>
                         <p className='text-primary'>Creando carrusel...</p>
                         <Progress
                             value={progressValue as number}

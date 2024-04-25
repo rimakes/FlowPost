@@ -42,15 +42,15 @@ export const SelectPostTemplate = ({
     // REVIEW: LAYOUT: Need to find a pattern to make this layout more responsive
     // DONE: Review in codepen: https://codepen.io/RicSala/pen/zYbpKwj
     return (
-        <div className='flex flex-col gap-4 space-y-2 border-0 border-black max-h-[90vh]'>
+        <div className='flex max-h-[90vh] flex-col gap-4 space-y-2 border-0 border-black'>
             {/* HEADER */}
-            <h2 className='font-semibold mb-4'>
+            <h2 className='mb-4 font-semibold'>
                 Selecciona el formato de tu post
             </h2>
 
             <div className='flex flex-col gap-2'>
                 <Label className='text-sm font-semibold'>Categorías</Label>
-                <div className='flex flex-wrap gap-2 border-0 border-green-400 max-h-24 overflow-x-auto'>
+                <div className='flex max-h-24 flex-wrap gap-2 overflow-x-auto border-0 border-green-400'>
                     {POST_CATEGORIES.map((category) => {
                         return (
                             <Button
@@ -72,8 +72,8 @@ export const SelectPostTemplate = ({
             </div>
 
             {/* BODY */}
-            <div className='flex grow min-h-0 border-0 border-yellow-600'>
-                <div className='sidebar basis-64 grow overflow-y-scroll border-0 border-blue-500 max-h-full'>
+            <div className='flex min-h-0 grow border-0 border-yellow-600'>
+                <div className='sidebar max-h-full grow basis-64 overflow-y-scroll border-0 border-blue-500'>
                     {selectedCategoryTemplates.map((template, index) => {
                         const isAvailable = availablePostTemplateIds?.includes(
                             template.id
@@ -82,7 +82,7 @@ export const SelectPostTemplate = ({
                             <div
                                 // TODO: change the key to something more unique
                                 key={template.id}
-                                className={`p-2 cursor-pointer text-sm border border-muted ${selectedPreviewIndex === template.id && 'bg-muted border-r-8 border-r-primary'} ${index} ${!isAvailable && 'opacity-50'} }`}
+                                className={`cursor-pointer border border-muted p-2 text-sm ${selectedPreviewIndex === template.id && 'border-r-8 border-r-primary bg-muted'} ${index} ${!isAvailable && 'opacity-50'} }`}
                                 onClick={() => {
                                     console.log(template.id);
                                     if (!isAvailable) {
@@ -95,17 +95,17 @@ export const SelectPostTemplate = ({
                                     setSelectedPreviewIndex(template.id);
                                 }}
                             >
-                                <h3 className='font-semibold overflow-hidden line-clamp-2'>
+                                <h3 className='line-clamp-2 overflow-hidden font-semibold'>
                                     {template.name}
                                 </h3>
-                                <p className='overflow-hidden text-ellipsis line-clamp-2'>
+                                <p className='line-clamp-2 overflow-hidden text-ellipsis'>
                                     {template.content}
                                 </p>
                             </div>
                         );
                     })}
                 </div>
-                <div className='border-0 basis-0 grow-[999] min-w-[50%] border-red-400 flex flex-col max-h-full overflow-y-scroll'>
+                <div className='flex max-h-full min-w-[50%] grow-[999] basis-0 flex-col overflow-y-scroll border-0 border-red-400'>
                     <div className='flex-grow border-0 border-green-400'>
                         <p className='whitespace-pre-line'>
                             {selectedTemplate!.content}
@@ -113,7 +113,7 @@ export const SelectPostTemplate = ({
                     </div>
                 </div>
             </div>
-            <div className='flex flex-wrap justify-between p-2 gap-2'>
+            <div className='flex flex-wrap justify-between gap-2 p-2'>
                 <Button variant={'outline'} type='button' className='flex-1'>
                     <Pen className='mr-2 h-5 w-5' />
                     Editar
@@ -146,10 +146,10 @@ export const SelectedPostTemplateCard = ({
 }: PostTemplateCardProps) => {
     return (
         <div
-            className={cn(`rounded-lg border space-y-2 p-4 w-full`, className)}
+            className={cn(`w-full space-y-2 rounded-lg border p-4`, className)}
         >
             <p className='font-semibold'>{template.name}</p>
-            <p className='w-full line-clamp-2'>{template.content}</p>
+            <p className='line-clamp-2 w-full'>{template.content}</p>
             <div className='flex justify-between'>
                 <Button variant={'ghost'} type='button' onClick={onEditClick}>
                     <Pen className='mr-2 h-5 w-5' />

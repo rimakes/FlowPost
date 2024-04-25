@@ -88,12 +88,12 @@ export function DownloadButton({ className }: DownloadButtonProps) {
         );
 
     return (
-        <div className='z-50 isolate'>
+        <div className='isolate z-50'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild className=''>
                     {downloadButton}
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className='flex flex-col items-center gap-2 z-50 bg-background isolate'>
+                <DropdownMenuContent className='isolate z-50 flex flex-col items-center gap-2 bg-background'>
                     {/* <DropdownMenuItem
                     onClick={() => {
                         onDownload('svg');
@@ -106,7 +106,7 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                         onClick={() => {
                             onDownload('pdf');
                         }}
-                        className='PDF-button justify-center w-full z-[9999]'
+                        className='PDF-button z-[9999] w-full justify-center'
                     >
                         PDF
                     </DropdownMenuItem>

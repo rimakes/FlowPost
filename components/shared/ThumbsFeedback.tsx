@@ -55,14 +55,14 @@ export function ThumbsFeedback({ className }: ThumbsFeedbackProps) {
             </Dialog>
             <Button
                 variant='ghost'
-                className='rounded-full hover:bg-green-200 hover:text-green-700 h-8 w-8 p-0'
+                className='h-8 w-8 rounded-full p-0 hover:bg-green-200 hover:text-green-700'
                 onClick={() => setIsDialogOpen(true)}
             >
                 <ThumbsUp size={15} />
             </Button>
             <Button
                 variant='ghost'
-                className='rounded-full hover:bg-red-200 hover:text-red-700 h-8 w-8 p-0'
+                className='h-8 w-8 rounded-full p-0 hover:bg-red-200 hover:text-red-700'
                 onClick={() => setIsDialogOpen(true)}
             >
                 <ThumbsDown size={15} />

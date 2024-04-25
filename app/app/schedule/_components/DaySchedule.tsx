@@ -25,14 +25,14 @@ export function DaySchedule({ slots, className, date }: DayScheduleProps) {
         <div className={cn(`flex flex-col divide-x divide-y `, className)}>
             <div
                 className={cn(
-                    `border-l border-border bg-primary/1 flex items-center justify-center p-2 text-primary/60`,
+                    `bg-primary/1 flex items-center justify-center border-l border-border p-2 text-primary/60`,
                     date === currentDay ? 'bg-primary/5' : 'bg-primary/1'
                 )}
             >
                 {dayOfWeek} {day}
                 <br />
             </div>
-            <div className='grow p-2 flex flex-col gap-2 '>
+            <div className='flex grow flex-col gap-2 p-2 '>
                 {slots &&
                     slots.sort()!.map((slot, i) => {
                         // console.log('slot time', slot.time);

@@ -44,24 +44,24 @@ export const ImageUpload = ({ onImageSelect }: ImageUploadProps) => {
     };
 
     return (
-        <div className='flex gap-4 justify-stretch items-center'>
+        <div className='flex items-center justify-stretch gap-4'>
             <Thumbnails
                 files={pictures}
                 classNamesThumbnails='h-24 w-24 rounded-full'
             />
             <Dropzone
                 onDrop={onDrop}
-                className='h-28 py-2 flex flex-col items-center justify-center flex-grow'
+                className='flex h-28 flex-grow flex-col items-center justify-center py-2'
             >
                 {pictures.length > 0 && (
                     <div
-                        className='flex flex-col justify-center items-center w-full h-full border-0 border-red-500'
+                        className='flex h-full w-full flex-col items-center justify-center border-0 border-red-500'
                         onClick={(ev) => {
                             ev.stopPropagation();
                         }}
                     >
                         <p>Por favor, confirma</p>
-                        <p className='text-primary/60 text-sm'>
+                        <p className='text-sm text-primary/60'>
                             ¿Quieres subir esta imagen?
                         </p>
                         <Button

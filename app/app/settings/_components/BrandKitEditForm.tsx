@@ -153,7 +153,7 @@ export function BrandKitEditForm({
                         <FormItem>
                             <FormLabel>Foto de perfil</FormLabel>
                             <FormControl>
-                                <div className='flex gap-4 justify-stretch items-center'>
+                                <div className='flex items-center justify-stretch gap-4'>
                                     <Thumbnails
                                         files={pictures}
                                         classNamesThumbnails='h-24 w-24 rounded-full shrink-0'
@@ -161,12 +161,12 @@ export function BrandKitEditForm({
                                     <Dropzone
                                         onDrop={onDrop}
                                         value={form.getValues('imageUrl')}
-                                        className='dropzone h-28 py-2 flex gap-4 items-center justify-center flex-grow'
+                                        className='dropzone flex h-28 flex-grow items-center justify-center gap-4 py-2'
                                     >
                                         {session &&
                                             session!.user.image &&
                                             !form.getValues('imageUrl') && (
-                                                <div className=' flex-1 flex flex-col items-center p-2'>
+                                                <div className=' flex flex-1 flex-col items-center p-2'>
                                                     <p className='text-primary/70'>
                                                         También puedes
                                                     </p>
@@ -213,7 +213,7 @@ export function BrandKitEditForm({
                     control={form.control}
                     name='colorPalette'
                     render={({ field }) => (
-                        <FormItem className='flex gap-2 justify-start items-center py-2'>
+                        <FormItem className='flex items-center justify-start gap-2 py-2'>
                             <FormLabel>Colores</FormLabel>
                             <FormControl>
                                 <Dialog
@@ -221,10 +221,10 @@ export function BrandKitEditForm({
                                     onOpenChange={setColorsPopOverisOpen}
                                 >
                                     <DialogTrigger
-                                        className='w-full flex items-center justify-between !mt-0'
+                                        className='!mt-0 flex w-full items-center justify-between'
                                         asChild
                                     >
-                                        <div className='cursor-pointer flex items-center'>
+                                        <div className='flex cursor-pointer items-center'>
                                             {/* Colores */}
                                             <ColorPalette
                                                 colors={form.getValues(

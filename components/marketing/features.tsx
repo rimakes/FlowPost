@@ -8,7 +8,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -28,7 +28,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -48,7 +48,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -68,7 +68,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -88,7 +88,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -108,7 +108,7 @@ export const Features = () => {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-6 h-6'
+                    className='h-6 w-6'
                 >
                     <path
                         strokeLinecap='round'
@@ -124,10 +124,10 @@ export const Features = () => {
 
     return (
         <section className='py-14'>
-            <div className='max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8'>
-                <div className='max-w-xl mx-auto space-y-3 sm:text-center'>
-                    <h3 className='text-primary font-semibold'>Features</h3>
-                    <p className='text-gray-800 text-3xl font-semibold sm:text-4xl'>
+            <div className='mx-auto max-w-screen-xl px-4 text-gray-600 md:px-8'>
+                <div className='mx-auto max-w-xl space-y-3 sm:text-center'>
+                    <h3 className='font-semibold text-primary'>Features</h3>
+                    <p className='text-3xl font-semibold text-gray-800 sm:text-4xl'>
                         Do more with less complexity
                     </p>
                     <p>
@@ -137,14 +137,14 @@ export const Features = () => {
                     </p>
                 </div>
                 <div className='mt-12'>
-                    <ul className='grid gap-y-8 gap-x-12 sm:grid-cols-2 lg:grid-cols-3'>
+                    <ul className='grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3'>
                         {features.map((item, idx) => (
                             <li key={idx} className='flex gap-x-4'>
-                                <div className='flex-none w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center'>
+                                <div className='flex h-12 w-12 flex-none items-center justify-center rounded-lg bg-primary/10 text-primary'>
                                     {item.icon}
                                 </div>
                                 <div>
-                                    <h4 className='text-lg text-gray-800 font-semibold'>
+                                    <h4 className='text-lg font-semibold text-gray-800'>
                                         {item.title}
                                     </h4>
                                     <p className='mt-3'>{item.desc}</p>

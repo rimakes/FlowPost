@@ -32,8 +32,8 @@ export const ToggleableCollapsible = ({
             }}
         >
             <CollapsibleTrigger asChild>
-                <div className='flex justify-between items-center'>
-                    <div className='flex gap-2 items-center'>
+                <div className='flex items-center justify-between'>
+                    <div className='flex items-center gap-2'>
                         <Switch
                             className='scale-75'
                             checked={enabled}

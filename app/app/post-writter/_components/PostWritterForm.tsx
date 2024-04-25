@@ -248,7 +248,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                         Elige Plantilla
                                                     </Button>
                                                 </DialogTrigger>
-                                                <DialogContent className='max-w-full md:max-w-4xl border-0 border-green-500'>
+                                                <DialogContent className='max-w-full border-0 border-green-500 md:max-w-4xl'>
                                                     <SelectPostTemplate
                                                         setSelected={
                                                             onSelectPostTemplate

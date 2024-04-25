@@ -39,13 +39,13 @@ export function Message({ children, className, variant }: FormErrorProps) {
     const icon = (() => {
         switch (variant) {
             case 'error':
-                return <AlertTriangle className='w-5 h-5 shrink-0' />;
+                return <AlertTriangle className='h-5 w-5 shrink-0' />;
             case 'success':
-                return <CheckCircle className='w-5 h-5  shrink-0' />;
+                return <CheckCircle className='h-5 w-5  shrink-0' />;
             case 'info':
-                return <Info className='w-5 h-5  shrink-0' />;
+                return <Info className='h-5 w-5  shrink-0' />;
             default:
-                return <AlertTriangle className='w-5 h-5 shrink-0' />;
+                return <AlertTriangle className='h-5 w-5 shrink-0' />;
         }
     })();
 
@@ -58,7 +58,7 @@ export function Message({ children, className, variant }: FormErrorProps) {
             ref={divRef}
         >
             <X
-                className='absolute top-1 right-1 w-3 h-3 cursor-pointer'
+                className='absolute right-1 top-1 h-3 w-3 cursor-pointer'
                 onClick={async () => {
                     divRef.current?.classList.add(
                         'opacity-0',

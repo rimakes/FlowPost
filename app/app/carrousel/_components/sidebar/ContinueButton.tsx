@@ -133,7 +133,7 @@ export function ContinueButton({}) {
             </Button>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className=' md:max-w-5xl'>
-                    <DialogHeader className='text justify-center items-center'>
+                    <DialogHeader className='text items-center justify-center'>
                         <h2 className='text-2xl font-bold'>
                             ✨ ¡Carrusel creado!
                         </h2>

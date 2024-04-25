@@ -20,11 +20,11 @@ export function AssistedClient({ carousel }: AssistedClientProps) {
     const { data } = useSession();
 
     return (
-        <div className='flex flex-col mt-6 2xl:flex-row gap-8'>
+        <div className='mt-6 flex flex-col gap-8 2xl:flex-row'>
             <PostWritterResultTipTap className='flex-1' />
             <LinkedinPost
                 carousel={carousel}
-                className='grow-0 max-w-[430px] mx-auto'
+                className='mx-auto max-w-[430px] grow-0'
             />
         </div>
     );

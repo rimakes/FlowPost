@@ -37,29 +37,29 @@ export const Sidebar = ({}: SidebarProps) => {
 
     return (
         <div
-            className={`sidebar border border-border
-    lg:border-t-0
-       flex gap-2 lg:flex-col lg:p-2 
-sticky bottom-0 lg:z-2 bg-background border-r
-border-t
-isolate z-10
-transition-[width] duration-300
+            className={`sidebar lg:z-2 sticky
+    bottom-0
+       isolate z-10 flex gap-2 
+border border-r border-t border-border bg-background
+transition-[width]
+duration-300 lg:flex-col
+lg:border-t-0 lg:p-2
  ${collapsed ? 'lg:w-16' : 'lg:w-72'}`}
         >
             <Button
-                className='absolute top-0 right-0 translate-x-full rounded-tl-none rounded-bl-none -z-10 border'
+                className='absolute right-0 top-0 -z-10 translate-x-full rounded-bl-none rounded-tl-none border'
                 size={'icon'}
                 variant={'secondary'}
                 onClick={() => setCollapsed(!collapsed)}
             >
                 {collapsed ? (
-                    <SidebarOpen className='w-5 h-5' />
+                    <SidebarOpen className='h-5 w-5' />
                 ) : (
-                    <SidebarClose className='w-5 h-5' />
+                    <SidebarClose className='h-5 w-5' />
                 )}
             </Button>
             <Button
-                className='rounded-full gap-2 hidden lg:flex bg-indigo-50 border border-indigo-200 text-indigo-700'
+                className='hidden gap-2 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 lg:flex'
                 onClick={() => {
                     router.push('/app/post-writter/new');
                     setCollapsed(true);
@@ -69,12 +69,12 @@ transition-[width] duration-300
                 {!collapsed && `Escribe tu post`}
             </Button>
             <div
-                className={`${collapsed ? '' : '-right-2'} mb-auto flex lg:block border-0 border-pink-600
-                lg:ml-0 lg:mr-0
-                overflow-x-auto
+                className={`${collapsed ? '' : '-right-2'} relative mb-auto flex w-full overflow-x-auto
+                border-0 border-pink-600
+                lg:ml-0
+                lg:mr-0
+                lg:block
                 lg:overflow-x-hidden
-                w-full
-                relative
                 `}
             >
                 {MAIN_MENU_ITEMS.map((item) => (
@@ -135,31 +135,31 @@ export const MenuItem = ({
             onClick={collapse}
             href={href}
             className={cn(
-                `flex flex-1 p-3  flex-col  lg:flex-row gap-2 items-center h-fit
-            rounded-none
+                `flex h-fit flex-1  flex-col  items-center gap-2 rounded-none border-t-4
+            border-transparent
+            p-3
             lg:w-full
+            lg:flex-row
             lg:border-r-4
             lg:border-t-0
-            border-t-4
-            border-transparent
             lg:hover:bg-muted
 `,
                 className,
                 pathname === href
-                    ? 'lg:border-r-4 border-slate-300 bg-primary/5'
+                    ? 'border-slate-300 bg-primary/5 lg:border-r-4'
                     : '',
                 regex && regex.test(pathname)
-                    ? 'lg:border-r-4 border-slate-300 bg-primary/5'
+                    ? 'border-slate-300 bg-primary/5 lg:border-r-4'
                     : '',
 
                 collapsed ? 'justify-center lg:border-r-0' : '',
                 status === 'próximamente' ? 'cursor-not-allowed' : ''
             )}
         >
-            <Icon className={`w-5 h-5 shrink-0 ${classNameNotActive}`} />
+            <Icon className={`h-5 w-5 shrink-0 ${classNameNotActive}`} />
             {!collapsed ? (
                 <span
-                    className={`${classNameNotActive} hidden lg:inline truncate`}
+                    className={`${classNameNotActive} hidden truncate lg:inline`}
                 >
                     {label}
                 </span>
@@ -174,7 +174,7 @@ export const MenuItem = ({
                               ? 'new'
                               : 'default'
                     }`}
-                    className=' lg:static lg:opacity-100 opacity-60 absolute bottom-8
+                    className=' absolute bottom-8 opacity-60 lg:static lg:opacity-100
 
                 '
                 >
@@ -216,7 +216,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
 
     return (
         <div
-            className={`bg-white rounded-md space-y-2 border border-primary/10 ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'text-xs p-2 font-semibold'}`}
+            className={`space-y-2 rounded-md border border-primary/10 bg-white ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'p-2 text-xs font-semibold'}`}
         >
             <div className='flex justify-between'>
                 {!collapsed && <p>Créditos disponibles</p>}
@@ -234,7 +234,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                 <>
                     <Progress
                         value={(creditBalance / maxCredits) * 100}
-                        className='h-2 border border-slate-100 rounded-full'
+                        className='h-2 rounded-full border border-slate-100'
                         color='#FF0000'
                     />
                     {!isPro && (

@@ -72,7 +72,7 @@ export const IASettings = ({
                 title='Configura tu IA'
                 subtitle='Creará contenido para ti basado en tus preferencias'
             />
-            <div className='max-w-md mt-4'>
+            <div className='mt-4 max-w-md'>
                 <Message className='mb-4'>
                     <p>
                         Configurar tu IA puede dar lugar a resultados
@@ -86,7 +86,7 @@ export const IASettings = ({
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit, onError)}
-                        className='flex flex-col gap-4 items-stretch'
+                        className='flex flex-col items-stretch gap-4'
                     >
                         <FormField
                             control={form.control}

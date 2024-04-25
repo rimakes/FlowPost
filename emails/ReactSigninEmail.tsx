@@ -40,22 +40,22 @@ export const ReactSigninEmail = ({
             <Head />
             <Preview>{previewText}</Preview>
             <Tailwind>
-                <Body className='bg-white my-auto mx-auto font-sans px-2'>
-                    <Container className='border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]'>
+                <Body className='mx-auto my-auto bg-white px-2 font-sans'>
+                    <Container className='mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]'>
                         <Section className='mt-[32px]'>
                             <Img
                                 src={`https://flowpost.io/images/logo.png`}
                                 alt='Vercel'
-                                className='my-0 mx-auto w-32'
+                                className='mx-auto my-0 w-32'
                             />
                         </Section>
-                        <Heading className='text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0'>
+                        <Heading className='mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black'>
                             Crea carrusels y post de Linkedin en segundos
                         </Heading>
-                        <Text className='text-black text-[14px] leading-[24px]'>
+                        <Text className='text-[14px] leading-[24px] text-black'>
                             Hola! 👋
                         </Text>
-                        <h1 className='text-xl text-center text-indigo-500'>{`ENTRA EN ${appConfig.general.appName.toUpperCase()}`}</h1>
+                        <h1 className='text-center text-xl text-indigo-500'>{`ENTRA EN ${appConfig.general.appName.toUpperCase()}`}</h1>
                         <Section>
                             {/* <Row>
                                 <Column align='right'>
@@ -88,15 +88,15 @@ export const ReactSigninEmail = ({
                                 </Column>
                             </Row> */}
                         </Section>
-                        <Section className='text-center mt-[32px] mb-[32px]'>
+                        <Section className='mb-[32px] mt-[32px] text-center'>
                             <Button
-                                className='bg-indigo-500 rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3'
+                                className='rounded bg-indigo-500 px-5 py-3 text-center text-[12px] font-semibold text-white no-underline'
                                 href={url}
                             >
                                 Entrar
                             </Button>
                         </Section>
-                        <Text className='text-black text-[14px] leading-[24px]'>
+                        <Text className='text-[14px] leading-[24px] text-black'>
                             o copia y pega esta dirección en tu navegador:{' '}
                             <Link
                                 href={url}

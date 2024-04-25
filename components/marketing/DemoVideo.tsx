@@ -28,13 +28,13 @@ export function DemoVideo({
     return (
         <section
             id='video'
-            className='m-auto flex w-[960px] max-w-full flex-col gap-4 relative'
+            className='relative m-auto flex w-[960px] max-w-full flex-col gap-4'
         >
-            <div className='anchor -top-32 absolute' id='demo' />
+            <div className='anchor absolute -top-32' id='demo' />
 
             {title}
             {subtitle}
-            <div className='cursor-pointer aspect-[1280/720] overflow-auto rounded-lg'>
+            <div className='aspect-[1280/720] cursor-pointer overflow-auto rounded-lg'>
                 {!hasMounted ? null : (
                     <ReactPlayer
                         url={videoUrl}

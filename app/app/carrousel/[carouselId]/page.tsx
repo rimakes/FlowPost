@@ -82,7 +82,7 @@ export default async function CarouselPage({ params }: props) {
 
             <CarouselProvider initialCarousel={carousel}>
                 <div
-                    className={`flex md:flex-row flex-col border-t flex-wrap w-full border-0 border-re-500 grow`}
+                    className={`border-re-500 flex w-full grow flex-col flex-wrap border-0 border-t md:flex-row`}
                 >
                     <CarouselSidebar brands={userBrands} />
                     <CarouselWorkbench />

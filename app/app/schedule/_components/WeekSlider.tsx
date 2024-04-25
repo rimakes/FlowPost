@@ -24,13 +24,13 @@ export function WeekSlider({}: WeekSliderProps) {
     const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     return (
-        <section className='flex justify-between items-center p-8'>
+        <section className='flex items-center justify-between p-8'>
             <ChevronLeft
                 onClick={onPrevWeek}
-                className='hover:bg-gray-200 rounded-full p-1.5'
+                className='rounded-full p-1.5 hover:bg-gray-200'
                 size={40}
             />
-            <div className='flex justify-between items-center flex-col text-lg'>
+            <div className='flex flex-col items-center justify-between text-lg'>
                 <p>
                     {`${formattedStartDate} - ${formattedEndDate}, ${currentYear}`}
                 </p>
@@ -38,7 +38,7 @@ export function WeekSlider({}: WeekSliderProps) {
             </div>
             <ChevronRight
                 onClick={onNextWeek}
-                className='hover:bg-gray-200 rounded-full p-1.5'
+                className='rounded-full p-1.5 hover:bg-gray-200'
                 size={40}
             />
         </section>

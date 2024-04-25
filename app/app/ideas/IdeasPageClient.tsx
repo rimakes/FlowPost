@@ -45,7 +45,7 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
     const onError = (errors: any) => {};
 
     return (
-        <div className='flex flex-col sm:flex-row gap-2'>
+        <div className='flex flex-col gap-2 sm:flex-row'>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit, onError)}
@@ -95,15 +95,15 @@ export function IdeasPageClient({}: IdeasPageClientProps) {
                     Aquí tienes ideas para tu próximo post de Linkedin
                 </p>
                 {status === 'loading' && (
-                    <div className='border w-full rounded-md p-4 space-y-4'>
-                        <Skeleton className='w-1/4 h-4 bg-muted' />
-                        <Skeleton className='w-3/5 h-4' />
-                        <Skeleton className='w-1/2 h-4' />
-                        <Skeleton className='w-full h-4' />
+                    <div className='w-full space-y-4 rounded-md border p-4'>
+                        <Skeleton className='h-4 w-1/4 bg-muted' />
+                        <Skeleton className='h-4 w-3/5' />
+                        <Skeleton className='h-4 w-1/2' />
+                        <Skeleton className='h-4 w-full' />
                     </div>
                 )}
                 {status === 'success' && (
-                    <div className='grid grid-cols-1 xl:grid-cols-2 gap-4'>
+                    <div className='grid grid-cols-1 gap-4 xl:grid-cols-2'>
                         {ideas.map((idea, index) => (
                             <PostIdeaCard
                                 key={index}

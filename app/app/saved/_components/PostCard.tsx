@@ -17,11 +17,11 @@ export function PostCard({ post }: PostCardProps) {
     return (
         <div
             key={post.id}
-            className='border border-border rounded-md flex flex-col [--outter-padding:1rem] p-[var(--outter-padding)] isolate'
+            className='isolate flex flex-col rounded-md border border-border p-[var(--outter-padding)] [--outter-padding:1rem]'
         >
-            <p className='line-clamp-4 mb-2 grow'>{post.content}</p>
+            <p className='mb-2 line-clamp-4 grow'>{post.content}</p>
             <Separator className='-ml-[var(--outter-padding)] -mr-[var(--outter-padding)] w-[calc(100%+calc(var(--outter-padding)*2))]' />
-            <div className='flex gap-2 pt-[var(--outter-padding)] relative'>
+            <div className='relative flex gap-2 pt-[var(--outter-padding)]'>
                 <ButtonWithTooltip
                     icon={<Trash2 />}
                     className='flex-1 rounded-full bg-muted text-primary/50 hover:bg-primary/10'

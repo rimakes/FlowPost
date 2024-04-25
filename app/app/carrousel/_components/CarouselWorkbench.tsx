@@ -46,18 +46,18 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
         useContext(CarouselContext);
 
     return (
-        <div className='not-sidebar basis-0 grow-[999] min-w-[60%]  p-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] flex flex-col gap-2 relative focus-visible:!border-transparent '>
-            <div className='flex justify-center gap-4 w-full items-center text-sm mt-2'>
+        <div className='not-sidebar relative flex min-w-[60%]  grow-[999] basis-0 flex-col gap-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] p-2 focus-visible:!border-transparent '>
+            <div className='mt-2 flex w-full items-center justify-center gap-4 text-sm'>
                 <ArrowLeft
                     size={20}
                     onClick={previousSlide}
-                    className='bg-muted p-1 rounded-full hover:cursor-pointer'
+                    className='rounded-full bg-muted p-1 hover:cursor-pointer'
                 />
                 Slide {currentSlide + 1} / {carousel.slides.length}
                 <ArrowRight
                     onClick={nextSlide}
                     size={20}
-                    className='bg-muted p-1 rounded-full hover:cursor-pointer'
+                    className='rounded-full bg-muted p-1 hover:cursor-pointer'
                 />
             </div>
             <div className='carousel flex overflow-hidden md:pl-8 lg:pl-56 2xl:pl-96'>
@@ -133,7 +133,7 @@ export const SlideWithSettings = ({
     return (
         <div
             className={cn(
-                `WithSettings shrink-0 isolate`,
+                `WithSettings isolate shrink-0`,
                 className || '',
                 isActive ? 'z-10' : 'z-0'
             )}

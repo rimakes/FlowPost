@@ -18,8 +18,8 @@ export default function FullScreenToolBar({
     return (
         <div
             className={cn(
-                `relative flex -translate-y-[4rem] flex-col items-center
-            transition-transform group hover:translate-y-0 duration-300`,
+                `group relative flex -translate-y-[4rem] flex-col
+            items-center transition-transform duration-300 hover:translate-y-0`,
                 className
             )}
         >
@@ -28,8 +28,8 @@ export default function FullScreenToolBar({
                 <Button onClick={openFullScreen}>Full</Button>
                 <Button onClick={closeFullscreen}>No Full</Button>
             </div>
-            <div className='rounded-bl-lg rounded-br-lg  bg-muted px-5 py-2 items-center m-auto'>
-                <SettingsIcon className='m-auto group-hover:rotate-45 transition-transform duration-500' />
+            <div className='m-auto items-center  rounded-bl-lg rounded-br-lg bg-muted px-5 py-2'>
+                <SettingsIcon className='m-auto transition-transform duration-500 group-hover:rotate-45' />
             </div>
         </div>
     );

@@ -23,8 +23,8 @@ export const TemplateSelector = ({}: TemplateSelectorProps) => {
                     Elige plantilla
                 </Button>
             </DialogTrigger>
-            <DialogContent className='md:max-w-[80vw] max-w-[calc(100%-1rem)]'>
-                <div className='template-rows flex flex-col items-start gap-2 scale-[30%] origin-left'>
+            <DialogContent className='max-w-[calc(100%-1rem)] md:max-w-[80vw]'>
+                <div className='template-rows flex origin-left scale-[30%] flex-col items-start gap-2'>
                     {/* TODO: This will eventually be images instead */}
                     {range(1, 5).map((index) => {
                         return (

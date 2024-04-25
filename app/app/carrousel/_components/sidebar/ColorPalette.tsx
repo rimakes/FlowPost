@@ -22,10 +22,10 @@ export const ColorPalette = ({
     return (
         <div
             className={cn(
-                `h-4 border rounded-l-md overflow-hidden rounded-r-md w-full flex`,
+                `flex h-4 w-full overflow-hidden rounded-l-md rounded-r-md border`,
                 orientation === 'vertical'
-                    ? 'flex-col h-16 min-w-[1rem]'
-                    : 'flex-row min-w-[4rem] min-h-[1rem]',
+                    ? 'h-16 min-w-[1rem] flex-col'
+                    : 'min-h-[1rem] min-w-[4rem] flex-row',
                 className
             )}
             onClick={() => onClick(colors)}

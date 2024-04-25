@@ -18,7 +18,7 @@ export const ImageWithLoading = ({
 }: ImageWithLoading) => {
     if (status === 'loading') {
         return (
-            <div className='text-primary/50 p-2 flex flex-col gap-4 justify-center items-center h-40 rounded-md border border-dashed'>
+            <div className='flex h-40 flex-col items-center justify-center gap-4 rounded-md border border-dashed p-2 text-primary/50'>
                 <Spinner />
                 <p>Creando imagen...</p>
             </div>
@@ -26,7 +26,7 @@ export const ImageWithLoading = ({
     }
     if (status === 'idle') {
         return (
-            <div className='text-primary/50 p-2 flex flex-col gap-4 justify-center items-center h-40 rounded-md border border-dashed'>
+            <div className='flex h-40 flex-col items-center justify-center gap-4 rounded-md border border-dashed p-2 text-primary/50'>
                 <ImageIcon />
                 <p>Genera imágenes con IA</p>
             </div>
@@ -35,12 +35,12 @@ export const ImageWithLoading = ({
 
     return (
         <div
-            className='relative h-40 aspect-square rounded-md overflow-hidden shrink-0'
+            className='relative aspect-square h-40 shrink-0 overflow-hidden rounded-md'
             onClick={() => onImageSelect(imageUrl)}
         >
             <Image
                 src={imageUrl}
-                className='object-cover cursor-pointer'
+                className='cursor-pointer object-cover'
                 alt=''
                 fill
                 // loader={({ src }) => src}

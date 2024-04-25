@@ -16,7 +16,7 @@ export function SlideHeader({ slideNumber, className }: SlideHeaderProps) {
     return (
         <div
             className={cn(
-                `slide-header flex justify-between absolute top-4 left-0 w-full px-8`,
+                `slide-header absolute left-0 top-4 flex w-full justify-between px-8`,
                 className
             )}
         >

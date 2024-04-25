@@ -12,10 +12,10 @@ import { Button } from '../ui/button';
 type VideoStepsProps = {};
 export function VideoSteps({}: VideoStepsProps) {
     return (
-        <section className='flex flex-col gap-8 relative max-w-full '>
-            <div className='anchor -top-32 absolute' id='how-it-works' />
+        <section className='relative flex max-w-full flex-col gap-8 '>
+            <div className='anchor absolute -top-32' id='how-it-works' />
             <h2
-                className={`text-6xl font-extrabold  relative ${secondaryFont.className} text-center`}
+                className={`relative text-6xl  font-extrabold ${secondaryFont.className} text-center`}
             >
                 ¿Cómo funciona?
             </h2>
@@ -79,7 +79,7 @@ export function VideoSteps({}: VideoStepsProps) {
             >
                 Y además...
             </h3>
-            <div className='flex flex-col gap-4 mx-auto'>
+            <div className='mx-auto flex flex-col gap-4'>
                 <ModalItem
                     icon={Languages}
                     title='Traduce tu contenido'
@@ -102,9 +102,9 @@ export function VideoSteps({}: VideoStepsProps) {
                 />
             </div>
             <GetAccessButton
-                className='mb-1 mx-auto shadow-none text-primary
-                            bg-gradient-to-tr  from-pink-400 to-indigo-500 text-pink-50 text-lg 
-                            w-full
+                className='mx-auto mb-1 w-full bg-gradient-to-tr
+                            from-pink-400  to-indigo-500 text-lg text-pink-50 text-primary 
+                            shadow-none
                             '
             />
         </section>

@@ -17,13 +17,13 @@ export default function Navbar({ className }: { className?: string }) {
     return (
         <header
             className={cn(
-                `px-4 sm:px-6 lg:px-8 sticky top-0 border-b border-border z-30 py-4 bg-background`,
+                `sticky top-0 z-30 border-b border-border bg-background px-4 py-4 sm:px-6 lg:px-8`,
                 className
             )}
         >
-            <div className='flex items-center justify-between h-full -mb-px'>
+            <div className='-mb-px flex h-full items-center justify-between'>
                 {/* Left side */}
-                <div className='flex gap-2 items-center'>
+                <div className='flex items-center gap-2'>
                     <Logo linkUrl='/app' />
                     <HeadwayScript />
                 </div>
@@ -43,7 +43,7 @@ export default function Navbar({ className }: { className?: string }) {
 
                     <Separator
                         orientation='vertical'
-                        className='separator self-stretch h-auto'
+                        className='separator h-auto self-stretch'
                     />
 
                     <SelectAccountMenu />

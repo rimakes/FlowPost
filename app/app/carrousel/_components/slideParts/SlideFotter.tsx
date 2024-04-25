@@ -27,7 +27,7 @@ export function SlideFotter({
     return (
         <div
             className={cn(
-                `flex justify-between items-center text-xs`,
+                `flex items-center justify-between text-xs`,
                 className
             )}
             style={{

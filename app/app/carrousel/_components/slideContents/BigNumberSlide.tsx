@@ -29,7 +29,7 @@ export const BigNumberSlide = ({
     return (
         <>
             <div
-                className='absolute w-full h-full top-0 left-0 z-10'
+                className='absolute left-0 top-0 z-10 h-full w-full'
                 style={{
                     fontSize: '40em',
                     color: brand.colorPalette.accent,
@@ -38,7 +38,7 @@ export const BigNumberSlide = ({
             >
                 <div
                     id='number'
-                    className='absolute top-0 right-0 -z-20'
+                    className='absolute right-0 top-0 -z-20'
                     style={{
                         fontWeight: 700,
                         lineHeight: 1,

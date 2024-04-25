@@ -34,9 +34,9 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
 
     return (
         <>
-            <div className='rounded-lg p-2 flex justify-between border items-center rounded-l-full gap-4'>
+            <div className='flex items-center justify-between gap-4 rounded-lg rounded-l-full border p-2'>
                 <div className='flex items-center gap-4'>
-                    <div className='relative h-20 w-20 rounded-full overflow-hidden'>
+                    <div className='relative h-20 w-20 overflow-hidden rounded-full'>
                         <Image
                             alt='brand profile pic'
                             src={brand.imageUrl}

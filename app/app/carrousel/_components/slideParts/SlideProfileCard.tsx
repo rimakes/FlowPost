@@ -41,7 +41,7 @@ export function SlideProfileCard({
 
     return (
         <div
-            className='flex gap-4 z-10'
+            className='z-10 flex gap-4'
             style={
                 orientation === 'vertical' ? verticalStyles : horizontalStyles
             }

@@ -18,11 +18,11 @@ export default function SignIn() {
             <div className='relative md:flex'>
                 {/* Content */}
                 <div className='md:w-1/2'>
-                    <div className='min-h-[100dvh] h-full flex flex-col after:flex-1'>
+                    <div className='flex h-full min-h-[100dvh] flex-col after:flex-1'>
                         <AuthHeader />
 
-                        <div className='max-w-sm mx-auto w-full px-4 py-8 space-y-4'>
-                            <h1 className='text-2xl text-slate-800 dark:text-slate-100 font-bold mb-6'>
+                        <div className='mx-auto w-full max-w-sm space-y-4 px-4 py-8'>
+                            <h1 className='mb-6 text-2xl font-bold text-slate-800 dark:text-slate-100'>
                                 Bienvenid@ de vuelta ✨
                             </h1>
                             {/* Form */}

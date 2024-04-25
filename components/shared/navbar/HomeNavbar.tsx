@@ -24,14 +24,14 @@ export function HomeNavbar({ className }: { className?: string }) {
     return (
         <header
             className={cn(
-                `px-4 sm:px-6 lg:px-8 sticky top-0 bg-white border-b border-border z-30 py-4 shadow-indigo-50/50 shadow-xl`,
+                `sticky top-0 z-30 border-b border-border bg-white px-4 py-4 shadow-xl shadow-indigo-50/50 sm:px-6 lg:px-8`,
                 className
             )}
         >
-            <div className='flex items-center justify-between h-full -mb-px'>
+            <div className='-mb-px flex h-full items-center justify-between'>
                 {/* Left side */}
                 <Logo />
-                <div className='lg:flex gap-2 items-center hidden '>
+                <div className='hidden items-center gap-2 lg:flex '>
                     {MENU_ITEMS.map((item) => {
                         return (
                             <Link
@@ -46,7 +46,7 @@ export function HomeNavbar({ className }: { className?: string }) {
                 </div>
 
                 {/* Right side */}
-                <div className='lg:flex hidden items-center space-x-3'>
+                <div className='hidden items-center space-x-3 lg:flex'>
                     <LoginButton mode='modal'>
                         <Button variant={'outline'} className='bg-white'>
                             {data?.user?.id ? 'Ir a App' : 'Login'}
@@ -57,7 +57,7 @@ export function HomeNavbar({ className }: { className?: string }) {
 
                     <Separator
                         orientation='vertical'
-                        className='separator self-stretch h-auto'
+                        className='separator h-auto self-stretch'
                     />
                     <GetAccessButton
                         className=' shadow-none'

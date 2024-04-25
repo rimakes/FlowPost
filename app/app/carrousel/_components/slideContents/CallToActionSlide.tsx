@@ -48,19 +48,19 @@ export const CallToActionSlide = ({
 
             <div
                 className={cn(
-                    `flex flex-col gap-4 h-full items-center text-center justify-center z-10`,
+                    `z-10 flex h-full flex-col items-center justify-center gap-4 text-center`,
                     className
                 )}
             >
                 <div
-                    className='absolute rotate-45 -top-[30%] w-[140%] h-[60%] rounded-full bg-primary -z-10 blur-xl'
+                    className='absolute -top-[30%] -z-10 h-[60%] w-[140%] rotate-45 rounded-full bg-primary blur-xl'
                     style={{
                         backgroundColor: brand.colorPalette.primary,
                         opacity: 0.4,
                     }}
                 />
                 <div
-                    className='absolute -top-10 -left-10 w-[12rem] h-[17rem] rounded-full bg-primary -z-10 blur-3xl'
+                    className='absolute -left-10 -top-10 -z-10 h-[17rem] w-[12rem] rounded-full bg-primary blur-3xl'
                     style={{
                         backgroundColor: brand.colorPalette.accent,
                         opacity: 0.3,

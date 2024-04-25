@@ -29,7 +29,7 @@ export const NotificationMenu = ({}: NotificationMenuProps) => {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <PopoverTrigger asChild className='cursor-pointer'>
-                            <div className='flex items-center justify-center h-2 w-2 rounded-full bg-primary animate-pulse' />
+                            <div className='flex h-2 w-2 animate-pulse items-center justify-center rounded-full bg-primary' />
                         </PopoverTrigger>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -67,11 +67,11 @@ export const NotificationCard = ({
     return (
         <>
             <div
-                className='flex items-center gap-2 cursor-pointer
-            hover:bg-primary/5
-            group
+                className='group flex cursor-pointer items-center
+            gap-2
             p-2
             py-4
+            hover:bg-primary/5
             '
             >
                 <div className='text-xs'>
@@ -80,11 +80,11 @@ export const NotificationCard = ({
                     </Badge>
                     <Link
                         href={notification.href}
-                        className='font-semibold group-hover:underline inline-block mr-4'
+                        className='mr-4 inline-block font-semibold group-hover:underline'
                     >
                         {title}
                     </Link>
-                    <p className='text-primary/40 inline'>{description}</p>
+                    <p className='inline text-primary/40'>{description}</p>
                 </div>
             </div>
         </>

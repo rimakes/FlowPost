@@ -30,9 +30,9 @@ export const ImageSearchOnline = ({
     };
 
     return (
-        <form className='overflow-x-auto flex flex-col gap-2' action={onSearch}>
+        <form className='flex flex-col gap-2 overflow-x-auto' action={onSearch}>
             {/* <Label htmlFor='paragraph'>Imagen</Label> */}
-            <div className='flex gap-2 items-center p-1'>
+            <div className='flex items-center gap-2 p-1'>
                 <Input
                     className='inline-block'
                     value={query}
@@ -45,15 +45,15 @@ export const ImageSearchOnline = ({
                     {status === 'loading' ? 'Buscando...' : 'Buscar'}
                 </Button>
             </div>
-            <div className='flex gap-2 items-center overflow-x-auto max-w-[22rem]'>
+            <div className='flex max-w-[22rem] items-center gap-2 overflow-x-auto'>
                 {imageUrls.map((url) => (
                     <div
                         key={url}
-                        className='relative h-24 aspect-square rounded-md overflow-hidden shrink-0'
+                        className='relative aspect-square h-24 shrink-0 overflow-hidden rounded-md'
                     >
                         <Image
                             src={url}
-                            className='object-cover cursor-pointer'
+                            className='cursor-pointer object-cover'
                             alt=''
                             fill
                             onClick={() => {

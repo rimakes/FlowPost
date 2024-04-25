@@ -25,10 +25,10 @@ export const PostIdeaCard = ({
     const { data } = useSession();
 
     return (
-        <div className='border rounded-lg p-4 shadow-sm flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 rounded-lg border p-4 shadow-sm'>
             <ThumbsFeedback className='-mt-2' component='IDEA-GENERATOR' />
             <p>{ideaDescription}</p>
-            <div className='flex gap-4 mt-auto'>
+            <div className='mt-auto flex gap-4'>
                 <ButtonWithTooltip
                     icon={<Feather />}
                     className='flex-1 rounded-full bg-muted text-primary/50

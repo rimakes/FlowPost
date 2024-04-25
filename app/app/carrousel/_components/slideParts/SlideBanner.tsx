@@ -7,12 +7,12 @@ export function SlideBanner({ content }: SlideBannerProps) {
     return (
         <div
             className='
-                        bg-primary text-primary-foreground
-                        w-full
-                        absolute
-                        left-0
+                        absolute left-0
                         top-0
+                        w-full
+                        bg-primary
                         text-center
+                        text-primary-foreground
     '
         >
             {content}

@@ -49,9 +49,9 @@ export function RecordButton({ onRecord, text }: PrefersToRecordProps) {
         <div>
             <Button
                 className={cn(
-                    `absolute top-1 right-1 flex justify-center items-center`,
+                    `absolute right-1 top-1 flex items-center justify-center`,
                     isMicroAllowed
-                        ? 'bg-green-500 hover:bg-green-500 bg-opacity-20'
+                        ? 'bg-green-500 bg-opacity-20 hover:bg-green-500'
                         : '',
                     isRecording ? 'bg-red-500 hover:bg-red-500' : ''
                 )}

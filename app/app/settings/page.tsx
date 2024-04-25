@@ -36,10 +36,10 @@ export default async function IdeasPage({ params, searchParams }: TPageProps) {
                 subtitle='Configura tu espacio de trabajo'
             />
             <Separator />
-            <div className='mt-6 space-y-4 2xl:flex gap-8'>
+            <div className='mt-6 gap-8 space-y-4 2xl:flex'>
                 <Tabs defaultValue={tab || 'general'} className='w-full'>
-                    <div className='overflow-x-auto mb-8 '>
-                        <TabsList className='flex justify-between w-full max-w-md'>
+                    <div className='mb-8 overflow-x-auto '>
+                        <TabsList className='flex w-full max-w-md justify-between'>
                             <TabsTrigger value='general'>General</TabsTrigger>
                             <TabsTrigger value='plan'>Subscripción</TabsTrigger>
                             {/* <TabsTrigger value='team'>Equipo</TabsTrigger> */}

@@ -69,7 +69,7 @@ export const PostSlot = ({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
-                    className='text-primary/50 p-0 h-4'
+                    className='h-4 p-0 text-primary/50'
                     variant={'ghost'}
                     size={'icon'}
                 >
@@ -132,19 +132,19 @@ export const PostSlot = ({
     return (
         <div
             className={cn(
-                `w-full h-40 bg-primary/5 rounded-md flex flex-col p-2 border border-dashed border-border relative`,
+                `relative flex h-40 w-full flex-col rounded-md border border-dashed border-border bg-primary/5 p-2`,
                 !isAvailable && 'bg-secondary',
                 className
             )}
         >
-            <div className='flex justify-between flex-wrap items-center p-2'>
+            <div className='flex flex-wrap items-center justify-between p-2'>
                 {isPublished && (
                     <div className='absolute -bottom-1 -right-1'>
                         <CheckCircle size={20} className='' />
                     </div>
                 )}
                 <p className='text-[12px]'>{formattedTime}</p>
-                <div className='flex gap-1 justify-center items-center'>
+                <div className='flex items-center justify-center gap-1'>
                     <Avatar className='h-4 w-4'>
                         <AvatarImage src={userProfileImageUrl} alt='avatar' />
                         {/* <AvatarFallback className='text-[10px]'>
@@ -159,8 +159,8 @@ export const PostSlot = ({
                 </div>
             </div>
             {isAvailable ? (
-                <div className='flex justify-center items-center grow '>
-                    <p className='italic text-primary/50 text-sm'>Vacío</p>
+                <div className='flex grow items-center justify-center '>
+                    <p className='text-sm italic text-primary/50'>Vacío</p>
                 </div>
             ) : (
                 <div className=' line-clamp-4'>

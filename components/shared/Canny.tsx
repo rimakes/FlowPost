@@ -19,7 +19,7 @@ export function CannyLink({
                 href={`https://${appConfig.general.appName}.canny.io/peticiones`}
                 target='_blank'
                 data-canny-link
-                className={cn(`p-0 block`, className)}
+                className={cn(`block p-0`, className)}
             >
                 {children}
             </Link>

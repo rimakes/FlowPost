@@ -29,7 +29,7 @@ export const ColorPaletteSelect = ({
     };
     return (
         <div className='flex flex-col gap-4'>
-            <div className='w-full h-full grid grid-cols-3 gap-2'>
+            <div className='grid h-full w-full grid-cols-3 gap-2'>
                 {COLOR_PALETTES.map((palette, index) => (
                     <ColorPalette
                         colors={{

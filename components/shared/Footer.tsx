@@ -7,17 +7,17 @@ import { Route } from 'next';
 const Footer = () => {
     return (
         <>
-            <footer className='relative z-10 bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px] border-t border-border'>
+            <footer className='dark:bg-dark relative z-10 border-t border-border bg-white pb-10 pt-20 lg:pb-20 lg:pt-[120px]'>
                 <div className='container'>
                     <div className='-mx-4 flex flex-wrap'>
                         <div className='w-full px-4 sm:w-2/3 lg:w-3/12'>
                             <div className='mb-10 w-full'>
                                 <Logo />
-                                <p className='mb-7 text-base text-body-color dark:text-dark-6'>
+                                <p className='text-body-color dark:text-dark-6 mb-7 text-base'>
                                     Tu herramienta de creación de contenido para
                                     Linkedin
                                 </p>
-                                <p className='flex items-center text-sm font-medium text-dark dark:text-white'>
+                                <p className='text-dark flex items-center text-sm font-medium dark:text-white'>
                                     <span className='mr-3 text-primary'>
                                         <svg
                                             width='20'
@@ -77,13 +77,13 @@ const Footer = () => {
 
                         <div className='w-full px-4 sm:w-1/2 lg:w-3/12'>
                             <div className='mb-10 w-full'>
-                                <h4 className='mb-9 text-lg font-semibold text-dark dark:text-white'>
+                                <h4 className='text-dark mb-9 text-lg font-semibold dark:text-white'>
                                     Síguenos en
                                 </h4>
                                 <div className='mb-6 flex items-center'>
                                     <Link
                                         href='/'
-                                        className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
+                                        className='border-stroke text-dark dark:border-dark-3 mr-3 flex h-8 w-8 items-center justify-center rounded-full border hover:border-primary hover:bg-primary hover:text-white dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
                                             width='8'
@@ -96,7 +96,7 @@ const Footer = () => {
                                     </Link>
                                     <Link
                                         href='/'
-                                        className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
+                                        className='border-stroke text-dark dark:border-dark-3 mr-3 flex h-8 w-8 items-center justify-center rounded-full border hover:border-primary hover:bg-primary hover:text-white dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
                                             width='16'
@@ -109,7 +109,7 @@ const Footer = () => {
                                     </Link>
                                     <Link
                                         href='/'
-                                        className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
+                                        className='border-stroke text-dark dark:border-dark-3 mr-3 flex h-8 w-8 items-center justify-center rounded-full border hover:border-primary hover:bg-primary hover:text-white dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
                                             width='16'
@@ -122,7 +122,7 @@ const Footer = () => {
                                     </Link>
                                     <Link
                                         href='/'
-                                        className='mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3 dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
+                                        className='border-stroke text-dark dark:border-dark-3 mr-3 flex h-8 w-8 items-center justify-center rounded-full border hover:border-primary hover:bg-primary hover:text-white dark:text-white dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4'
                                     >
                                         <svg
                                             width='14'
@@ -134,7 +134,7 @@ const Footer = () => {
                                         </svg>
                                     </Link>
                                 </div>
-                                <p className='text-base text-body-color dark:text-dark-6'>
+                                <p className='text-body-color dark:text-dark-6 text-base'>
                                     &copy; 2024 {appConfig.general.appName}
                                 </p>
                             </div>
@@ -228,7 +228,7 @@ const LinkGroup = ({ children, header }: LinkGroupProps) => {
         <>
             <div className='w-full px-4 sm:w-1/2 lg:w-2/12'>
                 <div className='mb-10 w-full'>
-                    <h4 className='mb-9 text-lg font-semibold text-dark dark:text-white'>
+                    <h4 className='text-dark mb-9 text-lg font-semibold dark:text-white'>
                         {header}
                     </h4>
                     <ul className='space-y-3'>{children}</ul>
@@ -248,7 +248,7 @@ const NavLink = <T extends string>({ link, label }: NavLinkProps<T>) => {
         <li>
             <Link
                 href={link}
-                className='inline-block text-base leading-loose text-body-color hover:text-primary dark:text-dark-6'
+                className='text-body-color dark:text-dark-6 inline-block text-base leading-loose hover:text-primary'
             >
                 {label}
             </Link>

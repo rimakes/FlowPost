@@ -7,7 +7,7 @@ import { appConfig } from '@/config/shipper.appconfig';
 
 export function SocialLogin({}) {
     return (
-        <div className='flex flex-col items-center space-y-2 w-full'>
+        <div className='flex w-full flex-col items-center space-y-2'>
             <Separator />
             <h4>Entra en {appConfig.general.appName} con </h4>
             {/* <Button

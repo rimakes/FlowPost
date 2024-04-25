@@ -14,13 +14,13 @@ export function ErrorWithReset({
     return (
         <div
             className={cn(
-                `h-full flex flex-col justify-center items-center gap-8`,
+                `flex h-full flex-col items-center justify-center gap-8`,
                 className
             )}
         >
             {children ?? (
                 <div className='text-center'>
-                    <h2 className='text-xl font-semibold text-primary mb-2'>
+                    <h2 className='mb-2 text-xl font-semibold text-primary'>
                         Ups! Algo ha ido mal!
                     </h2>
                     <p>Por favor, vuelva a intentarlo</p>

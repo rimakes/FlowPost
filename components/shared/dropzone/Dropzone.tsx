@@ -45,9 +45,9 @@ export function Dropzone({
     );
 
     const dragInactiveElement = propDragInactiveElement || (
-        <p className='flex !flex-1 flex-col items-center text-center gap-2'>
+        <p className='flex !flex-1 flex-col items-center gap-2 text-center'>
             Arrastra o clicka aquí
-            <span className='text-primary/60 text-sm'>
+            <span className='text-sm text-primary/60'>
                 para seleccionar tu archivo
             </span>
         </p>
@@ -62,7 +62,7 @@ export function Dropzone({
                 // Here you can add event handlers that will be executed BEFORE the ones registered by the library
             })}
             className={cn(
-                `border border-primary/20 border-dashed rounded !py-0`,
+                `rounded border border-dashed border-primary/20 !py-0`,
                 className
             )}
         >

@@ -107,7 +107,7 @@ export default function Scheduler({ userPosts, userSchedule }: userPostsProps) {
                             key={i}
                             date={weekDaysArray[i]}
                             slots={mergedSlotsAndPosts}
-                            className={`flex-1 min-w-0 max-h-none`}
+                            className={`max-h-none min-w-0 flex-1`}
                         />
                     );
                 })}

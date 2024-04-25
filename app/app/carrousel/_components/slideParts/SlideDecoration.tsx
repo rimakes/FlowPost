@@ -34,7 +34,7 @@ const Squares = ({
     alternateColors,
 }: DecorationProps) => {
     return (
-        <div className='absolute h-full w-full top-0 left-0'>
+        <div className='absolute left-0 top-0 h-full w-full'>
             <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='100%'
@@ -142,7 +142,7 @@ const Topo = ({
     even,
 }: DecorationProps) => {
     return (
-        <div className='absolute h-full w-full top-0 left-0'>
+        <div className='absolute left-0 top-0 h-full w-full'>
             <TopoSVG
                 strokeColor={fontColor}
                 opacity={even && fontColor ? '0.1' : '0.1'}
@@ -161,14 +161,14 @@ const Arrows = ({
     cta,
 }: DecorationProps) => {
     const element = (
-        <div className='absolute h-full w-full top-0 left-0 opacity-30'>
+        <div className='absolute left-0 top-0 h-full w-full opacity-30'>
             <ArrowRight
-                className='absolute top-8 -translate-x-1/2 left-0'
+                className='absolute left-0 top-8 -translate-x-1/2'
                 size={140}
                 color={primaryColor}
             />
             <ArrowRight
-                className='absolute bottom-12 -translate-x-3/4 left-0'
+                className='absolute bottom-12 left-0 -translate-x-3/4'
                 size={240}
                 color={primaryColor}
             />
@@ -197,28 +197,28 @@ const Bubbles = ({
     const Element = (
         <>
             <Circle
-                className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
+                className='absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2'
                 size={140}
                 color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
-                className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
+                className='absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2'
                 size={200}
                 color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
-                className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
+                className='absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2'
                 size={260}
                 color={primaryColor}
                 absoluteStrokeWidth={true}
                 strokeWidth={6}
             />
             <Circle
-                className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0'
+                className='absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2'
                 size={320}
                 color={primaryColor}
                 absoluteStrokeWidth={true}
@@ -250,7 +250,7 @@ const Balls = ({
 }: DecorationProps) => {
     const Element = (
         <div
-            className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0  rounded-full w-40 h-40'
+            className='absolute bottom-0 right-0 h-40 w-40  translate-x-1/2 translate-y-1/2 rounded-full'
             style={{
                 backgroundColor: primaryColor,
             }}
@@ -278,7 +278,7 @@ const Trending = ({
 }: DecorationProps) => {
     const Element = (
         <TrendingUp
-            className='absolute bottom-0 translate-x-3/4 translate-y-full right-0'
+            className='absolute bottom-0 right-0 translate-x-3/4 translate-y-full'
             size={360}
             color={accentColor}
             absoluteStrokeWidth={true}
@@ -306,7 +306,7 @@ const Starts = ({
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0 -z-10'
+            className='absolute left-0 top-0 -z-10 h-full w-full'
             style={{
                 // backgroundColor: '#ffffff',
                 backgroundAttachment: 'fixed',
@@ -348,7 +348,7 @@ const VerticalGradient = ({
     // TODO: Needs to go from totally transparent to the color depending on the slide. For that, we need be able to modify the opacity of the color, but righ now is a string
     return (
         <div
-            className='absolute h-full w-full top-0 left-0 -z-10'
+            className='absolute left-0 top-0 -z-10 h-full w-full'
             style={{
                 background: `linear-gradient(180deg, ${backgroundColor} 0%, ${accentColor}) 100%`,
             }}
@@ -370,7 +370,7 @@ const HorizontalGradient = ({
         : `linear-gradient(90deg, ${primaryColor} 0%, ${backgroundColor}) 100%`;
     return (
         <div
-            className='absolute h-full w-full top-0 left-0 -z-10'
+            className='absolute left-0 top-0 -z-10 h-full w-full'
             style={{
                 background: gradient,
             }}
@@ -382,7 +382,7 @@ const Paper = ({ primaryColor, accentColor, className }: DecorationProps) => {
     return (
         <div
             className={cn(
-                `absolute h-full w-full top-0 left-0 -z-10`,
+                `absolute left-0 top-0 -z-10 h-full w-full`,
                 className
             )}
         >
@@ -558,7 +558,7 @@ const Organic = ({
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute left-0 top-0 h-full w-full'
             style={{
                 backgroundColor: '#ffffff',
                 backgroundAttachment: '',
@@ -578,7 +578,7 @@ const Prism = ({
     return (
         <div
             className={cn(
-                `absolute h-full w-full top-0 left-0 z-10`,
+                `absolute left-0 top-0 z-10 h-full w-full`,
                 className
             )}
             style={{
@@ -935,7 +935,7 @@ const Sky = ({
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute left-0 top-0 h-full w-full'
             style={{
                 backgroundColor: '#ffaa00',
                 backgroundSize: 'cover',
@@ -954,7 +954,7 @@ const Grid = ({
 }: DecorationProps) => {
     return (
         <div
-            className='absolute h-full w-full top-0 left-0'
+            className='absolute left-0 top-0 h-full w-full'
             style={{
                 backgroundSize: 'cover',
                 backgroundPosition: 'center center',
@@ -975,7 +975,7 @@ const Blobs = ({
 }: DecorationProps) => {
     const element = (
         <div
-            className='absolute bottom-0 translate-x-1/2 translate-y-1/2 right-0 rounded-full w-40 h-40'
+            className='absolute bottom-0 right-0 h-40 w-40 translate-x-1/2 translate-y-1/2 rounded-full'
             style={{
                 width: '200px',
                 height: '200px',
@@ -1087,12 +1087,12 @@ export const DecorationConnectingPattern = ({
     return (
         <div
             className={cn(
-                ` absolute h-full w-full top-0 left-0 opacity-25`,
+                ` absolute left-0 top-0 h-full w-full opacity-25`,
                 className
             )}
         >
             <div
-                className='absolute bg-green-500 border-0 border-green-500'
+                className='absolute border-0 border-green-500 bg-green-500'
                 style={{
                     bottom: `${yAxis}px`,
                     right: `${xAxis}px`,

@@ -36,9 +36,9 @@ export default async function ResetPassword({
         <main className='bg-white dark:bg-slate-900'>
             <div className='relative md:flex'>
                 <div className='md:w-1/2'>
-                    <div className='min-h-[100dvh] h-full flex flex-col after:flex-1'>
+                    <div className='flex h-full min-h-[100dvh] flex-col after:flex-1'>
                         <AuthHeader />
-                        <div className='max-w-md mx-auto w-full px-4 py-8'>
+                        <div className='mx-auto w-full max-w-md px-4 py-8'>
                             <EmailSendMessage
                                 email={session!.customer_details?.email!}
                             />

@@ -14,11 +14,11 @@ export default function ResetPassword() {
             <div className='relative md:flex'>
                 {/* Content */}
                 <div className='md:w-1/2'>
-                    <div className='min-h-[100dvh] h-full flex flex-col after:flex-1'>
+                    <div className='flex h-full min-h-[100dvh] flex-col after:flex-1'>
                         <AuthHeader />
 
-                        <div className='max-w-sm mx-auto w-full px-4 py-8'>
-                            <h1 className='text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6'>
+                        <div className='mx-auto w-full max-w-sm px-4 py-8'>
+                            <h1 className='mb-6 text-3xl font-bold text-slate-800 dark:text-slate-100'>
                                 Actualiza tu contraseña ✨
                             </h1>
                             {/* Form */}

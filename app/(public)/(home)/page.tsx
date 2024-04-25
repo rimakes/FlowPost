@@ -30,7 +30,7 @@ export default async function Home() {
             <DemoVideo
                 title={
                     <h2
-                        className={`${secondaryFont.className} text-6xl font-semibold text-center`}
+                        className={`${secondaryFont.className} text-center text-6xl font-semibold`}
                     >
                         Vídeo Demo
                     </h2>
@@ -81,7 +81,7 @@ export default async function Home() {
                     </>
                 }
                 media={
-                    <div className='h-full w-80 relative'>
+                    <div className='relative h-full w-80'>
                         <Image
                             fill
                             alt='banner image'

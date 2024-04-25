@@ -10,7 +10,7 @@ export default function Logo<T extends string>({
 }) {
     return (
         <Link
-            className='relative h-8 w-40 shrink-0 inline-block'
+            className='relative inline-block h-8 w-40 shrink-0'
             href={linkUrl}
         >
             <Image

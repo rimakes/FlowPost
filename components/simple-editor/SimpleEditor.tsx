@@ -129,7 +129,7 @@ export default function SimpleEditor({
     return (
         <>
             {editor && <EditorBubbleMenu editor={editor} />}
-            <div className={cn(`relative group`, className)}>
+            <div className={cn(`group relative`, className)}>
                 <EditorContent
                     editor={editor}
                     autoFocus={false}

@@ -57,21 +57,21 @@ export function DecorationSelector({
                     <DialogTrigger asChild>
                         <Button
                             variant={'outline'}
-                            className='w-full mt-2 flex justify-between'
+                            className='mt-2 flex w-full justify-between'
                         >
                             {selectedDecoration}
                             <ChevronDown />
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className='overflow-y-scroll max-h-full'>
-                        <div className='grid grid-cols-2 gap-2 gap-x-4 m-auto'>
+                    <DialogContent className='max-h-full overflow-y-scroll'>
+                        <div className='m-auto grid grid-cols-2 gap-2 gap-x-4'>
                             {Object.keys(decorationMap).map(
                                 (decoration, index) => {
                                     return (
                                         <div
                                             key={decoration}
-                                            className='relative border-border px-4 py-4 w-40 aspect-square
-                                            rounded-md overflow-hidden border cursor-pointer'
+                                            className='relative aspect-square w-40 cursor-pointer overflow-hidden rounded-md
+                                            border border-border px-4 py-4'
                                             style={{
                                                 backgroundColor: notBackground(
                                                     decoration
@@ -98,7 +98,7 @@ export function DecorationSelector({
                                                 className='z-50'
                                             />
                                             <p
-                                                className='absolute m-auto inset-0 text-lg font-semibold flex justify-center items-center text-center z-10
+                                                className='absolute inset-0 z-10 m-auto flex items-center justify-center text-center text-lg font-semibold
                                             '
                                                 style={{
                                                     color: font,

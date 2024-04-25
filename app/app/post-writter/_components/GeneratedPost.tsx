@@ -51,7 +51,7 @@ export const PostWritterResult = ({
 
     if (status === 'loading')
         return (
-            <div className='flex-1 h-full w-full'>
+            <div className='h-full w-full flex-1'>
                 <Skeleton className='h-full w-full' />
             </div>
         );
@@ -61,12 +61,12 @@ export const PostWritterResult = ({
             {/* <EmojiPickerClient /> */}
             <Label>Post generado</Label>
 
-            <div className='border p-2 space-y-2 rounded-t-lg rounded-b-3xl'>
+            <div className='space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
                 <div className='relative pb-6'>
                     <Textarea
                         rows={20}
-                        className={`border-none resize-none h-[${height}px] min-h-[${minHeight}px]
-                        focus-visible:!ring-transparent focus-visible:outline-none bg-white
+                        className={`resize-none border-none h-[${height}px] min-h-[${minHeight}px]
+                        bg-white focus-visible:outline-none focus-visible:!ring-transparent
                         `}
                         value={post.content}
                         readOnly={!isEditable && !isEditableOverride}
@@ -75,7 +75,7 @@ export const PostWritterResult = ({
                         }}
                     />
                     {showEditableSwitch && (
-                        <div className='absolute right-2 bottom-0 flex items-center gap-2 text-xs text-primary/70'>
+                        <div className='absolute bottom-0 right-2 flex items-center gap-2 text-xs text-primary/70'>
                             <Label>Permitir edición</Label>
                             <Switch
                                 checked={isEditableOverride}
@@ -85,7 +85,7 @@ export const PostWritterResult = ({
                     )}
                 </div>
 
-                <div className='flex gap-2 relative'>
+                <div className='relative flex gap-2'>
                     <ButtonWithTooltip
                         variant={'secondary'}
                         icon={<Save />}

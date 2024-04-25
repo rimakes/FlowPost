@@ -29,7 +29,7 @@ export const BrandKitsSettings = ({
 
     return (
         <>
-            <div className='flex justify-between items-start'>
+            <div className='flex items-start justify-between'>
                 <SettingsSectionHeader
                     title='Configuración de marca'
                     subtitle='Personaliza el contenido y la apariencia de tu marca'
@@ -39,8 +39,8 @@ export const BrandKitsSettings = ({
                     <DialogTrigger>
                         <Button>+ Añadir Marca</Button>
                     </DialogTrigger>
-                    <DialogContent className='overflow-y-auto max-h-full'>
-                        <div className='max-w-md mt-4'>
+                    <DialogContent className='max-h-full overflow-y-auto'>
+                        <div className='mt-4 max-w-md'>
                             <BrandKitEditForm
                                 onSave={() => {
                                     setIsDialogOpen(false);
@@ -51,7 +51,7 @@ export const BrandKitsSettings = ({
                     </DialogContent>
                 </Dialog>
             </div>
-            <div className='grid sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 grid-cols-1  gap-8'>
+            <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2  2xl:grid-cols-3'>
                 {userBrandKits.map((brand) => (
                     <BrandKitCard brand={brand} key={brand.id} />
                 ))}

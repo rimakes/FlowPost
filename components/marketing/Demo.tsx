@@ -110,14 +110,14 @@ export function DemoWidget({ className }: DemoWidgetProps) {
             case 'idle':
                 return (
                     <>
-                        <Sparkles className='h-5 w-5 mr-2' />
+                        <Sparkles className='mr-2 h-5 w-5' />
                         Generar post
                     </>
                 );
             case 'loading':
                 return (
                     <>
-                        <Spinner className='h-5 w-5 mr-2' />
+                        <Spinner className='mr-2 h-5 w-5' />
                         Generando post...
                     </>
                 );
@@ -127,20 +127,20 @@ export function DemoWidget({ className }: DemoWidgetProps) {
     };
 
     return (
-        <div className='rounded-md border border-border shadow-md w-full p-4 gap-4 flex flex-col relative bg-white justify-center isolate'>
+        <div className='relative isolate flex w-full flex-col justify-center gap-4 rounded-md border border-border bg-white p-4 shadow-md'>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit, onError)}
                     className={cn(
-                        `flex flex-col gap-8 items-center`,
+                        `flex flex-col items-center gap-8`,
                         className
                     )}
                 >
                     <div
-                        className='anchor lg:-top-32 -top-24 absolute'
+                        className='anchor absolute -top-24 lg:-top-32'
                         id='try-it'
                     />
-                    <p className='text-center text-muted-foreground text-sm -mb-4'>
+                    <p className='-mb-4 text-center text-sm text-muted-foreground'>
                         Completa el formulario y descubre como la IA de{' '}
                         {appConfig.general.appName} hace su magia
                     </p>
@@ -162,7 +162,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                                 <Button
                                                     type='button'
                                                     variant={'outline'}
-                                                    className='flex gap-2 rounded-full mx-auto'
+                                                    className='mx-auto flex gap-2 rounded-full'
                                                 >
                                                     <span className='h-5 w-5'>
                                                         {
@@ -245,7 +245,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                                 setIsTemplateModalOpen
                                             }
                                         >
-                                            <DialogContent className='max-w-full md:max-w-4xl overflow-hidden'>
+                                            <DialogContent className='max-w-full overflow-hidden md:max-w-4xl'>
                                                 <SelectPostTemplate
                                                     availablePostTemplateIds={[
                                                         '0',
@@ -310,7 +310,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                         )}
                     />
                     <Button
-                        className='bg-gradient-to-tr  from-pink-400 to-indigo-500 text-pink-50 text-lg font-semibold w-full animate-pulse'
+                        className='w-full  animate-pulse bg-gradient-to-tr from-pink-400 to-indigo-500 text-lg font-semibold text-pink-50'
                         type='submit'
                     >
                         {buttonContent()}
@@ -323,7 +323,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                 onOpenChange={setisOpenResultDialog}
             >
                 <DialogContent
-                    className='demo-dialog max-w-3xl overflow-x-hidden overflow-y-auto max-h-full  bg-white focus-within:!border-transparent'
+                    className='demo-dialog max-h-full max-w-3xl overflow-y-auto overflow-x-hidden  bg-white focus-within:!border-transparent'
                     onInteractOutside={(e) => {
                         e.preventDefault();
                     }}
@@ -349,7 +349,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                             <Button>Publicar</Button>
                                         </div>
                                     </PopoverTrigger>
-                                    <PopoverContent className='w-fit flex flex-col items-center gap-2'>
+                                    <PopoverContent className='flex w-fit flex-col items-center gap-2'>
                                         <p>
                                             Esta funcionalidad es solo para
                                             usuarios Pro
@@ -373,16 +373,16 @@ type RecordControlsProps = {
 
 function RecordControls({ status, timeRemaining }: RecordControlsProps) {
     return (
-        <div className='flex gap-2 flex-col'>
-            <p className='text-center font-semibold text-xl'>
+        <div className='flex flex-col gap-2'>
+            <p className='text-center text-xl font-semibold'>
                 00:{timeRemaining ? timeRemaining : '00'}
             </p>
 
-            <div className='flex gap-2 justify-center items-center'>
+            <div className='flex items-center justify-center gap-2'>
                 <Button variant={'secondary'}>
                     <Recycle />
                 </Button>
-                <Button size={'lg'} className='rounded-full _animate-pulse'>
+                <Button size={'lg'} className='_animate-pulse rounded-full'>
                     {status === 'recording' ? (
                         <Square className='text-primary-foreground/50' />
                     ) : (
@@ -396,7 +396,7 @@ function RecordControls({ status, timeRemaining }: RecordControlsProps) {
             <Button
                 variant={'outline'}
                 size={`icon`}
-                className='mx-auto rounded-full h-10 aspect-square p-3 text-primary/50'
+                className='mx-auto aspect-square h-10 rounded-full p-3 text-primary/50'
             >
                 <Play className='fill-current' />
             </Button>

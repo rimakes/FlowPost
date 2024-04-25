@@ -53,7 +53,7 @@ export const CheckoutButton = ({
 
     return (
         <Button
-            className={cn(`flex gap-2 group`, className)}
+            className={cn(`group flex gap-2`, className)}
             onClick={() => handlePayment()}
         >
             {status === 'loading' ? (

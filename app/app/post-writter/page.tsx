@@ -29,7 +29,7 @@ export default async function PostWritterPage({
                 subtitle='Utiliza el poder de la IA para generar post que tu audiencia no pueda dejar de leer'
             />
             <Separator />
-            <div className='flex flex-col mt-6 2xl:flex-row gap-8'>
+            <div className='mt-6 flex flex-col gap-8 2xl:flex-row'>
                 <PostWritterContextProvider firstBrand={brands[0]}>
                     <Suspense>
                         <PostWritterForm className='flex-1' />

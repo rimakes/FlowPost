@@ -13,11 +13,11 @@ export default function DefaultLayout({
 }) {
     return (
         <div className='flex h-[100dvh] overflow-hidden border-0 border-green-500'>
-            <div className='relative flex flex-col flex-1 overflow-x-hidden'>
+            <div className='relative flex flex-1 flex-col overflow-x-hidden'>
                 <Navbar />
-                <div className='flex flex-col-reverse lg:flex-row border-0 border-dotted border-red-500 min-h-[calc(100%-6rem)] h-full'>
+                <div className='flex h-full min-h-[calc(100%-6rem)] flex-col-reverse border-0 border-dotted border-red-500 lg:flex-row'>
                     <Sidebar />
-                    <main className='border-0 border-indigo-600 flex-1 overflow-auto flex flex-col bg-background pb-4'>
+                    <main className='flex flex-1 flex-col overflow-auto border-0 border-indigo-600 bg-background pb-4'>
                         <ToolBanner className='hidden md:flex' />
                         <Feedback />
                         {children}

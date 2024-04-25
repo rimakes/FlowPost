@@ -35,18 +35,18 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                 open={fontPopOverisOpen}
                 onOpenChange={setFontPopOverisOpen}
             >
-                <PopoverTrigger className='w-full flex items-center justify-between'>
+                <PopoverTrigger className='flex w-full items-center justify-between'>
                     <div
-                        className={`flex w-full items-center gap-2 justify-between border border-border p-1 px-2 rounded-md`}
+                        className={`flex w-full items-center justify-between gap-2 rounded-md border border-border p-1 px-2`}
                         style={{ fontFamily: font }}
                     >
                         {font}
-                        <ChevronDown className='w-4 h-4' />
+                        <ChevronDown className='h-4 w-4' />
                     </div>
                 </PopoverTrigger>
                 <PopoverContent>
                     <>
-                        <div className='flex flex-col gap-2 overflow-y-scroll max-h-48'>
+                        <div className='flex max-h-48 flex-col gap-2 overflow-y-scroll'>
                             <Input
                                 className='sticky top-0'
                                 defaultValue={debouncedQuery}
@@ -79,7 +79,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                                     setNumberOfFonts(numberOfFonts + 10);
                                 }}
                             >
-                                Cargar más <ArrowDownIcon className='w-4 h-4' />
+                                Cargar más <ArrowDownIcon className='h-4 w-4' />
                             </Button>
                         </div>
                     </>

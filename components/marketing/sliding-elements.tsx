@@ -18,11 +18,11 @@ type SlidingElementsProps = {
 
 export const SlidingElements = () => {
     return (
-        <section className='w-[100vw] flex flex-col items-center gap-8'>
+        <section className='flex w-[100vw] flex-col items-center gap-8'>
             <h2 className=''>Todo lo que necesitas</h2>
             <div
-                className='flex flex-col gap-8 items-center justify-center w-full
-             relative
+                className='relative flex w-full flex-col items-center justify-center
+             gap-8
             '
             >
                 <SlidingRow elements={elements} direction='left' />
@@ -36,42 +36,42 @@ function SlidingRow({ elements, direction }: SlidingElementsProps) {
     return (
         <div
             className='
-            flex
-            w-full
-                overflow-hidden
+            before:content-["
+            "]
+                after:content-["
 
-            relative
-            before:content-[" "]
+            "]
+            relative flex
+            w-full
+            overflow-hidden
             before:absolute
-            before:top-0
             before:left-0
+            before:top-0
             before:z-10
+            before:h-full
+            before:w-[50px]
             before:bg-gradient-to-r
             before:from-background
             before:to-transparent
-            before:w-[50px]
-            before:md:w-[150px]
-            before:lg:w-[200px]
-            before:h-full
-            after:content-[" "]
-            after:absolute
+            after:absolute after:right-0
             after:top-0
-            after:right-0
             after:z-10
+            after:h-full
+            after:w-[50px]
             after:bg-gradient-to-l
             after:from-background
             after:to-transparent
-            after:w-[50px]
+            before:md:w-[150px]
             after:md:w-[150px]
+            before:lg:w-[200px]
             after:lg:w-[200px]
-            after:h-full
             '
         >
             <div className='flex'>
                 <ul
                     className={`
-                        flex
-                    relative
+                        relative
+                    flex
                     min-w-fit
                     will-change-transform
                     ${
@@ -91,8 +91,8 @@ function SlidingRow({ elements, direction }: SlidingElementsProps) {
                 </ul>
                 <ul
                     className={`
-                        flex
-                    relative
+                        relative
+                    flex
                     min-w-fit
                     will-change-transform
                     ${
@@ -123,7 +123,7 @@ const Element = ({ label, className }: ElementProps) => {
     return (
         <div
             className={cn(
-                `bg-slate-500/25 rounded-full p-5 whitespace-nowrap box-border inline-block`,
+                `box-border inline-block whitespace-nowrap rounded-full bg-slate-500/25 p-5`,
                 className
             )}
         >

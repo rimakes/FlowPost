@@ -5,7 +5,7 @@ type SlideBackgroundProps = {
 export function SlideBackground({ imageUrl, opacity }: SlideBackgroundProps) {
     return (
         <div
-            className='w-full h-full absolute top-0 left-0 opacity-60'
+            className='absolute left-0 top-0 h-full w-full opacity-60'
             style={{
                 backgroundImage: `url(${imageUrl})`,
                 backgroundSize: 'cover',

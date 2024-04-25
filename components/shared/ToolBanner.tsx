@@ -18,12 +18,12 @@ export const ToolBanner = async ({ className }: ToolBannerProps) => {
     return (
         <div
             className={cn(
-                `gap-4 bg-indigo-50 p-2 flex justify-center items-center text-sm`,
+                `flex items-center justify-center gap-4 bg-indigo-50 p-2 text-sm`,
                 className
             )}
         >
             <div className='flex gap-2'>
-                <Clock className='w-5 h-5 mr-2' />
+                <Clock className='mr-2 h-5 w-5' />
                 Estás en un Free trial
             </div>
             <Link
@@ -33,7 +33,7 @@ export const ToolBanner = async ({ className }: ToolBannerProps) => {
                     'rounded-full text-xs'
                 )}
             >
-                <Zap className='w-4 h-4 mr-2 fill-primary-foreground' />
+                <Zap className='mr-2 h-4 w-4 fill-primary-foreground' />
                 Eligen Plan
             </Link>
         </div>

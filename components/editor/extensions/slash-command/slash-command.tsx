@@ -222,7 +222,7 @@ const CommandList = ({
             {items.map((item, index) => {
                 return (
                     <button
-                        className={`flex w-full items-center justify-between space-x-2 rounded-md px-2 py-1 text-left text-sm text-base-content hover:bg-base-100 ${
+                        className={`text-base-content hover:bg-base-100 flex w-full items-center justify-between space-x-2 rounded-md px-2 py-1 text-left text-sm ${
                             index === selectedIndex
                                 ? 'bg-stone-100 text-stone-900'
                                 : ''
@@ -231,7 +231,7 @@ const CommandList = ({
                         onClick={() => selectItem(index)}
                     >
                         <div className='flex gap-2'>
-                            <div className='flex h-10 w-10 items-center justify-center rounded-md border border-base-content bg-base-100'>
+                            <div className='border-base-content bg-base-100 flex h-10 w-10 items-center justify-center rounded-md border'>
                                 {item.title === 'Continúa escribiendo' ? (
                                     // && isLoading
 

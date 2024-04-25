@@ -19,7 +19,7 @@ export function SlideProgressBar({
     return (
         <div
             className={cn(
-                `w-full h-1 flex gap-0 absolute top-0 left-0`,
+                `absolute left-0 top-0 flex h-1 w-full gap-0`,
                 className
             )}
         >

@@ -25,7 +25,7 @@ export function Editable({ value, setValue, style, className }: Editable) {
             }}
             html={elementRef.current}
             className={cn(
-                `focus:outline-none focus:ring-0 focus:border-transparent`,
+                `focus:border-transparent focus:outline-none focus:ring-0`,
                 className
             )}
             style={style}

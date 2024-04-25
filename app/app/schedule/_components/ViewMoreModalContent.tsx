@@ -28,13 +28,13 @@ export function ViewMoreModalContent({ post }: ViewMoreModalContentProps) {
                 {post.content}
             </Textarea>
 
-            <div className='flex flex-col justify-between gap-1 text-[12px] text-primary/40 italic'>
+            <div className='flex flex-col justify-between gap-1 text-[12px] italic text-primary/40'>
                 <span className=''>{post?.content?.length} caracteres</span>
                 <span className=''>
                     Última actualización: {formattedDateString}
                 </span>
             </div>
-            <div className='flex justify-end gap-1 text-[12px] text-primary/40 italic'>
+            <div className='flex justify-end gap-1 text-[12px] italic text-primary/40'>
                 {/* <Button variant={'outline'}>Editar</Button> */}
                 <Button
                     variant={'outline'}

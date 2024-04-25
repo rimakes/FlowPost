@@ -100,7 +100,7 @@ export default function Feedback({}) {
                     <textarea
                         ref={textAreaRef}
                         autoFocus
-                        className='w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-[1em] leading-tight outline-none transition duration-200 placeholder:text-gray-400 placeholder:opacity-100 focus-within:border-indigo-700 resize-none'
+                        className='w-full resize-none appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-[1em] leading-tight outline-none transition duration-200 placeholder:text-gray-400 placeholder:opacity-100 focus-within:border-indigo-700'
                         rows={4}
                         name='emoji-rate-msg'
                         id='emoji-rate-msg'

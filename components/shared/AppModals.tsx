@@ -47,10 +47,10 @@ export function AppModals({}: AppModalsProps) {
             }}
         >
             <DialogContent>
-                <h1 className='text-2xl font-bold text-center mb-4'>
+                <h1 className='mb-4 text-center text-2xl font-bold'>
                     ✨ ¡Crear tu primera marca!
                 </h1>
-                <p className='text-center text-gray-600 mb-8'>
+                <p className='mb-8 text-center text-gray-600'>
                     Así podremos personalizar tu contenido y darte una mejor
                     experiencia.
                 </p>

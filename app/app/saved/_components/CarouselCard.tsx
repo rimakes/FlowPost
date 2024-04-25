@@ -20,7 +20,7 @@ export function CarouselCard({ carousel, className }: CarouselCardProps) {
     return (
         <div
             className={cn(
-                `border border-border flex flex-col gap-2 [--outter-padding:1rem] p-[var(--outter-padding)] rounded-md shadow-md cursor-pointer bg-white hover:shadow-lg transition-all duration-300 ease-in-out`,
+                `flex cursor-pointer flex-col gap-2 rounded-md border border-border bg-white p-[var(--outter-padding)] shadow-md transition-all duration-300 ease-in-out [--outter-padding:1rem] hover:shadow-lg`,
                 className
             )}
         >
@@ -34,7 +34,7 @@ export function CarouselCard({ carousel, className }: CarouselCardProps) {
                 <div>
                     {!carousel.thumbnailDataUrl && (
                         <>
-                            <h2 className='text-center text-lg font-bold grow'>
+                            <h2 className='grow text-center text-lg font-bold'>
                                 {carousel.slides[0].title?.content}
                             </h2>
                             <p>{carousel.slides[0].paragraphs[0]?.content}</p>
@@ -42,7 +42,7 @@ export function CarouselCard({ carousel, className }: CarouselCardProps) {
                         </>
                     )}
                     {carousel.thumbnailDataUrl && (
-                        <div className='h-60 relative m-auto'>
+                        <div className='relative m-auto h-60'>
                             <Image
                                 src={carousel.thumbnailDataUrl}
                                 alt=''
@@ -64,7 +64,7 @@ const CarouselActions = ({ carousel, className }: CarouselCardProps) => {
     return (
         <div
             className={cn(
-                `flex gap-2 pt-[var(--outter-padding)] relative`,
+                `relative flex gap-2 pt-[var(--outter-padding)]`,
                 className
             )}
         >

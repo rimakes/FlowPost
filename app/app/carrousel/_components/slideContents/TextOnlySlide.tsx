@@ -24,7 +24,7 @@ export const TextOnlySlide = ({
     const isParagraphShown = slides[slideNumber!].paragraphs[0]?.isShown;
 
     return (
-        <div className='flex flex-col gap-2 h-full w-full z-10 justify-center -mt-6'>
+        <div className='z-10 -mt-6 flex h-full w-full flex-col justify-center gap-2'>
             <SimpleEditor
                 defaultValue={title}
                 onDebouncedUpdate={(string) => {

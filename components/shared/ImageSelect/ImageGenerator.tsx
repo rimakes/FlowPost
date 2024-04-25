@@ -35,7 +35,7 @@ export const ImageGenerator = ({ onImageSelect }: ImageGeneratorProps) => {
         <div>
             <Dialog defaultOpen={true}>
                 <DialogContent>
-                    <div className='grid grid-cols-2 gap-2 justify-items-center '>
+                    <div className='grid grid-cols-2 justify-items-center gap-2 '>
                         {range(0, 3).map((_, index) => (
                             <ImageWithLoading
                                 key={index}
@@ -58,7 +58,7 @@ export const ImageGenerator = ({ onImageSelect }: ImageGeneratorProps) => {
                             value={query}
                             onChange={(ev) => setQuery(ev.target.value)}
                         />
-                        <Button type='submit' className='w-full mt-2'>
+                        <Button type='submit' className='mt-2 w-full'>
                             {status === 'loading' ? (
                                 <>
                                     <Spinner className='mr-2' />

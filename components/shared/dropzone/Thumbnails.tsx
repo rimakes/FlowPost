@@ -30,7 +30,7 @@ export function Thumbnails({
                 <div
                     key={file.preview}
                     className={cn(
-                        `w-8 h-8 relative overflow-hidden`,
+                        `relative h-8 w-8 overflow-hidden`,
                         classNamesThumbnails
                     )}
                 >

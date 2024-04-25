@@ -1,1 +1,4 @@
-echo "[🐶] Prettifying your code"
+echo "[🐶] Prettifying your code"   
+
+# Check if the code is prettified
+npm run prettier --write

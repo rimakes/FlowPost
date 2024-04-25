@@ -65,7 +65,7 @@ export const AccountSettings = () => {
                 title='Configuración general'
                 subtitle='Configura tu cuenta'
             />
-            <div className='max-w-md mt-4'>
+            <div className='mt-4 max-w-md'>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}

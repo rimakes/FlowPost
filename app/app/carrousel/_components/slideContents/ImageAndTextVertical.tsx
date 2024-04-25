@@ -31,7 +31,7 @@ export const ImageAndTextVertical = ({
     const isDescriptionShown = slides[slideNumber].paragraphs[0]?.isShown;
 
     return (
-        <div className='flex flex-col h-full p-2 py-6 gap-6 z-10 isolate'>
+        <div className='isolate z-10 flex h-full flex-col gap-6 p-2 py-6'>
             <div
                 className='relative h-40 overflow-hidden'
                 style={{
@@ -43,7 +43,7 @@ export const ImageAndTextVertical = ({
                     src={image || '/images/placeholders/slide-image.webp'}
                     alt='image'
                     fill
-                    className='object-cover h-full'
+                    className='h-full object-cover'
                 />
             </div>
             <div>
