@@ -1,4 +1,4 @@
-import StarterKit from '@tiptap/starter-kit';
+import { StarterKit } from '@tiptap/starter-kit';
 // import SlashCommand from './slash-command/slash-command';
 // import TiptapImage from "@tiptap/extension-image";
 

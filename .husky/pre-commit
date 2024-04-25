@@ -1,4 +1,8 @@
 echo "[🐶] Prettifying your code"   
 
-# Check if the code is prettified
-npm run format && npm run lint && git add -A .
+# Prettify code
+npm run format 
+# Lint code with 0 warnings
+npm run lint:no-warnings
+# Stage all changes
+git add -A .

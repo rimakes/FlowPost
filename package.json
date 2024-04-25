@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
+        "lint:no-warnings": "next lint --max-warnings 0",
         "prettier": "prettier --check .",
         "format": "prettier --write .",
         "prisma": "npx prisma generate && npx prisma db push",
