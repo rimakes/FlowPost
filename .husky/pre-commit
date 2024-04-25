@@ -6,3 +6,4 @@ npm run format
 npm run lint:no-warnings
 # Stage all changes
 git add -A .
+echo "[🐶] DONE! ✅"   
