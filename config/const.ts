@@ -1,4 +1,3 @@
-import { TMenuItem } from '@/types/types';
 import { Brand } from '@prisma/client';
 import {
     CalendarCheck,
@@ -8,6 +7,7 @@ import {
     Settings,
     Sparkles,
 } from 'lucide-react';
+import { TMenuItem } from '@/types/types';
 
 export enum TIME_OF_THE_DAY {
     T0900 = '09:00 AM',

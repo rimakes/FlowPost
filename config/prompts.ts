@@ -40,12 +40,13 @@ ListSlide: use it when the text has a list but the list is not the only part of 
         "paragraphs": [
           "Enfocarse principalmente en ventas físicas",
           "Un solo canal de ventas online",
-          "Marketing tradicional, poco uso de redes sociales",
+          "Marketing tradicional, poco uso de redes sociales"
         ],
         "design": "ListSlide"
       }},
 
-  ImageAndTextHorizontal: use it when you want to show an image with a small paragraph of text. The paragraph must be concise (follow the schema). in the image property, put a query in Spanish that could be use to find an image that is relevant for the slide
+  ImageAndTextHorizontal: use it when you want to show an image with a small paragraph of text. The paragraph must be concise (follow the schema). in the image property, put a query in Spanish that could be use to find an image that is relevant for the slide.
+  
 {{
   "title": "Un enfoque moderno",
   "paragraphs": ["Mientras tú estás aquí, tu competencia ya está en TikTok, Instagram y Facebook. ¿Dónde estás tú?"],
