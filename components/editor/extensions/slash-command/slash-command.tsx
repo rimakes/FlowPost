@@ -8,14 +8,13 @@ import {
     useLayoutEffect,
 } from 'react';
 import { Extension } from '@tiptap/core';
-import Suggestion from '@tiptap/suggestion';
+import { Suggestion } from '@tiptap/suggestion';
 import { Editor, ReactRenderer } from '@tiptap/react';
 import tippy from 'tippy.js';
 import { LucideWrapText } from 'lucide-react';
 import useOperatingSystem from '@/hooks/use-os';
-import { Badge } from '@/components/ui/badge';
 import { getSuggestionItems } from './get-suggestion-items';
-import { complete, getContextText, requestComplete } from '@/lib/utils';
+import { getContextText, requestComplete } from '@/lib/utils';
 
 // Create the extension with the name "slash-command"
 // Using functions instead of objects allows us to: i) have dynamic configurations and ii) access the extension using the "this" keyword referring to the extension, which provides a way to interact with other options and methods.
