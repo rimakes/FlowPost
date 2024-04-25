@@ -31,6 +31,7 @@ export const deleteBrand = async (brandId: string) => {
 
     return brand;
 };
+
 export const saveIASettings = async (
     userId: string,
     iaSettings: Prisma.IaSettingsCreateInput
