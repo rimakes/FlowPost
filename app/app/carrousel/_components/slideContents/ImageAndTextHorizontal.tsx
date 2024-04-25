@@ -36,7 +36,7 @@ export const ImageAndTextHorizontal = ({
     const editFirstParagraph = editParagraphN.bind(null, 0);
 
     return (
-        <div className='flex flex-col h-full p-2 py-6 gap-6 isolate z-10'>
+        <div className='isolate z-10 flex h-full flex-col gap-6 p-2 py-6'>
             <div>
                 <SimpleEditor
                     defaultValue={title}
@@ -63,16 +63,18 @@ export const ImageAndTextHorizontal = ({
                 <div className='relative w-fit'>
                     <SlideGradientBlob brand={brand} className='blur-3xl' />
                     <div
-                        className='relative h-44 overflow-hidden w-44'
+                        className='relative h-44 w-44 overflow-hidden'
                         style={{
                             borderRadius: '0.5rem',
                         }}
                     >
                         <Image
-                            src={image}
+                            src={
+                                image || '/images/placeholders/slide-image.webp'
+                            }
                             alt='image'
                             fill
-                            className='object-cover h-full'
+                            className='h-full object-cover'
                         />
                     </div>
                 </div>

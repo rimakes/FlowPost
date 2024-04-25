@@ -41,3 +41,6 @@ namespace NodeJS {
 }
 
 // BOILER: Add to boilerplate so env variables are typed
+// BOILER: Install husky ? and lint-staged?
+// BOILER: Add husky to package.json
+// BOILER: Add .prettierrrc.json with configuration

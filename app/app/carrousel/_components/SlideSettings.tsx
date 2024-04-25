@@ -57,7 +57,7 @@ export function SlideSettings({
     return (
         <div
             className={cn(
-                `flex flex-col p-4 gap-4 border bg-background rounded-md rounded-tr-none rounded-tl-none relative group`,
+                `group relative flex flex-col gap-4 rounded-md rounded-tl-none rounded-tr-none border bg-background p-4`,
                 className
             )}
         >
@@ -65,20 +65,20 @@ export function SlideSettings({
             <Separator />
             <Button
                 variant={'ghost'}
-                className='absolute top-1/2 right-0 translate-x-[100%]'
+                className='absolute right-0 top-1/2 translate-x-[100%]'
                 onClick={nextSlide}
             >
                 <ArrowRightIcon />
             </Button>
             <Button
                 variant={'ghost'}
-                className='absolute top-1/2 left-0 -translate-x-[100%]'
+                className='absolute left-0 top-1/2 -translate-x-[100%]'
                 onClick={previousSlide}
             >
                 <ArrowLeftIcon />
             </Button>
 
-            <div className='flex gap-2 items-center justify-between'>
+            <div className='flex items-center justify-between gap-2'>
                 <Label htmlFor='slide-type' className='whitespace-nowrap'>
                     Tipo de slide
                 </Label>
@@ -109,11 +109,14 @@ export function SlideSettings({
 
             <div>
                 <Collapsible className=''>
-                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
-                        <Label htmlFor='paragraph'>Mostrar / Ocultar</Label>
+                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
+                        <Label htmlFor='paragraph'>Textos</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
                     <CollapsibleContent>
+                        <Label htmlFor='paragraph' className='text-xs'>
+                            Mostrar
+                        </Label>
                         <div className='flex flex-wrap gap-2'>
                             <CheckLabel
                                 id='Título'
@@ -143,12 +146,13 @@ export function SlideSettings({
                                 onCheckedChange={toggleSlideHasParagraph}
                             /> */}
                         </div>
+                        <div className='flex flex-wrap gap-2'></div>
                     </CollapsibleContent>
                 </Collapsible>
             </div>
             <div>
                 <Collapsible>
-                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
+                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
                         <Label htmlFor='paragraph'>Imagen</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
@@ -160,7 +164,7 @@ export function SlideSettings({
 
             <div>
                 <Collapsible>
-                    <CollapsibleTrigger className='flex justify-between w-full items-center mb-2'>
+                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
                         <Label htmlFor='paragraph'>Imagen de fondo</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
@@ -204,7 +208,7 @@ export const SlideActions = () => {
     const isFirstSlide = currentSlide === 0;
 
     return (
-        <div className='flex gap-2 text-xs w-full'>
+        <div className='flex w-full gap-2 text-xs'>
             <Button
                 disabled={isFirstSlide}
                 variant={'secondary'}
@@ -261,7 +265,7 @@ export const CheckLabel = ({
             className={buttonVariants({
                 variant: 'secondary',
                 size: 'sm',
-                className: 'flex gap-2 items-center',
+                className: 'flex items-center gap-2',
             })}
             style={{
                 opacity: checked ? 1 : 0.5,
@@ -269,7 +273,7 @@ export const CheckLabel = ({
         >
             <Label
                 htmlFor={id}
-                className='h-full w-full flex items-center justify-center'
+                className='flex h-full w-full items-center justify-center'
             >
                 {id}
             </Label>

@@ -99,6 +99,9 @@ export function CarouselProvider({
         setting: keyof TCarousel['settings'],
         newSetting: any
     ) => {
+        console.log('setting', setting);
+        console.log('newSetting', newSetting);
+
         // REVIEW: check what the difference is between using prev and not using it when we are using immer
         setCarousel((prev) =>
             produce(prev, (draftCarousel) => {
@@ -165,9 +168,17 @@ export function CarouselProvider({
     };
 
     const editDescription = (newDescription: string) => {
-        const newCarousel = deepCopy(carousel);
-        newCarousel.slides[currentSlide].paragraphs[0].content = newDescription;
-        setCarousel(newCarousel);
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.slides[currentSlide].paragraphs.length === 0 &&
+                    (draftCarousel.slides[currentSlide].paragraphs[0] = {
+                        content: '',
+                        isShown: true,
+                    });
+                draftCarousel.slides[currentSlide].paragraphs[0].content =
+                    newDescription;
+            })
+        );
     };
 
     const editParagraphs = (newParagraphs: string[]) => {

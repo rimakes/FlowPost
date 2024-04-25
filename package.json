@@ -7,8 +7,15 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
+        "prettier": "prettier --check .",
+        "format": "prettier --write .",
         "prisma": "npx prisma generate && npx prisma db push",
         "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "echo \"[Husky] pre-commit\""
+        }
     },
     "dependencies": {
         "@auth/prisma-adapter": "^1.0.11",
@@ -62,6 +69,7 @@
         "emoji-picker-react": "^4.8.0",
         "html-to-image": "^1.11.11",
         "https": "^1.0.0",
+        "husky": "^9.0.11",
         "immer": "^10.0.4",
         "install": "^0.13.0",
         "jspdf": "^2.5.1",
@@ -106,9 +114,10 @@
         "autoprefixer": "^10.0.1",
         "eslint": "^8",
         "eslint-config-next": "14.0.4",
+        "eslint-config-prettier": "^9.1.0",
         "postcss": "^8",
-        "prettier": "^3.2.4",
-        "prettier-plugin-tailwindcss": "^0.5.11",
+        "prettier": "^3.2.5",
+        "prettier-plugin-tailwindcss": "^0.5.14",
         "prisma": "^5.10.2",
         "tailwindcss": "^3.3.0",
         "typescript": "^5"

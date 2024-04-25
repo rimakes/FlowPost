@@ -40,7 +40,7 @@ export const ImageAndTextVertical = ({
                 }}
             >
                 <Image
-                    src={image}
+                    src={image || '/images/placeholders/slide-image.webp'}
                     alt='image'
                     fill
                     className='object-cover h-full'

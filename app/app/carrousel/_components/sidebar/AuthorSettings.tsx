@@ -9,6 +9,7 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { ChevronsUpDown } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export const AuthorSettings = () => {
     const {
@@ -71,16 +72,17 @@ export const AuthorSettings = () => {
                             }}
                         />
                     </div>
-                    {/* TODO: For now we remove this */}
-                    {/* <div className='flex gap-2 items-center'>
+                    <div className='flex gap-2 items-center'>
                         <Checkbox
                             checked={carousel.settings.showAuthorInFirstOnly}
-                            onCheckedChange={toggleShowAuthorInFirstOnly}
+                            onCheckedChange={() =>
+                                toggleCarouselSetting('showAuthorInFirstOnly')
+                            }
                         />
                         <Label className='text-xs font-normal italic'>
                             Mostrar solo en primera y última página
                         </Label>
-                    </div> */}
+                    </div>
                 </div>
             </CollapsibleContent>
         </Collapsible>

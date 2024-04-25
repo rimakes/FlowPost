@@ -135,7 +135,7 @@ export async function createCarousel(post: TLinkedinPost, isDemo = false) {
                 alt: '',
                 opacity: 0.1,
                 // @ts-ignore
-                url: slide.image ?? '',
+                url: slide.image ?? '/images/placeholders/slide-image.webp',
             },
             design: slide.design,
         };

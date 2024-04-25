@@ -1,3 +1,5 @@
+'use client';
+
 import {
     TColorPalette,
     TFontPalette,
@@ -6,6 +8,7 @@ import {
 } from '@/types/types';
 import { SlideAvatar } from './SlideAvatar';
 import { CSSProperties } from 'react';
+import { NameAndHandle } from './components/HandleAndName';
 
 type SlideProfileCardProps = {
     colorPalette: TColorPalette;
@@ -54,43 +57,3 @@ export function SlideProfileCard({
         </div>
     );
 }
-
-type NameAndHandleProps = {
-    name: string;
-    handle: string;
-    colorPalette: TColorPalette;
-    orientation?: TOrientation;
-};
-
-export const NameAndHandle = ({
-    name,
-    handle,
-    colorPalette,
-    orientation = 'horizontal',
-}: NameAndHandleProps) => {
-    return (
-        <div
-            className='flex-col gap-2'
-            style={{
-                color: colorPalette.font,
-                textAlign: orientation === 'vertical' ? 'center' : 'left',
-            }}
-        >
-            {' '}
-            <h3
-                style={{
-                    fontWeight: 700,
-                }}
-            >
-                {name}
-            </h3>
-            <p
-                style={{
-                    opacity: 0.7,
-                }}
-            >
-                {handle}
-            </p>
-        </div>
-    );
-};

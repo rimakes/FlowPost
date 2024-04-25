@@ -129,8 +129,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
                 <h3>Plantilla</h3>
                 <SizeSelector
                     aspectRatio={aspectRatio}
-                    setCarouselAspectRatio={() => {
-                        setCarouselSetting('aspectRatio', aspectRatio);
+                    setCarouselAspectRatio={(newValue) => {
+                        setCarouselSetting('aspectRatio', newValue);
                     }}
                 />
                 {/* TODO: Recover this */}

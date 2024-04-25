@@ -2,16 +2,16 @@ import { cn } from '@/lib/utils';
 import { Clock, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '../ui/button';
-import { useSession } from 'next-auth/react';
 import { getSubscription } from '@/app/_actions/user-actions';
+import { getServerSession } from '@/auth';
 
 type ToolBannerProps = {
     className?: string;
 };
 
 export const ToolBanner = async ({ className }: ToolBannerProps) => {
-    const { data } = useSession();
-    const subscription = await getSubscription(data?.user!.id!);
+    const session = await getServerSession();
+    const subscription = await getSubscription(session?.user!.id!);
 
     if (subscription) return null;
 
