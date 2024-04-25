@@ -4,9 +4,9 @@
 // Bg, font, accent
 // Inverted: bg -> font, accent -> bg, font -> accent
 
-import { cn } from '@/lib/utils';
 import { ArrowRight, Circle, TrendingUp } from 'lucide-react';
 import { TopoSVG } from '../svgs/Topo';
+import { cn } from '@/lib/utils';
 
 type DecorativeElementsProps = {
     fontColor: string;

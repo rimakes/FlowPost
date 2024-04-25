@@ -1,25 +1,25 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { defaultEditorContent } from './default-editor-content';
-// TODO: change to mantine
 import { useDebouncedCallback } from 'use-debounce';
 import {
     Editor as TipTapEditor,
     EditorContent,
     useEditor,
 } from '@tiptap/react';
+import { Button } from '../ui/button';
+import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
+import { Separator } from '../ui/separator';
+import { defaultEditorContent } from './default-editor-content';
+// TODO: change to mantine
 import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
-import { getPrevText } from '@/lib/get-prev-text';
 import { EditorBubbleMenu } from './bubble-menu/buble-menu';
 import TopMenu from './top-menu/TopMenu';
+import { getPrevText } from '@/lib/get-prev-text';
 import useLocalStorage from '@/hooks/use-local-storage';
 import useFullScreen from '@/hooks/use-full-screen';
-import { Button } from '../ui/button';
 import { cn, getContextText, requestComplete } from '@/lib/utils';
-import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
-import { Separator } from '../ui/separator';
 
 export default function Editor({
     /**

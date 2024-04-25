@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Faq } from '@/components/marketing/faq';
 import CtaWithSocial from '@/components/marketing/cta-with-social';
 import { secondaryFont } from '@/config/fonts';
@@ -6,7 +7,6 @@ import { CTABanner } from '@/components/marketing/CTABanner';
 import { Testimonials } from '@/components/marketing/Testimonials';
 import { DemoVideo } from '@/components/marketing/DemoVideo';
 import { Pricing2 } from '@/components/marketing/Pricing2';
-import Image from 'next/image';
 import { appConfig } from '@/config/shipper.appconfig';
 import { VideoSteps } from '@/components/marketing/VideoSteps';
 

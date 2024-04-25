@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from './logo';
 import Link from 'next/link';
-import { appConfig } from '@/config/shipper.appconfig';
 import { Route } from 'next';
+import Logo from './logo';
+import { appConfig } from '@/config/shipper.appconfig';
 
 const Footer = () => {
     return (

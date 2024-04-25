@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Search, Sparkles, Upload } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { ImageGenerator } from './ImageGenerator';
 import { ImageUpload } from './ImageUpload';
 import { ImageSearchOnline } from './ImageSearchOnline';

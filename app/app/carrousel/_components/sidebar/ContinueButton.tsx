@@ -3,9 +3,14 @@
 import { Download } from 'lucide-react';
 import { toCanvas, toPng } from 'html-to-image';
 import { useContext, useState } from 'react';
-import { CarouselContext } from '../CarouselProvider';
-import { Button, buttonVariants } from '@/components/ui/button';
 import { jsPDF } from 'jspdf';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { CarouselContext } from '../CarouselProvider';
+import { DownloadButton } from './downloadButton';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/Spinner';
 import { revalidateAllPaths } from '@/app/_actions/other-actions';
@@ -15,15 +20,10 @@ import {
     DialogFooter,
     DialogHeader,
 } from '@/components/ui/dialog';
-import Image from 'next/image';
-import { DownloadButton } from './downloadButton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
-import { useSession } from 'next-auth/react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 export function ContinueButton({}) {

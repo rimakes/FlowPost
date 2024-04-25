@@ -1,5 +1,5 @@
-import { db } from '@/lib/prisma';
 import { UserRole } from '@prisma/client';
+import { db } from '@/lib/prisma';
 
 export const register = async (
     name: string,

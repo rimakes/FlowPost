@@ -2,9 +2,10 @@
 
 import { Download } from 'lucide-react';
 import { useContext, useState } from 'react';
+import { jsPDF } from 'jspdf';
+import { toPng } from 'html-to-image';
 import { CarouselContext } from '../CarouselProvider';
 import { Button } from '@/components/ui/button';
-import { jsPDF } from 'jspdf';
 import { TStatus } from '@/types/types';
 import Spinner from '@/components/icons/Spinner';
 import { cn } from '@/lib/utils';
@@ -14,7 +15,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { toPng } from 'html-to-image';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 type ImageFormat = 'pdf' | 'svg';

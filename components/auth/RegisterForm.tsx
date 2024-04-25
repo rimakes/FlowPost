@@ -1,6 +1,12 @@
 'use client';
 
 import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import { SubmitErrorHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { Computer } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import {
     Form,
     FormControl,
@@ -12,17 +18,11 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
-import { signIn } from 'next-auth/react';
-import { SubmitErrorHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Message } from './Message';
+import { SocialLogin } from './SocialLogin';
 import { apiClient } from '@/lib/apiClient';
 import { RegisterReq } from '@/app/api/register/route';
-import { toast } from 'sonner';
-import { Computer } from 'lucide-react';
 import { registerFormSchema } from '@/schemas/auth-schemas';
-import { Message } from './Message';
-import { useEffect, useState } from 'react';
-import { SocialLogin } from './SocialLogin';
 
 // BOILER: I have fixed the button disabled state and fixed the error message
 

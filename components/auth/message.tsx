@@ -1,9 +1,9 @@
 'use client';
 
-import { cn, wait } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { cn, wait } from '@/lib/utils';
 
 interface FormErrorProps extends VariantProps<typeof messageVariants> {
     className?: string;

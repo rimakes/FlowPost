@@ -1,10 +1,10 @@
+import Image from 'next/image';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { getPexelImages } from '@/lib/pexels';
 import { TStatus } from '@/types/types';
-import Image from 'next/image';
-import { useState } from 'react';
-import { toast } from 'sonner';
 
 type ImageSearchOnlineProps = {
     onImageSelect: (url: string) => void;

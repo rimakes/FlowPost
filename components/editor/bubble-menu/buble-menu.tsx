@@ -1,8 +1,8 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from '@tiptap/react';
 import { BoldIcon, ItalicIcon } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
 import { EditorState } from '@tiptap/pm/state';
+import { cn } from '@/lib/utils';
 
 export type BubbleMenuItem = {
     name: string;

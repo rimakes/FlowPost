@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils';
 import { Clock, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '../ui/button';
+import { cn } from '@/lib/utils';
 import { getSubscription } from '@/app/_actions/user-actions';
 import { getServerSession } from '@/auth';
 

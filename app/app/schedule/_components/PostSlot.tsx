@@ -1,7 +1,14 @@
 'use client';
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { format } from 'date-fns-tz';
+import { CheckCircle, MoreHorizontal } from 'lucide-react';
+import { useContext, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { parse } from 'date-fns';
+import { DraftModalContent } from './DraftModalContent';
+import { SchedulerContext } from './SchedulerProvider';
+import { ViewMoreModalContent } from './ViewMoreModalContent';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -12,14 +19,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { CheckCircle, MoreHorizontal } from 'lucide-react';
-import { useContext, useState } from 'react';
-import { DraftModalContent } from './DraftModalContent';
-import { SchedulerContext } from './SchedulerProvider';
-import { useRouter } from 'next/navigation';
 import { unschedulePost } from '@/app/_actions/schedule-actions';
-import { ViewMoreModalContent } from './ViewMoreModalContent';
-import { parse } from 'date-fns';
 import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
 
 type PostSlotProps = {

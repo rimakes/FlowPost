@@ -1,17 +1,17 @@
 'use client';
-import { TDecorationId } from '@/types/types';
+import { ChevronDown } from 'lucide-react';
+import { useContext, useState } from 'react';
+import { ColorPalette } from '@prisma/client';
 import {
     SlideDecoration,
     decorationMap,
     decorationNamesMap,
 } from '../slideParts/SlideDecoration';
+import { CarouselContext } from '../CarouselProvider';
+import { TDecorationId } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
-import { ChevronDown } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useContext, useState } from 'react';
-import { CarouselContext } from '../CarouselProvider';
-import { ColorPalette } from '@prisma/client';
 
 type DecorationSelectorProps = {
     onSelect: (decoration: TDecorationId) => void;

@@ -1,10 +1,10 @@
 'use client';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TCarousel, TIdeas, TLinkedinPost } from '@/types/types';
 import { TabsContent } from '@radix-ui/react-tabs';
+import { PostIdeaCard } from '../../ideas/IdeaCard';
 import { PostCard } from './PostCard';
 import { CarouselCard } from './CarouselCard';
-import { PostIdeaCard } from '../../ideas/IdeaCard';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TCarousel, TIdeas, TLinkedinPost } from '@/types/types';
 
 type SavedPageClientProps = {
     posts: TLinkedinPost[];

@@ -1,7 +1,7 @@
 'use client';
 
-import { ErrorWithReset } from '@/components/shared/ErrorWithReset';
 import { useEffect } from 'react';
+import { ErrorWithReset } from '@/components/shared/ErrorWithReset';
 
 export default function Error({
     error,

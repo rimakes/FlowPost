@@ -1,9 +1,9 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
-import { Button } from '../ui/button';
 import { ArrowRight } from 'lucide-react';
 import ReactPlayer from 'react-player/lazy';
+import { Button } from '../ui/button';
 
 type DemoVideoProps = {
     videoUrl: string;

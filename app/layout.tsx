@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { getServerSession } from 'next-auth';
 import SessionProvider from '@/providers/session-provider';
 import { Toaster } from '@/components/ui/sonner';
 import Theme from '@/providers/theme-provider';
 import { primaryFont } from '@/config/fonts';
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { AppProvider } from '@/providers/AppProvider';
 import { appConfig } from '@/config/shipper.appconfig';

@@ -1,7 +1,7 @@
-import { appConfig } from '@/config/shipper.appconfig';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { appConfig } from '@/config/shipper.appconfig';
 
 export default function Logo<T extends string>({
     linkUrl = '/',

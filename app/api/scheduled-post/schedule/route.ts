@@ -1,7 +1,7 @@
-import { authOptions } from '@/auth';
-import { db } from '@/lib/prisma';
 import { getServerSession, Session } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '@/auth';
+import { db } from '@/lib/prisma';
 /**
  *
  * @param req : userId -> to check if user's has connected the linkedin account or not

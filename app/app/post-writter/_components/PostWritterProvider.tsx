@@ -8,10 +8,10 @@ import {
     useRef,
     useState,
 } from 'react';
+import { Editor } from '@tiptap/react';
 import { PostRequest } from './PostWritterForm';
 import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
-import { Editor } from '@tiptap/react';
 
 const INITIAL_STATE = {
     post: {

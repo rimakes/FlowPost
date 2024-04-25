@@ -1,10 +1,10 @@
 'use client';
 
-import { useContext } from 'react';
-import { SchedulerContext } from './SchedulerProvider';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { start } from 'repl';
+import { useContext } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { addDays, addWeeks, setDate } from 'date-fns';
+import { SchedulerContext } from './SchedulerProvider';
 
 type WeekSliderProps = {};
 export function WeekSlider({}: WeekSliderProps) {

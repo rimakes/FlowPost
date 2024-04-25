@@ -1,6 +1,7 @@
 'use client';
 
 import { RefObject, createContext, useCallback, useState } from 'react';
+import { produce } from 'immer';
 import { deepCopy } from '@/lib/utils';
 import {
     TArrayOfRefs,
@@ -10,7 +11,6 @@ import {
     TToggleableCarouselSettings,
     TToggleableSlideSettings,
 } from '@/types/types';
-import { produce } from 'immer';
 import { useCarouselShortcuts } from '@/hooks/use-slide-shortcuts';
 import { DEFAULT_BACKGROUND_IMAGE } from '@/config/const';
 

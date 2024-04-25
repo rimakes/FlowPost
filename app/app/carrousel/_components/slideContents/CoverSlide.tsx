@@ -1,8 +1,8 @@
+import { useContext } from 'react';
+import { SlideProfileCard } from '../slideParts/SlideProfileCard';
+import { CarouselContext } from '../CarouselProvider';
 import { cn } from '@/lib/utils';
 import { TBrand, TMode } from '@/types/types';
-import { SlideProfileCard } from '../slideParts/SlideProfileCard';
-import { useContext } from 'react';
-import { CarouselContext } from '../CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CoverSlideProps = {

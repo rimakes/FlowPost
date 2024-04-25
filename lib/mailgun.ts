@@ -1,5 +1,5 @@
-import { appConfig } from '@/config/shipper.appconfig';
 import Mailgun from 'mailgun.js';
+import { appConfig } from '@/config/shipper.appconfig';
 
 const formData = require('form-data');
 

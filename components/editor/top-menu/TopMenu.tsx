@@ -1,8 +1,8 @@
 'use client';
 
-import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Editor } from '@tiptap/react';
 import { Redo2, Undo2 } from 'lucide-react';
+import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 
 type TopMenuProps = {
     editor: Editor | null;

@@ -1,10 +1,10 @@
-import { cn } from '@/lib/utils';
-import { TBrand, TMode } from '@/types/types';
+import { useContext } from 'react';
 import { SlideProfileCard } from '../slideParts/SlideProfileCard';
 import { SlideProgressBar } from '../slideParts/SlideProgressBar';
 import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
-import { useContext } from 'react';
 import { CarouselContext } from '../CarouselProvider';
+import { TBrand, TMode } from '@/types/types';
+import { cn } from '@/lib/utils';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type CallToActionSlideProps = {

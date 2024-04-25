@@ -1,5 +1,7 @@
-import { getUserByEmail } from './lib/getUser';
-import { db } from './lib/prisma';
+// don't check eslint in this file
+/* eslint-disable */
+
+import console from 'console';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -10,13 +12,13 @@ import {
     getServerSession as getAuthServerSession,
 } from 'next-auth';
 
-import { appConfig } from './config/shipper.appconfig';
 import bcrypt from 'bcryptjs';
-import console from 'console';
-import { sendEmail } from './lib/mailgun';
-import { signinEmail } from './emails/signinEmail';
-import { ReactSigninEmail } from './emails/ReactSigninEmail';
 import { render } from '@react-email/render';
+import { appConfig } from './config/shipper.appconfig';
+import { sendEmail } from './lib/mailgun';
+import { ReactSigninEmail } from './emails/ReactSigninEmail';
+import { db } from './lib/prisma';
+import { getUserByEmail } from './lib/getUser';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -28,7 +30,6 @@ export const authOptions: NextAuthOptions = {
                 const newSettings = await db.settings.create({
                     data: {},
                 });
-
                 return {
                     id: profile.sub,
                     name: profile.name,

@@ -1,10 +1,10 @@
+import { range } from '@mantine/hooks';
+import { useState } from 'react';
+import { ImageWithLoading } from '../ImageWithLoading';
 import { generateNImages } from '@/app/_actions/image-actions';
 import Spinner from '@/components/icons/Spinner';
 import { Input } from '@/components/ui/input';
 import { ImageWithDataUrl, TStatus } from '@/types/types';
-import { range } from '@mantine/hooks';
-import { useState } from 'react';
-import { ImageWithLoading } from '../ImageWithLoading';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';

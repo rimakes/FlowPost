@@ -1,9 +1,9 @@
 'use client';
 
-import { appConfig } from '@/config/shipper.appconfig';
-import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Script from 'next/script';
+import { appConfig } from '@/config/shipper.appconfig';
+import { cn } from '@/lib/utils';
 
 type CannyProps = {
     children?: React.ReactNode;

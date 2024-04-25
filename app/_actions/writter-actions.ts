@@ -1,10 +1,22 @@
 'use server';
 
+import { PromptTemplate } from '@langchain/core/prompts';
+import { StructuredOutputParser } from 'langchain/output_parsers';
+import { RunnableSequence } from '@langchain/core/runnables';
+import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
+import { ChatOpenAI, ChatOpenAICallOptions } from '@langchain/openai';
+import {
+    dbCreateCarouselWithBrand,
+    dbDeleteCarousel,
+    dbUpsertCarousel,
+    dbUpsertLinkedinPost,
+} from '../_data/linkedinpost.data';
+import { getFirstBrand } from '../_data/brand.data';
+import { authGuard } from './auth.actions';
 import { db } from '@/lib/prisma';
 import { retryAsyncFunction } from '@/lib/utils';
 import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
-import { PromptTemplate } from '@langchain/core/prompts';
-import { StructuredOutputParser } from 'langchain/output_parsers';
 import {
     BigNumberSlideSchema,
     CallToActionSlideSchema,
@@ -13,21 +25,9 @@ import {
     ListSlideSchema,
     OnlyTextSlideSchema,
 } from '@/types/schemas';
-import { RunnableSequence } from '@langchain/core/runnables';
-import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
 import { promptGenerateCarousel } from '@/config/prompts';
 import { getPexelImages } from '@/lib/pexels';
-import {
-    dbCreateCarouselWithBrand,
-    dbDeleteCarousel,
-    dbUpsertCarousel,
-    dbUpsertLinkedinPost,
-} from '../_data/linkedinpost.data';
 import { aiChat } from '@/lib/aiClients';
-import { getFirstBrand } from '../_data/brand.data';
-import { authGuard } from './auth.actions';
-import { ChatOpenAI, ChatOpenAICallOptions } from '@langchain/openai';
 
 export async function upsertLinkedinPost(
     post: TLinkedinPost,

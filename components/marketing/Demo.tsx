@@ -1,29 +1,14 @@
 'use client';
 
-import {
-    VoiceToneSelector,
-    WritterFormSchema,
-} from '@/app/app/post-writter/_components/PostWritterForm';
-import { Button } from '../ui/button';
-import {
-    SelectPostTemplate,
-    SelectedPostTemplateCard,
-} from '@/app/app/post-writter/_components/SelectPostTemplate';
-import { PostWritterResult } from '@/app/app/post-writter/_components/GeneratedPost';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Mic, Play, Recycle, Sparkles, Square, Trash2 } from 'lucide-react';
 import { useContext, useState } from 'react';
-import { TStatus } from '@/types/types';
-import { Textarea } from '../ui/textarea';
-import { VOICE_TONES } from '@/app/app/post-writter/config/const';
-import { cn, getPostTemplateById, wait } from '@/lib/utils';
-import Spinner from '../icons/Spinner';
-import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { toast } from 'sonner';
-import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
-import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Textarea } from '../ui/textarea';
+import Spinner from '../icons/Spinner';
 import {
     Form,
     FormControl,
@@ -33,9 +18,24 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form';
-import { RecordButton } from '@/app/app/post-writter/_components/RecordButton';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { GetAccessButton } from './GetAccessButton';
+import {
+    VoiceToneSelector,
+    WritterFormSchema,
+} from '@/app/app/post-writter/_components/PostWritterForm';
+import {
+    SelectPostTemplate,
+    SelectedPostTemplateCard,
+} from '@/app/app/post-writter/_components/SelectPostTemplate';
+import { PostWritterResult } from '@/app/app/post-writter/_components/GeneratedPost';
+import { TStatus } from '@/types/types';
+import { VOICE_TONES } from '@/app/app/post-writter/config/const';
+import { cn, getPostTemplateById, wait } from '@/lib/utils';
+import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
+import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
+import { RecordButton } from '@/app/app/post-writter/_components/RecordButton';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type DemoWidgetProps = { className?: string };

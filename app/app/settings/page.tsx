@@ -1,17 +1,17 @@
-import { Heading } from '@/components/shared/Heading';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { signIn } from 'next-auth/react';
+import { Session, getServerSession } from 'next-auth';
 import { AccountSettings } from './_components/AccountSettings';
 import { IASettings } from './_components/IASettings';
 import { BrandKitsSettings } from './_components/BrandKitsSettings';
+import { PlanSettings } from './_components/PlanSettings';
+import { Heading } from '@/components/shared/Heading';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
     getUserBrands,
     getUserSettings,
 } from '@/app/_actions/settings-actions';
-import { signIn } from 'next-auth/react';
-import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { PlanSettings } from './_components/PlanSettings';
 import { TPageProps } from '@/types/types';
 import { getSubscription } from '@/app/_actions/user-actions';
 

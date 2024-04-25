@@ -1,18 +1,18 @@
-import { db } from '@/lib/prisma';
-import Scheduler from './_components/Scheduler';
 import { getServerSession } from 'next-auth';
+import { Suspense } from 'react';
+import Scheduler from './_components/Scheduler';
+import { TimeSlotSettings } from './_components/TimeSlotSettings';
+import { SchedulerProvider } from './_components/SchedulerProvider';
+import { db } from '@/lib/prisma';
 import { authOptions } from '@/auth';
 import Container from '@/components/shared/container';
 import { Heading } from '@/components/shared/Heading';
-import { TimeSlotSettings } from './_components/TimeSlotSettings';
 import { Separator } from '@/components/ui/separator';
-import { SchedulerProvider } from './_components/SchedulerProvider';
 import {
     findPostsByUserId,
     getScheduleByUserId,
 } from '@/app/_actions/schedule-actions';
 import { UrlErrorToaster } from '@/components/shared/UrlErrorToaster';
-import { Suspense } from 'react';
 
 export default async function SchedulePage() {
     const session = await getServerSession(authOptions);

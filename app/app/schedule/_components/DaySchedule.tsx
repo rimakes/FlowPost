@@ -1,10 +1,10 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import { PostSlot } from './PostSlot';
 import { daysOfTheWeekMap } from '@/config/const';
 import { cn } from '@/lib/utils';
 import { PostOrSlot } from '@/types/types';
-import { useSession } from 'next-auth/react';
-import { PostSlot } from './PostSlot';
 
 type DayScheduleProps = {
     date: Date;

@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import { useContext } from 'react';
 import { CarouselContext } from '../CarouselProvider';
+import { cn } from '@/lib/utils';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type SlideHeaderProps = {

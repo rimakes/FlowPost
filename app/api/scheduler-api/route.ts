@@ -1,6 +1,6 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { TLinkedinPost, TScheduledPost } from '@/types/types';
-import { NextRequest, NextResponse } from 'next/server';
 import {
     registerUploadDocumentToLinkedin,
     uploadAssetToLinkedin,

@@ -1,14 +1,14 @@
 'use client';
 
+import { CSSProperties } from 'react';
+import { SlideAvatar } from './SlideAvatar';
+import { NameAndHandle } from './components/HandleAndName';
 import {
     TColorPalette,
     TFontPalette,
     TMode,
     TOrientation,
 } from '@/types/types';
-import { SlideAvatar } from './SlideAvatar';
-import { CSSProperties } from 'react';
-import { NameAndHandle } from './components/HandleAndName';
 
 type SlideProfileCardProps = {
     colorPalette: TColorPalette;

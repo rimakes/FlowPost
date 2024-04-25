@@ -1,15 +1,16 @@
 'use client';
-import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { Brand } from '@prisma/client';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Image from 'next/image';
+import { MoreHorizontal } from 'lucide-react';
+import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
+import { BrandKitEditForm } from './BrandKitEditForm';
 import { TFont, TFontName } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { BrandKitEditForm } from './BrandKitEditForm';
-import { useState } from 'react';
-import Image from 'next/image';
 import { Select, SelectTrigger } from '@/components/ui/select';
 import {
     DropdownMenu,
@@ -17,7 +18,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
 
 type BrandKitCardProps = {
     brand: Brand;

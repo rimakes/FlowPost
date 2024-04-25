@@ -1,8 +1,20 @@
 'use client';
 
-import { Label } from '@/components/ui/label';
 import { useContext, useState } from 'react';
+import { ChevronsUpDown, Save } from 'lucide-react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { CarouselContext } from '../CarouselProvider';
+import { DecorationSelector } from './DecorationSelector';
+import { DownloadButton } from './downloadButton';
+import { ColorPaletteSelect } from './ColorPaletteSelector';
+import { SizeSelector } from './SizeSelector';
+import { AuthorSettings } from './AuthorSettings';
+import { ColorPalette } from './ColorPalette';
+import { BrandKitSelector } from './BrandKitSelector';
+import { ContinueButton } from './ContinueButton';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
@@ -14,30 +26,18 @@ import {
     TFontPalette,
 } from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
-import { ChevronsUpDown, Save } from 'lucide-react';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
-import { toast } from 'sonner';
-import { DecorationSelector } from './DecorationSelector';
-import { useRouter } from 'next/navigation';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { LoginButton } from '@/components/auth/LoginButton';
 import { cn } from '@/lib/utils';
-import { DownloadButton } from './downloadButton';
-import { ColorPaletteSelect } from './ColorPaletteSelector';
-import { SizeSelector } from './SizeSelector';
-import { AuthorSettings } from './AuthorSettings';
-import { ColorPalette } from './ColorPalette';
 import { ToggleableCollapsible } from '@/components/shared/ToggleableCollapsible';
 import { Slider } from '@/components/ui/slider';
-import { BrandKitSelector } from './BrandKitSelector';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { useSession } from 'next-auth/react';
 import { fontTypeMap } from '@/config/const';
-import { ContinueButton } from './ContinueButton';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type CarouselSidebarProps = {

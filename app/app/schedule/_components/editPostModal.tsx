@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { Label } from '@radix-ui/react-label';
+import { Save } from 'lucide-react';
 import { EmojiPickerClient } from '@/components/shared/EmojiPickerClient';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@radix-ui/react-label';
 import { Switch } from '@/components/ui/switch';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { cn } from '@/lib/utils';
-import { Save } from 'lucide-react';
 
 type EditPostProps = {
     className?: string;

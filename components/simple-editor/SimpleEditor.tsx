@@ -5,8 +5,8 @@ import { useDebouncedCallback } from 'use-debounce';
 import { EditorContent, useEditor, EditorOptions } from '@tiptap/react';
 import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
-import { getPrevText } from '@/lib/get-prev-text';
 import { EditorBubbleMenu } from './bubble-menu/buble-menu';
+import { getPrevText } from '@/lib/get-prev-text';
 import useLocalStorage from '@/hooks/use-local-storage';
 import { cn } from '@/lib/utils';
 

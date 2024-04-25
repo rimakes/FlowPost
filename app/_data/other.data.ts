@@ -1,5 +1,5 @@
-import { db } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
+import { db } from '@/lib/prisma';
 
 export const getFirstSettingsByUserId = async (userId: string) => {
     try {

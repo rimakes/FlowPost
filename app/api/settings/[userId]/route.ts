@@ -1,8 +1,8 @@
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+import { NextRequest, NextResponse } from 'next/server';
 import { GeneralSettingsForm } from '@/app/app/settings/_components/AccountSettings';
 import { db } from '@/lib/prisma';
 import { ApiResponse, ApiRequestBody } from '@/types/types';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest, context: { params: Params }) {
     const { action, data } = (await request.json()) as {

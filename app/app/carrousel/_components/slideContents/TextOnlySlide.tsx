@@ -1,6 +1,6 @@
+import { useContext } from 'react';
 import { CarouselContext } from '@/app/app/carrousel/_components/CarouselProvider';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
-import { useContext } from 'react';
 
 type TextOnlySlideProps = {
     title: string;

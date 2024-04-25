@@ -3,9 +3,9 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { Route } from 'next';
 import { wait } from '@/lib/utils';
 import { errors } from '@/config/const';
-import { Route } from 'next';
 
 type UrlErrorToasterProps = {};
 export function UrlErrorToaster({}: UrlErrorToasterProps) {

@@ -4,12 +4,12 @@ export const metadata = {
 };
 
 import Link from 'next/link';
+import { Suspense } from 'react';
 import AuthHeader from '../AuthHeader';
 import AuthImage from '../AuthImage';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { Suspense } from 'react';
 import { SocialLogin } from '@/components/auth/SocialLogin';
 
 export default function SignUp() {

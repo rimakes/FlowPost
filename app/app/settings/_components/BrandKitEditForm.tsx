@@ -1,5 +1,15 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Brand } from '@prisma/client';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
+import { ColorPaletteSelect } from '../../carrousel/_components/sidebar/ColorPaletteSelector';
+import { FontPaletteSelector } from '../../carrousel/_components/sidebar/Sidebar';
 import {
     Form,
     FormControl,
@@ -12,23 +22,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { brandKitsSettingsSchema } from '@/types/schemas';
 import { Pure, TFont, TFontName, TStatus } from '@/types/types';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Brand } from '@prisma/client';
-import { useForm } from 'react-hook-form';
-import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
-import { ColorPaletteSelect } from '../../carrousel/_components/sidebar/ColorPaletteSelector';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 import { upsertBrandkit } from '@/app/_actions/settings-actions';
-import { toast } from 'sonner';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { Dropzone } from '@/components/shared/dropzone/Dropzone';
 import {
     TExtendedFile,
     Thumbnails,
 } from '@/components/shared/dropzone/Thumbnails';
-import { FontPaletteSelector } from '../../carrousel/_components/sidebar/Sidebar';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 // import { uploadFileToCloudinary } from '@/lib/utils';

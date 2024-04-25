@@ -1,12 +1,12 @@
+import { Session, getServerSession } from 'next-auth';
 import { CarouselProvider } from '../_components/CarouselProvider';
-import Container from '@/components/shared/container';
 import { CarouselSidebar } from '../_components/sidebar/Sidebar';
-import { Heading } from '@/components/shared/Heading';
 import { fakeCarousel } from '../_components/const';
+import { CarouselWorkbench } from '../_components/CarouselWorkbench';
+import Container from '@/components/shared/container';
+import { Heading } from '@/components/shared/Heading';
 import { TCarousel } from '@/types/types';
 import { authOptions } from '@/auth';
-import { CarouselWorkbench } from '../_components/CarouselWorkbench';
-import { Session, getServerSession } from 'next-auth';
 import { db } from '@/lib/prisma';
 import { getUserBrands } from '@/app/_actions/settings-actions';
 

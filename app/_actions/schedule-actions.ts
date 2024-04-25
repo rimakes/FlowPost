@@ -1,6 +1,5 @@
 'use server';
 
-import { DayOfTheWeekNumber } from '@/types/types';
 import { revalidatePath } from 'next/cache';
 import {
     getFirstSettingsByUserId,
@@ -12,6 +11,7 @@ import {
     deleteScheduledPost,
     getLinkedinPosts,
 } from '../_data/linkedinpost.data';
+import { DayOfTheWeekNumber } from '@/types/types';
 
 export const toggleSlot = async (
     time: string,

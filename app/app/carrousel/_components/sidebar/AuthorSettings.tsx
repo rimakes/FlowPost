@@ -1,14 +1,14 @@
+import { useContext } from 'react';
+import { ChevronsUpDown } from 'lucide-react';
+import { CarouselContext } from '../CarouselProvider';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useContext } from 'react';
-import { CarouselContext } from '../CarouselProvider';
 import { Switch } from '@/components/ui/switch';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { ChevronsUpDown } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 
 export const AuthorSettings = () => {

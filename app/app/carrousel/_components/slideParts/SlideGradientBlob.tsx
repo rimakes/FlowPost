@@ -1,6 +1,6 @@
+import { CSSProperties } from 'react';
 import { cn } from '@/lib/utils';
 import { TBrand } from '@/types/types';
-import { CSSProperties } from 'react';
 
 type SlideGradientBlobProps = {
     brand: TBrand;

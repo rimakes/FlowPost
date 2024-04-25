@@ -1,3 +1,4 @@
+/* eslint-disable */
 namespace NodeJS {
     interface ProcessEnv {
         NEXT_PUBLIC_HOSTNAME: string;

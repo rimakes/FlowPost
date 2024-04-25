@@ -1,9 +1,6 @@
 'use client';
 
 import { FC, useContext, useState } from 'react';
-import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
-import { Separator } from '../ui/separator';
 import {
     CalendarPlus,
     GalleryHorizontal,
@@ -14,9 +11,12 @@ import {
     Star,
     UserSquare,
 } from 'lucide-react';
-import { appConfig } from '@/config/shipper.appconfig';
+import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Separator } from '../ui/separator';
 import { Rating } from '../shared/rating';
 import { CheckoutButton } from './CheckoutButton';
+import { appConfig } from '@/config/shipper.appconfig';
 import { cn } from '@/lib/utils';
 import { AppContext } from '@/providers/AppProvider';
 

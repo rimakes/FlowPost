@@ -1,8 +1,8 @@
 'use server';
 
-import { appConfig } from '@/config/shipper.appconfig';
 import cloudinary from 'cloudinary';
 import streamifier from 'streamifier';
+import { appConfig } from '@/config/shipper.appconfig';
 
 export const uploadFileToCloudinary = async (
     formData: FormData

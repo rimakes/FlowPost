@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { ComponentProps, forwardRef } from 'react';
 import {
     Tooltip,
     TooltipContent,
@@ -7,7 +7,6 @@ import {
 } from '../ui/tooltip';
 import { Button, ButtonProps, buttonVariants } from '../ui/button';
 import { cn } from '@/lib/utils';
-import { ComponentProps, forwardRef } from 'react';
 
 type ButtonWithTooltipCustomProps = {
     label?: string;

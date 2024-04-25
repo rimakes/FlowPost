@@ -1,13 +1,13 @@
 'use server';
 
-import { db } from '@/lib/prisma';
-import { Pure } from '@/types/types';
 import { Brand, Prisma } from '@prisma/client';
 import {
     getFirstSettingsByUserId,
     updateIASettingsByUserId,
 } from '../_data/other.data';
 import { dbGetUserBrands, upsertBrand } from '../_data/brand.data';
+import { Pure } from '@/types/types';
+import { db } from '@/lib/prisma';
 
 export const upsertBrandkit = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,

@@ -1,11 +1,11 @@
 'use client';
 
 import { useContext } from 'react';
-import { PostWritterContext } from '../_components/PostWritterProvider';
-import { TCarousel } from '@/types/types';
-import { LinkedinPost } from './_components/LinkedinPost';
 import { useSession } from 'next-auth/react';
+import { PostWritterContext } from '../_components/PostWritterProvider';
 import { PostWritterResultTipTap } from '../_components/GeneratedPostWithTipTap';
+import { LinkedinPost } from './_components/LinkedinPost';
+import { TCarousel } from '@/types/types';
 
 type AssistedClientProps = {
     carousel: TCarousel;

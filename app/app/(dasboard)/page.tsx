@@ -1,4 +1,6 @@
 // import { auth } from '@/auth';
+import { Route } from 'next';
+import Link from 'next/link';
 import { Heading } from '@/components/shared/Heading';
 import {
     Card,
@@ -10,8 +12,6 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { WRITTER_TOOLS } from '@/config/const';
 import { cn } from '@/lib/utils';
-import { Route } from 'next';
-import Link from 'next/link';
 
 export default async function Home() {
     // const session = await auth();

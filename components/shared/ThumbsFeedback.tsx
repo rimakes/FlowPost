@@ -1,8 +1,12 @@
 'use client';
 
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Button } from '../ui/button';
-import { cn } from '@/lib/utils';
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { DevTool } from '@hookform/devtools';
 import {
     Dialog,
     DialogContent,
@@ -12,8 +16,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '../ui/dialog';
-import { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import {
     Form,
     FormControl,
@@ -25,15 +27,13 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFeedback, TStatus } from '@/types/types';
-import { z } from 'zod';
-import { IdeaRequestFormSchema } from '@/types/schemas';
-import { toast } from 'sonner';
 import Spinner from '../icons/Spinner';
-import { apiClient } from '@/lib/apiClient';
+import { Button } from '../ui/button';
 import { InputFaces } from './InputFaces';
-import { DevTool } from '@hookform/devtools';
+import { TFeedback, TStatus } from '@/types/types';
+import { IdeaRequestFormSchema } from '@/types/schemas';
+import { apiClient } from '@/lib/apiClient';
+import { cn } from '@/lib/utils';
 
 type ThumbsFeedbackProps = { className?: string; component: string };
 export function ThumbsFeedback({ className }: ThumbsFeedbackProps) {

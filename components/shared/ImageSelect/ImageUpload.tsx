@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { Dropzone } from '../dropzone/Dropzone';
-import { TStatus } from '@/types/types';
 import { Upload } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { Dropzone } from '../dropzone/Dropzone';
 import { TExtendedFile, Thumbnails } from '../dropzone/Thumbnails';
+import { TStatus } from '@/types/types';
+import { Button } from '@/components/ui/button';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 
 type ImageUploadProps = {

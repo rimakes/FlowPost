@@ -2,17 +2,6 @@
 import { useContext, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import {
-    PostOrSlot,
-    TLinkedinPost,
-    TScheduledPost,
-    TSlot,
-} from '@/types/types';
-import { SchedulerContext } from './SchedulerProvider';
-import { WeekSlider } from './WeekSlider';
-import { Separator } from '@/components/ui/separator';
-import { DaySchedule } from './DaySchedule';
-import { loadSchedulePerDay, range } from '@/lib/utils';
-import {
     addDays,
     compareAsc,
     format,
@@ -21,6 +10,17 @@ import {
     isSameDay,
     parse,
 } from 'date-fns';
+import { SchedulerContext } from './SchedulerProvider';
+import { WeekSlider } from './WeekSlider';
+import { DaySchedule } from './DaySchedule';
+import {
+    PostOrSlot,
+    TLinkedinPost,
+    TScheduledPost,
+    TSlot,
+} from '@/types/types';
+import { Separator } from '@/components/ui/separator';
+import { loadSchedulePerDay, range } from '@/lib/utils';
 
 type userPostsProps = {
     userPosts: (TLinkedinPost & { scheduledPost: TScheduledPost[] })[];

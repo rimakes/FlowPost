@@ -1,6 +1,6 @@
-import SlashCommand from './slash-command/slash-command';
 import { StarterKit } from '@tiptap/starter-kit';
 import { HardBreak } from '@tiptap/extension-hard-break';
+import SlashCommand from './slash-command/slash-command';
 
 export const defaultExtensions = [
     StarterKit.configure({

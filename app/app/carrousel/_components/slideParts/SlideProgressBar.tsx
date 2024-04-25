@@ -1,6 +1,6 @@
+import { number } from 'zod';
 import { cn } from '@/lib/utils';
 import { TColorPalette, TMode } from '@/types/types';
-import { number } from 'zod';
 
 type SlideProgressBarProps = {
     colorPalette: TColorPalette;

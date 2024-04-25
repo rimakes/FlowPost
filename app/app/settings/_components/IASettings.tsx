@@ -1,6 +1,14 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { TStatus } from '@/types/types';
+import { Input } from '@/components/ui/input';
 import {
     Form,
     FormControl,
@@ -10,15 +18,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { SettingsSectionHeader } from './SettingsSectionHeader';
-import { TStatus } from '@/types/types';
-import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { saveIASettings } from '@/app/_actions/settings-actions';
 import { Message } from '@/components/auth/Message';

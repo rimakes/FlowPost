@@ -1,12 +1,12 @@
 'use client';
 
-import { AccountButton } from '@/components/marketing/AccountButton';
-import { appConfig } from '@/config/shipper.appconfig';
 import { Subscription } from '@prisma/client';
 import { formatDate } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
+import { appConfig } from '@/config/shipper.appconfig';
+import { AccountButton } from '@/components/marketing/AccountButton';
 import { SecondStep } from '@/components/marketing/GetAccessButton';
 
 type CurrentPlanProps = {

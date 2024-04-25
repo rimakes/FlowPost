@@ -1,5 +1,4 @@
 'use client';
-import { Button, buttonVariants } from '@/components/ui/button';
 import {
     User,
     Check,
@@ -12,6 +11,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CannyLink } from '../Canny';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
     Popover,

@@ -1,15 +1,15 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { appConfig } from '@/config/shipper.appconfig';
 import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import Spinner from '../icons/Spinner';
-import { useClickOutside } from '@/hooks/use-click-outside';
-import { toast } from 'sonner';
-import { TFeedback } from '@/types/types';
 import { InputFaces, KeyFrames } from './InputFaces';
+import { cn } from '@/lib/utils';
+import { appConfig } from '@/config/shipper.appconfig';
+import { useClickOutside } from '@/hooks/use-click-outside';
+import { TFeedback } from '@/types/types';
 
 export default function Feedback({}) {
     const [isVisible, setIsVisible] = useState(false);

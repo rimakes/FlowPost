@@ -1,13 +1,13 @@
 'use client';
 
+import { Check, GiftIcon, ShieldCheck } from 'lucide-react';
+import Highlight from '../utils/Hightlight';
+import { GetAccessButton } from './GetAccessButton';
 import { cn } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';
 // import Highlight from '../utils/highlight';
 import { getStripeInstance } from '@/lib/stripe';
 import { secondaryFont } from '@/config/fonts';
-import Highlight from '../utils/Hightlight';
-import { GetAccessButton } from './GetAccessButton';
-import { Check, GiftIcon, ShieldCheck } from 'lucide-react';
 
 export const Pricing2 = () => {
     return (

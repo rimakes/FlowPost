@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,6 @@ import { SlidingElements } from '@/components/marketing/sliding-elements';
 import { Explanation } from '@/components/shared/explanation';
 import { handwritten, secondaryFont } from '@/config/fonts';
 import { Dropzone } from '@/components/shared/dropzone/Dropzone';
-import { useState } from 'react';
 import {
     TExtendedFile,
     Thumbnails,

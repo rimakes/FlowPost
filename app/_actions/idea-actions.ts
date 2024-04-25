@@ -1,18 +1,18 @@
 'use server';
 
-import { retryAsyncFunction } from '@/lib/utils';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
-import { arrayOfIdeasSchema } from '@/types/schemas';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { generateIdeasPrompt } from '../app/ideas/const';
+import { getFirstSettingsByUserId } from '../_data/other.data';
+import { authGuard } from './auth.actions';
 import {
     createIdeaByAuthorId,
     deleteIdeaById,
     getIdeasByUserId,
 } from '@/app/_data/idea.data';
-import { getFirstSettingsByUserId } from '../_data/other.data';
-import { authGuard } from './auth.actions';
+import { arrayOfIdeasSchema } from '@/types/schemas';
+import { retryAsyncFunction } from '@/lib/utils';
 import { aiChat } from '@/lib/aiClients';
 
 export const generateIdeas = async (topic: string) => {

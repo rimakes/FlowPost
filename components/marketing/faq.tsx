@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Container from '../shared/container';
 import {
     Accordion,
     AccordionContent,
@@ -5,8 +7,6 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { secondaryFont } from '@/config/fonts';
-import Link from 'next/link';
-import Container from '../shared/container';
 import { appConfig } from '@/config/shipper.appconfig';
 
 export function Faq() {

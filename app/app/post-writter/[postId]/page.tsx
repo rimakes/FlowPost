@@ -1,12 +1,12 @@
-import { Heading } from '@/components/shared/Heading';
-import { Separator } from '@/components/ui/separator';
-import { PostWritterContextProvider } from '../_components/PostWritterProvider';
-import { TCarousel, TLinkedinPost } from '@/types/types';
-import { db } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/auth';
+import { PostWritterContextProvider } from '../_components/PostWritterProvider';
 import { AssistedClient } from './AssistedClient';
+import { Heading } from '@/components/shared/Heading';
+import { Separator } from '@/components/ui/separator';
+import { TCarousel, TLinkedinPost } from '@/types/types';
+import { db } from '@/lib/prisma';
+import { authOptions } from '@/auth';
 import { getUserBrands } from '@/app/_actions/settings-actions';
 
 type PostWritterPageProps = {

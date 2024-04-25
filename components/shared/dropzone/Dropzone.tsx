@@ -2,12 +2,12 @@
 // DOCS: https://react-dropzone.js.org
 // https://cloudinary.com/blog/guest_post/upload-images-with-react-dropzone
 
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 import { useDropzone } from 'react-dropzone';
-import { TExtendedFile } from './Thumbnails';
 import { ReactNode } from 'react';
 import { ThumbsUp } from 'lucide-react';
+import { TExtendedFile } from './Thumbnails';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 type DropzoneProps = {
     onDrop?: (files: File[]) => void;

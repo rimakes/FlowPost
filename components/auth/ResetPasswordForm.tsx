@@ -2,6 +2,11 @@
 
 // import zod
 import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 import {
     Form,
     FormControl,
@@ -13,13 +18,8 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { signIn } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { resetPasswordFormSchema } from '@/schemas/auth-schemas';
 import { appConfig } from '@/config/shipper.appconfig';
-import { toast } from 'sonner';
-import { useSearchParams } from 'next/navigation';
 
 type ResetPasswordFormProps = {
     defaultValues?: {

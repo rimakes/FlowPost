@@ -1,13 +1,13 @@
 'use client';
 
+import { Edit, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { Separator } from '@/components/ui/separator';
 import { TLinkedinPost } from '@/types/types';
-import { Edit, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 type PostCardProps = {
     post: TLinkedinPost;

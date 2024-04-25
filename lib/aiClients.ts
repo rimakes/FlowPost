@@ -1,8 +1,8 @@
 // TODO: to implement tracing and feedback from the user
 
 import { ChatOpenAI, DallEAPIWrapper } from '@langchain/openai';
-import { getAiModel } from './utils';
 import { OpenAIWhisperAudio } from 'langchain/document_loaders/fs/openai_whisper_audio';
+import { getAiModel } from './utils';
 
 export const aiChat = (
     use: 'ideas' | 'writter' | 'carousel',

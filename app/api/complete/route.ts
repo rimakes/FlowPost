@@ -1,11 +1,11 @@
-import { ApiRequestBody, ApiResponse } from '@/types/types';
 import { StreamingTextResponse } from 'ai';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { getServerSession } from 'next-auth';
+import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { ApiRequestBody, ApiResponse } from '@/types/types';
 import { COMPLETE_INSTRUCTIONS } from '@/config/const';
 import { aiChat } from '@/lib/aiClients';
 

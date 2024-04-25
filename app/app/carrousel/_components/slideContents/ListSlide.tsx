@@ -1,7 +1,7 @@
-import { TBrand } from '@/types/types';
 import { useContext, useRef } from 'react';
-import { CarouselContext } from '../CarouselProvider';
 import { Check } from 'lucide-react';
+import { CarouselContext } from '../CarouselProvider';
+import { TBrand } from '@/types/types';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ListSlideProps = {

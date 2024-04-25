@@ -1,5 +1,5 @@
-import { TColorPalette } from '@/types/types';
 import Image from 'next/image';
+import { TColorPalette } from '@/types/types';
 
 type SlideAvatarProps = {
     imageUrl: string;

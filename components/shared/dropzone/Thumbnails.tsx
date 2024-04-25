@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 export type TExtendedFile = File & {
     preview: string;

@@ -1,11 +1,11 @@
-import { Heading } from '@/components/shared/Heading';
-import { Separator } from '@/components/ui/separator';
+import { getServerSession } from 'next-auth';
+import { Suspense } from 'react';
 import { PostWritterForm } from './_components/PostWritterForm';
 import { PostWritterResult } from './_components/GeneratedPost';
 import { PostWritterContextProvider } from './_components/PostWritterProvider';
-import { getServerSession } from 'next-auth';
+import { Heading } from '@/components/shared/Heading';
+import { Separator } from '@/components/ui/separator';
 import { TPageProps } from '@/types/types';
-import { Suspense } from 'react';
 import { getUserBrands } from '@/app/_actions/settings-actions';
 
 export default async function PostWritterPage({

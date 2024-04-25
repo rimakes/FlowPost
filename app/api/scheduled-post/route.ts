@@ -1,8 +1,8 @@
+import { getServerSession, Session } from 'next-auth';
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/prisma';
 import { TScheduledPost } from '@/types/types';
-import { getServerSession, Session } from 'next-auth';
 import { authOptions } from '@/auth';
-import { NextRequest, NextResponse } from 'next/server';
 
 /**
  *

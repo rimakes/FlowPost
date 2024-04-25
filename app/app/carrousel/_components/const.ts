@@ -1,5 +1,5 @@
-import { TCarousel, TSlide } from '@/types/types';
 import * as PrismaClient from '@prisma/client';
+import { TCarousel, TSlide } from '@/types/types';
 
 export const fakeSlides: TSlide[] = [
     {

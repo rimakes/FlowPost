@@ -1,4 +1,12 @@
-import { cn, isEven } from '@/lib/utils';
+import { ArrowRight } from 'lucide-react';
+import { ReactNode, Ref, forwardRef } from 'react';
+import { AspectRatio } from '@prisma/client';
+import { ASPECT_RATIOS_MAP, aspectRatioClasses } from './const';
+import { SlideProgressBar } from './slideParts/SlideProgressBar';
+import { SlideFotter } from './slideParts/SlideFotter';
+import { SlideHeader } from './slideParts/SlideHeader';
+import { SlideDecoration } from './slideParts/SlideDecoration';
+import { SlideBackground } from './slideParts/SlideBackground';
 import {
     TBrand,
     TMode,
@@ -6,15 +14,7 @@ import {
     TDecorationId,
     TImage,
 } from '@/types/types';
-import { ArrowRight } from 'lucide-react';
-import { ReactNode, Ref, forwardRef } from 'react';
-import { ASPECT_RATIOS_MAP, aspectRatioClasses } from './const';
-import { SlideProgressBar } from './slideParts/SlideProgressBar';
-import { SlideFotter } from './slideParts/SlideFotter';
-import { SlideHeader } from './slideParts/SlideHeader';
-import { SlideDecoration } from './slideParts/SlideDecoration';
-import { SlideBackground } from './slideParts/SlideBackground';
-import { AspectRatio } from '@prisma/client';
+import { cn, isEven } from '@/lib/utils';
 
 export type AspectRatioKeys = keyof typeof aspectRatioClasses;
 

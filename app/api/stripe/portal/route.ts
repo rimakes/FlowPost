@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth/next';
+import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
 import { createCustomerPortal } from '@/lib/stripe';
-import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);

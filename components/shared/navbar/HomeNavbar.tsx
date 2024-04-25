@@ -1,12 +1,13 @@
 'use client';
 
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { Menu } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import Logo from '../logo';
-import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { Route } from 'next';
+import Logo from '../logo';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,7 +17,6 @@ import {
 import { GetAccessButton } from '@/components/marketing/GetAccessButton';
 import { LoginButton } from '@/components/auth/LoginButton';
 import { MENU_ITEMS } from '@/config/const';
-import { Route } from 'next';
 
 export function HomeNavbar({ className }: { className?: string }) {
     const { data } = useSession();

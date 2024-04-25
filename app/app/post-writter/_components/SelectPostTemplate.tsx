@@ -1,14 +1,14 @@
-import { Button } from '@/components/ui/button';
 import { Lock, Pen, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { PostCategory, PostTemplate } from '@prisma/client';
-import { Pure } from '@/types/types';
-import { POST_TEMPLATES } from '../config/prompts';
-import { POST_CATEGORIES } from '../config/const';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { POST_TEMPLATES } from '../config/prompts';
+import { POST_CATEGORIES } from '../config/const';
+import { Pure } from '@/types/types';
+import { cn, getPostTemplateById, proToast } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 type SelectPostTemplateProps = {
     setSelected: (selected: string) => void;

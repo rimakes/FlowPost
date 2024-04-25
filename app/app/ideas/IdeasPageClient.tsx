@@ -1,4 +1,9 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { PostIdeaCard } from './IdeaCard';
 import { generateIdeas } from '@/app/_actions/idea-actions';
 import Spinner from '@/components/icons/Spinner';
 import { Button } from '@/components/ui/button';
@@ -15,11 +20,6 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IdeaRequestFormSchema } from '@/types/schemas';
 import { TStatus } from '@/types/types';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Sparkles } from 'lucide-react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { PostIdeaCard } from './IdeaCard';
 
 type IdeasPageClientProps = {};
 export function IdeasPageClient({}: IdeasPageClientProps) {

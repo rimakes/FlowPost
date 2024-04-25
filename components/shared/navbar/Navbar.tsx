@@ -1,14 +1,14 @@
 'use client';
 
+import { PenLine } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Logo from '../logo';
+import { SelectAccountMenu } from './SelectAccountMenu';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { HeadwayScript } from '@/widgets/headway';
-import { PenLine } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import Logo from '../logo';
-import { SelectAccountMenu } from './SelectAccountMenu';
 import { cn } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
 
 export default function Navbar({ className }: { className?: string }) {
     const { data } = useSession();

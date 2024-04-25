@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import { CSSProperties, useEffect, useId, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 // Credit where credit is due: https://codepen.io/feketegy/pen/RwGBgyq
 

@@ -1,8 +1,8 @@
-import { cn } from '@/lib/utils';
 import { GiftIcon } from 'lucide-react';
+import { ComponentProps } from 'react';
 import { Button } from '../ui/button';
 import { GetAccessButton } from './GetAccessButton';
-import { ComponentProps } from 'react';
+import { cn } from '@/lib/utils';
 
 type CtaWithSocialProps = {
     accentText: string;

@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { TLinkedinPost, TScheduledPost } from '@/types/types';
 import { LinkedinPost } from '@prisma/client';
 import { PenSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { TLinkedinPost, TScheduledPost } from '@/types/types';
 
 type ViewMoreModalContentProps = {
     post: LinkedinPost & { scheduledPost: TScheduledPost[] };

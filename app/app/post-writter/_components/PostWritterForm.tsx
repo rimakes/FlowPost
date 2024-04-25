@@ -1,5 +1,20 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus, Sparkles } from 'lucide-react';
+import { useCallback, useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { VOICE_TONES } from '../config/const';
+import {
+    SelectPostTemplate,
+    SelectedPostTemplateCard,
+} from './SelectPostTemplate';
+import { PostWritterContext } from './PostWritterProvider';
+import { RecordButton } from './RecordButton';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
@@ -13,25 +28,10 @@ import {
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { cn, getPostTemplateById, proToast } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, Sparkles } from 'lucide-react';
-import { useCallback, useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import {
-    SelectPostTemplate,
-    SelectedPostTemplateCard,
-} from './SelectPostTemplate';
-import { PostWritterContext } from './PostWritterProvider';
 import { CharCounter } from '@/components/shared/CharCounter';
-import { RecordButton } from './RecordButton';
 import Spinner from '@/components/icons/Spinner';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
-import { VOICE_TONES } from '../config/const';
 import { useUserCredits } from '@/hooks/use-user-credits';
 
 export const MAX_LENGTH = 1000;

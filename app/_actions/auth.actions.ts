@@ -1,7 +1,7 @@
 'use server';
 
-import { getServerSession } from '@/auth';
 import { Session } from 'next-auth';
+import { getServerSession } from '@/auth';
 
 type UserSession = Session | { user: { id: string } };
 

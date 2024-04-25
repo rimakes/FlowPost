@@ -1,12 +1,12 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import { ArrowDown, ArrowRight, Video } from 'lucide-react';
-import { buttonVariants } from '../ui/button';
-import { handwritten } from '@/config/fonts';
-import { DemoWidget } from './Demo';
 import Link from 'next/link';
+import { buttonVariants } from '../ui/button';
+import { DemoWidget } from './Demo';
 import { GetAccessButton } from './GetAccessButton';
+import { handwritten } from '@/config/fonts';
+import { cn } from '@/lib/utils';
 import { PostWritterContextProvider } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { CarouselProvider } from '@/app/app/carrousel/_components/CarouselProvider';
 import { fakeCarousel } from '@/app/app/carrousel/_components/const';

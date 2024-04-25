@@ -1,6 +1,6 @@
-import { TBrand } from '@/types/types';
 import { useContext } from 'react';
 import { CarouselContext } from '../CarouselProvider';
+import { TBrand } from '@/types/types';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type BigNumberSlideProps = {

@@ -1,6 +1,6 @@
-import { Pricing } from '@/components/marketing/pricing';
 import { Subscription } from '@prisma/client';
 import { CurrentPlan } from './CurrentPlan';
+import { Pricing } from '@/components/marketing/pricing';
 
 type PlanSettingsProps = {
     subscription: Subscription | null | undefined;

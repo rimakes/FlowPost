@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import { CSSProperties, useEffect, useRef, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
+import { cn } from '@/lib/utils';
 
 type Editable = {
     value: string;

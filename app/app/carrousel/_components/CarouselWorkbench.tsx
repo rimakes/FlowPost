@@ -2,6 +2,12 @@
 
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ReactNode, useContext, useEffect, useRef } from 'react';
+import { CarouselContext } from './CarouselProvider';
+import { ContentSlideLayout } from './ContentSlideLayout';
+import { TextOnlySlide } from './slideContents/TextOnlySlide';
+import { SlideSettings } from './SlideSettings';
+import { designNamesMap } from './slideContents/contentMaps';
+import { cn, isEven } from '@/lib/utils';
 import {
     TBrand,
     TDecorationId,
@@ -10,12 +16,6 @@ import {
     TSlide,
     TSlideDesignNames,
 } from '@/types/types';
-import { CarouselContext } from './CarouselProvider';
-import { ContentSlideLayout } from './ContentSlideLayout';
-import { TextOnlySlide } from './slideContents/TextOnlySlide';
-import { cn, isEven } from '@/lib/utils';
-import { SlideSettings } from './SlideSettings';
-import { designNamesMap } from './slideContents/contentMaps';
 import { useBrand } from '@/hooks/use-brand';
 // Whitelisting the classes:
 type keys = keyof typeof translateClasses;

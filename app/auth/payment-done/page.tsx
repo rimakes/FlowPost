@@ -6,12 +6,12 @@ export const metadata = {
 import Link from 'next/link';
 import AuthHeader from '../AuthHeader';
 import AuthImage from '../AuthImage';
+import { EmailSendMessage } from './EmailSendMessage';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 import { Message } from '@/components/auth/Message';
 import { TPageProps } from '@/types/types';
 import { db } from '@/lib/prisma';
 import { findCheckoutSession } from '@/lib/stripe';
-import { EmailSendMessage } from './EmailSendMessage';
 
 const getUserByCustomerId = async (customerId: string) => {
     const user = await db.user.findFirst({

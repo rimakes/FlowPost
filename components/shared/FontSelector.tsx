@@ -1,13 +1,13 @@
 'use client';
 
+import { useId, useState } from 'react';
+import { ArrowDownIcon, ChevronDown } from 'lucide-react';
+import { useDebouncedState } from '@mantine/hooks';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useId, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { TFontName } from '@/types/types';
-import { ArrowDownIcon, ChevronDown } from 'lucide-react';
 import { FONTS } from '@/config/fontsBigList';
-import { useDebouncedState } from '@mantine/hooks';
 
 type FontSelectorProps = {
     setFontPalette: (font: TFontName) => void;

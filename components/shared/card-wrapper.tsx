@@ -1,3 +1,6 @@
+import { Separator } from '../ui/separator';
+import { SocialLogin } from '../auth/SocialLogin';
+import { Heading } from './Heading';
 import {
     Card,
     CardContent,
@@ -7,9 +10,6 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Heading } from './Heading';
-import { Separator } from '../ui/separator';
-import { SocialLogin } from '../auth/SocialLogin';
 
 type CardWrapperProps = {
     children: React.ReactNode;

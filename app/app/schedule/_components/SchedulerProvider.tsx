@@ -1,8 +1,8 @@
 'use client';
 
-import { TCarousel, TLinkedinPost, TScheduledPost } from '@/types/types';
 import { LinkedinPost, Prisma } from '@prisma/client';
 import { ReactNode, createContext, useState } from 'react';
+import { TCarousel, TLinkedinPost, TScheduledPost } from '@/types/types';
 
 type SchedulerProviderProps = {
     userPosts: (LinkedinPost & { scheduledPost: TScheduledPost[] } & {

@@ -1,10 +1,5 @@
 'use client';
 
-import { fakeSlides } from '@/app/app/carrousel/_components/const';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { cn, fromPdfUrlToThumnailUrl } from '@/lib/utils';
-import { TCarousel, TLinkedinPost } from '@/types/types';
 import {
     Cross,
     GalleryHorizontal,
@@ -24,9 +19,14 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import { PostWritterContext } from '../../_components/PostWritterProvider';
-import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import Link from 'next/link';
+import { PostWritterContext } from '../../_components/PostWritterProvider';
+import { fakeSlides } from '@/app/app/carrousel/_components/const';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { cn, fromPdfUrlToThumnailUrl } from '@/lib/utils';
+import { TCarousel, TLinkedinPost } from '@/types/types';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type LinkedinPostProps = { className?: string; carousel: TCarousel };

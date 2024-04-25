@@ -1,3 +1,5 @@
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import {
     Select,
     SelectContent,
@@ -7,8 +9,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { TBrand } from '@/types/types';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 type BrandKitSelectorProps = {
     brands?: TBrand[];

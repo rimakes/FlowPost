@@ -1,13 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
-import { LoginForm } from './LoginForm';
-import { cn } from '@/lib/utils';
-import { SwitchLogin } from './SwithLogin';
 import { Suspense, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { LoginForm } from './LoginForm';
+import { SwitchLogin } from './SwithLogin';
 import { SocialLogin } from './SocialLogin';
+import { cn } from '@/lib/utils';
 
 type LoginButtonProps = {
     mode: 'modal' | 'redirect';

@@ -1,3 +1,4 @@
+import { Badge, Link } from 'lucide-react';
 import {
     Popover,
     PopoverContent,
@@ -9,7 +10,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Badge, Link } from 'lucide-react';
 
 type Notification = {
     type: 'éxito' | 'error' | 'aviso' | 'info' | 'nuevo' | 'mejora';

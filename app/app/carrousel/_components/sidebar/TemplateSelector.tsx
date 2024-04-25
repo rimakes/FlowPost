@@ -1,10 +1,10 @@
 // TODO: Not used
 
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { range } from '@mantine/hooks';
 import { useContext } from 'react';
 import { CarouselContext } from '../CarouselProvider';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { ContentSlideLayout } from '@/app/app/carrousel/_components/ContentSlideLayout';
 import { TBrand } from '@/types/types';
 import { TextOnlySlide } from '@/app/app/carrousel/_components/slideContents/TextOnlySlide';

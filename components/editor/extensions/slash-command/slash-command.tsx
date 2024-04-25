@@ -12,8 +12,8 @@ import { Suggestion } from '@tiptap/suggestion';
 import { Editor, ReactRenderer } from '@tiptap/react';
 import tippy from 'tippy.js';
 import { LucideWrapText } from 'lucide-react';
-import useOperatingSystem from '@/hooks/use-os';
 import { getSuggestionItems } from './get-suggestion-items';
+import useOperatingSystem from '@/hooks/use-os';
 import { getContextText, requestComplete } from '@/lib/utils';
 
 // Create the extension with the name "slash-command"

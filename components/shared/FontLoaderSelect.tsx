@@ -2,8 +2,8 @@
 // TODO: Not used for now. Not sure if I want to keep this one or the one with the filter...
 
 import { useState } from 'react';
-import { FONTS } from '@/config/fontsBigList';
 import SimpleEditor from '../simple-editor/SimpleEditor';
+import { FONTS } from '@/config/fontsBigList';
 
 type FontLoaderProps = {
     // value: string;

@@ -1,9 +1,7 @@
 'use client';
 
 import { Label } from '@radix-ui/react-label';
-import { cn } from '@/lib/utils';
 import { useContext } from 'react';
-import { CarouselContext } from './CarouselProvider';
 import {
     ArrowLeft,
     ArrowLeftIcon,
@@ -12,11 +10,13 @@ import {
     Plus,
     Trash2,
 } from 'lucide-react';
+import { CarouselContext } from './CarouselProvider';
+import { designNamesMap } from './slideContents/contentMaps';
+import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { TSlide, TSlideDesignNames } from '@/types/types';
 import { Slider } from '@/components/ui/slider';
-import { designNamesMap } from './slideContents/contentMaps';
 import {
     Select,
     SelectContent,

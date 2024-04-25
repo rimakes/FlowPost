@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth/next';
+import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
 import { createCheckout } from '@/lib/stripe';
-import { NextRequest, NextResponse } from 'next/server';
 
 // This function is used to create a Stripe Checkout Session (one-time payment or subscription)
 // It's called by the <ButtonCheckout /> component

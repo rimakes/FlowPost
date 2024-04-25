@@ -1,9 +1,9 @@
-import { TBrand } from '@/types/types';
 import Image from 'next/image';
-import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { ArrowLeftIcon, ArrowRight } from 'lucide-react';
 import { useContext } from 'react';
+import { SlideGradientBlob } from '../slideParts/SlideGradientBlob';
 import { CarouselContext } from '../CarouselProvider';
+import { TBrand } from '@/types/types';
 import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 
 type ImageAndTextVertical = {
