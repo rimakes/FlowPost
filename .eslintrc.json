@@ -1,3 +1,8 @@
 {
-    "extends": ["next/core-web-vitals", "prettier"]
+    "extends": ["next/core-web-vitals", "prettier"],
+    "plugins": ["import"],
+    "rules": {
+        "import/no-unused-modules": [1],
+        "import/newline-after-import": [1]
+    }
 }

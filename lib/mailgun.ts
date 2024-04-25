@@ -2,6 +2,7 @@ import { appConfig } from '@/config/shipper.appconfig';
 import Mailgun from 'mailgun.js';
 
 const formData = require('form-data');
+
 const mailgun = new Mailgun(formData);
 
 const mg = mailgun.client({

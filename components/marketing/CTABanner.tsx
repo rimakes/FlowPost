@@ -1,7 +1,4 @@
-import { ArrowRight } from 'lucide-react';
 import { ReactNode } from 'react';
-import { Button } from '../ui/button';
-import Image from 'next/image';
 
 type CTABannerProps = {
     title: ReactNode;

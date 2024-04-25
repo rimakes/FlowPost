@@ -2,16 +2,11 @@
 
 import { useContext } from 'react';
 import { PostWritterContext } from '../_components/PostWritterProvider';
-import { TCarousel, TLinkedinPost } from '@/types/types';
-import Editor from '@/components/editor/Editor';
+import { TCarousel } from '@/types/types';
 import { LinkedinPost } from './_components/LinkedinPost';
-import { Editor as TipTapEditor } from '@tiptap/react';
-import { Textarea } from '@/components/ui/textarea';
-import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { Save } from 'lucide-react';
-import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 import { useSession } from 'next-auth/react';
 import { PostWritterResultTipTap } from '../_components/GeneratedPostWithTipTap';
+
 type AssistedClientProps = {
     carousel: TCarousel;
 };
