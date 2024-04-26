@@ -30,7 +30,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/first-step-demo.mp4'
+                        videoUrl='/videos/step1.mp4'
                         className='max-h-64'
                     />
                 </TextWithMedia>
@@ -47,7 +47,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/second-step-demo.mp4'
+                        videoUrl='/videos/step2.mp4'
                         className='max-h-64'
                     />
                 </TextWithMedia>
@@ -66,7 +66,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/create-carousel.mp4'
+                        videoUrl='/videos/step3.mp4'
                         className='max-h-64'
                     />
                 </TextWithMedia>

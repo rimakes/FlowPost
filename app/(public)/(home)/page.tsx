@@ -10,6 +10,8 @@ import { Pricing2 } from '@/components/marketing/Pricing2';
 import { appConfig } from '@/config/shipper.appconfig';
 import { VideoSteps } from '@/components/marketing/VideoSteps';
 
+// TODO: This should be rendered statically, but then I cannot use the session provider in the layout...?
+
 // BOILER: add the route typing (as done in next.config) https://nextjs.org/docs/app/building-your-application/configuring/typescript
 
 export default async function Home() {
@@ -17,16 +19,8 @@ export default async function Home() {
 
     return (
         <div className={`gap flex flex-col items-center justify-between`}>
-            {/* TODO:
-            NextAuth is adding the callback to the url instead of redirecting to the callbackUrl on signup
-            Not ideal, but for now, we are using this to redirect to the callbackUrl manually
-            */}
-            {/* <RedirectTweak /> */}
             <Hero />
-
-            {/* <TestComponent /> */}
             <VideoSteps />
-
             <Pricing2 />
             <DemoVideo
                 title={

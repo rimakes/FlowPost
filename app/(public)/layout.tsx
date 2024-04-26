@@ -1,7 +1,6 @@
 import Footer from '@/components/shared/Footer';
 import Container from '@/components/shared/container';
 import { HomeNavbar } from '@/components/shared/navbar/HomeNavbar';
-import Navbar from '@/components/shared/navbar/Navbar';
 
 export default function DefaultLayout({
     children,

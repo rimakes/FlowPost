@@ -93,7 +93,6 @@ export function CreateCarouselButton({
 
                 const toastId = toast.loading('Creando carrusel...', {
                     // TODO: Check how can we keep it active indefinitely (until we change it manually)
-                    duration: 20000,
                 });
                 try {
                     const newCarousel = await upsertPostAndCreateCarousel();
