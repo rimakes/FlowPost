@@ -46,7 +46,7 @@ ListSlide: use it when the text has a list but the list is not the only part of 
       }},
 
   ImageAndTextHorizontal: use it when you want to show an image with a small paragraph of text. The paragraph must be concise (follow the schema). in the image property, put a query in Spanish that could be use to find an image that is relevant for the slide.
-  
+
 {{
   "title": "Un enfoque moderno",
   "paragraphs": ["Mientras tú estás aquí, tu competencia ya está en TikTok, Instagram y Facebook. ¿Dónde estás tú?"],
@@ -87,29 +87,3 @@ Usa diversidad de tipos de slides cuando sea posible.
 const array =
 
 `;
-
-// Create the array of slides that meet that structure. Only output the array, not intro, no outro, no logs. VERY IMPORTANT: Don't go above the allowed length on ANY of the slide contents.
-
-// It's very important for me that you follow the format of each slide:
-// - CoverSlide has: title, tagline. It does NOT have paragraphs. Always start with a cover slide.
-// - OnlyTextSlide has: title, paragraphs (only ONE paragraph in the array). It does NOT have tagline.
-// - BigNumberSlide has: title, bigCharacter, tagline. It does NOT have paragraphs.
-// - ListSlide has: title, paragraphs. It does NOT have tagline.
-// - CallToAction has: title, paragraphs (only ONE paragraph in the array), and tagline. Always finish with a call to action.
-
-// export const promptGenerateCarousel = `
-
-// Given this text:
-
-// "
-// {post}
-// "
-// Use the copy of that text to create an array of slides with the following structure:
-
-// {format_instructions}
-
-// Create the array of slides that meet that structure. Only output the array, not intro, no outro, no logs. VERY IMPORTANT: Don't go above the allowed length on ANY of the slide contents.
-
-// const array =
-
-// `;

@@ -29,10 +29,10 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { CharCounter } from '@/components/shared/CharCounter';
-import Spinner from '@/components/icons/Spinner';
 import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
 import { useUserCredits } from '@/hooks/use-user-credits';
+import Spinner from '@/components/icons/Spinner';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;

@@ -12,7 +12,6 @@ import { CarouselContext } from '../CarouselProvider';
 import { DownloadButton } from './downloadButton';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { TStatus } from '@/types/types';
-import Spinner from '@/components/icons/Spinner';
 import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import {
     Dialog,
@@ -25,6 +24,7 @@ import { Label } from '@/components/ui/label';
 import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
+import Spinner from '@/components/icons/Spinner';
 
 export function ContinueButton({}) {
     const router = useRouter();

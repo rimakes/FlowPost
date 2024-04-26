@@ -29,11 +29,6 @@ type GeneratedPostProps = {
 
 export const PostWritterResultTipTap = ({
     className,
-    isEditable = false,
-    height,
-    minHeight,
-    setEditDetailsModal,
-    showEditableSwitch = true,
     carouselId,
     isDemo = false,
     onDemoCarouselCreated: onDemoCarouselCreatedProp = () => {},
@@ -43,7 +38,6 @@ export const PostWritterResultTipTap = ({
     const [status, setStatus] = useState<TStatus>('idle');
     const { post, setPost, updatePost } = useContext(PostWritterContext);
     const { setCarousel } = useContext(CarouselContext);
-    const [isEditableOverride, setIsEditableOverride] = useState(false);
 
     const router = useRouter();
 

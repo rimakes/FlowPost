@@ -7,7 +7,6 @@ import { toPng } from 'html-to-image';
 import { CarouselContext } from '../CarouselProvider';
 import { Button } from '@/components/ui/button';
 import { TStatus } from '@/types/types';
-import Spinner from '@/components/icons/Spinner';
 import { cn } from '@/lib/utils';
 import {
     DropdownMenu,
@@ -16,6 +15,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
+import Spinner from '@/components/icons/Spinner';
 
 type ImageFormat = 'pdf' | 'svg';
 

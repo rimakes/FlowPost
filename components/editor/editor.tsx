@@ -6,10 +6,8 @@ import {
     EditorContent,
     useEditor,
 } from '@tiptap/react';
-import { Button } from '../ui/button';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { Separator } from '../ui/separator';
-import { defaultEditorContent } from './default-editor-content';
 // TODO: change to mantine
 import { defaultExtensions } from './extensions/default-extensions';
 import { defaultEditorProps } from './default-props';
@@ -19,7 +17,6 @@ import { getPrevText } from '@/lib/get-prev-text';
 import useLocalStorage from '@/hooks/use-local-storage';
 import useFullScreen from '@/hooks/use-full-screen';
 import { cn, getContextText, requestComplete } from '@/lib/utils';
-import { LinkedinPost } from '@/app/app/post-writter/[postId]/_components/LinkedinPost';
 
 export default function Editor({
     /**

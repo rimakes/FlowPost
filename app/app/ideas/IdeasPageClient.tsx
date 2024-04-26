@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { PostIdeaCard } from './IdeaCard';
 import { generateIdeas } from '@/app/_actions/idea-actions';
-import Spinner from '@/components/icons/Spinner';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -20,6 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IdeaRequestFormSchema } from '@/types/schemas';
 import { TStatus } from '@/types/types';
+import Spinner from '@/components/icons/Spinner';
 
 type IdeasPageClientProps = {};
 export function IdeasPageClient({}: IdeasPageClientProps) {
