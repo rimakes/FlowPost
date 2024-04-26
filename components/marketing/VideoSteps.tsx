@@ -30,7 +30,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/viral-templates.mp4'
+                        videoUrl='/videos/test-video.mp4'
                         className='max-h-64'
                         playing
                     />
