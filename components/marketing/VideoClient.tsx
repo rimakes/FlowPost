@@ -1,36 +1,31 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player/lazy';
-import { cn } from '@/lib/utils';
+import { useRef, useEffect } from 'react';
+
+//
 
 type VideoClientProps = {
     videoUrl: string;
-    playing?: boolean;
     className?: string;
 };
-export function VideoClient({
-    videoUrl,
-    playing = true,
-    className,
-}: VideoClientProps) {
-    const [hasMouted, setHasMouted] = useState(false);
-    useEffect(() => {
-        setHasMouted(true);
-    }, []);
 
-    if (!hasMouted) return null;
+export const VideoClient = (props: VideoClientProps) => {
+    const videoRef = useRef<HTMLVideoElement>();
+    useEffect(() => {
+        if (videoRef.current) videoRef.current.defaultMuted = true;
+    });
 
     return (
-        <div className={cn(`aspect-[1158/720]`, className)}>
-            <ReactPlayer
-                url={videoUrl}
-                width={'100%'}
-                height={'100%'}
-                playing
-                loop
-                muted
-            />
-        </div>
+        <video
+            className={props.className}
+            // @ts-ignore
+            ref={videoRef}
+            loop
+            autoPlay
+            muted
+            playsInline
+        >
+            <source src={props.videoUrl} type='video/mp4' />
+        </video>
     );
-}
+};

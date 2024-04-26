@@ -22,7 +22,7 @@ export default function CtaWithSocial({
     return (
         <div className='flex flex-col gap-2 '>
             <GetAccessButton
-                className='mx-auto mb-1 w-full bg-gradient-to-tr from-pink-400  to-indigo-500 text-lg text-pink-50 text-primary shadow-none
+                className='mx-auto mb-1 w-full bg-gradient-to-tr from-pink-400  to-indigo-500 text-lg text-pink-50 shadow-none
 '
                 buttonProps={buttonProps}
             />

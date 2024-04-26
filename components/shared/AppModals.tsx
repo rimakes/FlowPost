@@ -46,7 +46,7 @@ export function AppModals({}: AppModalsProps) {
                 if (value === false) brandCreateDismissed();
             }}
         >
-            <DialogContent>
+            <DialogContent className='max-h-full overflow-y-auto'>
                 <h1 className='mb-4 text-center text-2xl font-bold'>
                     ✨ ¡Crear tu primera marca!
                 </h1>

@@ -30,9 +30,8 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/test-video.mp4'
+                        videoUrl='/videos/first-step-demo.mp4'
                         className='max-h-64'
-                        playing
                     />
                 </TextWithMedia>
                 <TextWithMedia
@@ -48,7 +47,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     className=''
                 >
                     <VideoClient
-                        videoUrl='/videos/create-viral.mp4'
+                        videoUrl='/videos/second-step-demo.mp4'
                         className='max-h-64'
                     />
                 </TextWithMedia>
@@ -101,7 +100,7 @@ export function VideoSteps({}: VideoStepsProps) {
             </div>
             <GetAccessButton
                 className='mx-auto mb-1 w-full bg-gradient-to-tr
-                            from-pink-400  to-indigo-500 text-lg text-pink-50 text-primary 
+                            from-pink-400  to-indigo-500 text-lg text-pink-50 
                             shadow-none
                             '
             />

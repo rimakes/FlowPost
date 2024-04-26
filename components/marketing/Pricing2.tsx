@@ -1,19 +1,17 @@
 'use client';
 
 import { Check, GiftIcon, ShieldCheck } from 'lucide-react';
-import Highlight from '../utils/Hightlight';
 import { GetAccessButton } from './GetAccessButton';
 import { cn } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';
 // import Highlight from '../utils/highlight';
-import { getStripeInstance } from '@/lib/stripe';
 import { secondaryFont } from '@/config/fonts';
 
 export const Pricing2 = () => {
     return (
-        <section className='relative flex max-w-7xl flex-col gap-20'>
+        <section className='relative flex max-w-7xl flex-col gap-6'>
             <div className='anchor absolute -top-32' id='pricing' />
-            <div className='gap2 flex flex-col text-center'>
+            <div className='flex flex-col gap-2 text-center'>
                 <h2
                     className={`${secondaryFont.className} border-b-0 text-6xl font-extrabold`}
                 >
@@ -56,7 +54,7 @@ export const Pricing2 = () => {
                         <div>
                             <GetAccessButton
                                 className='mx-auto mb-1 w-full bg-gradient-to-tr
-                            from-pink-400  to-indigo-400 text-lg text-pink-50 text-primary shadow-none
+                            from-pink-400  to-indigo-400 text-lg text-pink-50 shadow-none
                             
                             '
                             />
