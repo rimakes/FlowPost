@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
-import Spinner from '../icons/Spinner';
+import Spinner from '../icons/SpinnerIcon';
 import {
     Form,
     FormControl,

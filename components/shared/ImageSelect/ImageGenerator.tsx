@@ -2,7 +2,7 @@ import { range } from '@mantine/hooks';
 import { useState } from 'react';
 import { ImageWithLoading } from '../ImageWithLoading';
 import { generateNImages } from '@/app/_actions/image-actions';
-import Spinner from '@/components/icons/Spinner';
+import Spinner from '@/components/icons/SpinnerIcon';
 import { Input } from '@/components/ui/input';
 import { ImageWithDataUrl, TStatus } from '@/types/types';
 import { Dialog, DialogContent } from '@/components/ui/dialog';

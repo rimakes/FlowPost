@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IdeaRequestFormSchema } from '@/types/schemas';
 import { TStatus } from '@/types/types';
-import Spinner from '@/components/icons/Spinner';
+import Spinner from '@/components/icons/SpinnerIcon';
 
 type IdeasPageClientProps = {};
 export function IdeasPageClient({}: IdeasPageClientProps) {

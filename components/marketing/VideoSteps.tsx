@@ -1,12 +1,9 @@
 'use client';
 
 import { Calendar, Languages, Rocket, Sparkles } from 'lucide-react';
-import { useContext } from 'react';
-import { Button } from '../ui/button';
 import { GetAccessButton, ModalItem } from './GetAccessButton';
 import { TextWithMedia } from './TextWithMedia';
 import { VideoClient } from './VideoClient';
-import { AppContext } from '@/providers/AppProvider';
 import { secondaryFont } from '@/config/fonts';
 
 type VideoStepsProps = {};
@@ -35,6 +32,7 @@ export function VideoSteps({}: VideoStepsProps) {
                     <VideoClient
                         videoUrl='/videos/viral-templates.mp4'
                         className='max-h-64'
+                        playing
                     />
                 </TextWithMedia>
                 <TextWithMedia

@@ -32,7 +32,7 @@ import { CharCounter } from '@/components/shared/CharCounter';
 import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
 import { useUserCredits } from '@/hooks/use-user-credits';
-import Spinner from '@/components/icons/Spinner';
+import Spinner from '@/components/icons/SpinnerIcon';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;

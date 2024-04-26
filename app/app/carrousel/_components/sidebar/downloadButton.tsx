@@ -15,7 +15,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
-import Spinner from '@/components/icons/Spinner';
+import Spinner from '@/components/icons/SpinnerIcon';
 
 type ImageFormat = 'pdf' | 'svg';
 

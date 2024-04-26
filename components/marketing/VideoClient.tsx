@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { cn } from '@/lib/utils';
 
 type VideoClientProps = {
@@ -27,7 +27,7 @@ export function VideoClient({
                 url={videoUrl}
                 width={'100%'}
                 height={'100%'}
-                playing={playing}
+                playing
                 loop
                 muted
             />

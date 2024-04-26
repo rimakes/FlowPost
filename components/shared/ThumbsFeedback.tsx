@@ -14,7 +14,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '../ui/dialog';
 import {
     Form,
@@ -25,13 +24,11 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form';
-import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import Spinner from '../icons/Spinner';
+import Spinner from '../icons/SpinnerIcon';
 import { Button } from '../ui/button';
 import { InputFaces } from './InputFaces';
 import { TFeedback, TStatus } from '@/types/types';
-import { IdeaRequestFormSchema } from '@/types/schemas';
 import { apiClient } from '@/lib/apiClient';
 import { cn } from '@/lib/utils';
 

@@ -24,7 +24,7 @@ import { Label } from '@/components/ui/label';
 import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
 import { upsertCarousel } from '@/app/_actions/writter-actions';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
-import Spinner from '@/components/icons/Spinner';
+import Spinner from '@/components/icons/SpinnerIcon';
 
 export function ContinueButton({}) {
     const router = useRouter();

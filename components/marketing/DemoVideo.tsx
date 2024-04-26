@@ -1,9 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import ReactPlayer from 'react-player/lazy';
-import { Button } from '../ui/button';
 
 type DemoVideoProps = {
     videoUrl: string;
@@ -40,6 +38,8 @@ export function DemoVideo({
                         url={videoUrl}
                         width={'100%'}
                         height={'100%'}
+                        muted
+                        playing
                     />
                 )}
             </div>

@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '../ui/button';
-import Spinner from '../icons/Spinner';
+import Spinner from '../icons/SpinnerIcon';
 import { InputFaces, KeyFrames } from './InputFaces';
 import { cn } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';

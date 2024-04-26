@@ -9,6 +9,7 @@ import { DemoVideo } from '@/components/marketing/DemoVideo';
 import { Pricing2 } from '@/components/marketing/Pricing2';
 import { appConfig } from '@/config/shipper.appconfig';
 import { VideoSteps } from '@/components/marketing/VideoSteps';
+import { VideoClient } from '@/components/marketing/VideoClient';
 
 // BOILER: add the route typing (as done in next.config) https://nextjs.org/docs/app/building-your-application/configuring/typescript
 
@@ -25,6 +26,7 @@ export default async function Home() {
             <Hero />
 
             <VideoSteps />
+            <VideoClient videoUrl='/public/videos/edit-post.mp4' playing />
 
             <Pricing2 />
             <DemoVideo

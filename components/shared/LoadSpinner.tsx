@@ -1,6 +1,3 @@
-import { Loader, Loader2 } from 'lucide-react';
-import Spinner from '../icons/Spinner';
-
 type LoadSpinnerProps = {};
 export function LoadSpinner({}: LoadSpinnerProps) {
     return (

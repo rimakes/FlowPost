@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ImageIcon } from 'lucide-react';
-import Spinner from '../icons/Spinner';
+import Spinner from '../icons/SpinnerIcon';
 import { TStatus } from '@/types/types';
 
 type ImageWithLoading = {
