@@ -220,7 +220,6 @@ export const SecondStep = ({
                     priceId={seletectedPlan}
                     className='w-full bg-gradient-to-tr from-fuchsia-500 to-indigo-600'
                 >
-                    {' '}
                     Consigue {appConfig.general.appName}
                     <span className='relative -top-1'>+</span>{' '}
                 </CheckoutButton>

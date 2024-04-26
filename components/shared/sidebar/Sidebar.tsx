@@ -24,6 +24,7 @@ import { cn, capitalizeFirstLetter, getCreditsByPriceId } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';
 import { TMenuItem } from '@/types/types';
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS } from '@/config/const';
+import { useUserCredits } from '@/hooks/use-user-credits';
 
 type SidebarProps = {};
 
@@ -208,10 +209,10 @@ type WordsUsedWidgetProps = {
 
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
     const { data } = useSession();
-    const creditBalance = data?.user?.creditBalance || 0;
+    const { creditBalance } = useUserCredits();
     const isPro = !!data?.user?.stripeSubscription?.subscriptionId;
     const maxCredits = !isPro
-        ? 3
+        ? 10
         : getCreditsByPriceId(data?.user?.stripeSubscription?.priceId!);
 
     return (

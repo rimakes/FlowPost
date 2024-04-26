@@ -23,7 +23,7 @@ export default function Editor({
      * Additional classes to add to the editor container.
      * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
      */
-    className = 'relative min-h-full w-full sm:mb-[calc(20vh)]',
+    className = 'relative min-h-full w-full',
     /**
      * The default value to use for the editor.
      * Defaults to defaultEditorContent.
@@ -159,7 +159,7 @@ export default function Editor({
                 onClick={() => {
                     editor?.chain().focus().run();
                 }}
-                className={cn(`bg-background`)}
+                className={cn(`relative bg-background`, className)}
             >
                 <FullScreenToolBar
                     openFullScreen={openFullScreen}
@@ -176,7 +176,7 @@ export default function Editor({
                         editor={editor}
                         ref={editorRef}
                         placeholder='Cinco consejos para mejorar tu copy...'
-                        className='flex-1'
+                        className='min-h-full flex-1 overflow-y-auto '
                     />
                 </div>
             </div>

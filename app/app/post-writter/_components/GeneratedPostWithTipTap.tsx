@@ -13,7 +13,7 @@ import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { TStatus } from '@/types/types';
-import Editor from '@/components/editor/EditorComp';
+import Editor from '@/components/editor/Editor';
 
 type GeneratedPostProps = {
     className?: string;
@@ -51,13 +51,12 @@ export const PostWritterResultTipTap = ({
     return (
         <div className={cn(``, className)}>
             {/* <EmojiPickerClient /> */}
-            <div className='space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
-                <div className='relative pb-6'>
-                    <Editor
-                        onDebouncedUpdate={updatePost}
-                        defaultValue={post.content.replace(/\n/g, '<br/>')}
-                    />
-                </div>
+            <div className='relative flex min-h-[40vh] flex-col space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
+                <Editor
+                    onDebouncedUpdate={updatePost}
+                    defaultValue={post.content.replace(/\n/g, '<br/>')}
+                    className='h-full grow'
+                />
 
                 <div className='relative flex gap-2'>
                     <ButtonWithTooltip

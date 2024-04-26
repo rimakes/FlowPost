@@ -24,7 +24,7 @@ model User {
     emailVerified      DateTime?
     hashedPassword     String?
     role               UserRole      @default(USER)
-    creditBalance      Int           @default(3)
+    creditBalance      Int           @default(10)
 
     settingsId    String         @unique @db.ObjectId
     settings      Settings       @relation(fields: [settingsId], references: [id], onDelete: Cascade)

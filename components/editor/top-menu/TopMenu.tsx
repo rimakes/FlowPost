@@ -15,27 +15,27 @@ export default function TopMenu({ editor, handleDownload }: TopMenuProps) {
     }
 
     const editorTopMenuItems = [
-        {
-            label: 'B',
-            description: 'Bold',
-            command: () => editor.chain().focus().toggleBold().run(),
-            isActive: () => editor.isActive('bold'),
-            className: 'font-bold',
-        },
-        {
-            label: 'I',
-            description: 'Italic',
-            command: () => editor.chain().focus().toggleItalic().run(),
-            isActive: () => editor.isActive('italic'),
-            className: 'italic',
-        },
-        {
-            label: 'S',
-            description: 'Strike',
-            command: () => editor.chain().focus().toggleStrike().run(),
-            isActive: () => editor.isActive('strike'),
-            className: 'line-through',
-        },
+        // {
+        //     label: 'B',
+        //     description: 'Bold',
+        //     command: () => editor.chain().focus().toggleBold().run(),
+        //     isActive: () => editor.isActive('bold'),
+        //     className: 'font-bold',
+        // },
+        // {
+        //     label: 'I',
+        //     description: 'Italic',
+        //     command: () => editor.chain().focus().toggleItalic().run(),
+        //     isActive: () => editor.isActive('italic'),
+        //     className: 'italic',
+        // },
+        // {
+        //     label: 'S',
+        //     description: 'Strike',
+        //     command: () => editor.chain().focus().toggleStrike().run(),
+        //     isActive: () => editor.isActive('strike'),
+        //     className: 'line-through',
+        // },
         // {
         //     label: 'clear marks',
         //     command: () => editor.chain().focus().unsetAllMarks().run(),
@@ -99,8 +99,8 @@ export default function TopMenu({ editor, handleDownload }: TopMenuProps) {
                         label={button.label}
                         description={button.description}
                         command={button.command}
-                        isActive={button.isActive}
-                        className={button.className}
+                        // isActive={button.isActive}
+                        // className={button.className}
                     />
                 ))}
             </div>
