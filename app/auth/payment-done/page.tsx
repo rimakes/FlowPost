@@ -3,12 +3,10 @@ export const metadata = {
     description: 'Page description',
 };
 
-import Link from 'next/link';
 import AuthHeader from '../AuthHeader';
 import AuthImage from '../AuthImage';
 import { EmailSendMessage } from './EmailSendMessage';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
-import { Message } from '@/components/auth/Message';
 import { TPageProps } from '@/types/types';
 import { db } from '@/lib/prisma';
 import { findCheckoutSession } from '@/lib/stripe';

@@ -3,9 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 import { Message } from '@/components/auth/Message';
-import { Button } from '@/components/ui/button';
 import { appConfig } from '@/config/shipper.appconfig';
-import { wait } from '@/lib/utils';
 
 export const EmailSendMessage = ({ email }: { email: string }) => {
     // TODO: check if the email is sent more than once...

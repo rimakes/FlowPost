@@ -3,12 +3,10 @@ export const metadata = {
     description: 'Page description',
 };
 
-import Link from 'next/link';
 import { Suspense } from 'react';
 import AuthHeader from '../AuthHeader';
 import AuthImage from '../AuthImage';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { Message } from '@/components/auth/Message';
 import { SwitchLogin } from '@/components/auth/SwithLogin';
 import { SocialLogin } from '@/components/auth/SocialLogin';
 

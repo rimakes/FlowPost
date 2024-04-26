@@ -2,11 +2,10 @@
 
 import { z } from 'zod';
 import { signIn } from 'next-auth/react';
-import { SubmitErrorHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Computer } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     Form,
     FormControl,

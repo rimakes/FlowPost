@@ -3,7 +3,6 @@
 // BOILER: Message component updated
 
 // import zod
-import { type } from 'os';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,8 +20,6 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { CardWrapper } from '../shared/card-wrapper';
-import { SocialLogin } from './SocialLogin';
 import { Message } from './Message';
 import { signInFormSchema } from '@/schemas/auth-schemas';
 import { appConfig } from '@/config/shipper.appconfig';
