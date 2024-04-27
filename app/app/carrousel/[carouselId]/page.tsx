@@ -7,8 +7,8 @@ import Container from '@/components/shared/container';
 import { Heading } from '@/components/shared/Heading';
 import { TCarousel } from '@/types/types';
 import { authOptions } from '@/auth';
-import { db } from '@/lib/prisma';
 import { getUserBrands } from '@/app/_actions/settings-actions';
+import { getCarousel } from '@/app/_actions/carousel-actions';
 
 /* TODO: Can we get a better aproach to stretch an element that is inside a flex container without making it this rigid? 
             Right now, it depends on the size of the scrollbar, which is not ideal...
@@ -59,11 +59,7 @@ export default async function CarouselPage({ params }: props) {
 
     // If the carousel is not new, we fetch it from the database
     if (!(carouselId === 'new')) {
-        const dbCarousel = await db?.carousel.findUnique({
-            where: {
-                id: carouselId,
-            },
-        });
+        const dbCarousel = await getCarousel(carouselId);
 
         if (dbCarousel) {
             carousel = dbCarousel;

@@ -8,12 +8,12 @@ import { useRouter } from 'next/navigation';
 import { CarouselContext } from '../../carrousel/_components/CarouselProvider';
 import { PostWritterContext } from './PostWritterProvider';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn, proToast } from '@/lib/utils';
-import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
+import { cn, proToast, wait } from '@/lib/utils';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { TStatus } from '@/types/types';
 import Editor from '@/components/editor/Editor';
+import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 
 type GeneratedPostProps = {
     className?: string;
@@ -65,21 +65,36 @@ export const PostWritterResultTipTap = ({
                         className='flex-1 rounded-full'
                         label='Guardar post'
                         onClick={async () => {
-                            if (isDemo)
+                            const toastId = toast.loading('Guardando post');
+                            if (isDemo) {
+                                await wait(500);
+                                toast.dismiss(toastId);
                                 return proToast(
                                     router,
                                     'Para guardar y programar tus post, hazte Pro ahora'
                                 );
+                            }
 
-                            const dbpost = await upsertLinkedinPost(
-                                post,
-                                isDemo,
-                                data?.user?.id!,
-                                carouselId
-                            );
-                            setPost(dbpost);
-                            router.push(`/app/post-writter/${dbpost.id}`);
-                            toast('Post guardado');
+                            let dbPost;
+                            try {
+                                dbPost = await upsertLinkedinPost(
+                                    post,
+                                    isDemo,
+                                    data?.user?.id!,
+                                    carouselId
+                                );
+
+                                if (!dbPost)
+                                    throw new Error('Error al guardar post');
+                                setPost(dbPost);
+                                router.push(`/app/post-writter/${dbPost.id}`);
+                                toast.success('Post guardado', {
+                                    id: toastId,
+                                });
+                            } catch (error) {
+                                console.error(error);
+                                toast.error('Error al guardar post');
+                            }
                         }}
                     />
                     <CreateCarouselButton

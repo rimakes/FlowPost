@@ -1,5 +1,5 @@
-import { updateUserCredits } from '@/app/_actions/user-actions';
 import { useSession } from 'next-auth/react';
+import { updateUserCredits } from '@/app/_actions/user-actions';
 
 export const useUserCredits = () => {
     const { data: session, update: updateSession } = useSession();

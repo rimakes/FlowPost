@@ -5,9 +5,12 @@ import {
     getFirstSettingsByUserId,
     updateIASettingsByUserId,
 } from '../_data/other.data';
-import { dbGetUserBrands, upsertBrand } from '../_data/brand.data';
+import {
+    dbDeleteBrand,
+    dbGetUserBrands,
+    upsertBrand,
+} from '../_data/brand.data';
 import { Pure } from '@/types/types';
-import { db } from '@/lib/prisma';
 
 export const upsertBrandkit = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,
@@ -23,12 +26,7 @@ export const getUserBrands = async (userId: string) => {
 };
 
 export const deleteBrand = async (brandId: string) => {
-    const brand = db.brand.delete({
-        where: {
-            id: brandId,
-        },
-    });
-
+    const brand = await dbDeleteBrand(brandId);
     return brand;
 };
 

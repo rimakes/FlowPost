@@ -42,7 +42,7 @@ export default async function Home() {
                 }
                 cta={
                     <CtaWithSocial
-                        accentText={'30% de descuento'}
+                        accentText={'65% de descuento'}
                         buttonLabel={'Comprar'}
                         primaryText={'a las primeras 20 compras'}
                     />
@@ -65,7 +65,7 @@ export default async function Home() {
                             marca
                         </p>
                         <CtaWithSocial
-                            accentText={'30% de descuento'}
+                            accentText={'65% de descuento'}
                             buttonLabel={'Comprar'}
                             primaryText={'a las primeras 20 compras'}
                             buttonProps={{

@@ -2,8 +2,8 @@
 
 import fs from 'fs';
 import { revalidatePath } from 'next/cache';
-import { getCarouselsByUserId } from './writter-actions';
 import { aiTranscribe } from '@/lib/aiClients';
+import { getCarouselsByUserId } from '@/app/_actions/carousel-actions';
 
 export const revalidateAllPaths = async () => {
     revalidatePath('/app', 'layout');

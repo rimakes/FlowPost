@@ -26,7 +26,7 @@ import {
     TFontPalette,
 } from '@/types/types';
 import { FontSelector } from '@/components/shared/FontSelector';
-import { upsertCarousel } from '@/app/_actions/writter-actions';
+import { upsertCarousel } from '@/app/_actions/carousel-actions';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { LoginButton } from '@/components/auth/LoginButton';
 import { cn } from '@/lib/utils';

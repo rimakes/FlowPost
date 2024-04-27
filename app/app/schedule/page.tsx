@@ -3,7 +3,6 @@ import { Suspense } from 'react';
 import Scheduler from './_components/Scheduler';
 import { TimeSlotSettings } from './_components/TimeSlotSettings';
 import { SchedulerProvider } from './_components/SchedulerProvider';
-import { db } from '@/lib/prisma';
 import { authOptions } from '@/auth';
 import Container from '@/components/shared/container';
 import { Heading } from '@/components/shared/Heading';

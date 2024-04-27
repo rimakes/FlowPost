@@ -1,16 +1,9 @@
 'use client';
 
-import {
-    Dispatch,
-    createContext,
-    use,
-    useContext,
-    useRef,
-    useState,
-} from 'react';
+import { Dispatch, createContext, useRef, useState } from 'react';
 import { Editor } from '@tiptap/react';
 import { PostRequest } from './PostWritterForm';
-import { WritterReq, WritterRes } from '@/app/api/post-writter/route';
+import { WritterReq } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
 
 const INITIAL_STATE = {

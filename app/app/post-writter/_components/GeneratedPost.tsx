@@ -15,7 +15,7 @@ import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
-import { TStatus } from '@/types/types';
+import { TLinkedinPost, TStatus } from '@/types/types';
 
 type GeneratedPostProps = {
     className?: string;
@@ -98,15 +98,24 @@ export const PostWritterResult = ({
                                     'Para guardar y programar tus post, hazte Pro ahora'
                                 );
 
-                            const dbpost = await upsertLinkedinPost(
-                                post,
-                                isDemo,
-                                data?.user?.id!,
-                                carouselId
-                            );
-                            setPost(dbpost);
-                            router.push(`/app/post-writter/${dbpost.id}`);
-                            toast('Post guardado');
+                            let dbPost: TLinkedinPost | undefined;
+                            try {
+                                dbPost = await upsertLinkedinPost(
+                                    post,
+                                    isDemo,
+                                    data?.user?.id!,
+                                    carouselId
+                                );
+
+                                if (!dbPost)
+                                    throw new Error('Error al guardar post');
+                                setPost(dbPost);
+                                router.push(`/app/post-writter/${dbPost.id}`);
+                                toast.success('Post guardado!!!!');
+                            } catch (error) {
+                                console.error(error);
+                                toast.error('Error al guardar post');
+                            }
                         }}
                     />
                     <CreateCarouselButton

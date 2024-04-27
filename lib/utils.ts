@@ -234,7 +234,7 @@ export const absoluteUrl = (path?: string) => {
 };
 
 export const proToast = (router: AppRouterInstance, message = '') => {
-    return toast.info('Esta plantilla no está disponible para tu plan', {
+    return toast.info(message, {
         action: {
             label: 'Hazte Pro',
             onClick: () => {
@@ -247,7 +247,6 @@ export const proToast = (router: AppRouterInstance, message = '') => {
         },
         icon: '🔒',
     });
-    return;
 };
 
 // PLACEHOLDER LOADER - while image is transforming

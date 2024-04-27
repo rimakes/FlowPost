@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
-import { upsertCarousel } from '@/app/_actions/writter-actions';
+import { upsertCarousel } from '@/app/_actions/carousel-actions';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 import Spinner from '@/components/icons/SpinnerIcon';
 

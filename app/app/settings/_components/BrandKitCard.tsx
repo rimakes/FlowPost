@@ -7,11 +7,10 @@ import Image from 'next/image';
 import { MoreHorizontal } from 'lucide-react';
 import { ColorPalette } from '../../carrousel/_components/sidebar/ColorPalette';
 import { BrandKitEditForm } from './BrandKitEditForm';
-import { TFont, TFontName } from '@/types/types';
+import { TFont } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { deleteBrand } from '@/app/_actions/settings-actions';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Select, SelectTrigger } from '@/components/ui/select';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,

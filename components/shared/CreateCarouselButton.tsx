@@ -8,10 +8,8 @@ import { useSession } from 'next-auth/react';
 import { Progress } from '../ui/progress';
 import { Button } from '../ui/button';
 import { ButtonWithTooltip } from './ButtonWithTooltip';
-import {
-    createCarousel,
-    upsertLinkedinPost,
-} from '@/app/_actions/writter-actions';
+import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
+import { createCarousel } from '@/app/_actions/carousel-actions';
 import { TCarousel, TLinkedinPost } from '@/types/types';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';

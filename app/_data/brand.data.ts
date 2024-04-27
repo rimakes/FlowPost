@@ -60,7 +60,7 @@ export const dbGetUserBrands = async (userId: string) => {
     }
 };
 
-export const getFirstBrand = async (userId: string) => {
+export const dbGetFirstBrand = async (userId: string) => {
     try {
         const brand = await db.brand.findFirst({
             where: {
@@ -72,5 +72,18 @@ export const getFirstBrand = async (userId: string) => {
     } catch (error) {
         console.error('Error getting first brand', error);
         throw new Error('Error getting first brand'); // Replace this with your custom error or error handling logic
+    }
+};
+
+export const dbDeleteBrand = async (brandId: string) => {
+    try {
+        const brand = db.brand.delete({
+            where: {
+                id: brandId,
+            },
+        });
+    } catch (error) {
+        console.error('Error deleting brand', error);
+        throw new Error('Error deleting brand'); // Replace this with your custom error or error handling logic
     }
 };

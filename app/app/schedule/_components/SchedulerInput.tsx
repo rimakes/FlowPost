@@ -1,11 +1,8 @@
 'use client';
 
-import { time } from 'console';
 import { compareAsc, format, parse } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
-import { date } from 'zod';
 import { addTime, toggleSlot } from '@/app/_actions/schedule-actions';
 import { Checkbox } from '@/components/ui/checkbox';
 import {

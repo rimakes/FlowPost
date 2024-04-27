@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { addMinutes, differenceInMinutes, parse } from 'date-fns';
-import { difference } from 'next/dist/build/utils';
 import { SchedulerContext } from './SchedulerProvider';
 import { Separator } from '@/components/ui/separator';
 import { schedulePost } from '@/app/_actions/schedule-actions';

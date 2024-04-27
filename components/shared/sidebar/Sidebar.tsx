@@ -29,7 +29,7 @@ import { useUserCredits } from '@/hooks/use-user-credits';
 type SidebarProps = {};
 
 export const Sidebar = ({}: SidebarProps) => {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
     const router = useRouter();
 
     const collapse = () => {

@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Separator } from '@/components/ui/separator';
-import { deleteCarousel } from '@/app/_actions/writter-actions';
+import { deleteCarousel } from '@/app/_actions/carousel-actions';
 import { cn } from '@/lib/utils';
 import { TCarousel } from '@/types/types';
 
