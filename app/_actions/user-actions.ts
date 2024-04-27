@@ -1,6 +1,10 @@
 'use server';
 
-import { dbGetSubscription, updateCreditBalance } from '../_data/user.data';
+import {
+    dbGetFirstUserAccount,
+    dbGetSubscription,
+    updateCreditBalance,
+} from '../_data/user.data';
 
 export const updateUserCredits = async (
     userId: string,
@@ -13,4 +17,9 @@ export const updateUserCredits = async (
 export const getSubscription = async (userId: string) => {
     const subscription = await dbGetSubscription(userId);
     return subscription;
+};
+
+export const getFirstUserAccount = async (userId: string) => {
+    const userAccount = await dbGetFirstUserAccount(userId);
+    return userAccount;
 };

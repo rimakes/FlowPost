@@ -19,6 +19,7 @@ import { sendEmail } from './lib/mailgun';
 import { ReactSigninEmail } from './emails/ReactSigninEmail';
 import { db } from './lib/prisma';
 import { getUserByEmail } from './lib/getUser';
+import { getFirstUserAccount } from '@/app/_actions/user-actions';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -253,12 +254,9 @@ export const authOptions: NextAuthOptions = {
                     where: { id: user.id },
                 });
 
-                const linkedinAccountLinked = !!(await db.account.findFirst({
-                    where: {
-                        userId: dbUser!.id,
-                        provider: 'linkedin',
-                    },
-                }));
+                const linkedinAccountLinked = !!(await getFirstUserAccount(
+                    user.id
+                ));
 
                 const brandsOfUser = await db.brand.findMany({
                     where: {

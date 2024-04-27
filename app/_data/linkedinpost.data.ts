@@ -8,9 +8,14 @@
 // });
 
 import { db } from '@/lib/prisma';
-import { TBrand, TCarousel, TLinkedinPost } from '@/types/types';
+import {
+    TBrand,
+    TCarousel,
+    TLinkedinPost,
+    TScheduledPost,
+} from '@/types/types';
 
-export const createScheduledPost = async (
+export const dbCreateScheduledPost = async (
     linkedinPostId: string,
     userId: string,
     date: Date,
@@ -259,4 +264,44 @@ export const dbCreateCarouselWithBrand = async (
         },
     });
     return carousel;
+};
+
+type NewTScheduledPost = TScheduledPost & {
+    linkedinPost: TLinkedinPost;
+};
+
+export async function dbGetPendingToPublishPost(startOfDay: Date, now: Date) {
+    return (await db.scheduledPost.findMany({
+        where: {
+            date: {
+                gte: startOfDay,
+                lt: now,
+            },
+            linkedinPost: {
+                published: false,
+            },
+        },
+        include: {
+            linkedinPost: true,
+        },
+    })) as NewTScheduledPost[];
+}
+
+export const dbUpdatePostAsPublished = async (postId: string) => {
+    try {
+        const updatedPost = await db.linkedinPost.update({
+            where: {
+                id: postId,
+            },
+            data: {
+                published: true,
+                publishedAt: new Date(),
+            },
+        });
+
+        return updatedPost;
+    } catch (error) {
+        console.error('Error updating post as published', error);
+        throw new Error('Error updating post as published'); // Replace this with your custom error or error handling logic
+    }
 };

@@ -349,8 +349,6 @@ export const requestComplete = async (
     editor: Editor
 ) => {
     editor.setEditable(false);
-
-    console.log({ data });
     const { description, instructionsId } = data;
     const reqBody: WritterReq<'COMPLETE'> = {
         action: 'COMPLETE',
@@ -366,6 +364,7 @@ export const requestComplete = async (
     });
 
     if (res.status !== 200) {
+        editor.setEditable(true);
         throw new Error('Error al escribir el post');
     }
     // The fetch response body is a readable stream.

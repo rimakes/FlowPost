@@ -7,7 +7,7 @@ import {
     updateScheduleBySettingsId,
 } from '../_data/other.data';
 import {
-    createScheduledPost,
+    dbCreateScheduledPost,
     deleteScheduledPost,
     getLinkedinPosts,
 } from '../_data/linkedinpost.data';
@@ -84,7 +84,7 @@ export const schedulePost = async (
     date: Date,
     time: string
 ) => {
-    const newSchedule = await createScheduledPost(postId, userId, date, time);
+    const newSchedule = await dbCreateScheduledPost(postId, userId, date, time);
     revalidatePath('/app/schedule');
 
     return newSchedule;
@@ -104,6 +104,5 @@ export const findPostsByUserId = async (userId: string) => {
 
 export const getScheduleByUserId = async (userId: string) => {
     const userSettings = await getFirstSettingsByUserId(userId);
-    console.log('got linkedin posts');
     return userSettings?.schedule;
 };

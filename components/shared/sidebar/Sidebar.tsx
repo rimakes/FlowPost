@@ -220,6 +220,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
             className={`space-y-2 rounded-md border border-primary/10 bg-white ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'p-2 text-xs font-semibold'}`}
         >
             <div className='flex justify-between'>
+                {/* TODO: The session is not being updated when the user pays, forcing her to logout */}
                 {!collapsed && <p>Créditos disponibles</p>}
                 <p
                     className={`

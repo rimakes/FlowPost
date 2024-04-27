@@ -1,4 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { Account } from '@prisma/client';
+import { TCarousel } from '@/types/types';
 
 type IData = {
     id: string;
@@ -225,4 +227,32 @@ export const postOnLinkedIn = async (
         console.error(error);
         throw error;
     }
+};
+
+export const registerAndUploadDocumentToLinkedin = async (
+    carousel: TCarousel,
+    userAccount: Account
+) => {
+    let asset = undefined as undefined | string;
+
+    if (carousel?.pdfUrl) {
+        console.log('Registering document to linkedin');
+        const documentRegister = await registerUploadDocumentToLinkedin(
+            userAccount?.providerAccountId,
+            userAccount?.access_token
+        );
+
+        const { uploadUrl } = documentRegister;
+        asset = documentRegister.asset;
+
+        console.log('Uploading document to linkedin');
+        await uploadAssetToLinkedin(
+            uploadUrl,
+            carousel?.pdfUrl!,
+            userAccount?.access_token
+        );
+    }
+    console.log('Posting on linkedin');
+
+    return asset;
 };

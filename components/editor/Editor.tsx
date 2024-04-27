@@ -6,6 +6,7 @@ import {
     EditorContent,
     useEditor,
 } from '@tiptap/react';
+import { toast } from 'sonner';
 import FullScreenToolBar from '../full-screen-toolbar/FullScreenToolBar';
 import { Separator } from '../ui/separator';
 // TODO: change to mantine
@@ -111,18 +112,21 @@ export default function Editor({
                     from: selection.from - 2,
                     to: selection.from,
                 });
-                const text = await requestComplete(
-                    {
-                        description: getContextText(editor, {
-                            chars: 5000,
-                            offset: 0,
-                        }),
-                        instructionsId: 'continue',
-                    },
-                    editor
-                );
-
-                console.log({ text });
+                try {
+                    await requestComplete(
+                        {
+                            description: getContextText(editor, {
+                                chars: 5000,
+                                offset: 0,
+                            }),
+                            instructionsId: 'continue',
+                        },
+                        editor
+                    );
+                } catch (error: any) {
+                    toast.error(`${error.message}.
+                    Por favor, intenta de nuevo.`);
+                }
 
                 // complete(e.editor.storage.markdown.getMarkdown());
                 // va.track("Autocomplete Shortcut Used");

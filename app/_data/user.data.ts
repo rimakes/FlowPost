@@ -33,3 +33,19 @@ export const dbGetSubscription = async (userId: string) => {
         throw new Error('Error getting subscription'); // Replace this with your custom error or error handling logic
     }
 };
+
+export const dbGetFirstUserAccount = async (userId: string) => {
+    try {
+        const userAccount = await db.account.findFirst({
+            where: {
+                provider: 'linkedin',
+                userId,
+            },
+        });
+
+        return userAccount;
+    } catch (error) {
+        console.error('Error fetching User Account:', error);
+        throw new Error('Error fetching User Account'); // Replace this with your custom error or error handling logic
+    }
+};

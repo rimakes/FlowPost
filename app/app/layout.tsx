@@ -6,7 +6,7 @@ import { ToolBanner } from '@/components/shared/ToolBanner';
 
 export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 
-export default function DefaultLayout({
+export default async function DefaultLayout({
     children,
 }: {
     children: React.ReactNode;

@@ -1,7 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { dbUpsertLinkedinPost } from '../_data/linkedinpost.data';
+import {
+    dbGetPendingToPublishPost,
+    dbUpsertLinkedinPost,
+} from '../_data/linkedinpost.data';
 import { TLinkedinPost } from '@/types/types';
 
 export async function upsertLinkedinPost(
@@ -22,3 +25,12 @@ export async function deleteLinkedinPost(postId: string) {
 
     revalidatePath('/app/schedule');
 }
+
+export const getPendingToPublishPost = async (startOfDay: Date, now: Date) => {
+    let pendingToPublishPosts = await dbGetPendingToPublishPost(
+        startOfDay,
+        now
+    );
+
+    return pendingToPublishPosts;
+};

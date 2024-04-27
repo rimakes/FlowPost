@@ -1,15 +1,9 @@
 'use client';
 
+import { useLocalStorage } from '@mantine/hooks';
+import { createContext, Dispatch, SetStateAction, useState } from 'react';
 import { deepCopy } from '@/lib/utils';
 import { AppNotifications } from '@/types/types';
-import { useLocalStorage } from '@mantine/hooks';
-import {
-    createContext,
-    Dispatch,
-    SetStateAction,
-    useContext,
-    useState,
-} from 'react';
 
 type ContextProps = {
     notifications: AppNotifications;

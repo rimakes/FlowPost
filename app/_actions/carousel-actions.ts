@@ -27,6 +27,7 @@ import { aiChat } from '@/lib/aiClients';
 import {
     dbGetCarousel,
     dbGetCarouselByUserId,
+    dbGetFirstCarousel,
 } from '@/app/_data/carousel.data';
 
 export async function deleteCarousel(carouselId: string) {
@@ -187,4 +188,9 @@ export const getSlidesImages = async (slides: TSlide[]) => {
     }
 
     return slides;
+};
+
+export const getFirstCarousel = async (linkedinPostId: string) => {
+    const carousel = await dbGetFirstCarousel(linkedinPostId);
+    return carousel;
 };

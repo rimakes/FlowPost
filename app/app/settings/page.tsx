@@ -15,7 +15,7 @@ import { authOptions } from '@/auth';
 import { TPageProps } from '@/types/types';
 import { getSubscription } from '@/app/_actions/user-actions';
 
-export default async function IdeasPage({ params, searchParams }: TPageProps) {
+export default async function Page({ params, searchParams }: TPageProps) {
     const tab = searchParams['tab'] as string;
 
     const session: Session | null = await getServerSession(authOptions);
@@ -41,7 +41,7 @@ export default async function IdeasPage({ params, searchParams }: TPageProps) {
                     <div className='mb-8 overflow-x-auto '>
                         <TabsList className='flex w-full max-w-md justify-between'>
                             <TabsTrigger value='general'>General</TabsTrigger>
-                            <TabsTrigger value='plan'>Subscripción</TabsTrigger>
+                            <TabsTrigger value='plan'>Plan</TabsTrigger>
                             {/* <TabsTrigger value='team'>Equipo</TabsTrigger> */}
                             <TabsTrigger value='ai'>IA</TabsTrigger>
                             <TabsTrigger value='brands'>Tus Marcas</TabsTrigger>

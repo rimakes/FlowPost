@@ -3,13 +3,47 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/auth';
 import { db } from '@/lib/prisma';
 import { createCheckout } from '@/lib/stripe';
+import { withMiddleware } from '@/app/api/(middleware)/with-middleware';
+import { withCatch } from '@/app/api/(middleware)/with-catch';
 
 // This function is used to create a Stripe Checkout Session (one-time payment or subscription)
 // It's called by the <ButtonCheckout /> component
 // By default, it doesn't force users to be authenticated. But if they are, it will prefill the Checkout data with their email and/or credit card
-export async function POST(req: NextRequest) {
+async function postHandler(req: NextRequest) {
     const body = await req.json();
 
+    validateBody(body);
+
+    const session = await getServerSession(authOptions);
+    let user;
+    if (session?.user?.id) {
+        user = await db.user.findUnique({
+            where: { id: session?.user?.id },
+        });
+    }
+
+    const { priceId, mode, successUrl, cancelUrl, couponId } = body;
+
+    const stripeSessionURL = await createCheckout({
+        priceId,
+        mode,
+        successUrl,
+        cancelUrl,
+        clientReferenceId: user?.id, // so we can link the Stripe Checkout Session to the user
+        user: {
+            // prefill the Checkout data
+            customerId: user?.stripeCustomerId!,
+            email: user?.email!,
+        },
+        couponId,
+    });
+
+    return NextResponse.json({ url: stripeSessionURL });
+}
+
+export const POST = withMiddleware(withCatch, postHandler);
+
+const validateBody = (body: any) => {
     if (!body.priceId) {
         return NextResponse.json(
             { error: 'Price ID is required' },
@@ -28,42 +62,4 @@ export async function POST(req: NextRequest) {
             { status: 400 }
         );
     }
-
-    try {
-        // Check if there's a user session
-        const session = await getServerSession(authOptions);
-
-        let user;
-
-        if (session?.user?.id) {
-            user = await db.user.findUnique({
-                where: { id: session?.user?.id },
-            });
-        }
-
-        const { priceId, mode, successUrl, cancelUrl, couponId } = body;
-
-        const stripeSessionURL = await createCheckout({
-            priceId,
-            mode,
-            successUrl,
-            cancelUrl,
-            // If user is logged in, it will pass the user ID to the Stripe Session so it can be retrieved in the webhook later
-            clientReferenceId: user?.id,
-            // If user is logged in, this will automatically prefill Checkout data like email and/or credit card for faster checkout
-            user: {
-                customerId: user?.stripeCustomerId!,
-                email: user?.email!,
-            },
-            // If you send coupons from the frontend, you can pass it here
-            couponId,
-        });
-
-        return NextResponse.json({ url: stripeSessionURL });
-    } catch (e: any) {
-        const error: Error = e; // Here we're asserting that e is of type Error
-
-        console.error(error);
-        return NextResponse.json({ error: error?.message }, { status: 500 });
-    }
-}
+};

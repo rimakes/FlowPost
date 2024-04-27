@@ -1,9 +1,6 @@
 'use client';
 
 import { Subscription } from '@prisma/client';
-import { formatDate } from 'date-fns';
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
 import { appConfig } from '@/config/shipper.appconfig';
 import { AccountButton } from '@/components/marketing/AccountButton';
@@ -25,7 +22,7 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
         <div>
             <SettingsSectionHeader
                 title='Plan actual'
-                subtitle='Cambia o gestiona tu plan de suscripción u obtén tus facturas'
+                subtitle='Cambia o gestiona tu plan u obtén tus facturas'
                 className='mb-8'
             />
             {subscription ? (
