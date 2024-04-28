@@ -5,7 +5,6 @@ import { StructuredOutputParser } from 'langchain/output_parsers';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { generateIdeasPrompt } from '../app/ideas/const';
 import { getFirstSettingsByUserId } from '../_data/other.data';
-import { authGuard } from './auth.actions';
 import {
     createIdeaByAuthorId,
     deleteIdeaById,
@@ -14,11 +13,12 @@ import {
 import { arrayOfIdeasSchema } from '@/types/schemas';
 import { retryAsyncFunction } from '@/lib/utils';
 import { aiChat } from '@/lib/aiClients';
+import { getServerSession } from '@/auth';
 
 export const generateIdeas = async (topic: string) => {
     const model = aiChat('ideas');
 
-    const data = await authGuard();
+    const data = await getServerSession();
     const settings = await getFirstSettingsByUserId(data!.user.id);
 
     const iaSettings = settings?.iaSettings;

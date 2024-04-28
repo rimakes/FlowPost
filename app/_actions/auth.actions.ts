@@ -3,28 +3,15 @@
 import { Session } from 'next-auth';
 import { getServerSession } from '@/auth';
 
-type UserSession = Session | { user: { id: string } };
-
-export const authGuard = async (isDemo = false) => {
-    try {
-        let session: UserSession | null = await getServerSession(); // your function to retrieve the session
-        // if (!!session) return session;
-
-        // if (!session && !isDemo) {
-        //     throw new Error('User is not authenticated');
-        // }
-
-        // if (!session && isDemo) {
-        //     session = {
-        //         user: {
-        //             id: process.env.DEMO_USER_ID!,
-        //         },
-        //     };
-
-        return session;
-        // }
-    } catch (error) {
-        console.error('Error getting session', error);
-        throw new Error('Error getting session');
+/**
+ * Check if the user is authenticated. If it's not, throw an error. If it's authenticated, return the user session.
+ * It also asserts that the user session is a valid session object for type safety.
+ */
+export const authGuard = async () => {
+    const session = await getServerSession();
+    if (!session) {
+        throw new Error('User not authenticated');
     }
+
+    return session as Session;
 };

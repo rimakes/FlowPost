@@ -10,7 +10,6 @@ import {
     dbUpsertCarousel,
 } from '../_data/linkedinpost.data';
 import { dbGetFirstBrand } from '../_data/brand.data';
-import { authGuard } from './auth.actions';
 import { retryAsyncFunction } from '@/lib/utils';
 import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
 import {
@@ -29,6 +28,7 @@ import {
     dbGetCarouselByUserId,
     dbGetFirstCarousel,
 } from '@/app/_data/carousel.data';
+import { authGuard } from '@/app/_actions/auth.actions';
 
 export async function deleteCarousel(carouselId: string) {
     await dbDeleteCarousel(carouselId);
@@ -51,8 +51,8 @@ export const getCarouselsByUserId = async (userId: string) => {
 
 export async function createCarousel(post: TLinkedinPost, isDemo = false) {
     // Get the custom AISettings from the user
-    const data = await authGuard(isDemo);
-    let userId = data!.user.id;
+    const data = await authGuard();
+    let userId = data.user.id;
 
     const model = aiChat('carousel');
 
