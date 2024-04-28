@@ -13,7 +13,7 @@ import { getFirstCarousel } from '@/app/_actions/carousel-actions';
 export const dynamic = 'force-dynamic';
 
 // This endpoint will check the scheduled posts, which will be called every time from cron job to find if there is any post to be posted on linkedin.
-export async function getHandler(req: NextRequest) {
+async function getHandler(req: NextRequest) {
     // Get the post the beginning of the day to now that are pending to be published
     const now = new Date();
     const startOfDay = new Date();

@@ -49,6 +49,11 @@ export const getCarouselsByUserId = async (userId: string) => {
     return carousel;
 };
 
+export const carouselsByUserId = async (userId: string) => {
+    const carousels = await getCarouselsByUserId(userId);
+    return carousels;
+};
+
 export async function createCarousel(post: TLinkedinPost, isDemo = false) {
     // Get the custom AISettings from the user
     const data = await authGuard();

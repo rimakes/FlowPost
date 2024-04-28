@@ -5,7 +5,7 @@ import { Heading } from '@/components/shared/Heading';
 import { authOptions } from '@/auth';
 import { getLinkedinPosts } from '@/app/_data/linkedinpost.data';
 import { ideasbyUserId } from '@/app/_actions/idea-actions';
-import { carouselsByUserId } from '@/app/_actions/other-actions';
+import { carouselsByUserId } from '@/app/_actions/carousel-actions';
 
 export default async function SavedPage() {
     const session = await getServerSession(authOptions);

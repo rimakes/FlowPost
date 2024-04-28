@@ -3,15 +3,9 @@
 import fs from 'fs';
 import { revalidatePath } from 'next/cache';
 import { aiTranscribe } from '@/lib/aiClients';
-import { getCarouselsByUserId } from '@/app/_actions/carousel-actions';
 
 export const revalidateAllPaths = async () => {
     revalidatePath('/app', 'layout');
-};
-
-export const carouselsByUserId = async (userId: string) => {
-    const carousels = await getCarouselsByUserId(userId);
-    return carousels;
 };
 
 export const createWebmFile = async (formData: FormData) => {
