@@ -59,11 +59,6 @@ export async function completeApiHandler(body: any) {
         description,
     });
 
-    const randomNumber = Math.floor(Math.random() * 2);
-    if (randomNumber === 1) {
-        throw new Error('Random error');
-    }
-
     // TODO: use this instead so you learn about streams: https://michaelangelo.io/blog/server-sent-events
     return new StreamingTextResponse(stream);
 }

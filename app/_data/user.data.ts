@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma';
 
-export const updateCreditBalance = async (
+export const dbUpdateCreditBalance = async (
     userId: string,
     creditBalance: number
 ) => {
@@ -62,3 +62,13 @@ export const dbGetUser = async (userId: string) => {
         throw new Error('Error getting user');
     }
 };
+
+export interface IUser {
+    dbUpdateCreditBalance: (
+        userId: string,
+        creditBalance: number
+    ) => Promise<any>;
+    dbGetSubscription: (userId: string) => Promise<any>;
+    dbGetFirstUserAccount: (userId: string) => Promise<any>;
+    dbGetUser: (userId: string) => Promise<any>;
+}

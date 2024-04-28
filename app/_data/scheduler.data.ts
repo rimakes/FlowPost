@@ -1,10 +1,3 @@
-// await db.scheduledPost.create({
-//     data: {
-//         ...body,
-//         userId,
-//     },
-// });
-
 import { db } from '@/lib/prisma';
 
 export const dbCreateScheduledPost = async (
