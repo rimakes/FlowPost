@@ -17,7 +17,7 @@ export const updateCreditBalance = async (
         return updatedUser;
     } catch (error) {
         console.error('Error updating credit balance', error);
-        throw new Error('Error updating credit balance'); // Replace this with your custom error or error handling logic
+        throw new Error('Error updating credit balance');
     }
 };
 
@@ -30,7 +30,7 @@ export const dbGetSubscription = async (userId: string) => {
         return user?.stripeSubscription;
     } catch (error) {
         console.error('Error getting subscription', error);
-        throw new Error('Error getting subscription'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting subscription');
     }
 };
 
@@ -46,6 +46,19 @@ export const dbGetFirstUserAccount = async (userId: string) => {
         return userAccount;
     } catch (error) {
         console.error('Error fetching User Account:', error);
-        throw new Error('Error fetching User Account'); // Replace this with your custom error or error handling logic
+        throw new Error('Error fetching User Account');
+    }
+};
+
+export const dbGetUser = async (userId: string) => {
+    try {
+        const user = await db.user.findUnique({
+            where: { id: userId },
+        });
+
+        return user;
+    } catch (error) {
+        console.error('Error getting user', error);
+        throw new Error('Error getting user');
     }
 };

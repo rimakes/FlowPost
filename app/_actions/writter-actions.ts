@@ -23,6 +23,7 @@ export async function upsertLinkedinPost(
 export async function deleteLinkedinPost(postId: string) {
     await deleteLinkedinPost(postId);
 
+    // REVIEW: Does this revalidate the cache for EVERY user?
     revalidatePath('/app/schedule');
 }
 

@@ -34,6 +34,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
             <Popover
                 open={fontPopOverisOpen}
                 onOpenChange={setFontPopOverisOpen}
+                modal={true}
             >
                 <PopoverTrigger className='flex w-full items-center justify-between'>
                     <div
@@ -44,44 +45,42 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                         <ChevronDown className='h-4 w-4' />
                     </div>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent className='flex max-h-48 flex-col gap-2 overflow-y-scroll'>
                     <>
-                        <div className='flex max-h-48 flex-col gap-2 overflow-y-scroll'>
-                            <Input
-                                className='sticky top-0'
-                                defaultValue={debouncedQuery}
-                                onChange={(e) => {
-                                    setDebouncedQuery(e.target.value);
-                                }}
-                                placeholder='Busca tu fuente'
-                            />
-                            {
-                                //    iterate on the object constFontsMap and get the key and value
-                                filteredFonts.map((font, index) => (
-                                    <Button
-                                        variant={'secondary'}
-                                        style={{ fontFamily: font }}
-                                        key={font}
-                                        // @ts-ignore
-                                        // className={`${fontsMap[font].className} text-lg`}
-                                        onClick={() =>
-                                            onSetFontPalette(font as TFontName)
-                                        }
-                                    >
-                                        {font}
-                                    </Button>
-                                ))
-                            }
-                            <Button
-                                className='gap-2'
-                                variant={'outline'}
-                                onClick={() => {
-                                    setNumberOfFonts(numberOfFonts + 10);
-                                }}
-                            >
-                                Cargar más <ArrowDownIcon className='h-4 w-4' />
-                            </Button>
-                        </div>
+                        <Input
+                            className='sticky top-0'
+                            defaultValue={debouncedQuery}
+                            onChange={(e) => {
+                                setDebouncedQuery(e.target.value);
+                            }}
+                            placeholder='Busca tu fuente'
+                        />
+                        {
+                            //    iterate on the object constFontsMap and get the key and value
+                            filteredFonts.map((font, index) => (
+                                <Button
+                                    variant={'secondary'}
+                                    style={{ fontFamily: font }}
+                                    key={font}
+                                    // @ts-ignore
+                                    // className={`${fontsMap[font].className} text-lg`}
+                                    onClick={() =>
+                                        onSetFontPalette(font as TFontName)
+                                    }
+                                >
+                                    {font}
+                                </Button>
+                            ))
+                        }
+                        <Button
+                            className='gap-2'
+                            variant={'outline'}
+                            onClick={() => {
+                                setNumberOfFonts(numberOfFonts + 10);
+                            }}
+                        >
+                            Cargar más <ArrowDownIcon className='h-4 w-4' />
+                        </Button>
                     </>
                 </PopoverContent>
             </Popover>

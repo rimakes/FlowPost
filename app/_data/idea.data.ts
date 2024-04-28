@@ -15,7 +15,7 @@ export const createIdeaByAuthorId = async (
         return idea;
     } catch (error) {
         console.error('Error creating idea', error);
-        throw new Error('Error creating idea'); // Replace this with your custom error or error handling logic
+        throw new Error('Error creating idea');
     }
 };
 
@@ -30,7 +30,7 @@ export const deleteIdeaById = async (ideaId: string) => {
         return idea;
     } catch (error) {
         console.error('Error deleting idea', error);
-        throw new Error('Error deleting idea'); // Replace this with your custom error or error handling logic
+        throw new Error('Error deleting idea');
     }
 };
 
@@ -45,6 +45,6 @@ export const getIdeasByUserId = async (userId: string) => {
         return ideas;
     } catch (error) {
         console.error('Error getting ideas', error);
-        throw new Error('Error getting ideas'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting ideas');
     }
 };

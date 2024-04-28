@@ -12,6 +12,9 @@ type ContextProps = {
     brandCreateDismissed: () => void;
     setAccessModalIsOpen: Dispatch<SetStateAction<boolean>>;
     accessModalIsOpen: boolean;
+    creditBalance: number;
+    setCreditBalance: Dispatch<SetStateAction<number>>;
+    subscription: string;
 };
 
 export const AppContext = createContext<ContextProps>({
@@ -21,10 +24,23 @@ export const AppContext = createContext<ContextProps>({
     brandCreateDismissed: () => {},
     setAccessModalIsOpen: () => false,
     accessModalIsOpen: false,
+    creditBalance: 0,
+    setCreditBalance: () => 0,
+    subscription: '',
 });
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+export function AppProvider({
+    children,
+    userFE,
+}: {
+    children: React.ReactNode;
+    userFE: {
+        credits: number;
+        subscription: string;
+    };
+}) {
     const [accessModalIsOpen, setAccessModalIsOpen] = useState<boolean>(false);
+    const [creditBalance, setCreditBalance] = useState<number>(userFE.credits);
 
     // REVIEW: Why this hook is problematic?
     // https://github.com/uidotdev/usehooks/issues/218
@@ -73,11 +89,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         <AppContext.Provider
             value={{
                 brandCreateDismissed,
+                setCreditBalance,
                 brandCreated,
                 notifications,
                 setNotifications,
                 accessModalIsOpen,
                 setAccessModalIsOpen,
+                creditBalance,
+                subscription: userFE.subscription,
             }}
         >
             {children}

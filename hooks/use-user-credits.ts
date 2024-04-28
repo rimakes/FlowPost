@@ -1,9 +1,13 @@
 import { useSession } from 'next-auth/react';
+import { useContext } from 'react';
 import { updateUserCredits } from '@/app/_actions/user-actions';
+import { AppContext } from '@/providers/AppProvider';
+import { getCreditsByPriceId } from '@/lib/utils';
 
 export const useUserCredits = () => {
-    const { data: session, update: updateSession } = useSession();
-    const creditBalance = session?.user?.creditBalance!;
+    const { creditBalance, setCreditBalance, subscription } =
+        useContext(AppContext);
+    const { data: session } = useSession();
 
     const update = async (creditBalance: number) => {
         const updatedUser = await updateUserCredits(
@@ -11,11 +15,12 @@ export const useUserCredits = () => {
             creditBalance
         );
         const updatedBalance = updatedUser.creditBalance;
-        await updateSession({
-            ...session?.user,
-            creditBalance: updatedBalance,
-        });
+        setCreditBalance(updatedBalance);
     };
 
-    return { creditBalance, update };
+    const isPro = !!subscription;
+
+    const maxCredits = !isPro ? 10 : getCreditsByPriceId(subscription);
+
+    return { isPro, creditBalance, maxCredits, update };
 };

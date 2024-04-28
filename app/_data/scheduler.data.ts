@@ -26,6 +26,6 @@ export const dbCreateScheduledPost = async (
         return newScheduledPost;
     } catch (error) {
         console.error('Error creating scheduled post', error);
-        throw new Error('Error creating scheduled post'); // Replace this with your custom error or error handling logic
+        throw new Error('Error creating scheduled post');
     }
 };

@@ -41,7 +41,7 @@ export const upsertBrand = async (
         return dbBrand;
     } catch (error) {
         console.error('Error upserting brand', error);
-        throw new Error('Error upserting brand'); // Replace this with your custom error or error handling logic
+        throw new Error('Error upserting brand');
     }
 };
 
@@ -56,7 +56,7 @@ export const dbGetUserBrands = async (userId: string) => {
         return brandKits;
     } catch (error) {
         console.error('Error getting brand kits', error);
-        throw new Error('Error getting brand kits'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting brand kits');
     }
 };
 
@@ -71,7 +71,7 @@ export const dbGetFirstBrand = async (userId: string) => {
         return brand;
     } catch (error) {
         console.error('Error getting first brand', error);
-        throw new Error('Error getting first brand'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting first brand');
     }
 };
 
@@ -84,6 +84,6 @@ export const dbDeleteBrand = async (brandId: string) => {
         });
     } catch (error) {
         console.error('Error deleting brand', error);
-        throw new Error('Error deleting brand'); // Replace this with your custom error or error handling logic
+        throw new Error('Error deleting brand');
     }
 };

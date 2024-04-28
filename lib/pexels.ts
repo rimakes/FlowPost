@@ -26,6 +26,6 @@ export const getPexelImages = async (query: string) => {
             );
             console.error('CONFIG: ', axiosError.config);
         }
-        throw error; // Replace this with your custom error or error handling logic
+        throw error;
     }
 };

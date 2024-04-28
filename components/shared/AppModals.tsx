@@ -40,7 +40,6 @@ export function AppModals({}: AppModalsProps) {
 
     return (
         <Dialog
-            open={isOpen}
             onOpenChange={(value) => {
                 setIsOpen(value);
                 if (value === false) brandCreateDismissed();

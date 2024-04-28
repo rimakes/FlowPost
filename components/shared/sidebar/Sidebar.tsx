@@ -9,7 +9,6 @@ import {
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { CannyLink } from '../Canny';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -20,7 +19,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { cn, capitalizeFirstLetter, getCreditsByPriceId } from '@/lib/utils';
+import { cn, capitalizeFirstLetter } from '@/lib/utils';
 import { appConfig } from '@/config/shipper.appconfig';
 import { TMenuItem } from '@/types/types';
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS } from '@/config/const';
@@ -208,13 +207,7 @@ type WordsUsedWidgetProps = {
 };
 
 export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
-    const { data } = useSession();
-    const { creditBalance } = useUserCredits();
-    const isPro = !!data?.user?.stripeSubscription?.subscriptionId;
-    const maxCredits = !isPro
-        ? 10
-        : getCreditsByPriceId(data?.user?.stripeSubscription?.priceId!);
-
+    const { isPro, creditBalance, maxCredits } = useUserCredits();
     return (
         <div
             className={`space-y-2 rounded-md border border-primary/10 bg-white ${collapsed ? 'px-0.5 text-[10px] font-normal' : 'p-2 text-xs font-semibold'}`}
@@ -228,7 +221,7 @@ export const WordsUsedWidget = ({ collapsed }: WordsUsedWidgetProps) => {
                  ${collapsed ? 'mx-auto' : ''}
                 `}
                 >
-                    {data?.user?.creditBalance ?? '...'}
+                    {creditBalance ?? '...'}
                     <span> / {maxCredits}</span>
                 </p>
             </div>

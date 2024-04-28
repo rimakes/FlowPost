@@ -6,7 +6,6 @@ import { Toaster } from '@/components/ui/sonner';
 import Theme from '@/providers/theme-provider';
 import { primaryFont } from '@/config/fonts';
 import { authOptions } from '@/auth';
-import { AppProvider } from '@/providers/AppProvider';
 import { appConfig } from '@/config/shipper.appconfig';
 
 // BOILER: ADD
@@ -52,7 +51,7 @@ export default async function RootLayout({
                         defaultTheme='light'
                         disableTransitionOnChange
                     >
-                        <AppProvider>{children}</AppProvider>
+                        {children}
                     </Theme>
                     <Toaster />
                 </body>

@@ -14,7 +14,7 @@ export const getFirstSettingsByUserId = async (userId: string) => {
         return settings;
     } catch (error) {
         console.error('Error getting settings', error);
-        throw new Error('Error getting settings'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting settings');
     }
 };
 
@@ -29,7 +29,7 @@ export const getSettingsById = async (settingsId: string) => {
         return settings;
     } catch (error) {
         console.error('Error getting settings', error);
-        throw new Error('Error getting settings'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting settings');
     }
 };
 
@@ -53,7 +53,7 @@ export const updateScheduleBySettingsId = async (
         return updatedSettings;
     } catch (error) {
         console.error('Error updating settings', error);
-        throw new Error('Error updating settings'); // Replace this with your custom error or error handling logic
+        throw new Error('Error updating settings');
     }
 };
 
@@ -76,6 +76,6 @@ export const updateIASettingsByUserId = async (
         return updatedSettings;
     } catch (error) {
         console.error('Error updating settings', error);
-        throw new Error('Error updating settings'); // Replace this with your custom error or error handling logic
+        throw new Error('Error updating settings');
     }
 };

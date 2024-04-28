@@ -11,7 +11,7 @@ export const dbGetCarousel = async (carouselId: string) => {
         return carousel;
     } catch (error) {
         console.error('Error getting carousel', error);
-        throw new Error('Error getting carousel'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting carousel');
     }
 };
 
@@ -26,7 +26,7 @@ export const dbGetCarouselByUserId = async (userId: string) => {
         return carousels;
     } catch (error) {
         console.error('Error getting carousels', error);
-        throw new Error('Error getting carousels'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting carousels');
     }
 };
 
@@ -41,6 +41,6 @@ export const dbGetFirstCarousel = async (linkedinPostId: string) => {
         return carousel;
     } catch (error) {
         console.error('Error fetching Carousel:', error);
-        throw new Error('Error fetching Carousel'); // Replace this with your custom error or error handling logic
+        throw new Error('Error fetching Carousel');
     }
 };

@@ -34,7 +34,7 @@ export const dbCreateScheduledPost = async (
         return newScheduledPost;
     } catch (error) {
         console.error('Error creating scheduled post', error);
-        throw new Error('Error creating scheduled post'); // Replace this with your custom error or error handling logic
+        throw new Error('Error creating scheduled post');
     }
 };
 
@@ -49,7 +49,7 @@ export const deleteScheduledPost = async (linkedinPostId: string) => {
         return deletedScheduledPost;
     } catch (error) {
         console.error('Error deleting scheduled post', error);
-        throw new Error('Error deleting scheduled post'); // Replace this with your custom error or error handling logic
+        throw new Error('Error deleting scheduled post');
     }
 };
 
@@ -64,7 +64,7 @@ export const dbDeleteLinkedinPost = async (linkedinPostId: string) => {
         return deletedLinkedinPost;
     } catch (error) {
         console.error('Error deleting linkedin post', error);
-        throw new Error('Error deleting linkedin post'); // Replace this with your custom error or error handling logic
+        throw new Error('Error deleting linkedin post');
     }
 };
 
@@ -83,7 +83,7 @@ export const getLinkedinPosts = async (userId: string) => {
         return linkedinPosts;
     } catch (error) {
         console.error('Error getting linkedin posts', error);
-        throw new Error('Error getting linkedin posts'); // Replace this with your custom error or error handling logic
+        throw new Error('Error getting linkedin posts');
     }
 };
 
@@ -141,7 +141,7 @@ export const dbUpsertLinkedinPost = async (
         return linkedinPost;
     } catch (error) {
         console.error('Error upserting linkedin post', error);
-        throw new Error('Error upserting linkedin post'); // Replace this with your custom error or error handling logic
+        throw new Error('Error upserting linkedin post');
     }
 };
 
@@ -156,7 +156,7 @@ export const dbDeleteCarousel = async (carouselId: string) => {
         return deletedCarousel;
     } catch (error) {
         console.error('Error deleting carousel', error);
-        throw new Error('Error deleting carousel'); // Replace this with your custom error or error handling logic
+        throw new Error('Error deleting carousel');
     }
 };
 
@@ -215,7 +215,7 @@ export const dbUpsertCarousel = async (carousel: TCarousel, userId: string) => {
         return updatedCarousel;
     } catch (error) {
         console.error('Error upserting carousel', error);
-        throw new Error('Error upserting carousel'); // Replace this with your custom error or error handling logic
+        throw new Error('Error upserting carousel');
     }
 };
 
@@ -302,6 +302,6 @@ export const dbUpdatePostAsPublished = async (postId: string) => {
         return updatedPost;
     } catch (error) {
         console.error('Error updating post as published', error);
-        throw new Error('Error updating post as published'); // Replace this with your custom error or error handling logic
+        throw new Error('Error updating post as published');
     }
 };

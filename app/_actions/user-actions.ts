@@ -3,6 +3,7 @@
 import {
     dbGetFirstUserAccount,
     dbGetSubscription,
+    dbGetUser,
     updateCreditBalance,
 } from '../_data/user.data';
 
@@ -21,5 +22,10 @@ export const getSubscription = async (userId: string) => {
 
 export const getFirstUserAccount = async (userId: string) => {
     const userAccount = await dbGetFirstUserAccount(userId);
+    return userAccount;
+};
+
+export const getUser = async (userId: string) => {
+    const userAccount = await dbGetUser(userId);
     return userAccount;
 };
