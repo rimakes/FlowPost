@@ -109,8 +109,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             setCarouselSetting('colorPalette', brand.colorPalette);
             setCarouselSetting('fontPalette', brand.fontPalette);
             editProfilePicture(brand.imageUrl);
-            editName(brand.name);
-            editHandle(brand.handle);
+            // editName(brand.name);
+            // editHandle(brand.handle);
         }
     };
 

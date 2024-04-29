@@ -99,12 +99,11 @@ export function CarouselProvider({
         setting: keyof TCarousel['settings'],
         newSetting: any
     ) => {
-        console.log('setting', setting);
-        console.log('newSetting', newSetting);
-
+        console.log('settings', setting, newSetting);
         // REVIEW: check what the difference is between using prev and not using it when we are using immer
         setCarousel((prev) =>
             produce(prev, (draftCarousel) => {
+                console.log('draftCarousel', draftCarousel);
                 // @ts-ignore
                 draftCarousel.settings[setting] = newSetting;
             })
@@ -112,27 +111,27 @@ export function CarouselProvider({
     };
 
     const editProfilePicture = (newImage: string) => {
-        setCarousel(
-            produce(carousel, (draftCarousel) => {
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
                 draftCarousel.author.pictureUrl = newImage;
             })
         );
     };
 
     const editName = (newName: string) => {
-        setCarousel(
-            produce(carousel, (draftCarousel) => {
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
                 draftCarousel.author.name = newName;
             })
         );
     };
 
     const editHandle = (newHandle: string) => {
-        setCarousel((prev) => {
-            const newCarousel = deepCopy(prev);
-            newCarousel.author.handle = newHandle;
-            return newCarousel;
-        });
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                draftCarousel.author.handle = newHandle;
+            })
+        );
     };
 
     const setPdfUrl = (url: string) => {
