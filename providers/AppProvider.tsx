@@ -41,9 +41,6 @@ export function AppProvider({
 }) {
     const [accessModalIsOpen, setAccessModalIsOpen] = useState<boolean>(false);
     const [creditBalance, setCreditBalance] = useState<number>(userFE.credits);
-
-    // REVIEW: Why this hook is problematic?
-    // https://github.com/uidotdev/usehooks/issues/218
     const [notifications, setNotifications] = useLocalStorage<AppNotifications>(
         {
             key: 'notifications',

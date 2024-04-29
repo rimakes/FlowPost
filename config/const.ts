@@ -329,9 +329,10 @@ export const COMPLETE_INSTRUCTIONS = {
 
     summarize: `
     Create a TL;DR  in ${language} with the format:
-    TL;DR: [Summary of the text in bullet points]
+    TL;DR: [Summary of the text in bullet points, max size of the summary is 1/5 the size of the original text, and maximum 5 bullets. Write the summary as if you were the author of the text.]
     
     for the following text:`,
+    // TODO: The summary size could be parametrized
     emojify: `
     Add relevant emojis to the following text keeping the same language.
     ##Example##
