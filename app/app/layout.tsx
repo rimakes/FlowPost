@@ -7,7 +7,7 @@ import { ToolBanner } from '@/components/shared/ToolBanner';
 import { AppProvider } from '@/providers/AppProvider';
 import { getServerSession } from '@/auth';
 
-export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const maxDuration = 120; // This function can run for a maximum of 120 seconds
 
 export default async function DefaultLayout({
     children,
