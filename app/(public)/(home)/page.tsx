@@ -22,7 +22,7 @@ export default async function Home() {
             <Hero />
             <VideoSteps />
             <Pricing2 />
-            <DemoVideo
+            {/* <DemoVideo
                 title={
                     <h2
                         className={`${secondaryFont.className} text-center text-6xl font-semibold`}
@@ -49,7 +49,7 @@ export default async function Home() {
                 }
                 videoPosterUrl='asdf'
                 videoUrl='https://www.youtube.com/watch?v=MGjCIQh5Pkw&ab_channel=Joshtriedcoding'
-            />
+            /> */}
             <Testimonials />
             <Faq />
             <CTABanner
