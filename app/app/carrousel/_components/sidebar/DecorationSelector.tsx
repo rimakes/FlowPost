@@ -40,7 +40,7 @@ export function DecorationSelector({
                 'HorizontalGradient',
                 'Prism',
                 'Starts',
-                'Paper',
+                // 'Paper',
             ].includes(design)
         )
             return true;
