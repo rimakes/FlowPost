@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { cn, proToast } from '@/lib/utils';
-import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
+import { upsertLinkedinPost } from '@/app/_actions/linkedinpost-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { Switch } from '@/components/ui/switch';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';

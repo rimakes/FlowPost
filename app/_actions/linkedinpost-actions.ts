@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import {
+    dbDeleteLinkedinPost,
     dbGetPendingToPublishPost,
     dbUpsertLinkedinPost,
 } from '../_data/linkedinpost.data';
@@ -21,7 +22,7 @@ export async function upsertLinkedinPost(
 }
 
 export async function deleteLinkedinPost(postId: string) {
-    await deleteLinkedinPost(postId);
+    await dbDeleteLinkedinPost(postId);
 
     // REVIEW: Does this revalidate the cache for EVERY user?
     revalidatePath('/app/schedule');

@@ -29,6 +29,8 @@ export const ImageAndTextVertical = ({
 
     const isTitleShown = slides[slideNumber].title?.isShown;
     const isDescriptionShown = slides[slideNumber].paragraphs[0]?.isShown;
+    const tagline = slides[slideNumber].tagline;
+    const isTaglineShown = tagline?.isShown;
 
     return (
         <div className='isolate z-10 flex h-full flex-col gap-6 p-2 py-6'>
@@ -55,6 +57,14 @@ export const ImageAndTextVertical = ({
                     defaultValue={title}
                     slideElement='title'
                     isShown={isTitleShown}
+                />
+                <SimpleEditor
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('tagline', string);
+                    }}
+                    defaultValue={tagline?.content}
+                    slideElement='tagline'
+                    isShown={isTaglineShown}
                 />
                 <SimpleEditor
                     onDebouncedUpdate={editDescription}

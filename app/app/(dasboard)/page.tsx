@@ -12,6 +12,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { WRITTER_TOOLS } from '@/config/const';
 import { cn } from '@/lib/utils';
+import { Badge } from '@ui/badge';
 
 export default async function Home() {
     // const session = await auth();
@@ -35,6 +36,7 @@ export default async function Home() {
                         headerClassName={tool.headerClassName}
                         imageUrl='/images/decoration/patterns/circles-pattern.svg'
                         titleClassName={tool.titleClassName}
+                        status={tool.status}
                     />
                 ))}
             </div>
@@ -50,6 +52,7 @@ type PostGeneratorCardProps<T extends string> = {
     headerClassName?: string;
     titleClassName: string;
     imageUrl?: string;
+    status?: string;
 };
 
 const PostGeneratorCard = <T extends string>({
@@ -60,9 +63,26 @@ const PostGeneratorCard = <T extends string>({
     headerClassName,
     titleClassName,
     imageUrl,
+    status,
 }: PostGeneratorCardProps<T>) => {
     return (
-        <Link href={url} className='h-full w-full'>
+        <Link
+            href={url}
+            className={cn(
+                `relative h-full w-full`,
+                status === 'Próximamente'
+                    ? 'pointer-events-none opacity-50'
+                    : 'hover:shadow-lg'
+            )}
+        >
+            {status === 'Próximamente' && (
+                <Badge className='absolute right-2 top-2'>{status}</Badge>
+            )}
+            {status === 'Beta' && (
+                <Badge className='absolute right-2 top-2 border-success bg-success-background text-success-foreground'>
+                    {status}
+                </Badge>
+            )}
             <Card className='h-full'>
                 <CardHeader
                     className={cn(

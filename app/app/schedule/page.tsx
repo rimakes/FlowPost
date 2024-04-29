@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import {
     findPostsByUserId,
     getScheduleByUserId,
-} from '@/app/_actions/schedule-actions';
+} from '@/app/_actions/scheduler-actions';
 import { UrlErrorToaster } from '@/components/shared/UrlErrorToaster';
 
 export default async function SchedulePage() {

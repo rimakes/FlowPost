@@ -3,7 +3,7 @@
 import { compareAsc, format, parse } from 'date-fns';
 import { useSession } from 'next-auth/react';
 import { useMemo, useOptimistic, useTransition } from 'react';
-import { addTime, toggleSlot } from '@/app/_actions/schedule-actions';
+import { addTime, toggleSlot } from '@/app/_actions/scheduler-actions';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
     Select,

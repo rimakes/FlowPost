@@ -8,15 +8,15 @@ import {
 import {
     dbDeleteBrand,
     dbGetUserBrands,
-    upsertBrand,
+    dbUpsertBrand,
 } from '../_data/brand.data';
 import { Pure } from '@/types/types';
 
-export const upsertBrandkit = async (
+export const upsertBrand = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,
     userId: string
 ) => {
-    const newBrandkit = await upsertBrand(brandKit, userId);
+    const newBrandkit = await dbUpsertBrand(brandKit, userId);
     return newBrandkit;
 };
 

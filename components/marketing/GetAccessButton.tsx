@@ -157,7 +157,7 @@ export const SecondStep = ({
             <div className='flex grow flex-col items-center justify-start gap-2 p-2'>
                 <div className='text-center'>
                     <p className='mb-2'>Oferta de Lanzamiento Limitada</p>
-                    <p className='text-xl font-bold '>Ahorra hasta un 75%</p>
+                    <p className='text-xl font-bold '>Ahorra hasta un 60%</p>
                 </div>
                 <div className='text-sm text-muted-foreground'>
                     Plan disponible para{' '}

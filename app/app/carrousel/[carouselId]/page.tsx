@@ -1,4 +1,3 @@
-import { Session, getServerSession } from 'next-auth';
 import { CarouselProvider } from '../_components/CarouselProvider';
 import { CarouselSidebar } from '../_components/sidebar/Sidebar';
 import { fakeCarousel } from '../_components/const';
@@ -6,7 +5,7 @@ import { CarouselWorkbench } from '../_components/CarouselWorkbench';
 import Container from '@/components/shared/container';
 import { Heading } from '@/components/shared/Heading';
 import { TCarousel } from '@/types/types';
-import { authOptions } from '@/auth';
+import { getServerSession } from '@/auth';
 import { getUserBrands } from '@/app/_actions/settings-actions';
 import { getCarousel } from '@/app/_actions/carousel-actions';
 
@@ -24,14 +23,12 @@ type props = {
 };
 
 export default async function CarouselPage({ params }: props) {
-    const session: Session | null = await getServerSession(authOptions);
+    const session = await getServerSession();
 
     const userBrands = await getUserBrands(session?.user.id!);
 
     const { carouselId } = params;
     let carousel = fakeCarousel as TCarousel;
-
-    console.log('userBrand1', userBrands[0]);
 
     if (carouselId === 'new') {
         carousel = {

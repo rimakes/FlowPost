@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { brandKitsSettingsSchema } from '@/types/schemas';
 import { Pure, TFont, TFontName, TStatus } from '@/types/types';
 import { Button } from '@/components/ui/button';
-import { upsertBrandkit } from '@/app/_actions/settings-actions';
+import { upsertBrand } from '@/app/_actions/settings-actions';
 import { Dropzone } from '@/components/shared/dropzone/Dropzone';
 import {
     TExtendedFile,
@@ -90,7 +90,7 @@ export function BrandKitEditForm({
             data.imageUrl = cloudinaryResponse.url as string;
         }
         try {
-            await upsertBrandkit(
+            await upsertBrand(
                 { ...data, id: form.getValues('id') },
                 session!.user.id
             );

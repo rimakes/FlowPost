@@ -1,3 +1,5 @@
+// TODO: This is not used. It's just for my reference.
+
 import { NextRequest, NextResponse } from 'next/server';
 
 export type NextFunction = () => void;

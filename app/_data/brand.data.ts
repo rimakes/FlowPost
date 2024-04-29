@@ -2,7 +2,7 @@ import { Brand } from '@prisma/client';
 import { db } from '@/lib/prisma';
 import { Pure } from '@/types/types';
 
-export const upsertBrand = async (
+export const dbUpsertBrand = async (
     brandKit: Omit<Pure<Brand>, 'authorId'>,
     userId: string
 ) => {

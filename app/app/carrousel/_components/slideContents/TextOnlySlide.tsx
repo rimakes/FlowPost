@@ -22,6 +22,8 @@ export const TextOnlySlide = ({
 
     const isTittleShown = slides[slideNumber!].title?.isShown;
     const isParagraphShown = slides[slideNumber!].paragraphs[0]?.isShown;
+    const tagline = slides[slideNumber!].tagline;
+    const isTaglineShown = tagline?.isShown;
 
     return (
         <div className='z-10 -mt-6 flex h-full w-full flex-col justify-center gap-2'>
@@ -33,6 +35,15 @@ export const TextOnlySlide = ({
                 className=''
                 slideElement='title'
                 isShown={isTittleShown}
+            />
+            <SimpleEditor
+                defaultValue={tagline?.content}
+                onDebouncedUpdate={(string) => {
+                    setSlideContent('tagline', string);
+                }}
+                className=''
+                slideElement='tagline'
+                isShown={isTaglineShown}
             />
 
             <SimpleEditor

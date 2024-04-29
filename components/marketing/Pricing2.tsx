@@ -29,7 +29,7 @@ export const Pricing2 = () => {
                 <p className='flex items-center justify-center gap-2 text-sm'>
                     <GiftIcon className='animate-bounce text-teal-500' />
                     <span className='text-teal-500'>
-                        65% de descuento &nbsp;
+                        60% de descuento &nbsp;
                         <span className={cn(`text-primary`)}>
                             a las primeras 20 compras
                         </span>

@@ -35,7 +35,6 @@ import { cn, getPostTemplateById, wait } from '@/lib/utils';
 import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
 import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
 import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
-import { RecordButton } from '@/app/app/post-writter/_components/RecordButton';
 import { appConfig } from '@/config/shipper.appconfig';
 
 type DemoWidgetProps = { className?: string };
@@ -277,14 +276,14 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                         control={form.control}
                         name='description'
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className='w-full'>
                                 <FormLabel className=''>
                                     ¿Sobre qué quieres escribir?
                                 </FormLabel>
                                 <FormControl>
                                     <div className='relative'>
                                         <Textarea
-                                            className='resize-none overflow-auto'
+                                            className='w-full resize-none overflow-auto'
                                             placeholder='Los mejores hooks para enganchar a tus seguidores en Linkedin'
                                             {...field}
                                         />
@@ -295,15 +294,15 @@ export function DemoWidget({ className }: DemoWidgetProps) {
                                                 form.watch('description').length
                                             }
                                         /> */}
-                                        <RecordButton
+                                        {/* <RecordButton
                                             onRecord={field.onChange}
                                             text={field.value}
-                                        />
+                                        /> */}
                                     </div>
                                 </FormControl>
                                 <FormDescription className=''>
-                                    Suéltalo tal y como te salga, incluso puedes
-                                    hacerlo POR VOZ. Nosotros le daremos forma.
+                                    Suéltalo tal y como te salga. Nosotros le
+                                    daremos forma.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

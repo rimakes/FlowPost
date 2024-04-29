@@ -19,8 +19,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { unschedulePost } from '@/app/_actions/schedule-actions';
-import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
+import { unschedulePost } from '@/app/_actions/scheduler-actions';
+import { deleteLinkedinPost } from '@/app/_actions/linkedinpost-actions';
 
 type PostSlotProps = {
     isAvailable: boolean;

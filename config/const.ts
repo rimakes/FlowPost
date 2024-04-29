@@ -281,6 +281,7 @@ export const WRITTER_TOOLS = [
         url: '/app/post-writter/new',
         headerClassName: 'bg-emerald-50',
         titleClassName: 'text-emerald-800',
+        status: 'Beta',
     },
     {
         name: 'Plantillas Virales',
@@ -290,6 +291,17 @@ export const WRITTER_TOOLS = [
         url: '/app/post-writter',
         headerClassName: 'bg-indigo-50',
         titleClassName: 'text-indigo-800',
+        status: 'Beta',
+    },
+    {
+        name: 'Copy Frameworks',
+        title: 'Aplica los mejores frameworks de copywriting',
+        subtitle:
+            'Tú escribes el contenido, Flowpost lo mejora para que sea más efectivo',
+        url: '/app/copy-frameworks',
+        headerClassName: 'bg-yello-50',
+        titleClassName: 'text-yello-800',
+        status: 'Próximamente',
     },
     {
         name: 'En camino! 🚀',

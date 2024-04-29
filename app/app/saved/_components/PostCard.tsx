@@ -3,7 +3,7 @@
 import { Edit, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { deleteLinkedinPost } from '@/app/_actions/writter-actions';
+import { deleteLinkedinPost } from '@/app/_actions/linkedinpost-actions';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { Separator } from '@/components/ui/separator';
@@ -27,9 +27,14 @@ export function PostCard({ post }: PostCardProps) {
                     className='flex-1 rounded-full bg-muted text-primary/50 hover:bg-primary/10'
                     label='Borrar post'
                     onClick={async () => {
-                        await deleteLinkedinPost(post.id);
-                        toast.success('Post eliminado');
-                        router.refresh();
+                        try {
+                            await deleteLinkedinPost(post.id);
+                            toast.success('Post eliminado');
+                            router.refresh();
+                        } catch (error) {
+                            console.error(error);
+                            toast.error('No se pudo eliminar el post');
+                        }
                     }}
                 />
                 <ButtonWithTooltip

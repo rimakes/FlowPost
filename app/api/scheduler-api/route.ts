@@ -6,7 +6,7 @@ import {
 import { dbUpdatePostAsPublished } from '@/app/_data/linkedinpost.data';
 import { withMiddleware } from '@/app/api/(middleware)/with-middleware';
 import { withCatch } from '@/app/api/(middleware)/with-catch';
-import { getPendingToPublishPost } from '@/app/_actions/writter-actions';
+import { getPendingToPublishPost } from '@/app/_actions/linkedinpost-actions';
 import { getFirstUserAccount } from '@/app/_actions/user-actions';
 import { getFirstCarousel } from '@/app/_actions/carousel-actions';
 

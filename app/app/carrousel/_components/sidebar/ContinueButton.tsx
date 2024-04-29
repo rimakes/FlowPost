@@ -200,8 +200,7 @@ export function ContinueButton({}) {
 const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
     try {
         const dataUrl = await toPng(htmlElement, {
-            quality: 1,
-            pixelRatio: 4,
+            quality: 0.8,
             includeQueryParams: true,
         });
         pdf.addImage({

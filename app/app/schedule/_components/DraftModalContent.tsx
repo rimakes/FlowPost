@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { addMinutes, differenceInMinutes, parse } from 'date-fns';
 import { SchedulerContext } from './SchedulerProvider';
 import { Separator } from '@/components/ui/separator';
-import { schedulePost } from '@/app/_actions/schedule-actions';
+import { schedulePost } from '@/app/_actions/scheduler-actions';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 

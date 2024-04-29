@@ -13,7 +13,7 @@ import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { TStatus } from '@/types/types';
 import Editor from '@/components/editor/Editor';
-import { upsertLinkedinPost } from '@/app/_actions/writter-actions';
+import { upsertLinkedinPost } from '@/app/_actions/linkedinpost-actions';
 
 type GeneratedPostProps = {
     className?: string;

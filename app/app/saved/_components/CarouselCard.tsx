@@ -75,7 +75,7 @@ const CarouselActions = ({ carousel, className }: CarouselCardProps) => {
                 label='Borrar post'
                 onClick={async () => {
                     await deleteCarousel(carousel.id);
-                    toast.success('Post eliminado');
+                    toast.success('Carrusel eliminado');
                     router.refresh();
                 }}
             />

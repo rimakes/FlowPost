@@ -31,6 +31,7 @@ export default function Navbar({ className }: { className?: string }) {
                 {/* Right side */}
                 <div className='flex items-center space-x-3'>
                     <Button
+                        className='hidden sm:flex'
                         onClick={() => {
                             router.push('/app/post-writter/new');
                         }}
@@ -43,7 +44,7 @@ export default function Navbar({ className }: { className?: string }) {
 
                     <Separator
                         orientation='vertical'
-                        className='separator h-auto self-stretch'
+                        className='separator hidden h-auto self-stretch sm:flex'
                     />
 
                     <SelectAccountMenu />

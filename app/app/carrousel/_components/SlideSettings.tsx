@@ -62,7 +62,7 @@ export function SlideSettings({
             )}
         >
             <SlideActions />
-            <Separator />
+            <Separator className='-mb-2 -mt-2' />
             <Button
                 variant={'ghost'}
                 className='absolute right-0 top-1/2 translate-x-[100%]'
@@ -106,10 +106,10 @@ export function SlideSettings({
                     </SelectContent>
                 </Select>
             </div>
-
+            <Separator className='-mb-2 -mt-2' />
             <div>
                 <Collapsible className=''>
-                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
+                    <CollapsibleTrigger className=' flex w-full items-center justify-between'>
                         <Label htmlFor='paragraph'>Textos</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
@@ -150,9 +150,11 @@ export function SlideSettings({
                     </CollapsibleContent>
                 </Collapsible>
             </div>
+            <Separator className='-mb-2 -mt-2' />
+
             <div>
                 <Collapsible>
-                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
+                    <CollapsibleTrigger className=' flex w-full items-center justify-between'>
                         <Label htmlFor='paragraph'>Imagen</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
@@ -161,10 +163,11 @@ export function SlideSettings({
                     </CollapsibleContent>
                 </Collapsible>
             </div>
+            <Separator className='-mb-2 -mt-2' />
 
             <div>
                 <Collapsible>
-                    <CollapsibleTrigger className='mb-2 flex w-full items-center justify-between'>
+                    <CollapsibleTrigger className=' flex w-full items-center justify-between'>
                         <Label htmlFor='paragraph'>Imagen de fondo</Label>
                         <ChevronsUpDown size={20} className='ml-2' />
                     </CollapsibleTrigger>
