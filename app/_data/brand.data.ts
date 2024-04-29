@@ -77,7 +77,7 @@ export const dbGetFirstBrand = async (userId: string) => {
 
 export const dbDeleteBrand = async (brandId: string) => {
     try {
-        const brand = db.brand.delete({
+        const brand = await db.brand.delete({
             where: {
                 id: brandId,
             },
