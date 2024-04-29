@@ -36,12 +36,7 @@ export function SlideFotter({
         >
             <div className='flex items-center gap-4'>
                 <div className='relative h-10 w-10'>
-                    <Image
-                        src={imageUrl}
-                        alt='avatar'
-                        fill
-                        className='object-cover'
-                    />
+                    <Image src={imageUrl} alt='avatar' fill className='' />
                 </div>
                 <div
                     className='w-6'
