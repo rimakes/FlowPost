@@ -3,7 +3,6 @@
 import { Download } from 'lucide-react';
 import { toCanvas } from 'html-to-image';
 import { useContext, useState } from 'react';
-import { jsPDF } from 'jspdf';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
@@ -25,6 +24,7 @@ import { dataUrl, fromPdfUrlToThumnailUrl } from '@/lib/utils';
 import { upsertCarousel } from '@/app/_actions/carousel-actions';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 import Spinner from '@/components/icons/SpinnerIcon';
+import { fromHtmlElementsToPdf } from '@/lib/toPdf';
 
 export function ContinueButton({}) {
     const router = useRouter();
@@ -53,37 +53,30 @@ export function ContinueButton({}) {
     const onCarouselLoad = async () => {
         setStatus('loading');
         setThumbnailUrls([]);
-
-        const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'px',
-            format: [1350, 1080],
-        });
-        // REVIEW: How can we optimize this?
-        for (let i = 0; i < arrayOfRefs.length; i++) {
-            await addSlidetoCaroulse(arrayOfRefs[i].current!, pdf);
-            if (i !== arrayOfRefs.length - 1) {
-                pdf.addPage();
-            }
-        }
-        const arrayBuffer = pdf.output('arraybuffer');
+        const currentArray = arrayOfRefs.map((ref) => ref.current!);
+        const arrayBuffer = await fromHtmlElementsToPdf(currentArray);
         const formData = new FormData();
         formData.append(
             'file',
             new Blob([arrayBuffer], { type: 'application/pdf' })
         );
 
-        const res = await uploadFileToCloudinary(formData);
+        const cldResPromise = uploadFileToCloudinary(formData);
+        const canvasPromise = toCanvas(arrayOfRefs[0].current!);
 
-        const canvas = await toCanvas(arrayOfRefs[0].current!);
+        const [cldRes, canvas] = await Promise.all([
+            cldResPromise,
+            canvasPromise,
+        ]);
+
         const dataUrl = canvas.toDataURL();
 
         const savedCarousel = await upsertCarousel(
             {
                 ...carousel,
                 thumbnailDataUrl: dataUrl,
-                publicId: res.publicId,
-                pdfUrl: res.url,
+                publicId: cldRes.publicId,
+                pdfUrl: cldRes.url,
             },
             data?.user.id!
         );
@@ -95,7 +88,7 @@ export function ContinueButton({}) {
         setCarousel(savedCarousel); //REVIEW: Don't love doing it this way, but...is there a way to update the url and THEN load the dialog? (other than using a conditional useEffect)
 
         arrayOfRefs.forEach(async (ref, index) => {
-            const url = fromPdfUrlToThumnailUrl(res.publicId, index + 1);
+            const url = fromPdfUrlToThumnailUrl(cldRes.publicId, index + 1);
             setThumbnailUrls((prev) => [...prev, url]);
         });
     };
@@ -196,22 +189,3 @@ export function ContinueButton({}) {
         </>
     );
 }
-
-const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    try {
-        const dataUrl = await toCanvas(htmlElement, {
-            quality: 1,
-            includeQueryParams: true,
-            pixelRatio: 2,
-        });
-        pdf.addImage({
-            imageData: dataUrl,
-            format: 'PNG',
-            x: 0,
-            y: 0,
-            height: 1350,
-            width: 1080,
-            compression: 'FAST', // or 'SLOW' for better compression
-        });
-    } catch (error) {}
-};

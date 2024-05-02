@@ -2,8 +2,6 @@
 
 import { Download } from 'lucide-react';
 import { useContext, useState } from 'react';
-import { jsPDF } from 'jspdf';
-import { toCanvas } from 'html-to-image';
 import { CarouselContext } from '../CarouselProvider';
 import { Button } from '@/components/ui/button';
 import { TStatus } from '@/types/types';
@@ -16,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { uploadFileToCloudinary } from '@/lib/cloudinary';
 import Spinner from '@/components/icons/SpinnerIcon';
+import { fromHtmlElementsToPdf } from '@/lib/toPdf';
 
 type ImageFormat = 'pdf' | 'svg';
 
@@ -34,42 +33,25 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
         switch (format) {
             case 'pdf':
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'px',
-                    format: [1350, 1080],
-                });
-                // REVIEW: How can we optimize this?
-                for (let i = 0; i < arrayOfRefs.length; i++) {
-                    if (i === 4) {
-                        console.log(
-                            arrayOfRefs[i].current!.querySelector('img')?.src
-                        );
-                    }
-                    await addSlidetoCarousel(arrayOfRefs[i].current!, pdf);
-                    if (i !== arrayOfRefs.length - 1) {
-                        pdf.addPage();
-                    }
-                }
-                pdf.save('download.pdf');
-                const blob = pdf.output('arraybuffer');
+                const currentArray = arrayOfRefs.map((ref) => ref.current!);
+                const arrayBuffer = await fromHtmlElementsToPdf(currentArray);
+
                 const formData = new FormData();
                 formData.append(
                     'file',
-                    new Blob([blob], { type: 'application/pdf' })
+                    new Blob([arrayBuffer], { type: 'application/pdf' })
                 );
 
-                await uploadFileToCloudinary(formData);
+                const cldRes = await uploadFileToCloudinary(formData);
+
+                // download the pdf
+                const a = document.createElement('a');
+                a.href = cldRes.url;
+                a.target = '_blank';
+                a.download = 'carousel.pdf';
+                a.click();
 
                 break;
-            // case 'svg':
-            //     dataUrl = toSvg(arrayOfRefs[0].current!);
-            //     link.download = `logo.svg`;
-            //     link.href = await dataUrl;
-            //     document.body.appendChild(link);
-            //     link.click();
-            //     document.body.removeChild(link);
-            //     break;
         }
         setStatus('idle');
     };
@@ -94,14 +76,6 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                     {downloadButton}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='isolate z-50 flex flex-col items-center gap-2 bg-background'>
-                    {/* <DropdownMenuItem
-                    onClick={() => {
-                        onDownload('svg');
-                    }}
-                    className='justify-center w-full'
-                >
-                    SVG
-                </DropdownMenuItem> */}
                     <DropdownMenuItem
                         onClick={() => {
                             onDownload('pdf');
@@ -115,22 +89,3 @@ export function DownloadButton({ className }: DownloadButtonProps) {
         </div>
     );
 }
-
-const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    try {
-        const dataUrl = await toCanvas(htmlElement, {
-            quality: 1,
-            includeQueryParams: true,
-            pixelRatio: 2,
-        });
-        pdf.addImage({
-            imageData: dataUrl,
-            format: 'WEBP',
-            x: 0,
-            y: 0,
-            height: 1350,
-            width: 1080,
-            compression: 'FAST', // or 'SLOW' for better compression
-        });
-    } catch (error) {}
-};
