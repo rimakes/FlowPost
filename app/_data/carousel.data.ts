@@ -30,11 +30,14 @@ export const dbGetCarouselByUserId = async (userId: string) => {
     }
 };
 
-export const dbGetFirstCarousel = async (linkedinPostId: string) => {
+export const dbGetLastCarousel = async (linkedinPostId: string) => {
     try {
         const carousel = await db.carousel.findFirst({
             where: {
                 linkedinPostId,
+            },
+            orderBy: {
+                createdAt: 'desc',
             },
         });
 

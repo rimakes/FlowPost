@@ -3,7 +3,7 @@
 import { Download } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { jsPDF } from 'jspdf';
-import { toPng } from 'html-to-image';
+import { toCanvas } from 'html-to-image';
 import { CarouselContext } from '../CarouselProvider';
 import { Button } from '@/components/ui/button';
 import { TStatus } from '@/types/types';
@@ -118,7 +118,7 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 
 const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
     try {
-        const dataUrl = await toPng(htmlElement, {
+        const dataUrl = await toCanvas(htmlElement, {
             quality: 1,
             includeQueryParams: true,
             pixelRatio: 2,

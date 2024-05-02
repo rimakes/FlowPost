@@ -1,7 +1,7 @@
 'use client';
 
 import { Download } from 'lucide-react';
-import { toCanvas, toPng } from 'html-to-image';
+import { toCanvas } from 'html-to-image';
 import { useContext, useState } from 'react';
 import { jsPDF } from 'jspdf';
 import Image from 'next/image';
@@ -199,14 +199,14 @@ export function ContinueButton({}) {
 
 const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
     try {
-        const dataUrl = await toPng(htmlElement, {
+        const dataUrl = await toCanvas(htmlElement, {
             quality: 1,
             includeQueryParams: true,
-            pixelRatio: 2,
+            pixelRatio: 1,
         });
         pdf.addImage({
             imageData: dataUrl,
-            format: 'WEBP',
+            format: 'PNG',
             x: 0,
             y: 0,
             height: 1350,

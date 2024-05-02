@@ -8,7 +8,7 @@ import { withMiddleware } from '@/app/api/(middleware)/with-middleware';
 import { withCatch } from '@/app/api/(middleware)/with-catch';
 import { getPendingToPublishPost } from '@/app/_actions/linkedinpost-actions';
 import { getFirstUserAccount } from '@/app/_actions/user-actions';
-import { getFirstCarousel } from '@/app/_actions/carousel-actions';
+import { getLastCarousel } from '@/app/_actions/carousel-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +35,7 @@ async function getHandler(req: NextRequest) {
             continue;
         }
 
-        const carousel = await getFirstCarousel(post.linkedinPostId!);
+        const carousel = await getLastCarousel(post.linkedinPostId!);
         const asset = await registerAndUploadDocumentToLinkedin(
             carousel!,
             userAccount

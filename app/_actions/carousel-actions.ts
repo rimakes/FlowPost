@@ -26,7 +26,7 @@ import { aiChat } from '@/lib/aiClients';
 import {
     dbGetCarousel,
     dbGetCarouselByUserId,
-    dbGetFirstCarousel,
+    dbGetLastCarousel,
 } from '@/app/_data/carousel.data';
 import { authGuard } from '@/app/_actions/auth.actions';
 
@@ -195,7 +195,7 @@ export const getSlidesImages = async (slides: TSlide[]) => {
     return slides;
 };
 
-export const getFirstCarousel = async (linkedinPostId: string) => {
-    const carousel = await dbGetFirstCarousel(linkedinPostId);
+export const getLastCarousel = async (linkedinPostId: string) => {
+    const carousel = await dbGetLastCarousel(linkedinPostId);
     return carousel;
 };
