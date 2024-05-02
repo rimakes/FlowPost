@@ -8,7 +8,6 @@ import { primaryFont } from '@/config/fonts';
 import { authOptions } from '@/auth';
 import { appConfig } from '@/config/shipper.appconfig';
 
-// BOILER: ADD
 // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 export const metadata: Metadata = {
     title: `${appConfig.general.appName} · Crea Carousel y Post de Linkedin en Segundos`,

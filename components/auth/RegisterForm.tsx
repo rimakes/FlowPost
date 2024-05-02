@@ -23,8 +23,6 @@ import { apiClient } from '@/lib/apiClient';
 import { RegisterReq } from '@/app/api/register/route';
 import { registerFormSchema } from '@/schemas/auth-schemas';
 
-// BOILER: I have fixed the button disabled state and fixed the error message
-
 export function RegisterForm({}) {
     const form = useForm({
         resolver: zodResolver(registerFormSchema),

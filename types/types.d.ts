@@ -1,7 +1,7 @@
+import type { Position, Prisma, PrismaClient, TimeSlot } from '@prisma/client';
 import { decorationMap } from '@/app/app/carrousel/_components/slideParts/SlideDecoration';
 import { ASPECT_RATIOS_MAP } from '@/app/app/carrousel/_components/const';
 import { fontsMap } from '@/config/fonts';
-import type { Position, Prisma, PrismaClient, TimeSlot } from '@prisma/client';
 import { designNamesMap } from '@/app/app/carrousel/_components/slideContents/contentMaps';
 import {
     DaysOfTheWeek,
@@ -122,11 +122,7 @@ export type TLinkedinPost = Pure<Prisma.LinkedinPostGetPayload<{}>>;
 export type TScheduledPost = Pure<Prisma.ScheduledPostGetPayload<{}>>;
 export type TCarousel = Pure<Prisma.CarouselGetPayload<{}>>;
 
-export type TSlide = Pure<Prisma.SlideGetPayload<{}>>;
-
 type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
-export type TAspectRatioEnum = keyof TAspectRatioMap;
-export type TAspectRatioLabel = TAspectRatioMap[TAspectRatioEnum];
 
 export type TFontNames = keyof typeof fontsMap;
 
@@ -153,8 +149,6 @@ export type TColor = keyof TColorPalette;
 export type TFont = keyof TFontPalette;
 
 export type TFontPalette = Prisma.FontPaletteGetPayload<{}>;
-
-export type TDecorationId = keyof typeof decorationMap;
 
 export type TOrientation = 'horizontal' | 'vertical';
 

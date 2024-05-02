@@ -1,4 +1,32 @@
+import { UserRole } from '@prisma/client';
 import { db } from '@/lib/prisma';
+
+export const dbRegister = async (
+    name: string,
+    email: string,
+    hashedPassword: string | undefined = undefined,
+    role: UserRole = 'USER'
+) => {
+    try {
+        const user = await db.user.create({
+            data: {
+                email,
+                name,
+                hashedPassword,
+                role,
+                settings: {
+                    create: {
+                        schedule: [],
+                    },
+                },
+            },
+        });
+        return user;
+    } catch (error) {
+        console.error('Error registering user', error);
+        throw new Error('Error registering user');
+    }
+};
 
 export const dbUpdateCreditBalance = async (
     userId: string,
@@ -60,6 +88,19 @@ export const dbGetUser = async (userId: string) => {
     } catch (error) {
         console.error('Error getting user', error);
         throw new Error('Error getting user');
+    }
+};
+
+export const dbGetUserByEmail = async (email: string) => {
+    try {
+        const user = await db.user.findFirst({
+            where: { email },
+        });
+
+        return user;
+    } catch (error) {
+        console.error('Error getting user by email', error);
+        throw new Error('Error getting user by email');
     }
 };
 

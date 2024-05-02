@@ -1,18 +1,13 @@
 import Image from 'next/image';
 import { Faq } from '@/components/marketing/faq';
 import CtaWithSocial from '@/components/marketing/cta-with-social';
-import { secondaryFont } from '@/config/fonts';
 import Hero from '@/components/marketing/hero';
 import { CTABanner } from '@/components/marketing/CTABanner';
 import { Testimonials } from '@/components/marketing/Testimonials';
-import { DemoVideo } from '@/components/marketing/DemoVideo';
 import { Pricing2 } from '@/components/marketing/Pricing2';
-import { appConfig } from '@/config/shipper.appconfig';
 import { VideoSteps } from '@/components/marketing/VideoSteps';
 
 // TODO: This should be rendered statically, but then I cannot use the session provider in the layout...?
-
-// BOILER: add the route typing (as done in next.config) https://nextjs.org/docs/app/building-your-application/configuring/typescript
 
 export default async function Home() {
     // const session = await auth();

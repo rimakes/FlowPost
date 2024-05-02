@@ -18,8 +18,10 @@ import { appConfig } from './config/shipper.appconfig';
 import { sendEmail } from './lib/mailgun';
 import { ReactSigninEmail } from './emails/ReactSigninEmail';
 import { db } from './lib/prisma';
-import { getUserByEmail } from './lib/getUser';
-import { getFirstUserAccount } from '@/app/_actions/user-actions';
+import {
+    getFirstUserAccount,
+    getUserByEmail,
+} from '@/app/_actions/user-actions';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),

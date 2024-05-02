@@ -1,24 +1,18 @@
-import { appConfig } from '@/config/shipper.appconfig';
 import {
     Body,
     Button,
     Container,
-    Column,
     Head,
     Heading,
-    Hr,
     Html,
     Img,
     Link,
     Preview,
-    Row,
     Section,
     Text,
 } from '@react-email/components';
 import { Tailwind } from '@react-email/tailwind';
-import { url } from 'inspector';
-import { Theme } from 'next-auth';
-import * as React from 'react';
+import { appConfig } from '@/config/shipper.appconfig';
 
 interface VercelInviteUserEmailProps {
     email: string;

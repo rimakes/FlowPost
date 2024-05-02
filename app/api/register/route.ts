@@ -2,9 +2,9 @@ import bcrypt from 'bcryptjs';
 import { User } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { ApiRequestBody, ApiResponse } from '@/types/types';
-import { register } from '@/lib/register-user';
 import { RegisterFormValues } from '@/schemas/auth-schemas';
 import { wait } from '@/lib/utils';
+import { register } from '@/app/_actions/user-actions';
 
 export async function POST(req: NextRequest) {
     try {

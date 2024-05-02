@@ -81,6 +81,10 @@ export function CreateCarouselButton({
             )}
             label='Crear carrusel'
             onClick={async () => {
+                if (post.content.length > 3000)
+                    return toast.error(
+                        'El post no puede superar los 3000 caracteres'
+                    );
                 setStatus('loading');
                 if (post.content.length < 30) {
                     toast.error(

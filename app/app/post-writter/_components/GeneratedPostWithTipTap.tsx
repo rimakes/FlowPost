@@ -14,6 +14,7 @@ import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
 import { TStatus } from '@/types/types';
 import Editor from '@/components/editor/Editor';
 import { upsertLinkedinPost } from '@/app/_actions/linkedinpost-actions';
+import { CharCounter } from '@/components/shared/CharCounter';
 
 type GeneratedPostProps = {
     className?: string;
@@ -59,12 +60,22 @@ export const PostWritterResultTipTap = ({
                 />
 
                 <div className='relative flex gap-2'>
+                    <CharCounter
+                        usedChars={post.content.length}
+                        maxChars={3000}
+                        minChars={10}
+                        className='absolute -top-4 right-0'
+                    />
                     <ButtonWithTooltip
                         variant={'secondary'}
                         icon={<Save />}
                         className='flex-1 rounded-full'
                         label='Guardar post'
                         onClick={async () => {
+                            if (post.content.length > 3000)
+                                return toast.error(
+                                    'El post no puede superar los 3000 caracteres'
+                                );
                             const toastId = toast.loading('Guardando post');
                             if (isDemo) {
                                 await wait(500);

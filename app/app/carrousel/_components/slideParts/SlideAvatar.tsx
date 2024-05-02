@@ -11,6 +11,7 @@ export function SlideAvatar({ imageUrl, colorPalette }: SlideAvatarProps) {
             <div
                 className='relative aspect-square w-24 overflow-hidden rounded-full border-4 bg-transparent'
                 style={{
+                    backgroundColor: colorPalette.primary,
                     borderColor: colorPalette.primary,
                 }}
             >

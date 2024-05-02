@@ -117,27 +117,20 @@ export function DownloadButton({ className }: DownloadButtonProps) {
 }
 
 const addSlidetoCarousel = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
-    // This prints the correct image url!!!!
-    console.log(htmlElement.querySelector('img')?.src);
-
-    const dataUrl = await toPng(htmlElement, {
-        quality: 1,
-        pixelRatio: 4,
-        // REVIEW: This was causing the issue! <Image> component use the query params
-        // indeed, with Next <Image> component, the src is url path is the same for all images and the query params are used to fetch the image that is needed specifically. As toPng was removing the query params, the image was not being fetched correctly.
-        includeQueryParams: true,
-    });
-
-    // ...but this prints the wrong image url!!!!!!
-    console.log('dataUrl', dataUrl);
-
-    pdf.addImage({
-        imageData: dataUrl,
-        format: 'WEBP',
-        x: 0,
-        y: 0,
-        height: 1350,
-        width: 1080,
-        compression: 'FAST', // or 'SLOW' for better compression
-    });
+    try {
+        const dataUrl = await toPng(htmlElement, {
+            quality: 1,
+            includeQueryParams: true,
+            pixelRatio: 2,
+        });
+        pdf.addImage({
+            imageData: dataUrl,
+            format: 'WEBP',
+            x: 0,
+            y: 0,
+            height: 1350,
+            width: 1080,
+            compression: 'FAST', // or 'SLOW' for better compression
+        });
+    } catch (error) {}
 };

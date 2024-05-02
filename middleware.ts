@@ -11,7 +11,6 @@
 
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-// BOILER: EDGE CONFIG
 import { get } from '@vercel/edge-config';
 
 // export async function middleware(req: NextRequest) {

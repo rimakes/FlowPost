@@ -30,9 +30,8 @@
 
 -   [Shadcn] (https://ui.shadcn.com/)
     A collection of React components built with Radix, installed in your own project and highly customizable.
-    -   Change <Input> text size to md (default is sm) in mobile to avoid zooming in iOS
 
-<!-- BOILER: ADD -->
+    -   Change <Input> text size to md (default is sm) in mobile to avoid zooming in iOS
 
 -   [Tailwind CSS] (https://tailwindcss.com/)
     A utility-first CSS framework for rapidly building custom designs.

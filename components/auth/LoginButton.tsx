@@ -40,7 +40,6 @@ export function LoginButton({ mode, children, className }: LoginButtonProps) {
     if (mode === 'modal')
         return (
             <Dialog
-                // BOILER: isOpen and onOpenChange updated so it redirects to app if user is logged in
                 open={isOpen}
                 onOpenChange={(isOpen) => {
                     if (session.data?.user) return router.push('/app');
