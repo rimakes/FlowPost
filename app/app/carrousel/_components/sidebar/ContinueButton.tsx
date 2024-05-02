@@ -202,7 +202,7 @@ const addSlidetoCaroulse = async (htmlElement: HTMLDivElement, pdf: jsPDF) => {
         const dataUrl = await toCanvas(htmlElement, {
             quality: 1,
             includeQueryParams: true,
-            pixelRatio: 1,
+            pixelRatio: 2,
         });
         pdf.addImage({
             imageData: dataUrl,
