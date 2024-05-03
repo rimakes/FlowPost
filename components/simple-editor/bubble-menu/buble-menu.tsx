@@ -1,5 +1,13 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from '@tiptap/react';
-import { BoldIcon, ItalicIcon, StrikethroughIcon, Undo } from 'lucide-react';
+import {
+    AlignCenter,
+    AlignLeft,
+    AlignRight,
+    BoldIcon,
+    ItalicIcon,
+    List,
+    StrikethroughIcon,
+} from 'lucide-react';
 
 import { EditorState } from '@tiptap/pm/state';
 import { cn } from '@/lib/utils';
@@ -30,6 +38,34 @@ export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
             isActive: () => props.editor!.isActive('strike'),
             command: () => props.editor!.chain().focus().toggleStrike().run(),
             icon: StrikethroughIcon,
+        },
+        {
+            name: 'list',
+            isActive: () => props.editor!.isActive('list'),
+            command: () =>
+                props.editor!.chain().focus().toggleBulletList().run(),
+            icon: List,
+        },
+        {
+            name: 'align-left',
+            isActive: () => props.editor!.isActive({ textAlign: 'left' }),
+            command: () =>
+                props.editor!.chain().focus().setTextAlign('left').run(),
+            icon: AlignLeft,
+        },
+        {
+            name: 'align-center',
+            isActive: () => props.editor!.isActive({ textAlign: 'center' }),
+            command: () =>
+                props.editor!.chain().focus().setTextAlign('center').run(),
+            icon: AlignCenter,
+        },
+        {
+            name: 'align-right',
+            isActive: () => props.editor!.isActive({ textAlign: 'right' }),
+            command: () =>
+                props.editor!.chain().focus().setTextAlign('right').run(),
+            icon: AlignRight,
         },
         // {
         //     name: 'code',

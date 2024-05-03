@@ -30,6 +30,7 @@ export default function SimpleEditor({
      * Defaults to defaultEditorContent.
      */
     defaultValue = '...',
+
     /**
      * A list of extensions to use for the editor, in addition to the default Novel extensions.
      * Defaults to [].

@@ -9,19 +9,23 @@ import SimpleEditor from '@/components/simple-editor/SimpleEditor';
 type ImageAndTextVertical = {
     brand: TBrand;
     title: string;
+    tagline: string;
     description: string;
     image: string;
     imageLocation?: 'left' | 'right';
     imageCaption?: string;
+    slideNumber?: number;
 };
 
 export const ImageAndTextHorizontal = ({
     brand,
     title,
+    tagline,
     description,
     image,
     imageLocation = 'right',
     imageCaption,
+    slideNumber,
 }: ImageAndTextVertical) => {
     const ArrowElement = imageLocation === 'right' ? ArrowRight : ArrowLeftIcon;
 
@@ -29,10 +33,12 @@ export const ImageAndTextHorizontal = ({
         carousel: { slides },
         editParagraphN,
         setSlideContent,
+        setSlideImageCaption,
     } = useContext(CarouselContext);
 
-    const isTitleShown = slides[0].title?.isShown;
-    const isDescriptionShown = slides[0].paragraphs[0]?.isShown;
+    const isTitleShown = slides[slideNumber!].title?.isShown;
+    const isDescriptionShown = slides[slideNumber!].paragraphs[0]?.isShown;
+    const isTaglineShown = slides[slideNumber!].tagline?.isShown;
     const editFirstParagraph = editParagraphN.bind(null, 0);
 
     return (
@@ -45,6 +51,14 @@ export const ImageAndTextHorizontal = ({
                     }}
                     slideElement='title'
                     isShown={isTitleShown}
+                />
+                <SimpleEditor
+                    defaultValue={tagline}
+                    onDebouncedUpdate={(string) => {
+                        setSlideContent('tagline', string);
+                    }}
+                    slideElement='tagline'
+                    isShown={isTaglineShown}
                 />
                 <SimpleEditor
                     defaultValue={description}
@@ -87,12 +101,10 @@ export const ImageAndTextHorizontal = ({
                         zIndex: 10,
                     }}
                 />
-
                 <SimpleEditor
+                    onDebouncedUpdate={setSlideImageCaption}
                     defaultValue={imageCaption}
-                    // onDebouncedUpdate={editParagraphs}
                     slideElement='imageCaption'
-                    isShown={true}
                 />
             </div>
         </div>

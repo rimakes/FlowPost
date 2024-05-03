@@ -12,14 +12,6 @@ import {
 import { dbGetFirstBrand } from '../_data/brand.data';
 import { retryAsyncFunction } from '@/lib/utils';
 import { TCarousel, TLinkedinPost, TSlide } from '@/types/types';
-import {
-    BigNumberSlideSchema,
-    CallToActionSlideSchema,
-    CoverSlideSchema,
-    ImageAndTextHorizontalSchema,
-    ListSlideSchema,
-    OnlyTextSlideSchema,
-} from '@/types/schemas';
 import { promptGenerateCarousel } from '@/config/prompts';
 import { getPexelImages } from '@/lib/pexels';
 import { aiChat } from '@/lib/aiClients';
@@ -29,6 +21,13 @@ import {
     dbGetLastCarousel,
 } from '@/app/_data/carousel.data';
 import { authGuard } from '@/app/_actions/auth.actions';
+import {
+    BigNumberSlideSchema,
+    CallToActionSlideSchema,
+    CoverSlideSchema,
+    ImageAndTextHorizontalSchema,
+    OnlyTextSlideSchema,
+} from '@/app/app/carrousel/_components/slideContents/schemas';
 
 export async function deleteCarousel(carouselId: string) {
     await dbDeleteCarousel(carouselId);
@@ -86,7 +85,7 @@ export async function createCarousel(post: TLinkedinPost, isDemo = false) {
                   slide.paragraphs.map((paragraph: any) => {
                       return { content: paragraph, isShown: true };
                   })
-                : [{ content: '...', isShown: true }],
+                : [{ content: '...', isShown: false }],
 
             tagline: {
                 // @ts-ignore
@@ -145,7 +144,6 @@ export const generateSlides = async (
                 z.union([
                     BigNumberSlideSchema,
                     OnlyTextSlideSchema,
-                    ListSlideSchema,
                     CallToActionSlideSchema,
                     CoverSlideSchema,
                     ImageAndTextHorizontalSchema,

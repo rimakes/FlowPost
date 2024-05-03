@@ -1,4 +1,5 @@
 import { StarterKit } from '@tiptap/starter-kit';
+import { TextAlign } from '@tiptap/extension-text-align';
 // import SlashCommand from './slash-command/slash-command';
 // import TiptapImage from "@tiptap/extension-image";
 
@@ -27,7 +28,7 @@ export const defaultExtensions = [
     StarterKit.configure({
         bulletList: {
             HTMLAttributes: {
-                class: 'list-disc list-outside leading-3 -mt-2',
+                class: 'list-disc leading-8',
             },
         },
         orderedList: {
@@ -37,7 +38,7 @@ export const defaultExtensions = [
         },
         listItem: {
             HTMLAttributes: {
-                class: 'leading-normal -mb-2',
+                class: 'leading-normal',
             },
         },
         blockquote: {
@@ -62,5 +63,10 @@ export const defaultExtensions = [
             width: 4,
         },
         gapcursor: false,
+    }),
+
+    TextAlign.configure({
+        types: ['heading', 'paragraph'],
+        alignments: ['left', 'center', 'right', 'justify'],
     }),
 ];

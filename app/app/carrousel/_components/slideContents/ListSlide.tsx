@@ -20,6 +20,7 @@ export const ListSlide = ({
     slideNumber,
 }: ListSlideProps) => {
     const {
+        carousel,
         carousel: { slides },
         editParagraphN,
         setSlideContent,
@@ -47,7 +48,15 @@ export const ListSlide = ({
                     setSlideContent('title', string);
                 }}
                 slideElement='title'
-                isShown={true}
+                isShown={carousel.slides[slideNumber!].title?.isShown}
+            />
+            <SimpleEditor
+                defaultValue={carousel.slides[slideNumber!].tagline?.content}
+                onDebouncedUpdate={(string) => {
+                    setSlideContent('tagline', string);
+                }}
+                slideElement='tagline'
+                isShown={carousel.slides[slideNumber!].tagline?.isShown}
             />
 
             <ul

@@ -203,7 +203,7 @@ export const aiModels = {
         prod: 'gpt-4-0613',
     },
     carousel: {
-        dev: 'gpt-3.5-turbo',
+        dev: 'gpt-4-0613',
         prod: 'gpt-4-0613',
     },
 };

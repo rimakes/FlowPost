@@ -20,9 +20,13 @@ type ImageFormat = 'pdf' | 'svg';
 
 type DownloadButtonProps = {
     className?: string;
+    carouselUrl?: string;
 };
 
-export function DownloadButton({ className }: DownloadButtonProps) {
+export function DownloadButton({
+    className,
+    carouselUrl,
+}: DownloadButtonProps) {
     const [status, setStatus] = useState<TStatus>('idle');
     const { arrayOfRefs } = useContext(CarouselContext);
 
@@ -78,6 +82,14 @@ export function DownloadButton({ className }: DownloadButtonProps) {
                 <DropdownMenuContent className='isolate z-50 flex flex-col items-center gap-2 bg-background'>
                     <DropdownMenuItem
                         onClick={() => {
+                            if (carouselUrl) {
+                                const a = document.createElement('a');
+                                a.href = carouselUrl;
+                                a.target = '_blank';
+                                a.download = 'carousel.svg';
+                                return a.click();
+                            }
+
                             onDownload('pdf');
                         }}
                         className='PDF-button z-[9999] w-full justify-center'

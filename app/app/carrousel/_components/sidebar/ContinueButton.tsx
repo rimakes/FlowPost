@@ -29,6 +29,9 @@ import { fromHtmlElementsToPdf } from '@/lib/toPdf';
 export function ContinueButton({}) {
     const router = useRouter();
     const [status, setStatus] = useState<TStatus>('idle');
+    const [carouselUrl, setCarouselUrl] = useState<string | undefined>(
+        undefined
+    );
     const [isOpen, setIsOpen] = useState(false);
     const {
         arrayOfRefs,
@@ -68,6 +71,8 @@ export function ContinueButton({}) {
             cldResPromise,
             canvasPromise,
         ]);
+
+        setCarouselUrl(cldRes.url);
 
         const dataUrl = canvas.toDataURL();
 
@@ -165,6 +170,7 @@ export function ContinueButton({}) {
                     </div>
                     <DialogFooter className='flex !justify-end gap-4'>
                         <DownloadButton
+                            carouselUrl={carouselUrl}
                             className={buttonVariants({
                                 variant: 'secondary',
                             })}

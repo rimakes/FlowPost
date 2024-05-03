@@ -175,7 +175,7 @@ export const SlideWithSettings = ({
                         title={slide.title?.content!}
                         paragraphs={slide.paragraphs.map((p) => p.content)}
                         bigCharacter={slide.bigCharacter?.content || ''}
-                        listFirstNumber={slide.listFirstItem!}
+                        // listFirstNumber={slide.listFirstItem!}
                         imageCaption={slide.image?.caption!}
                         className=''
                     />

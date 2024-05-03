@@ -1,13 +1,12 @@
 import { BigNumberSlide } from './BigNumberSlide';
 import { ImageAndTextHorizontal } from './ImageAndTextHorizontal';
 import { ImageAndTextVertical } from './ImageAndTextVertical';
-import { ListSlide } from './ListSlide';
 import { TextOnlySlide } from './TextOnlySlide';
 import { CallToActionSlide } from './CallToActionSlide';
 import { CoverSlide } from './CoverSlide';
 
 export const designNamesMap = {
-    ListSlide: { name: 'Lista', component: ListSlide },
+    // ListSlide: { name: 'Lista', component: ListSlide },
     BigNumberSlide: { name: 'Carácter Grande', component: BigNumberSlide },
     ImageAndTextHorizontal: {
         name: 'Imagen + Texto Horiz.',

@@ -9,6 +9,7 @@ type BigNumberSlideProps = {
     bigCharacter: string;
     tagline: string;
     slideNumber: number;
+    paragraphs: string[];
 };
 
 export const BigNumberSlide = ({
@@ -17,14 +18,26 @@ export const BigNumberSlide = ({
     title,
     tagline,
     slideNumber,
+    paragraphs,
 }: BigNumberSlideProps) => {
     const {
         carousel: { slides },
         setSlideContent,
+        editParagraphN,
     } = useContext(CarouselContext);
 
     const isTittleShown = slides[slideNumber!].title?.isShown;
     const isTaglineShown = slides[slideNumber!].tagline?.isShown;
+    const paragraphArray =
+        paragraphs.length === 0
+            ? []
+            : paragraphs.map((p, index) => {
+                  return {
+                      id: index, // TODO: use uuid
+                      content: p,
+                      editParagraph: editParagraphN.bind(null, index),
+                  };
+              });
 
     return (
         <>
@@ -66,6 +79,13 @@ export const BigNumberSlide = ({
                     slideElement='tagline'
                     defaultValue={tagline}
                     isShown={isTaglineShown}
+                />
+                <SimpleEditor
+                    className='z-10'
+                    defaultValue={paragraphArray[0].content}
+                    key={paragraphArray[0].id}
+                    onDebouncedUpdate={paragraphArray[0].editParagraph}
+                    isShown={slides[slideNumber!].paragraphs[0].isShown}
                 />
             </div>
         </>

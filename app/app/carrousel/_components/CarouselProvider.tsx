@@ -54,6 +54,7 @@ const INITIAL_STATE = {
     editParagraphN: (index: number, newParagraph: string) => {},
     setPdfUrl: (url: string) => {},
     setCarousel: (carousel: TCarousel | ((prev: TCarousel) => TCarousel)) => {},
+    setSlideImageCaption: (caption: string) => {},
 };
 export const CarouselContext = createContext({
     ...INITIAL_STATE,
@@ -154,6 +155,14 @@ export function CarouselProvider({
             produce(carousel, (draftCarousel) => {
                 draftCarousel.slides[currentSlide][property]!.content = content;
                 // carousel.thumbnailDataUrl = dataUrl;
+            })
+        );
+    };
+
+    const setSlideImageCaption = (caption: string) => {
+        setCarousel(
+            produce(carousel, (draftCarousel) => {
+                draftCarousel.slides[currentSlide].image!.caption = caption;
             })
         );
     };
@@ -290,6 +299,7 @@ export function CarouselProvider({
     return (
         <CarouselContext.Provider
             value={{
+                setSlideImageCaption,
                 setCarouselSetting,
                 setSlideContent,
                 moveSlide,

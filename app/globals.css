@@ -109,4 +109,28 @@
         color: var(--bold-color);
         font-weight: 700;
     }
+
+    .slideStyles ul {
+        list-style-position: inside;
+        margin-top: 1rem;
+    }
+
+    /* START OF BULLET - Create a custom market for bullet list */
+    .slideStyles li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+
+    .slideStyles li::before {
+        position: relative;
+        bottom: 0.3rem;
+        content: '✓ ';
+        font-size: 1.5rem;
+    }
+    .slideStyles li::marker {
+        display: none;
+    }
+
+    /* END OF BULLET */
 }
