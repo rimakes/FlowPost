@@ -370,6 +370,10 @@ export const MENU_ITEMS = [
         label: 'Preguntas Frecuentes',
         url: '#faq',
     },
+    {
+        label: 'Blog',
+        url: '/blog',
+    },
 ];
 
 export const DEFAULT_BACKGROUND_IMAGE = {

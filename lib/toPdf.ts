@@ -12,7 +12,7 @@ export const fromHtmlElementsToPdf = async (htmlElements: HTMLDivElement[]) => {
     });
     // REVIEW: How can we optimize this?
     // First add as many pages as elements in the array
-    for (let i = 0; i < htmlElements.length; i++) {
+    for (let i = 0; i < htmlElements.length - 1; i++) {
         pdf.addPage();
     }
     console.log('pages added');

@@ -6,6 +6,7 @@ import { deepCopy } from '@/lib/utils';
 import {
     TArrayOfRefs,
     TCarousel,
+    TCarouselContent,
     TPosition,
     TSlideDesignNames,
     TToggleableCarouselSettings,
@@ -55,6 +56,7 @@ const INITIAL_STATE = {
     setPdfUrl: (url: string) => {},
     setCarousel: (carousel: TCarousel | ((prev: TCarousel) => TCarousel)) => {},
     setSlideImageCaption: (caption: string) => {},
+    setCarouselContent: (content: TCarouselContent, newContent: string) => {},
 };
 export const CarouselContext = createContext({
     ...INITIAL_STATE,
@@ -107,6 +109,17 @@ export function CarouselProvider({
                 console.log('draftCarousel', draftCarousel);
                 // @ts-ignore
                 draftCarousel.settings[setting] = newSetting;
+            })
+        );
+    };
+
+    const setCarouselContent = (
+        content: TCarouselContent,
+        newContent: string
+    ) => {
+        setCarousel((prev) =>
+            produce(prev, (draftCarousel) => {
+                draftCarousel[content as TCarouselContent] = newContent;
             })
         );
     };
@@ -300,6 +313,7 @@ export function CarouselProvider({
         <CarouselContext.Provider
             value={{
                 setSlideImageCaption,
+                setCarouselContent,
                 setCarouselSetting,
                 setSlideContent,
                 moveSlide,

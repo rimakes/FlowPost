@@ -58,6 +58,7 @@ export function ContinueButton({}) {
         setThumbnailUrls([]);
         const currentArray = arrayOfRefs.map((ref) => ref.current!);
         const arrayBuffer = await fromHtmlElementsToPdf(currentArray);
+
         const formData = new FormData();
         formData.append(
             'file',
@@ -65,7 +66,7 @@ export function ContinueButton({}) {
         );
 
         const cldResPromise = uploadFileToCloudinary(formData);
-        const canvasPromise = toCanvas(arrayOfRefs[0].current!);
+        const canvasPromise = toCanvas(currentArray[0]);
 
         const [cldRes, canvas] = await Promise.all([
             cldResPromise,
@@ -118,7 +119,10 @@ export function ContinueButton({}) {
                     toast.promise(onCarouselLoad(), {
                         loading: 'Creando pdf y guardando tu carrusel...',
                         success: 'Carrusel cargado y guardado',
-                        error: 'Error al crear carrusel',
+                        error: (e) => {
+                            console.log('HERE!', e);
+                            return 'Error al crear carrusel';
+                        },
                         finally: async () => {
                             await revalidateAllPaths();
                             setIsOpen(true);

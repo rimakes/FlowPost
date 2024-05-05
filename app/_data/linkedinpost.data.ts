@@ -227,6 +227,7 @@ export const dbCreateCarouselWithBrand = async (
 ) => {
     const carousel = await db.carousel.create({
         data: {
+            title: formattedSlides[0].title, //TODO: For now this is good enough: the title of the carousel will by default be the title of the first slide, so we don't need to ask the user for a title
             slides: formattedSlides,
             author: {
                 handle: firstBrand?.handle ?? 'Ricardo Sala',

@@ -5,6 +5,7 @@ import { ChevronsUpDown, Save } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { toCanvas } from 'html-to-image';
 import { CarouselContext } from '../CarouselProvider';
 import { DecorationSelector } from './DecorationSelector';
 import { DownloadButton } from './downloadButton';
@@ -39,6 +40,8 @@ import {
 } from '@/components/ui/collapsible';
 import { fontTypeMap } from '@/config/const';
 import { appConfig } from '@/config/shipper.appconfig';
+import { Input } from '@ui/input';
+import { revalidateAllPaths } from '@/app/_actions/other-actions';
 
 type CarouselSidebarProps = {
     brands: TBrand[];
@@ -93,6 +96,8 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         editProfilePicture,
         editName,
         editHandle,
+        setCarouselContent,
+        arrayOfRefs,
     } = useContext(CarouselContext);
 
     const router = useRouter();
@@ -125,6 +130,16 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
         <div
             className={cn(`sidebar flex grow basis-60 flex-col p-4`, className)}
         >
+            <div className=''>
+                <h3>Título</h3>
+                <Input
+                    value={carousel.title!}
+                    onChange={(e) => {
+                        setCarouselContent('title', e.target.value);
+                    }}
+                />
+            </div>
+            <Separator className='mb-2 mt-2' />
             <div className='flex flex-col gap-2'>
                 <h3>Plantilla</h3>
                 <SizeSelector
@@ -210,10 +225,16 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
             <div className='mt-8 flex flex-col justify-between gap-2'>
                 <Button
                     onClick={async () => {
+                        const canvas = await toCanvas(arrayOfRefs[0].current!);
+                        const dataUrl = canvas.toDataURL();
+
+                        setCarouselContent('thumbnailDataUrl', dataUrl);
+
                         const savedCarousel = await upsertCarousel(
-                            carousel,
+                            { ...carousel, thumbnailDataUrl: dataUrl },
                             data?.user.id!
                         );
+                        revalidateAllPaths();
                         toast.success('Carrusel Guardado!');
                         router.push(`/app/carrousel/${savedCarousel.id}`);
                     }}

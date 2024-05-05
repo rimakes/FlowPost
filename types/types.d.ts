@@ -246,3 +246,5 @@ export type TMenuItem = {
     collapse?: () => void;
     as?: React.ElementType;
 };
+
+export type TCarouselContent = 'title' | 'pdfUrl' | 'thumbnailDataUrl';
