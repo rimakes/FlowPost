@@ -248,3 +248,14 @@ export type TMenuItem = {
 };
 
 export type TCarouselContent = 'title' | 'pdfUrl' | 'thumbnailDataUrl';
+
+export type TBlogPostMetadata = {
+    title: string;
+    metaTitle: string;
+    metaDescription: string;
+    abstract: string;
+    publishedOn: string;
+    slug: string;
+    tags: string[];
+    topic: string;
+};

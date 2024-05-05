@@ -63,8 +63,11 @@ const Footer = () => {
                             <NavLink link='/' label='Estamos Contratando' />
                         </LinkGroup>
                         <LinkGroup header='Recursos Gratis'>
-                            <NavLink link='/' label='Creador de logos' />
-                            <NavLink link='/' label='Consejos' />
+                            <NavLink
+                                link='https://logoti.me/'
+                                label='Creador de logos'
+                            />
+                            <NavLink link='/blog' label='Blog' />
 
                             {/* <NavLink link='/#' label='Contact & Support' />
                             <NavLink link='/#' label='Success History' />
