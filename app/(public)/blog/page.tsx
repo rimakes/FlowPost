@@ -6,10 +6,9 @@ import { getBlogPostList, getPosts } from '@/lib/fileHelpers';
 export default async function Home() {
     // const session = await auth();
 
-    const posts = await getBlogPostList();
     const altPosts = await getPosts();
-
     console.log(altPosts);
+    const posts = await getBlogPostList();
 
     return (
         <div className={`flex flex-col gap-16`}>
