@@ -51,7 +51,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         Heading2,
                         Message,
                         p: ({ children }) => (
-                            <p className='my-6 text-primary/90'>{children}</p>
+                            <p className='my-6 leading-6 text-primary/90'>
+                                {children}
+                            </p>
                         ),
                         h3: ({ children }) => (
                             <h3 className='mb-4 mt-6 text-lg font-[500]'>

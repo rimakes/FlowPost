@@ -14,9 +14,10 @@ export default async function Home() {
                 <p className='text-sm font-semibold text-indigo-500'>
                     Nuestro blog
                 </p>
-                <h1 className='text-3xl font-bold'>Marca tu marca</h1>
+                <h1 className='text-3xl font-bold'>El Blog de FlowPost</h1>
                 <p className='text-primary/60'>
-                    Descubre el poder de la marca personal conmigo
+                    Compartimos nuestro camino creando la mejor herramienta de
+                    creación de contenido para LinkedIn.
                 </p>
             </div>
             <div
@@ -31,7 +32,7 @@ export default async function Home() {
                 
                 '
             >
-                {posts.map(({ abstract, publishedOn, slug, title }) => (
+                {posts.map(({ abstract, publishedOn, slug, title, topic }) => (
                     <BlogCard
                         abstract={abstract}
                         date={publishedOn}
@@ -39,6 +40,7 @@ export default async function Home() {
                         title={title}
                         image={`/images/blog/${slug}.webp`}
                         url={`/blog/${slug}`}
+                        topic={topic}
                     />
                 ))}
             </div>

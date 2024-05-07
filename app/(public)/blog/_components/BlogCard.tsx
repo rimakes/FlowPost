@@ -10,12 +10,23 @@ type BlogCardProps = {
     date: string;
     image: string;
     url: string;
+    topic: string;
 };
-export function BlogCard({ title, abstract, date, image, url }: BlogCardProps) {
+export function BlogCard({
+    title,
+    abstract,
+    date,
+    image,
+    url,
+    topic = '',
+}: BlogCardProps) {
     return (
-        <Link className='group space-y-6' href={url as Route}>
-            <div className='space-y-2'>
-                <div className='relative aspect-[384/240] overflow-clip rounded-3xl border shadow-md'>
+        <Link
+            className='group space-y-6 transition-transform hover:-translate-y-1'
+            href={url as Route}
+        >
+            <div className='space-y-6'>
+                <div className='relative aspect-[384/240] overflow-clip rounded-3xl border'>
                     <Image
                         src={image}
                         alt={title}
@@ -23,12 +34,14 @@ export function BlogCard({ title, abstract, date, image, url }: BlogCardProps) {
                         className='object-cover'
                     />
                 </div>
-                <p className='font-semibold text-indigo-500'>Marca Personal</p>
-                <h2 className='flex justify-between text-xl font-semibold'>
-                    {title}
-                    <ArrowRight className='inline-block h-6 w-6 -rotate-45' />
-                </h2>
-                <p className='line-clamp-2 text-primary/60'>{abstract}</p>
+                <div className='space-y-2'>
+                    <p className='font-semibold text-indigo-500'>{topic}</p>
+                    <h2 className='flex justify-between text-xl font-semibold'>
+                        {title}
+                        <ArrowRight className='inline-block h-6 w-6 -rotate-45 transition-transform group-hover:rotate-0' />
+                    </h2>
+                    <p className='line-clamp-2 text-primary/60'>{abstract}</p>
+                </div>
             </div>
             <AuthorCard date={date} />
         </Link>
