@@ -1,12 +1,15 @@
 // TODO: This should be rendered statically, but then I cannot use the session provider in the layout...?
 
 import { BlogCard } from '@/app/(public)/blog/_components/BlogCard';
-import { getBlogPostList } from '@/lib/fileHelpers';
+import { getBlogPostList, getPosts } from '@/lib/fileHelpers';
 
 export default async function Home() {
     // const session = await auth();
 
     const posts = await getBlogPostList();
+    const altPosts = await getPosts();
+
+    console.log(altPosts);
 
     return (
         <div className={`flex flex-col gap-16`}>
