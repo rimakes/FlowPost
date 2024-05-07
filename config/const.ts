@@ -352,23 +352,23 @@ export const COMPLETE_INSTRUCTIONS = {
 export const MENU_ITEMS = [
     {
         label: 'Pruébalo',
-        url: '#try-it',
+        url: '/#try-it',
     },
     {
         label: 'Cómo funciona',
-        url: '#how-it-works',
+        url: '/#how-it-works',
     },
     {
         label: 'Precios',
-        url: '#pricing',
+        url: '/#pricing',
     },
     {
         label: 'Ver Demo',
-        url: '#demo',
+        url: '/#demo',
     },
     {
         label: 'Preguntas Frecuentes',
-        url: '#faq',
+        url: '/#faq',
     },
     {
         label: 'Blog',
