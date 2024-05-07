@@ -4,6 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { TBlogPostMetadata } from '@/types/types';
 
+// TODO: why adding this solved the EOENT error?
 const postsDirectory = path.join(process.cwd(), '/app/(public)/blog/_posts/');
 
 export async function getBlogPostList() {
@@ -79,33 +80,3 @@ const getHeadings = (source: string) => {
         };
     });
 };
-
-// export const getPosts = cache(() => {
-//     // Get file names under /posts
-//     const posts = fsSync.readdirSync(postsDirectory);
-
-//     return Promise.all(
-//         posts
-//             .filter((file) => path.extname(file) === '.mdx') // get the mdx files only
-//             .map(async (file) => {
-//                 const filePath = `${postsDirectory}/${file}`; // gets the path to the file
-//                 const postContent = fsSync.readFileSync(filePath, 'utf8'); // gets the content of the file
-//                 const { data, content } = matter(postContent); // gets the metadata and the content of the file
-
-//                 if (data.published === false) {
-//                     return null;
-//                 }
-
-//                 const slug = file.replace(/\.mdx$/, ''); // removes the extension from the file name to create the slug
-//                 const headings = getHeadings(content);
-
-//                 return {
-//                     ...data,
-//                     date: data.date,
-//                     slug,
-//                     body: content,
-//                     headings,
-//                 }; // returns the metadata, slug and content of the file
-//             })
-//     );
-// });
