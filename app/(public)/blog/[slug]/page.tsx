@@ -1,14 +1,45 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { loadBlogPost } from '@/lib/fileHelpers';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getBlogPostList, loadBlogPost } from '@/lib/fileHelpers';
 import { AuthorCard } from '@/app/(public)/blog/_components/AuthorCard';
 import { TBlogPostMetadata } from '@/types/types';
 import { PostImage } from '@/app/(public)/blog/_components/PostImage';
 import { Heading2 } from '@/app/(public)/blog/_components/H2';
 import { Message } from '@/components/auth/Message';
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type Props = {
+    params: { slug: string };
+};
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    // read route params
+    const post = await loadBlogPost(params.slug);
+    if (!post) {
+        return notFound();
+    }
+    const metadata = post.frontmatter as TBlogPostMetadata;
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || [];
+
+    return {
+        title: metadata.title,
+    };
+}
+
+export async function generateStaticParams() {
+    const posts = await getBlogPostList();
+
+    return posts.map((post) => ({
+        slug: post.slug,
+    }));
+}
+
+export default async function Page({ params }: Props) {
     const post = await loadBlogPost(params.slug);
     if (!post) {
         return notFound();
