@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { v4 as v4uuid } from 'uuid';
 import { CarouselContext } from '../CarouselProvider';
 import { DownloadButton } from './downloadButton';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -66,7 +67,7 @@ export function ContinueButton({}) {
         );
 
         const cldResPromise = uploadFileToCloudinary(formData);
-        const canvasPromise = toCanvas(currentArray[0]);
+        const canvasPromise = toCanvas(currentArray[0], {});
 
         const [cldRes, canvas] = await Promise.all([
             cldResPromise,
@@ -77,21 +78,38 @@ export function ContinueButton({}) {
 
         const dataUrl = canvas.toDataURL();
 
+        // CREATE A TWO LINE EXPLANATION OF WHAT MY APP DOES FOR TECHNICAL PEOPLE:
+        // My app is a tool that allows users to create carousels for LinkedIn. It's a web app that lets users create slides with text and images, and then export them as a PDF. Users can then download the PDF, or assign the carousel to a LinkedIn post to publish it.
+
+        // OK, NOW EXPLAIN THE PROBLEM THAT I AM HAVING WITH THE KEY AND THE SLIDES:
+        // I don't need an id in the backend
+        // but doing it on the frontend is a bit messy and is giving me some problems with types and db queries
+        // EXPLAIN IT:
+        // I am using the key as a way to identify the slides in the frontend, but I don't need it in the backend. I am having some problems with types and db queries because of this. I am not sure how to refactor it to make it cleaner.
+
         const savedCarousel = await upsertCarousel(
             {
                 ...carousel,
+                slides: carousel.slides.map((slide) => {
+                    // @ts-ignore
+                    const { key, ...rest } = slide;
+                    return rest;
+                }),
                 thumbnailDataUrl: dataUrl,
                 publicId: cldRes.publicId,
                 pdfUrl: cldRes.url,
             },
             data?.user.id!
         );
-        window.history.replaceState(
-            null,
-            'unused',
-            `/app/carrousel/${savedCarousel.id}`
-        );
-        setCarousel(savedCarousel); //REVIEW: Don't love doing it this way, but...is there a way to update the url and THEN load the dialog? (other than using a conditional useEffect)
+        router.replace(`/app/carrousel/${savedCarousel.id}`);
+        const carouselWithKeys = {
+            ...savedCarousel,
+            slides: savedCarousel.slides.map((slide, index) => ({
+                ...slide,
+                key: v4uuid(),
+            })),
+        };
+        setCarousel(carouselWithKeys); //REVIEW: Don't love doing it this way, but...is there a way to update the url and THEN load the dialog? (other than using a conditional useEffect)
 
         arrayOfRefs.forEach(async (ref, index) => {
             const url = fromPdfUrlToThumnailUrl(cldRes.publicId, index + 1);

@@ -55,7 +55,7 @@ export const carouselsByUserId = async (userId: string) => {
 
 export async function createCarousel(post: TLinkedinPost, isDemo = false) {
     // Get the custom AISettings from the user
-    const data = await authGuard();
+    const data = await authGuard(isDemo);
     let userId = data.user.id;
 
     const model = aiChat('carousel');

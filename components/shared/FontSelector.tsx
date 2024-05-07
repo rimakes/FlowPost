@@ -92,6 +92,7 @@ export const FontSelector = ({ font, setFontPalette }: FontSelectorProps) => {
                         ' ',
                         '+'
                     )}:400,700`}
+                    crossOrigin='anonymous'
                 />
             ))}
         </>
