@@ -1,9 +1,7 @@
 import fs from 'fs/promises';
-import fsSync from 'fs';
 
 import path from 'path';
 import matter from 'gray-matter';
-import { cache } from 'react';
 import { TBlogPostMetadata } from '@/types/types';
 
 const postsDirectory = path.join(process.cwd(), '/app/(public)/blog/_posts/');
@@ -51,12 +49,12 @@ export async function loadBlogPost(slug: string) {
 }
 
 function readFile(localPath: string) {
-    console.log('Reading file', path.join(postsDirectory, localPath));
+    // console.log('Reading file', path.join(postsDirectory, localPath));
     return fs.readFile(path.join(process.cwd(), localPath), 'utf8');
 }
 
 function readDirectory(localPath: string) {
-    console.log('Reading file', path.join(postsDirectory, localPath));
+    // console.log('Reading file', path.join(postsDirectory, localPath));
     return fs.readdir(path.join(process.cwd(), localPath));
 }
 
@@ -82,32 +80,32 @@ const getHeadings = (source: string) => {
     });
 };
 
-export const getPosts = cache(() => {
-    // Get file names under /posts
-    const posts = fsSync.readdirSync(postsDirectory);
+// export const getPosts = cache(() => {
+//     // Get file names under /posts
+//     const posts = fsSync.readdirSync(postsDirectory);
 
-    return Promise.all(
-        posts
-            .filter((file) => path.extname(file) === '.mdx') // get the mdx files only
-            .map(async (file) => {
-                const filePath = `${postsDirectory}/${file}`; // gets the path to the file
-                const postContent = fsSync.readFileSync(filePath, 'utf8'); // gets the content of the file
-                const { data, content } = matter(postContent); // gets the metadata and the content of the file
+//     return Promise.all(
+//         posts
+//             .filter((file) => path.extname(file) === '.mdx') // get the mdx files only
+//             .map(async (file) => {
+//                 const filePath = `${postsDirectory}/${file}`; // gets the path to the file
+//                 const postContent = fsSync.readFileSync(filePath, 'utf8'); // gets the content of the file
+//                 const { data, content } = matter(postContent); // gets the metadata and the content of the file
 
-                if (data.published === false) {
-                    return null;
-                }
+//                 if (data.published === false) {
+//                     return null;
+//                 }
 
-                const slug = file.replace(/\.mdx$/, ''); // removes the extension from the file name to create the slug
-                const headings = getHeadings(content);
+//                 const slug = file.replace(/\.mdx$/, ''); // removes the extension from the file name to create the slug
+//                 const headings = getHeadings(content);
 
-                return {
-                    ...data,
-                    date: data.date,
-                    slug,
-                    body: content,
-                    headings,
-                }; // returns the metadata, slug and content of the file
-            })
-    );
-});
+//                 return {
+//                     ...data,
+//                     date: data.date,
+//                     slug,
+//                     body: content,
+//                     headings,
+//                 }; // returns the metadata, slug and content of the file
+//             })
+//     );
+// });
