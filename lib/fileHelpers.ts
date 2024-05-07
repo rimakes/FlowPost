@@ -4,7 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { TBlogPostMetadata } from '@/types/types';
 
-// const postsDirectory = path.join(process.cwd(), '/app/(public)/blog/_posts/');
+const postsDirectory = path.join(process.cwd(), '/app/(public)/blog/_posts/');
 
 export async function getBlogPostList() {
     const fileNames = await readDirectory('/app/(public)/blog/_posts');
