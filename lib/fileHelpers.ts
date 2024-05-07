@@ -3,6 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { TBlogPostMetadata } from '@/types/types';
 
+const rootPath = path.join(process.cwd());
+
 export async function getBlogPostList() {
     const fileNames = await readDirectory('/app/(public)/blog/_posts');
 
@@ -46,11 +48,13 @@ export async function loadBlogPost(slug: string) {
 }
 
 function readFile(localPath: string) {
-    return fs.readFile(path.join(process.cwd(), localPath), 'utf8');
+    console.log('Reading file', path.join(rootPath, localPath));
+    return fs.readFile(path.join(rootPath, localPath), 'utf8');
 }
 
 function readDirectory(localPath: string) {
-    return fs.readdir(path.join(process.cwd(), localPath));
+    console.log('Reading file', path.join(rootPath, localPath));
+    return fs.readdir(path.join(rootPath, localPath));
 }
 
 const getHeadings = (source: string) => {
