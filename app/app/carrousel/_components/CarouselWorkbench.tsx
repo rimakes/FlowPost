@@ -44,7 +44,6 @@ type CarouselWorkbenchProps = {};
 export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
     const { currentSlide, nextSlide, previousSlide, carousel } =
         useContext(CarouselContext);
-
     return (
         <div className='not-sidebar relative flex min-w-[60%]  grow-[999] basis-0 flex-col gap-2 bg-slate-100/50 bg-[url("/images/decoration/patterns/grid.svg")] p-2 focus-visible:!border-transparent '>
             <div className='mt-2 flex w-full items-center justify-center gap-4 text-sm'>
@@ -61,25 +60,30 @@ export const CarouselWorkbench = ({}: CarouselWorkbenchProps) => {
                 />
             </div>
             <div className='carousel flex overflow-hidden md:pl-8 lg:pl-56 2xl:pl-96'>
-                {carousel.slides.map((slide, index) => (
-                    <SlideWithSettings
-                        key={index} //TODO: Better no index
-                        slide={slide}
-                        slideNumber={index}
-                        numberOfSlides={carousel.slides.length}
-                        decorationId={
-                            carousel.settings.backgroundPattern as TDecorationId
-                        }
-                        className={`${translateClasses[(100 * currentSlide) as keys]} transition-transform duration-300`}
-                        mode={
-                            carousel.settings.alternateColors &&
-                            !isEven(index) &&
-                            index !== 0
-                                ? 'dark'
-                                : 'light'
-                        }
-                    />
-                ))}
+                {carousel.slides.map((slide, index) => {
+                    return (
+                        <SlideWithSettings
+                            // @ts-ignore
+                            // TODO: The whole key thing of the slides is messy. Refactor it when you have time
+                            key={slide.key} //TODO: Better no index
+                            slide={slide}
+                            slideNumber={index}
+                            numberOfSlides={carousel.slides.length}
+                            decorationId={
+                                carousel.settings
+                                    .backgroundPattern as TDecorationId
+                            }
+                            className={`${translateClasses[(100 * currentSlide) as keys]} transition-transform duration-300`}
+                            mode={
+                                carousel.settings.alternateColors &&
+                                !isEven(index) &&
+                                index !== 0
+                                    ? 'dark'
+                                    : 'light'
+                            }
+                        />
+                    );
+                })}
             </div>
         </div>
     );
@@ -187,12 +191,10 @@ export const SlideWithSettings = ({
                 // REVIEW: Apart from the fact that it works...what do we think about this...?
                 // + index is a hack to avoid the key warning
                 <div key={brand.fontPalette[fontType as TFont] + index}>
-                    <style>
-                        {`#font-test {font-family: ${brand.fontPalette[fontType as TFont]} !important;}`}
-                    </style>
                     <link
                         rel='stylesheet'
                         href={`https://fonts.googleapis.com/css?family=${brand.fontPalette[fontType as TFont].replace(' ', '+')}`}
+                        crossOrigin='anonymous'
                     />
                 </div>
             ))}

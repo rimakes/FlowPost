@@ -23,7 +23,7 @@ export const fakeSlides: TSlide[] = [
             },
         ],
         title: {
-            content: 'some randum title',
+            content: 'some randum title 1',
             isShown: true,
         },
         // Ignored for now
@@ -75,7 +75,7 @@ export const fakeSlides: TSlide[] = [
             },
         ],
         title: {
-            content: 'some randum title',
+            content: 'some randum title 2',
             isShown: true,
         },
         // Ignored for now

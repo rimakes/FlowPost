@@ -15,7 +15,6 @@ export async function upsertLinkedinPost(
     carouselId?: string
 ) {
     const userId = isDemo ? process.env.DEMO_USER_ID! : authorId!;
-    console.log({ isDemo }, { authorId }, { userId });
     let linkedinPost: TLinkedinPost;
     linkedinPost = await dbUpsertLinkedinPost(post, userId, carouselId);
     return linkedinPost;

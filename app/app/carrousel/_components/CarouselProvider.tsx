@@ -2,6 +2,7 @@
 
 import { RefObject, createContext, useCallback, useState } from 'react';
 import { produce } from 'immer';
+import { v4 as v4uuid } from 'uuid';
 import { deepCopy } from '@/lib/utils';
 import {
     TArrayOfRefs,
@@ -15,13 +16,22 @@ import {
 import { useCarouselShortcuts } from '@/hooks/use-slide-shortcuts';
 import { DEFAULT_BACKGROUND_IMAGE } from '@/config/const';
 
+// Infer the Slide type from TCarousel
+type TSlide = TCarousel['slides'][number];
+
+// Add a 'key' property to Slide
+type SlideWithKey = TSlide & { key: string };
+
+// Then your TCarousel with keys is defined with this new type
+type TCarouselWithKeys = TCarousel & { slides: SlideWithKey[] };
+
 const INITIAL_STATE = {
     arrayOfRefs: [] as TArrayOfRefs,
     addRef: (ref: RefObject<HTMLDivElement>, index: number) => {},
     nextSlide: () => {},
     previousSlide: () => {},
     currentSlide: 0 as number,
-    carousel: {} as TCarousel,
+    carousel: {} as TCarouselWithKeys,
     editDescription: (newDescription: string) => {},
     editProfilePicture: (newImage: string) => {},
     editName: (newName: string) => {},
@@ -54,7 +64,11 @@ const INITIAL_STATE = {
     editImage: (newImage: string) => {},
     editParagraphN: (index: number, newParagraph: string) => {},
     setPdfUrl: (url: string) => {},
-    setCarousel: (carousel: TCarousel | ((prev: TCarousel) => TCarousel)) => {},
+    setCarousel: (
+        carousel:
+            | (TCarouselWithKeys & {})
+            | ((prev: TCarouselWithKeys) => TCarouselWithKeys)
+    ) => {},
     setSlideImageCaption: (caption: string) => {},
     setCarouselContent: (content: TCarouselContent, newContent: string) => {},
 };
@@ -70,7 +84,17 @@ export function CarouselProvider({
     initialCarousel: TCarousel;
 }) {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [carousel, setCarousel] = useState(initialCarousel);
+    const [carousel, setCarousel] = useState(() => {
+        const carouselWithKeys = {
+            ...initialCarousel,
+            slides: initialCarousel.slides.map((slide, index) => ({
+                ...slide,
+                key: v4uuid(),
+            })),
+        };
+
+        return carouselWithKeys;
+    });
     const [arrayOfRefs, setArrayOfRefs] = useState([] as TArrayOfRefs);
 
     const nextSlide = useCallback(() => {
@@ -258,6 +282,7 @@ export function CarouselProvider({
         setCarousel((prev) =>
             produce(prev, (draftCarousel) => {
                 const newSlide = deepCopy(draftCarousel.slides[currentSlide]);
+                newSlide.key = v4uuid();
                 draftCarousel.slides.splice(currentSlide + 1, 0, newSlide);
                 setCurrentSlide(currentSlide + 1);
             })

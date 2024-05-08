@@ -5,6 +5,8 @@ import matter from 'gray-matter';
 import { TBlogPostMetadata } from '@/types/types';
 
 // TODO: why adding this solved the EOENT error?
+// TODO: why is prefetch not workingn for the postCard and the blog link on navbar?
+
 const postsDirectory = path.join(process.cwd(), '/app/(public)/blog/_posts/');
 
 export async function getBlogPostList() {

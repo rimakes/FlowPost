@@ -2,7 +2,6 @@
 // TODO: Not used for now. Not sure if I want to keep this one or the one with the filter...
 
 import { useState } from 'react';
-import SimpleEditor from '../simple-editor/SimpleEditor';
 import { FONTS } from '@/config/fontsBigList';
 
 type FontLoaderProps = {
@@ -27,14 +26,11 @@ export function FontLoader({}: FontLoaderProps) {
                     </option>
                 ))}
             </select>
-            <style>
-                {`#font-test {
-                    font-family: ${font} !important;
-                }`}
-            </style>
+
             <link
                 rel='stylesheet'
                 href={`https://fonts.googleapis.com/css?family=${font.replace(' ', '+')}`}
+                crossOrigin='anonymous'
             />
         </>
     );

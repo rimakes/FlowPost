@@ -1,6 +1,10 @@
 import { StarterKit } from '@tiptap/starter-kit';
 import { HardBreak } from '@tiptap/extension-hard-break';
 import SlashCommand from './slash-command/slash-command';
+import CustomBold from '@/components/editor/extensions/custom-bold';
+import CustomItalic from '@/components/editor/extensions/custom-italic';
+import CustomStrikeThrough from '@/components/editor/extensions/custom-strike-through';
+import CustomUnderline from '@/components/editor/extensions/custom-underline';
 
 export const defaultExtensions = [
     StarterKit.configure({
@@ -48,4 +52,8 @@ export const defaultExtensions = [
     }),
 
     SlashCommand,
+    CustomBold,
+    CustomItalic,
+    CustomStrikeThrough,
+    CustomUnderline,
 ];

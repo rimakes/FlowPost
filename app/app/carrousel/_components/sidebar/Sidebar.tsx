@@ -230,8 +230,23 @@ export const SideBarContent = ({ className, brands }: SideBarContentProps) => {
 
                         setCarouselContent('thumbnailDataUrl', dataUrl);
 
+                        // TODO: This is ok for now but will need to be refactored. It's messy to have to remove the keys
+                        // TODO: And our types are basically useless
+                        const carouselWithoutKeys = {
+                            ...carousel,
+                            slides: carousel.slides.map((slide) => {
+                                return {
+                                    ...slide,
+                                    key: undefined,
+                                };
+                            }),
+                        };
+
                         const savedCarousel = await upsertCarousel(
-                            { ...carousel, thumbnailDataUrl: dataUrl },
+                            {
+                                ...carouselWithoutKeys,
+                                thumbnailDataUrl: dataUrl,
+                            },
                             data?.user.id!
                         );
                         revalidateAllPaths();

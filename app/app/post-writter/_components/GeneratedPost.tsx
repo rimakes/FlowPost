@@ -125,6 +125,8 @@ export const PostWritterResult = ({
                         isDemo={isDemo}
                         post={post}
                         onDemoCarouselCreated={(carousel) => {
+                            // TODO: Refactor this
+                            // @ts-ignore
                             setCarousel(carousel);
                             onDemoCarouselCreatedProp();
                         }}

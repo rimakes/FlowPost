@@ -115,6 +115,7 @@ export const PostWritterResultTipTap = ({
                         isDemo={isDemo}
                         post={post}
                         onDemoCarouselCreated={(carousel) => {
+                            // @ts-ignore
                             setCarousel(carousel);
                             onDemoCarouselCreatedProp();
                         }}

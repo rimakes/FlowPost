@@ -106,11 +106,6 @@ export const BrandKitCard = ({ brand }: BrandKitCardProps) => {
 
             {Object.keys(brand.fontPalette).map((fontType) => (
                 <>
-                    <style>
-                        {`#font-test {
-    font-family: ${brand.fontPalette[fontType as TFont]} !important;
-}`}
-                    </style>
                     <link
                         rel='stylesheet'
                         href={`https://fonts.googleapis.com/css?family=${brand.fontPalette[fontType as TFont].replace(' ', '+')}`}
