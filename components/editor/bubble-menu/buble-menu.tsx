@@ -1,5 +1,5 @@
 import { BubbleMenu, BubbleMenuProps, isNodeSelection } from '@tiptap/react';
-import { BoldIcon, ItalicIcon } from 'lucide-react';
+import { Bold, BoldIcon, Italic, Strikethrough, Underline } from 'lucide-react';
 
 import { EditorState } from '@tiptap/pm/state';
 import { cn } from '@/lib/utils';
@@ -13,17 +13,43 @@ export type BubbleMenuItem = {
 
 export const EditorBubbleMenu = (props: Omit<BubbleMenuProps, 'children'>) => {
     const items: BubbleMenuItem[] = [
+        // {
+        //     name: 'bold',
+        //     isActive: () => props.editor!.isActive('bold'),
+        //     command: () => props.editor!.chain().focus().toggleBold().run(),
+        //     icon: BoldIcon,
+        // },
+        // {
+        //     name: 'italic',
+        //     isActive: () => props.editor!.isActive('italic'),
+        //     command: () => props.editor!.chain().focus().toggleItalic().run(),
+        //     icon: ItalicIcon,
+        // },
         {
             name: 'bold',
-            isActive: () => props.editor!.isActive('bold'),
-            command: () => props.editor!.chain().focus().toggleBold().run(),
-            icon: BoldIcon,
+            isActive: () => props.editor!.chain().isCustomBold().run(),
+            command: () => props.editor!.chain().focus().customBold().run(),
+            icon: Bold,
         },
         {
             name: 'italic',
-            isActive: () => props.editor!.isActive('italic'),
-            command: () => props.editor!.chain().focus().toggleItalic().run(),
-            icon: ItalicIcon,
+            isActive: () => props.editor!.chain().isCustomItalic().run(),
+            command: () => props.editor!.chain().focus().customItalic().run(),
+            icon: Italic,
+        },
+        {
+            name: 'strike-through',
+            isActive: () => props.editor!.chain().isStrikeThrough().run(),
+            command: () =>
+                props.editor!.chain().focus().customStrikeThrough().run(),
+            icon: Strikethrough,
+        },
+        {
+            name: 'underline',
+            isActive: () => props.editor!.chain().isTextUnderline().run(),
+            command: () =>
+                props.editor!.chain().focus().customUnderline().run(),
+            icon: Underline,
         },
     ];
 
