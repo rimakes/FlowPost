@@ -1,19 +1,14 @@
 'use client';
+import TError from 'next/error';
 
-import { useEffect } from 'react';
 import { ErrorWithReset } from '@/components/shared/ErrorWithReset';
 
 export default function Error({
     error,
     reset,
 }: {
-    error: Error & { digest?: string };
+    error: TError & { digest?: string };
     reset: () => void;
 }) {
-    useEffect(() => {
-        // Log the error to an error reporting service
-        // console.error(error);
-    }, [error]);
-
-    return <ErrorWithReset reset={reset} />;
+    return <ErrorWithReset reset={reset} error={error} />;
 }
