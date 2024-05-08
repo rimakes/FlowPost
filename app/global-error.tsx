@@ -2,9 +2,10 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
+import Error from 'next/error';
 import { ErrorWithReset } from '@/components/shared/ErrorWithReset';
 
-export default function Error({
+export default function GlobalError({
     error,
     reset,
 }: {
