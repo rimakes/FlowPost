@@ -67,6 +67,10 @@ const Footer = () => {
                                 link='https://logoti.me/'
                                 label='Creador de logos'
                             />
+                            <NavLink
+                                link='/negrita-linkedin'
+                                label='Negrita en Linkedin'
+                            />
                             <NavLink link='/blog' label='Blog' />
 
                             {/* <NavLink link='/#' label='Contact & Support' />
