@@ -11,7 +11,8 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { TFeedback } from '@/types/types';
 
-export default function Feedback({}) {
+// BOILER: copy the whole component to boilerplate
+export default function Feedback({ label = 'Feedback' }) {
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState<TFeedback>('');
     const [message, setMessage] = useState('');
@@ -59,7 +60,7 @@ export default function Feedback({}) {
                 }
             }}
             className={cn(
-                `animate fixed right-0 top-[300px] isolate  z-50 translate-x-full rounded-bl-lg rounded-tl-lg bg-background drop-shadow-xl transition-transform duration-1000
+                `animate fixed right-0 top-[300px] isolate  z-50 translate-x-full rounded-bl-lg bg-background drop-shadow-xl transition-transform duration-1000
                 `,
                 isVisible ? 'translate-x-0' : ''
             )}
@@ -118,10 +119,10 @@ export default function Feedback({}) {
             </form>
 
             <div
-                className='absolute left-0 top-0 -translate-x-full translate-y-1/4 cursor-pointer rounded-l-lg bg-background p-4 px-1 text-sm text-primary transition [writing-mode:vertical-rl;] hover:bg-background'
+                className='absolute left-0 top-0 -translate-x-full cursor-pointer rounded-l-lg bg-background p-4 px-1 text-sm text-primary transition [writing-mode:vertical-rl;] hover:bg-background'
                 onClick={() => setIsVisible(!isVisible)}
             >
-                Feedback
+                {label}
             </div>
 
             <Button
