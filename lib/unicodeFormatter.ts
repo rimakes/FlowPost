@@ -214,6 +214,359 @@ const charBoldItalicKeys = Object.keys(mathBoldItalicMap);
 type MathBoldItalicMap = typeof mathBoldItalicMap;
 type MathBoldItalicMapKeys = keyof typeof mathBoldItalicMap;
 
+export const circledMap = {
+    A: 'Ⓐ',
+    B: 'Ⓑ',
+    C: 'Ⓒ',
+    Ç: 'Ⓒ',
+    D: 'Ⓓ',
+    E: 'Ⓔ',
+    Ë: 'Ⓔ',
+    F: 'Ⓕ',
+    G: 'Ⓖ',
+    H: 'Ⓗ',
+    I: 'Ⓘ',
+    J: 'Ⓙ',
+    K: 'Ⓚ',
+    L: 'Ⓛ',
+    M: 'Ⓜ',
+    N: 'Ⓝ',
+    O: 'Ⓞ',
+    P: 'Ⓟ',
+    Q: 'Ⓠ',
+    R: 'Ⓡ',
+    S: 'Ⓢ',
+    T: 'Ⓣ',
+    U: 'Ⓤ',
+    V: 'Ⓥ',
+    W: 'Ⓦ',
+    X: 'Ⓧ',
+    Y: 'Ⓨ',
+    Z: 'Ⓩ',
+    a: 'ⓐ',
+    b: 'ⓑ',
+    c: 'ⓒ',
+    d: 'ⓓ',
+    e: 'ⓔ',
+    f: 'ⓕ',
+    g: 'ⓖ',
+    h: 'ⓗ',
+    i: 'ⓘ',
+    j: 'ⓙ',
+    k: 'ⓚ',
+    l: 'ⓛ',
+    m: 'ⓜ',
+    n: 'ⓝ',
+    o: 'ⓞ',
+    p: 'ⓟ',
+    q: 'ⓠ',
+    r: 'ⓡ',
+    s: 'ⓢ',
+    t: 'ⓣ',
+    u: 'ⓤ',
+    v: 'ⓥ',
+    w: 'ⓦ',
+    x: 'ⓧ',
+    y: 'ⓨ',
+    z: 'ⓩ',
+    '0': '⓪',
+    '1': '①',
+    '2': '②',
+    '3': '③',
+    '4': '④',
+    '5': '⑤',
+    '6': '⑥',
+    '7': '⑦',
+    '8': '⑧',
+    '9': '⑨',
+};
+
+export const squareMap = {
+    A: '🄰',
+    B: '🄱',
+    C: '🄲',
+    D: '🄳',
+    E: '🄴',
+    F: '🄵',
+    G: '🄶',
+    H: '🄷',
+    I: '🄸',
+    J: '🄹',
+    K: '🄺',
+    L: '🄻',
+    M: '🄼',
+    N: '🄽',
+    O: '🄾',
+    P: '🄿',
+    Q: '🅀',
+    R: '🅁',
+    S: '🅂',
+    T: '🅃',
+    U: '🅄',
+    V: '🅅',
+    W: '🅆',
+    X: '🅇',
+    Y: '🅈',
+    Z: '🅉',
+    a: '🄰',
+    b: '🄱',
+    c: '🄲',
+    d: '🄳',
+    e: '🄴',
+    f: '🄵',
+    g: '🄶',
+    h: '🄷',
+    i: '🄸',
+    j: '🄹',
+    k: '🄺',
+    l: '🄻',
+    m: '🄼',
+    n: '🄽',
+    o: '🄾',
+    p: '🄿',
+    q: '🅀',
+    r: '🅁',
+    s: '🅂',
+    t: '🅃',
+    u: '🅄',
+    v: '🅅',
+    w: '🅆',
+    x: '🅇',
+    y: '🅈',
+    z: '🅉',
+    '0': '0',
+    '1': '1',
+    '2': '2',
+    '3': '3',
+    '4': '4',
+    '5': '5',
+    '6': '6',
+    '7': '7',
+    '8': '8',
+    '9': '9',
+};
+
+export const invertedMap = {
+    A: '∀',
+    B: '𐐒',
+    C: 'Ɔ',
+    D: 'ᗡ',
+    E: 'Ǝ',
+    F: 'Ⅎ',
+    G: 'Ǥ',
+    H: 'H', // no exact inverted 'H'
+    I: 'I',
+    J: 'ſ', // J isn't available in Unicode, so using 'long s' as an alternative
+    K: 'ꓘ',
+    L: '⅂',
+    M: 'W', // no exact inverted 'M', using upside down 'W'
+    N: 'N',
+    O: 'O',
+    P: 'Ԁ',
+    Q: 'Ὸ',
+    R: 'ꓤ',
+    S: 'S', // no exact inverted 'S'
+    T: '⊥',
+    U: '∩',
+    V: 'Λ',
+    W: 'M', // no exact inverted 'W', using upside down 'M'
+    X: 'X',
+    Y: '⅄',
+    Z: 'Z', // no exact inverted 'Z'
+    // Lowercase
+    a: 'ɐ',
+    b: 'q', // no exact inverted 'b', using upside down 'q'
+    c: 'c', // no exact inverted 'c'
+    d: 'p', // no exact inverted 'd', using upside down 'p'
+    e: 'ǝ',
+    f: 'ɟ',
+    g: 'ƃ',
+    h: 'ɥ',
+    i: 'ᴉ',
+    j: 'ɾ', // no exact inverted 'j', using upside down 'r'
+    k: 'ʞ',
+    l: 'ן',
+    m: 'ɯ',
+    n: 'u', // no exact inverted 'n', using upside down 'u'
+    o: 'o',
+    p: 'd', // no exact inverted 'p', using upside down 'd'
+    q: 'b', // no exact inverted 'q', using upside down 'b'
+    r: 'ɹ',
+    s: 's', // no exact inverted 's'
+    t: 'ʇ',
+    u: 'n', // no exact inverted 'u', using upside down 'n'
+    v: 'ʌ',
+    w: 'ʍ',
+    x: 'x', // no exact inverted 'x'
+    y: 'ʎ',
+    z: 'z', // no exact inverted 'z'
+    // Only symbolic numbers available
+    '0': '0',
+    '1': 'Ɩ',
+    '2': 'Շ',
+    '3': 'Ɛ',
+    '4': 'h',
+    '5': 'S', // no symbolic inverted 5, using normal 'S' as a placeholder
+    '6': '9',
+    '7': 'L', // no symbolic inverted 7, using normal 'L' as a placeholder
+    '8': '8',
+    '9': '6',
+};
+
+const charInvertedKeys = Object.keys(invertedMap);
+type InvertedMap = typeof invertedMap;
+type InvertedMapKeys = keyof typeof invertedMap;
+
+/**
+ * Toggles "inverted" formatting using unicode "maps" for the selected text
+ */
+export function toggleInverted(text: string) {
+    let newText = '';
+    if (isTextInverted(text)) newText = removeInvertedFormatting(text);
+    else newText = applyInvertedFormatting(text);
+
+    return newText;
+}
+
+/**
+ * Determines if the text is inverted by checking if any characters are inverted.
+ */
+export function isTextInverted(text: string) {
+    const arrayOfText = Array.from(text);
+
+    const isInverted = arrayOfText.some((char) => {
+        return Object.values(invertedMap).includes(char);
+    });
+
+    return isInverted;
+}
+
+export const removeInvertedFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Is the character a value in the inverted map? (aka is it inverted?)
+            const originalCharInvertedKey = charInvertedKeys.find(
+                (key) => invertedMap[key as InvertedMapKeys] === char
+            );
+
+            // Convert inverted to normal
+            return originalCharInvertedKey || char;
+        })
+        .join('');
+};
+
+export const applyInvertedFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Convert normal to inverted
+            return invertedMap[char as InvertedMapKeys] || char;
+        })
+        .join('');
+};
+
+const charSquareKeys = Object.keys(squareMap);
+type SquareMap = typeof squareMap;
+type SquareMapKeys = keyof typeof squareMap;
+
+const charCircleKeys = Object.keys(circledMap);
+
+type CircledMap = typeof circledMap;
+type CircledMapKeys = keyof typeof circledMap;
+
+/**
+ * Toggles "square" formatting using unicode "maps" for the selected text
+ */
+export function toggleSquare(text: string) {
+    let newText = '';
+    if (isTextSquare(text)) newText = removeSquareFormatting(text);
+    else newText = applySquareFormatting(text);
+
+    return newText;
+}
+
+/**
+ * Determines if the text is inside square by checking if any characters are inside square.
+ */
+export function isTextSquare(text: string) {
+    const arrayOfText = Array.from(text);
+
+    const isSquare = arrayOfText.some((char) => {
+        return Object.values(squareMap).includes(char);
+    });
+
+    return isSquare;
+}
+
+export const removeSquareFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Is the character a value in the square map? (aka is it square?)
+            const originalCharSquareKey = charSquareKeys.find(
+                (key) => squareMap[key as SquareMapKeys] === char
+            );
+
+            // Convert square to normal
+            return originalCharSquareKey || char;
+        })
+        .join('');
+};
+
+export const applySquareFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Convert normal to square
+            return squareMap[char as SquareMapKeys] || char;
+        })
+        .join('');
+};
+
+/**
+ * Toggles "circled" formatting using unicode "maps" for the selected text
+ */
+export function toggleCircled(text: string) {
+    let newText = '';
+    if (isTextCircled(text)) newText = removeCircledFormatting(text);
+    else newText = applyCircledFormatting(text);
+
+    return newText;
+}
+
+/**
+ * Determines if the text is inside circle by checking if any characters are inside circle.
+ */
+export function isTextCircled(text: string) {
+    const arrayOfText = Array.from(text);
+
+    const isCircled = arrayOfText.some((char) => {
+        return Object.values(circledMap).includes(char);
+    });
+
+    return isCircled;
+}
+
+export const removeCircledFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Is the character a value in the circled map? (aka is it circled?)
+            const originalCharCircleKey = charCircleKeys.find(
+                (key) => circledMap[key as CircledMapKeys] === char
+            );
+
+            // Convert circled to normal
+            return originalCharCircleKey || char;
+        })
+        .join('');
+};
+
+export const applyCircledFormatting = (text: string) => {
+    return Array.from(text)
+        .map((char) => {
+            // Convert normal to circled
+            return circledMap[char as CircledMapKeys] || char;
+        })
+        .join('');
+};
+
 /**
  * Toggles bold formatting using unicode "maps" for the selected text
  */

@@ -173,7 +173,7 @@ export default function Editor({
 
                 {editor && <EditorBubbleMenu editor={editor} />}
                 {/* {editor?.isActive("image") && <ImageResizer editor={editor} />} */}
-                <div className={cn(``, className)}>
+                <div className={cn(``)}>
                     <TopMenu editor={editor} handleDownload={() => {}} />
                     <Separator className='-ml-2 -mr-2 mb-4 mt-2 w-[100%+1rem]' />
                     <EditorContent
