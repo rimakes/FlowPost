@@ -43,6 +43,7 @@
         "@radix-ui/react-tooltip": "^1.0.7",
         "@react-email/components": "0.0.16",
         "@react-email/render": "^0.0.12",
+        "@sentry/nextjs": "^7.114.0",
         "@tiptap/extension-document": "^2.3.0",
         "@tiptap/extension-hard-break": "^2.3.0",
         "@tiptap/extension-history": "^2.2.4",

@@ -1,16 +1,27 @@
+'use client';
+
+import Error from 'next/error';
+import { useEffect } from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 
 type ErrorWithResetProps = {
+    error: Error;
     reset: () => void;
     children?: React.ReactNode;
     className?: string;
 };
 export function ErrorWithReset({
+    error,
     reset,
     children,
     className,
 }: ErrorWithResetProps) {
+    useEffect(() => {
+        Sentry.captureException(error);
+    }, [error]);
+
     return (
         <div
             className={cn(

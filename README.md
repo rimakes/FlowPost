@@ -13,8 +13,10 @@
 
 -   [CVA](https://cva.style/docs)
     For creating type-safe variants of the components. Helps keeping the components consistent and easy to use.
+
 -   [Radix](https://www.radix-ui.com)
-    Unstyled components perfectly design with accessibility in mind
+    Unstyled components perfectly design with accessibility in mind.
+
 -   [TailwindMerge] (https://github.com/dcastil/tailwind-merge/blob/v2.1.0/docs/what-is-it-for.md)
     Allows merging tailwind classes avoiding conflicts and applyint the order of the classes instead of the tailwind order.
 
@@ -38,6 +40,9 @@
 
 -   [Canny](https://canny.io/)
     A feedback tool that helps you collect and organize user feedback and feature requests.
+
+-   [Sentry](https://sentry.io/)
+    Application monitoring and error tracking software.
 
 ## COLORS
 
