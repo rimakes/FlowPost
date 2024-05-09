@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
-import { CopyPlus } from 'lucide-react';
+import { BanIcon, CheckCircle, CopyPlus } from 'lucide-react';
 import { toast } from 'sonner';
 import { Textarea } from '@ui/textarea';
 import {
@@ -24,7 +24,7 @@ export function TextFormatter({}: TextFormatterProps) {
     return (
         <div className='space-y-8'>
             <Textarea
-                className='bg-white'
+                className='resize-none bg-white'
                 value={content}
                 onChange={(ev) => {
                     setContent(ev.target.value);
@@ -78,8 +78,26 @@ export const FormattedText = ({
 
                 <Button
                     onClick={() => {
+                        if (!content)
+                            return toast.error('No hay texto para copiar', {
+                                icon: (
+                                    <BanIcon
+                                        className='text-red-500'
+                                        size={15}
+                                    />
+                                ),
+                                position: 'top-center',
+                            });
                         copy(formattingFn(content));
-                        toast.success('Texto copiado al portapapeles');
+                        toast.success('Texto copiado al portapapeles', {
+                            icon: (
+                                <CheckCircle
+                                    className='text-green-500'
+                                    size={15}
+                                />
+                            ),
+                            position: 'top-center',
+                        });
                     }}
                     variant='outline'
                     className='absolute right-0 top-0 aspect-square bg-muted p-2'
