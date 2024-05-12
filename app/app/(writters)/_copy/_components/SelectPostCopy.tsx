@@ -1,11 +1,10 @@
-import { Lock, Pen, Sparkles } from 'lucide-react';
+import { Pen } from 'lucide-react';
 import { useState } from 'react';
 import { Label } from '@radix-ui/react-label';
 import { PostCategory, PostTemplate } from '@prisma/client';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { POST_TEMPLATES } from '../config/prompts';
-import { POST_CATEGORIES } from '../config/const';
+import { POST_TEMPLATES } from '../../assisted/config/prompts';
+import { POST_CATEGORIES } from '../../assisted/config/const';
 import { Pure } from '@/types/types';
 import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,7 +14,7 @@ type SelectPostTemplateProps = {
     availablePostTemplateIds?: PostTemplate['id'][];
 };
 
-export const SelectPostTemplate = ({
+export const SelectPostCopy = ({
     setSelected,
     availablePostTemplateIds = POST_TEMPLATES.map((template) => template.id),
 }: SelectPostTemplateProps) => {
@@ -45,7 +44,7 @@ export const SelectPostTemplate = ({
         <div className='flex max-h-[90vh] flex-col gap-4 space-y-2 border-0 border-black'>
             {/* HEADER */}
             <h2 className='mb-4 font-semibold'>
-                Selecciona el formato de tu post
+                Selecciona el framework de copy
             </h2>
 
             <div className='flex flex-col gap-2'>
@@ -131,14 +130,14 @@ export const SelectPostTemplate = ({
     );
 };
 
-export type PostTemplateCardProps = {
+type PostTemplateCardProps = {
     template: Pure<PostTemplate>;
     onDelete?: () => void;
     className?: string;
     onEditClick?: () => void;
 };
 
-export const SelectedPostTemplateCard = ({
+export const SelectedPostCopyCard = ({
     template,
     onDelete,
     className,

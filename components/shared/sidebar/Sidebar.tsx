@@ -61,7 +61,7 @@ lg:border-t-0 lg:p-2
             <Button
                 className='hidden gap-2 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 lg:flex'
                 onClick={() => {
-                    router.push('/app/post-writter/new');
+                    router.push('/app/assisted/new');
                     setCollapsed(true);
                 }}
             >

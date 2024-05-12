@@ -23,16 +23,16 @@ import { GetAccessButton } from './GetAccessButton';
 import {
     VoiceToneSelector,
     WritterFormSchema,
-} from '@/app/app/post-writter/_components/PostWritterForm';
+} from '@/app/app/(writters)/framework/_components/PostWritterForm';
 import {
     SelectPostTemplate,
     SelectedPostTemplateCard,
-} from '@/app/app/post-writter/_components/SelectPostTemplate';
-import { PostWritterResult } from '@/app/app/post-writter/_components/GeneratedPost';
+} from '@/app/app/(writters)/framework/_components/SelectPostTemplate';
+import { PostWritterResult } from '@/app/app/(writters)/framework/_components/GeneratedPost';
 import { TStatus } from '@/types/types';
-import { VOICE_TONES } from '@/app/app/post-writter/config/const';
+import { VOICE_TONES } from '@/app/app/(writters)/assisted/config/const';
 import { cn, getPostTemplateById, wait } from '@/lib/utils';
-import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { PostWritterContext } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
 import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
 import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
 import { appConfig } from '@/config/shipper.appconfig';

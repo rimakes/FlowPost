@@ -1,5 +1,5 @@
 import { ColorPalette } from './ColorPalette';
-import { COLOR_PALETTES } from '@/app/app/post-writter/config/const';
+import { COLOR_PALETTES } from '@/app/app/(writters)/assisted/config/const';
 import { TColorPalette } from '@/types/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

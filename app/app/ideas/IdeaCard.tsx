@@ -40,7 +40,7 @@ export const PostIdeaCard = ({
                         // const newCarousel = await createLinkedinCarousel(post);
                         // setStatus('idle');
                         router.push(
-                            `/app/post-writter?description=${encodeURIComponent(ideaDescription)}`
+                            `/app/framework?description=${encodeURIComponent(ideaDescription)}`
                         );
                         // console.log(newCarousel);
                     }}

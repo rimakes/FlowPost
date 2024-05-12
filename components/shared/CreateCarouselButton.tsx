@@ -13,7 +13,7 @@ import { createCarousel } from '@/app/_actions/carousel-actions';
 import { TCarousel, TLinkedinPost } from '@/types/types';
 import useDeterminedProgressBar from '@/hooks/use-determined-progressbar';
 import { cn } from '@/lib/utils';
-import { PostWritterContext } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { PostWritterContext } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
 import { useUserCredits } from '@/hooks/use-user-credits';
 
 type CreateCarouselButonProps = {

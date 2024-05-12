@@ -7,7 +7,7 @@ import { DemoWidget } from './Demo';
 import { GetAccessButton } from './GetAccessButton';
 import { handwritten } from '@/config/fonts';
 import { cn } from '@/lib/utils';
-import { PostWritterContextProvider } from '@/app/app/post-writter/_components/PostWritterProvider';
+import { PostWritterContextProvider } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
 import { CarouselProvider } from '@/app/app/carrousel/_components/CarouselProvider';
 import { fakeCarousel } from '@/app/app/carrousel/_components/const';
 

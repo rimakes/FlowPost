@@ -3,7 +3,7 @@
 import { Mic, MicOff } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
-import useMicrophone from '../../../../hooks/useMicrophone';
+import useMicrophone from '../../../../../hooks/useMicrophone';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
