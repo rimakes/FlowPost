@@ -75,7 +75,7 @@ export const PostSelect = ({ onSelect, time, date }: PostSelectProps) => {
                                         onClick={() => {
                                             // edit the post
                                             router.push(
-                                                `/app/post-writter/${post.id}`
+                                                `/app/assisted/${post.id}`
                                             );
                                         }}
                                     >

@@ -3,7 +3,7 @@ import { PenSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { TLinkedinPost, TScheduledPost } from '@/types/types';
+import { TScheduledPost } from '@/types/types';
 
 type ViewMoreModalContentProps = {
     post: LinkedinPost & { scheduledPost: TScheduledPost[] };
@@ -39,7 +39,7 @@ export function ViewMoreModalContent({ post }: ViewMoreModalContentProps) {
                 <Button
                     variant={'outline'}
                     onClick={() => {
-                        router.push(`/app/post-writter/${post.id}`);
+                        router.push(`/app/assisted/${post.id}`);
                     }}
                 >
                     <PenSquare size={16} className='mr-2' />

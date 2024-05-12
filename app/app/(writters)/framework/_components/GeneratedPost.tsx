@@ -5,16 +5,17 @@ import { useContext, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { CarouselContext } from '../../carrousel/_components/CarouselProvider';
+import { CarouselContext } from '../../../carrousel/_components/CarouselProvider';
 import { PostWritterContext } from './PostWritterProvider';
+import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn, proToast, wait } from '@/lib/utils';
-import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
-import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
-import { TStatus } from '@/types/types';
-import Editor from '@/components/editor/Editor';
+import { Textarea } from '@/components/ui/textarea';
+import { cn, proToast } from '@/lib/utils';
 import { upsertLinkedinPost } from '@/app/_actions/linkedinpost-actions';
-import { CharCounter } from '@/components/shared/CharCounter';
+import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
+import { Switch } from '@/components/ui/switch';
+import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
+import { TLinkedinPost, TStatus } from '@/types/types';
 
 type GeneratedPostProps = {
     className?: string;
@@ -28,8 +29,13 @@ type GeneratedPostProps = {
     onDemoCarouselCreated?: () => void;
 };
 
-export const PostWritterResultTipTap = ({
+export const PostWritterResult = ({
     className,
+    isEditable = false,
+    height,
+    minHeight,
+    setEditDetailsModal,
+    showEditableSwitch = true,
     carouselId,
     isDemo = false,
     onDemoCarouselCreated: onDemoCarouselCreatedProp = () => {},
@@ -37,8 +43,9 @@ export const PostWritterResultTipTap = ({
     const { data } = useSession();
 
     const [status, setStatus] = useState<TStatus>('idle');
-    const { post, setPost, updatePost } = useContext(PostWritterContext);
+    const { post, setPost } = useContext(PostWritterContext);
     const { setCarousel } = useContext(CarouselContext);
+    const [isEditableOverride, setIsEditableOverride] = useState(false);
 
     const router = useRouter();
 
@@ -52,41 +59,46 @@ export const PostWritterResultTipTap = ({
     return (
         <div className={cn(``, className)}>
             {/* <EmojiPickerClient /> */}
-            <div className='relative flex min-h-[40vh] flex-col space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
-                <Editor
-                    onDebouncedUpdate={updatePost}
-                    defaultValue={post.content.replace(/\n/g, '<br/>')}
-                    className='h-full grow'
-                />
+            <Label>Post generado</Label>
+
+            <div className='space-y-2 rounded-b-3xl rounded-t-lg border p-2'>
+                <div className='relative pb-6'>
+                    <Textarea
+                        rows={20}
+                        className={`resize-none border-none h-[${height}px] min-h-[${minHeight}px]
+                        bg-white focus-visible:outline-none focus-visible:!ring-transparent
+                        `}
+                        value={post.content}
+                        readOnly={!isEditable && !isEditableOverride}
+                        onChange={(e) => {
+                            setPost({ ...post, content: e.target.value });
+                        }}
+                    />
+                    {showEditableSwitch && (
+                        <div className='absolute bottom-0 right-2 flex items-center gap-2 text-xs text-primary/70'>
+                            <Label>Permitir edición</Label>
+                            <Switch
+                                checked={isEditableOverride}
+                                onCheckedChange={setIsEditableOverride}
+                            />
+                        </div>
+                    )}
+                </div>
 
                 <div className='relative flex gap-2'>
-                    <CharCounter
-                        usedChars={post.content.length}
-                        maxChars={3000}
-                        minChars={10}
-                        className='absolute -top-4 right-0'
-                    />
                     <ButtonWithTooltip
                         variant={'secondary'}
                         icon={<Save />}
                         className='flex-1 rounded-full'
                         label='Guardar post'
                         onClick={async () => {
-                            if (post.content.length > 3000)
-                                return toast.error(
-                                    'El post no puede superar los 3000 caracteres'
-                                );
-                            const toastId = toast.loading('Guardando post');
-                            if (isDemo) {
-                                await wait(500);
-                                toast.dismiss(toastId);
+                            if (isDemo)
                                 return proToast(
                                     router,
                                     'Para guardar y programar tus post, hazte Pro ahora'
                                 );
-                            }
 
-                            let dbPost;
+                            let dbPost: TLinkedinPost | undefined;
                             try {
                                 dbPost = await upsertLinkedinPost(
                                     post,
@@ -98,10 +110,8 @@ export const PostWritterResultTipTap = ({
                                 if (!dbPost)
                                     throw new Error('Error al guardar post');
                                 setPost(dbPost);
-                                router.push(`/app/post-writter/${dbPost.id}`);
-                                toast.success('Post guardado', {
-                                    id: toastId,
-                                });
+                                router.push(`/app/assisted/${dbPost.id}`);
+                                toast.success('Post guardado!!!!');
                             } catch (error) {
                                 console.error(error);
                                 toast.error('Error al guardar post');
@@ -115,6 +125,7 @@ export const PostWritterResultTipTap = ({
                         isDemo={isDemo}
                         post={post}
                         onDemoCarouselCreated={(carousel) => {
+                            // TODO: Refactor this
                             // @ts-ignore
                             setCarousel(carousel);
                             onDemoCarouselCreatedProp();

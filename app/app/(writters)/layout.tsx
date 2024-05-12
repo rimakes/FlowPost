@@ -5,11 +5,7 @@ type LayoutProps = {
 };
 export default function WritterLayout({ children }: LayoutProps) {
     return (
-        <Container
-            className={
-                'flex grow flex-col border-0 border-dashed border-red-400'
-            }
-        >
+        <Container className={'flex grow flex-col border-0 border-dashed'}>
             {children}
         </Container>
     );

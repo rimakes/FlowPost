@@ -6,15 +6,8 @@ import { useCallback, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast } from 'sonner';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { VOICE_TONES } from '../config/const';
-import {
-    SelectPostTemplate,
-    SelectedPostTemplateCard,
-} from './SelectPostTemplate';
-import { PostWritterContext } from './PostWritterProvider';
-import { RecordButton } from './RecordButton';
+import { useRouter } from 'next/navigation';
+import { VOICE_TONES } from '../../assisted/config/const';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
@@ -33,6 +26,12 @@ import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
 import { useUserCredits } from '@/hooks/use-user-credits';
 import Spinner from '@/components/icons/SpinnerIcon';
+import { PostWritterContext } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
+import { RecordButton } from '@/app/app/(writters)/framework/_components/RecordButton';
+import {
+    SelectPostCopy,
+    SelectedPostCopyCard,
+} from '@/app/app/(writters)/_copy/_components/SelectPostCopy';
 
 export const MAX_LENGTH = 1000;
 export const MIN_LENGTH = 10;
@@ -63,21 +62,17 @@ export const WritterFormSchema = z.object({
         }),
 });
 
-export function PostWritterForm({ className }: PostWritterFormProps) {
+export function CopyWritterForm({ className }: PostWritterFormProps) {
     const {
         requestPost,
         postRequest: { description, templateId, toneId },
     } = useContext(PostWritterContext);
-    const { data: session, update } = useSession();
     const { creditBalance, update: updateCredits } = useUserCredits();
-
-    const searchParams = useSearchParams();
-    const urlDescription = searchParams.get('description');
 
     const form = useForm({
         resolver: zodResolver(WritterFormSchema),
         defaultValues: {
-            description: urlDescription || description, // If we have both, we use the one from the url
+            description, // If we have both, we use the one from the url
             toneId,
             templateId,
         },
@@ -214,7 +209,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                     <FormControl>
                                         <div>
                                             {field.value ? (
-                                                <SelectedPostTemplateCard
+                                                <SelectedPostCopyCard
                                                     template={getPostTemplateById(
                                                         field.value
                                                     )}
@@ -249,7 +244,7 @@ export function PostWritterForm({ className }: PostWritterFormProps) {
                                                     </Button>
                                                 </DialogTrigger>
                                                 <DialogContent className='max-w-full border-0 border-green-500 md:max-w-4xl'>
-                                                    <SelectPostTemplate
+                                                    <SelectPostCopy
                                                         setSelected={
                                                             onSelectPostTemplate
                                                         }

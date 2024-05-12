@@ -42,7 +42,7 @@ export function PostCard({ post }: PostCardProps) {
                     className='flex-1 rounded-full bg-muted text-primary/50 hover:bg-primary/10'
                     label='Editar post'
                     onClick={() => {
-                        router.push(`/app/post-writter/${post.id}`);
+                        router.push(`/app/assisted/${post.id}`);
                     }}
                 />
                 <CreateCarouselButton post={post} />

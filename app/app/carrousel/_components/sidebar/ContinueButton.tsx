@@ -50,8 +50,8 @@ export function ContinueButton({}) {
         router.refresh();
 
         carousel.linkedinPostId
-            ? router.push(`/app/post-writter/${carousel.linkedinPostId}`)
-            : router.push(`/app/post-writter/new`);
+            ? router.push(`/app/assisted/${carousel.linkedinPostId}`)
+            : router.push(`/app/assisted/new`);
     };
 
     const onCarouselLoad = async () => {

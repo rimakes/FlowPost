@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import { PostWritterContextProvider } from '../_components/PostWritterProvider';
+import { PostWritterContextProvider } from '../../framework/_components/PostWritterProvider';
 import { AssistedClient } from './AssistedClient';
 import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';

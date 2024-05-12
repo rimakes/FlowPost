@@ -278,7 +278,7 @@ export const WRITTER_TOOLS = [
         title: 'Escribe tu post apoyado por IA',
         subtitle:
             'Ideal para cuando tienes claro qué quieres escribir pero quieres algo de ayuda',
-        url: '/app/post-writter/new',
+        url: '/app/assisted/new',
         headerClassName: 'bg-emerald-50',
         titleClassName: 'text-emerald-800',
         status: 'Beta',
@@ -288,7 +288,7 @@ export const WRITTER_TOOLS = [
         title: 'Genera post a partir de plantillas',
         subtitle:
             'Podrás personalizar el tono, y la plantilla que más encaje con tu marca y con el contenido que quieres publicar',
-        url: '/app/post-writter',
+        url: '/app/framework',
         headerClassName: 'bg-indigo-50',
         titleClassName: 'text-indigo-800',
         status: 'Beta',

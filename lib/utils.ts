@@ -8,8 +8,8 @@ import { db } from './prisma';
 import {
     POST_CATEGORIES,
     VOICE_TONES,
-} from '@/app/app/post-writter/config/const';
-import { POST_TEMPLATES } from '@/app/app/post-writter/config/prompts';
+} from '@/app/app/(writters)/assisted/config/const';
+import { POST_TEMPLATES } from '@/app/app/(writters)/assisted/config/prompts';
 import { aiModels } from '@/config/const';
 import { DayMap, DayOfTheWeekNumber, TSlot, TimeMap } from '@/types/types';
 import { appConfig } from '@/config/shipper.appconfig';

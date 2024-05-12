@@ -106,7 +106,7 @@ export const PostSlot = ({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => {
-                        router.push(`/app/post-writter/${postId}`);
+                        router.push(`/app/assisted/${postId}`);
                     }}
                 >
                     Editar

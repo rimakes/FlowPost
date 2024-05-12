@@ -2,7 +2,6 @@
 
 import {
     Cross,
-    GalleryHorizontal,
     Globe,
     Globe2,
     ImageIcon,
@@ -20,8 +19,7 @@ import {
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import Link from 'next/link';
-import { PostWritterContext } from '../../_components/PostWritterProvider';
-import { fakeSlides } from '@/app/app/carrousel/_components/const';
+import { PostWritterContext } from '../../../framework/_components/PostWritterProvider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn, fromPdfUrlToThumnailUrl } from '@/lib/utils';

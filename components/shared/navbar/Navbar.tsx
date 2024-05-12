@@ -33,7 +33,7 @@ export default function Navbar({ className }: { className?: string }) {
                     <Button
                         className='hidden sm:flex'
                         onClick={() => {
-                            router.push('/app/post-writter/new');
+                            router.push('/app/assisted/new');
                         }}
                     >
                         <PenLine className='mr-2' />
