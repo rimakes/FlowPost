@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { PostWritterContext } from '../../framework/_components/PostWritterProvider';
-import { PostWritterResultTipTap } from '../../framework/_components/GeneratedPostWithTipTap';
+import { PostWritterResultTipTap } from './_components/GeneratedPostWithTipTap';
 import { LinkedinPost } from './_components/LinkedinPost';
 import { TCarousel } from '@/types/types';
 

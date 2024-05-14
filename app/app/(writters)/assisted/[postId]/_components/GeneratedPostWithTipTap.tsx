@@ -1,17 +1,15 @@
 'use client';
 
 import { Save } from 'lucide-react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { CarouselContext } from '../../../carrousel/_components/CarouselProvider';
-import { PostWritterContext } from './PostWritterProvider';
-import { Skeleton } from '@/components/ui/skeleton';
+import { CarouselContext } from '../../../../carrousel/_components/CarouselProvider';
+import { PostWritterContext } from '../../../framework/_components/PostWritterProvider';
 import { cn, proToast, wait } from '@/lib/utils';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
-import { TStatus } from '@/types/types';
 import Editor from '@/components/editor/Editor';
 import { upsertLinkedinPost } from '@/app/_actions/linkedinpost-actions';
 import { CharCounter } from '@/components/shared/CharCounter';
@@ -35,19 +33,10 @@ export const PostWritterResultTipTap = ({
     onDemoCarouselCreated: onDemoCarouselCreatedProp = () => {},
 }: GeneratedPostProps) => {
     const { data } = useSession();
-
-    const [status, setStatus] = useState<TStatus>('idle');
     const { post, setPost, updatePost } = useContext(PostWritterContext);
     const { setCarousel } = useContext(CarouselContext);
 
     const router = useRouter();
-
-    if (status === 'loading')
-        return (
-            <div className='h-full w-full flex-1'>
-                <Skeleton className='h-full w-full' />
-            </div>
-        );
 
     return (
         <div className={cn(``, className)}>

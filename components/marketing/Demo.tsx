@@ -21,13 +21,9 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { GetAccessButton } from './GetAccessButton';
 import {
-    VoiceToneSelector,
-    WritterFormSchema,
-} from '@/app/app/(writters)/framework/_components/PostWritterForm';
-import {
     SelectPostTemplate,
     SelectedPostTemplateCard,
-} from '@/app/app/(writters)/framework/_components/SelectPostTemplate';
+} from '@/app/app/(writters)/framework/_components/postWritterForm/SelectPostTemplate';
 import { PostWritterResult } from '@/app/app/(writters)/framework/_components/GeneratedPost';
 import { TStatus } from '@/types/types';
 import { VOICE_TONES } from '@/app/app/(writters)/assisted/config/const';
@@ -36,6 +32,8 @@ import { PostWritterContext } from '@/app/app/(writters)/framework/_components/P
 import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
 import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
 import { appConfig } from '@/config/shipper.appconfig';
+import { VoiceToneSelector } from '@/app/app/(writters)/framework/_components/postWritterForm/VoiceToneSelector';
+import { WritterFormSchema } from '@/app/app/(writters)/framework/_components/postWritterForm/postWritterFormSchema';
 
 type DemoWidgetProps = { className?: string };
 export function DemoWidget({ className }: DemoWidgetProps) {
@@ -54,6 +52,8 @@ export function DemoWidget({ className }: DemoWidgetProps) {
             description: '', // If we have both, we use the one from the url
             toneId: null,
             templateId: '',
+            generationType: 'framework' as 'framework' | 'writtingStyle',
+            writtingStyleId: '',
         },
         mode: 'onBlur',
     });
@@ -101,7 +101,7 @@ export function DemoWidget({ className }: DemoWidgetProps) {
     };
 
     const onError = (errors: any) => {
-        console.log(errors);
+        console.log({ errors });
     };
 
     const buttonContent = () => {

@@ -11,7 +11,6 @@ import { appConfig } from '@/config/shipper.appconfig';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { TFeedback } from '@/types/types';
 
-// BOILER: copy the whole component to boilerplate
 export default function Feedback({ label = 'Feedback' }) {
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState<TFeedback>('');

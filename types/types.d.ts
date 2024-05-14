@@ -121,6 +121,7 @@ export type Pure<T> = Omit<T, 'createdAt' | 'updatedAt'>;
 export type TLinkedinPost = Pure<Prisma.LinkedinPostGetPayload<{}>>;
 export type TScheduledPost = Pure<Prisma.ScheduledPostGetPayload<{}>>;
 export type TCarousel = Pure<Prisma.CarouselGetPayload<{}>>;
+export type TWrittingStyle = Pure<Prisma.WrittingStyleGetPayload<{}>>;
 
 type TAspectRatioMap = typeof ASPECT_RATIOS_MAP;
 

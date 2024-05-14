@@ -95,3 +95,8 @@ export const brandKitsSettingsSchema = z.object({
         primary: z.string(),
     }),
 });
+
+export const writtingSettingsSchema = z.object({
+    description: z.string(),
+    posts: z.array(z.string()),
+});

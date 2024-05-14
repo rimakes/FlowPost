@@ -2,7 +2,7 @@
 
 import { Dispatch, createContext, useRef, useState } from 'react';
 import { Editor } from '@tiptap/react';
-import { PostRequest } from './PostWritterForm';
+import { PostRequest } from './postWritterForm/PostWritterForm';
 import { WritterReq } from '@/app/api/post-writter/route';
 import { TBrand, TLinkedinPost } from '@/types/types';
 
@@ -21,7 +21,9 @@ const INITIAL_STATE = {
     postRequest: {
         description: ``,
         toneId: 1,
+        writtingStyleId: '',
         templateId: '',
+        generationType: 'framework',
     } as PostRequest,
     createCarouselButtonRef: null as React.RefObject<HTMLButtonElement> | null,
     setPost: ((post: TLinkedinPost) => {}) as Dispatch<
@@ -72,13 +74,21 @@ export function PostWritterContextProvider({
     };
 
     const requestPost = async (data: PostRequest) => {
-        const { description, templateId, toneId } = data;
+        const {
+            description,
+            templateId,
+            toneId,
+            generationType,
+            writtingStyleId,
+        } = data;
         const reqBody: WritterReq<'WRITE'> = {
             action: 'WRITE',
             data: {
                 description,
                 templateId,
                 toneId,
+                generationType,
+                writtingStyleId,
             },
         };
 

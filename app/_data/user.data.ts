@@ -1,4 +1,4 @@
-import { UserRole } from '@prisma/client';
+import { Prisma, UserRole } from '@prisma/client';
 import { db } from '@/lib/prisma';
 
 export const dbRegister = async (
@@ -101,6 +101,51 @@ export const dbGetUserByEmail = async (email: string) => {
     } catch (error) {
         console.error('Error getting user by email', error);
         throw new Error('Error getting user by email');
+    }
+};
+
+export const dbGetWrittingStylesByUserId = async (userId: string) => {
+    try {
+        const writtingStyles = await db.writtingStyle.findMany({
+            where: { userId },
+        });
+
+        return writtingStyles;
+    } catch (error) {
+        console.error('Error getting writting styles', error);
+        throw new Error('Error getting writting styles');
+    }
+};
+
+export const dbGetWrittingStyleById = async (id: string) => {
+    try {
+        const writtingStyle = await db.writtingStyle.findUnique({
+            where: { id },
+        });
+
+        return writtingStyle;
+    } catch (error) {
+        console.error('Error getting writting style', error);
+        throw new Error('Error getting writting style');
+    }
+};
+
+export const dbCreateWrittingStyle = async (
+    userId: string,
+    writingStyleSettings: Omit<Prisma.WrittingStyleCreateInput, 'user'>
+) => {
+    try {
+        const updatedSettings = await db.writtingStyle.create({
+            data: {
+                ...writingStyleSettings,
+                userId,
+            },
+        });
+
+        return updatedSettings;
+    } catch (error) {
+        console.error('Error creating writting style', error);
+        throw new Error('Error creating writting style');
     }
 };
 

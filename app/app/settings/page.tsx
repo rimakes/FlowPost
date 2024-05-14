@@ -13,7 +13,12 @@ import {
 } from '@/app/_actions/settings-actions';
 import { authOptions } from '@/auth';
 import { TPageProps } from '@/types/types';
-import { getSubscription } from '@/app/_actions/user-actions';
+import {
+    getSubscription,
+    getWrittingStyles,
+} from '@/app/_actions/user-actions';
+import { WrittingStyleSettings } from '@/app/app/settings/_components/WrittingStyleSettings';
+import { getLinkedinPosts } from '@/app/_data/linkedinpost.data';
 
 export default async function Page({ params, searchParams }: TPageProps) {
     const tab = searchParams['tab'] as string;
@@ -27,6 +32,8 @@ export default async function Page({ params, searchParams }: TPageProps) {
     const userBrandKits = await getUserBrands(session!.user.id);
     const userSettings = await getUserSettings(session!.user.id);
     const subscription = await getSubscription(session!.user.id);
+    const writtingStyles = await getWrittingStyles(session!.user.id);
+    const posts = await getLinkedinPosts(session!.user.id);
 
     return (
         <>
@@ -43,6 +50,9 @@ export default async function Page({ params, searchParams }: TPageProps) {
                             <TabsTrigger value='general'>General</TabsTrigger>
                             <TabsTrigger value='plan'>Plan</TabsTrigger>
                             {/* <TabsTrigger value='team'>Equipo</TabsTrigger> */}
+                            <TabsTrigger value='writtingStyle'>
+                                Estilo de Escritura
+                            </TabsTrigger>
                             <TabsTrigger value='ai'>IA</TabsTrigger>
                             <TabsTrigger value='brands'>Tus Marcas</TabsTrigger>
                         </TabsList>
@@ -54,6 +64,12 @@ export default async function Page({ params, searchParams }: TPageProps) {
                         <PlanSettings subscription={subscription} />
                     </TabsContent>
                     {/* <TabsContent value='team'></TabsContent> */}
+                    <TabsContent value='writtingStyle'>
+                        <WrittingStyleSettings
+                            writtingStyles={writtingStyles}
+                            posts={posts}
+                        />
+                    </TabsContent>
                     <TabsContent value='ai'>
                         <IASettings
                             userIaSettings={userSettings?.iaSettings!}

@@ -100,6 +100,7 @@ export function CopyWritterForm({ className }: PostWritterFormProps) {
             return;
         }
         try {
+            // @ts-ignore
             await requestPost(data);
             updateCredits(creditBalance - 1);
             await revalidateAllPaths();

@@ -20,7 +20,7 @@ export const aiChat = (
         callbacks: [
             {
                 handleLLMNewToken(token) {
-                    // console.log(token);
+                    console.log(token);
                 },
             },
         ],

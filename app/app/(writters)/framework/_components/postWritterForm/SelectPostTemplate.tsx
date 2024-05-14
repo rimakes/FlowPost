@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Label } from '@radix-ui/react-label';
 import { PostCategory, PostTemplate } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { POST_TEMPLATES } from '../../assisted/config/prompts';
-import { POST_CATEGORIES } from '../../assisted/config/const';
+import { POST_TEMPLATES } from '../../../assisted/config/prompts';
+import { POST_CATEGORIES } from '../../../assisted/config/const';
 import { Pure } from '@/types/types';
 import { cn, getPostTemplateById, proToast } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -158,6 +158,7 @@ export const SelectedPostTemplateCard = ({
                     variant={'ghost'}
                     className='text-primary/50'
                     onClick={onDelete}
+                    type='button'
                 >
                     Borrar
                 </Button>

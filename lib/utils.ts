@@ -403,3 +403,10 @@ export const getSearchResults = async (query: string) => {
     );
     return res.data.items;
 };
+
+export const toggleElementInArray = (array: string[], element: string) => {
+    if (array.includes(element)) {
+        return array.filter((el) => el !== element);
+    }
+    return [...array, element];
+};
