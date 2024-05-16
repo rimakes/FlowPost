@@ -23,17 +23,17 @@ import { GetAccessButton } from './GetAccessButton';
 import {
     SelectPostTemplate,
     SelectedPostTemplateCard,
-} from '@/app/app/(writters)/framework/_components/postWritterForm/SelectPostTemplate';
-import { PostWritterResult } from '@/app/app/(writters)/framework/_components/GeneratedPost';
+} from '@/app/app/(writters)/from-scratch/_components/postWritterForm/SelectPostTemplate';
+import { PostWritterResult } from '@/app/app/(writters)/from-scratch/_components/GeneratedPost';
 import { TStatus } from '@/types/types';
 import { VOICE_TONES } from '@/app/app/(writters)/assisted/config/const';
 import { cn, getPostTemplateById, wait } from '@/lib/utils';
-import { PostWritterContext } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
+import { PostWritterContext } from '@/app/app/(writters)/from-scratch/_components/PostWritterProvider';
 import { CarouselWorkbench } from '@/app/app/carrousel/_components/CarouselWorkbench';
 import { DownloadButton } from '@/app/app/carrousel/_components/sidebar/downloadButton';
 import { appConfig } from '@/config/shipper.appconfig';
-import { VoiceToneSelector } from '@/app/app/(writters)/framework/_components/postWritterForm/VoiceToneSelector';
-import { WritterFormSchema } from '@/app/app/(writters)/framework/_components/postWritterForm/postWritterFormSchema';
+import { VoiceToneSelector } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/VoiceToneSelector';
+import { WritterFormSchema } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/postWritterFormSchema';
 
 type DemoWidgetProps = { className?: string };
 export function DemoWidget({ className }: DemoWidgetProps) {

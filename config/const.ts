@@ -274,6 +274,16 @@ export const SECONDARY_MENU_ITEMS: TMenuItem[] = [
 
 export const WRITTER_TOOLS = [
     {
+        name: 'Desde Cero',
+        title: 'Deja que la IA escriba tu post',
+        subtitle:
+            'Deja que la IA genere tu contenido, basado en tu estilo o plantillas virales. Podrás retocarlo antes de publicar!',
+        url: '/app/from-scratch',
+        headerClassName: 'bg-indigo-50',
+        titleClassName: 'text-indigo-800',
+        status: 'Beta',
+    },
+    {
         name: 'Escritura Asistida',
         title: 'Escribe tu post apoyado por IA',
         subtitle:
@@ -281,16 +291,6 @@ export const WRITTER_TOOLS = [
         url: '/app/assisted/new',
         headerClassName: 'bg-emerald-50',
         titleClassName: 'text-emerald-800',
-        status: 'Beta',
-    },
-    {
-        name: 'Plantillas Virales',
-        title: 'Genera post a partir de plantillas',
-        subtitle:
-            'Podrás personalizar el tono, y la plantilla que más encaje con tu marca y con el contenido que quieres publicar',
-        url: '/app/framework',
-        headerClassName: 'bg-indigo-50',
-        titleClassName: 'text-indigo-800',
         status: 'Beta',
     },
     {

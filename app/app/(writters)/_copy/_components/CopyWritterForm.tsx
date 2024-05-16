@@ -26,8 +26,8 @@ import { revalidateAllPaths } from '@/app/_actions/other-actions';
 import { VoiceTone } from '@/types/types';
 import { useUserCredits } from '@/hooks/use-user-credits';
 import Spinner from '@/components/icons/SpinnerIcon';
-import { PostWritterContext } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
-import { RecordButton } from '@/app/app/(writters)/framework/_components/RecordButton';
+import { PostWritterContext } from '@/app/app/(writters)/from-scratch/_components/PostWritterProvider';
+import { RecordButton } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/RecordButton';
 import {
     SelectPostCopy,
     SelectedPostCopyCard,

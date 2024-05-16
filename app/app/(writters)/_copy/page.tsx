@@ -4,8 +4,8 @@ import { Heading } from '@/components/shared/Heading';
 import { Separator } from '@/components/ui/separator';
 import { TPageProps } from '@/types/types';
 import { getUserBrands } from '@/app/_actions/settings-actions';
-import { PostWritterContextProvider } from '@/app/app/(writters)/framework/_components/PostWritterProvider';
-import { PostWritterResult } from '@/app/app/(writters)/framework/_components/GeneratedPost';
+import { PostWritterContextProvider } from '@/app/app/(writters)/from-scratch/_components/PostWritterProvider';
+import { PostWritterResult } from '@/app/app/(writters)/from-scratch/_components/GeneratedPost';
 import { CopyWritterForm } from '@/app/app/(writters)/_copy/_components/CopyWritterForm';
 
 export default async function PostWritterPage({}: TPageProps) {

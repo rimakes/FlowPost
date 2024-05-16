@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { toast } from 'sonner';
 import { useSearchParams } from 'next/navigation';
 import { PostWritterContext } from '../PostWritterProvider';
-import { RecordButton } from '../RecordButton';
+import { RecordButton } from './RecordButton';
 import { SelectedPostTemplateCard } from './SelectPostTemplate';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,13 +30,13 @@ import Spinner from '@/components/icons/SpinnerIcon';
 import {
     PostWritterFormProps,
     WritterFormSchema,
-} from '@/app/app/(writters)/framework/_components/postWritterForm/postWritterFormSchema';
+} from '@/app/app/(writters)/from-scratch/_components/postWritterForm/postWritterFormSchema';
 import {
     MIN_LENGTH,
     MAX_LENGTH,
 } from '@/app/app/(writters)/_copy/_components/CopyWritterForm';
-import { GenerationSelector } from '@/app/app/(writters)/framework/_components/postWritterForm/GenerationSelector';
-import { VoiceToneSelector } from '@/app/app/(writters)/framework/_components/postWritterForm/VoiceToneSelector';
+import { GenerationSelector } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/GenerationSelector';
+import { VoiceToneSelector } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/VoiceToneSelector';
 
 export type PostRequest = z.infer<typeof WritterFormSchema>;
 

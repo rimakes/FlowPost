@@ -4,7 +4,7 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { NextRequest, NextResponse } from 'next/server';
 import { ApiRequestBody, ApiResponse } from '@/types/types';
 import { getPostTemplateById, getVoiceToneById } from '@/lib/utils';
-import { PostRequest } from '@/app/app/(writters)/framework/_components/postWritterForm/PostWritterForm';
+import { PostRequest } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/PostWritterForm';
 import { generalInstructions } from '@/app/app/(writters)/assisted/config/prompts';
 import { db } from '@/lib/prisma';
 import { aiChat } from '@/lib/aiClients';

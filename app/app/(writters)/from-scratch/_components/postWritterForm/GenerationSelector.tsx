@@ -11,8 +11,8 @@ import {
     FormMessage,
 } from '@ui/form';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
-import { SelectPostTemplate } from '@/app/app/(writters)/framework/_components/postWritterForm/SelectPostTemplate';
-import { PostWritterFormProps } from '@/app/app/(writters)/framework/_components/postWritterForm/postWritterFormSchema';
+import { SelectPostTemplate } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/SelectPostTemplate';
+import { PostWritterFormProps } from '@/app/app/(writters)/from-scratch/_components/postWritterForm/postWritterFormSchema';
 import { Badge } from '@ui/badge';
 import {
     Select,

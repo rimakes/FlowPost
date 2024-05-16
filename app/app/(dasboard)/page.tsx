@@ -72,7 +72,7 @@ const PostGeneratorCard = <T extends string>({
                 `relative h-full w-full`,
                 status === 'Próximamente'
                     ? 'pointer-events-none opacity-50'
-                    : 'hover:shadow-lg'
+                    : 'transition-transform hover:-translate-y-1 hover:shadow-lg'
             )}
         >
             {status === 'Próximamente' && (

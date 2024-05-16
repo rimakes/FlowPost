@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { CarouselContext } from '../../../../carrousel/_components/CarouselProvider';
-import { PostWritterContext } from '../../../framework/_components/PostWritterProvider';
+import { PostWritterContext } from '../../../from-scratch/_components/PostWritterProvider';
 import { cn, proToast, wait } from '@/lib/utils';
 import { ButtonWithTooltip } from '@/components/shared/ButtonWithTooltip';
 import { CreateCarouselButton } from '@/components/shared/CreateCarouselButton';
