@@ -1,6 +1,7 @@
 // TODO: This should be rendered statically, but then I cannot use the session provider in the layout...?
 
 import { BlogCard } from '@/app/(public)/blog/_components/BlogCard';
+import Breadcrumbs from '@/components/shared/Breadcrumbs';
 import { getBlogPostList } from '@/lib/fileHelpers';
 
 export default async function Home() {
@@ -9,6 +10,16 @@ export default async function Home() {
     // const altPosts = await getPosts();
     // console.log(altPosts);
     const posts = await getBlogPostList();
+    const breadcrumbs = [
+        {
+            label: 'Inicio',
+            path: '/',
+        },
+        {
+            label: 'Blog',
+            path: '/blog',
+        },
+    ];
 
     return (
         <div className={`flex flex-col gap-16`}>
@@ -21,6 +32,7 @@ export default async function Home() {
                     Compartimos nuestro camino creando la mejor herramienta de
                     creación de contenido para LinkedIn.
                 </p>
+                <Breadcrumbs items={breadcrumbs} />
             </div>
             <div
                 className='

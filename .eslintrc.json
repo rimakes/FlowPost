@@ -10,7 +10,7 @@
     "rules": {
         "import/no-unused-modules": [1],
         "import/newline-after-import": [1],
-        "import/order": [1]
-        // "@typescript-eslint/no-unused-vars": [1, { "varsIgnorePattern": "^_" }]
+        "import/order": [1],
+        "@typescript-eslint/no-unused-vars": [1, { "varsIgnorePattern": "^_" }]
     }
 }

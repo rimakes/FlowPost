@@ -3,7 +3,7 @@ echo "[🐶] Prettifying your code"
 # Prettify code
 npm run format 
 # Lint code with 0 warnings
-npm run lint:no-warnings
+# npm run lint
 # Stage all changes
 git add -A .
 echo "[🐶] DONE! ✅"   

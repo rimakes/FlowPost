@@ -1,12 +1,21 @@
 import { TextFormatter } from '@/app/(public)/negrita-linkedin/TextFormatter';
+import Breadcrumbs from '@/components/shared/Breadcrumbs';
 import Container from '@/components/shared/container';
 import Feedback from '@/components/shared/feedback';
 import { secondaryFont } from '@/config/fonts';
 
-export default function Page({
-    params,
-    searchParams,
-}: {
+const breadcrumbs = [
+    {
+        path: '/',
+        label: 'Inicio',
+    },
+    {
+        path: '/negrita-linkedin',
+        label: 'Negrita en LinkedIn',
+    },
+];
+
+export default function Page({}: {
     params: { slug: string };
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
@@ -28,6 +37,7 @@ export default function Page({
                     </p>
                 </div>
                 <TextFormatter />
+                <Breadcrumbs items={breadcrumbs} />
                 <div className='space-y-4'>
                     <div className='space-y-2'>
                         <h2 className='text-lg font-semibold'>
