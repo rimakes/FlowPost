@@ -1,8 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { TextFormatter } from '@/app/(public)/negrita-linkedin/TextFormatter';
 import Breadcrumbs from '@/components/shared/Breadcrumbs';
 import Container from '@/components/shared/container';
 import Feedback from '@/components/shared/feedback';
 import { secondaryFont } from '@/config/fonts';
+import { Separator } from '@ui/separator';
 
 const breadcrumbs = [
     {
@@ -21,7 +24,7 @@ export default function Page({}: {
 }) {
     return (
         <Container className='max-w-4xl'>
-            <div className='space-y-12'>
+            <div className='space-y-12' id='top'>
                 <div className='space-y-2'>
                     <p className='text-center text-sm font-semibold text-indigo-400'>
                         Formateador tu post de LinkedIn
@@ -102,6 +105,21 @@ export default function Page({}: {
                         </p>
                     </div>
                 </div>
+            </div>
+            <Separator className='mb-6 mt-6' />
+            <div className='-ml-[12rem] -mr-[12rem] flex w-[calc(100%+24rem)] flex-wrap justify-center'>
+                <div className='flex-1'>
+                    <h2>¿Necesitas algo más que negrita?</h2>
+                </div>
+                <Link href='#top'>
+                    <Image
+                        className='flex-1 cursor-pointer rounded-lg border-2 border-border p-2 shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl'
+                        src={'/images/negrita-linkedin.jpg'}
+                        alt='negrita en linkedin'
+                        width={600}
+                        height={500}
+                    />
+                </Link>
             </div>
             <Feedback label='¿Sugerencias?' />
         </Container>
